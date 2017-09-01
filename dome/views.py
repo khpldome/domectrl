@@ -15,26 +15,51 @@ def index(request):
     return render(request, 'dome/index.html', context)
 
 
-class StoreDirectView(View):
+class StoreDirectView(TemplateView):
 
-    def get(self, request, mosaic_action):
-        print("get=", mosaic_action)
+    template_name = 'dome/index.html'
 
-        text_output = ""
-        if mosaic_action == "Start":
-            messages.error(request, 'User already has tsdfghis module.')
-            text_output = start_mosaic()
+    def get(self, request, *args, **kwargs):
+        # print("get=", mosaic_action)
 
-        elif mosaic_action == "Stop":
-            messages.error(request, 'User alreaghfgdy has this module.')
-            text_output = start_mosaic()
+        # messages.error(request, 'User already has this module.')
+        # return HttpResponse('Result: ' + text_output)
 
-        elif mosaic_action == "Restart":
-            messages.error(request, 'User alrefghfgady has this module.')
-            text_output = start_mosaic()
+        return super(StoreDirectView, self).get(request, *args, **kwargs)
 
-        messages.error(request, 'User already has this module.')
-        return HttpResponse('Result: ' + text_output)
+    def get_context_data(self, **kwargs):
+        context = super(StoreDirectView, self).get_context_data(**kwargs)
+        if 'mosaic_action' in kwargs:
+            mosaic_action = kwargs['mosaic_action']
+            print("get=", mosaic_action)
+
+            text_output = ""
+            if mosaic_action == "Start":
+                # messages.error(request, 'User already has tsdfghis module.')
+                text_output = start_mosaic()
+
+            elif mosaic_action == "Stop":
+                # messages.error(request, 'User alreaghfgdy has this module.')
+                text_output = start_mosaic()
+
+            elif mosaic_action == "Restart":
+                # messages.error(request, 'User alrefghfgady has this module.')
+                text_output = start_mosaic()
+
+        # context['pages'] = ModulePage.objects.filter(module_id=self.mymodule.id)
+        context.update({
+            "data_context": text_output,
+            "revenue_shared": 22,
+        })
+        return context
+
+    # def get_success_url(self):
+    #     # Get clone id
+    #     return reverse_lazy('monetize_module', kwargs={'module_id': module_id})
+
+
+
+
 
 
 def start_mosaic():
