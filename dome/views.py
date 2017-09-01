@@ -12,7 +12,7 @@ def index(request):
     context = {'latest_question_list': 22}
     if request.method == 'GET':
         start_mosaic()
-    return render(request, 'dome/index.html', context)
+    return render(request, 'base.html', context)
 
 
 class StoreDirectView(TemplateView):
