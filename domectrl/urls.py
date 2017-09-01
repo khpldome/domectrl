@@ -26,6 +26,5 @@ urlpatterns = [
     url(r'^dome/', include('dome.urls')),  # this line added
 
 
-
 ]
 
