@@ -1,0 +1,21 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<p>Mosaic control</p>
+
+<div class="btn-group" role="group" aria-label="...">
+    <a href="{% url 'mosaic' mosaic_action='Start' %}" class="flrow-a-btn wide grey"><span>Start</span></a>
+</div>
+
+<div>
+    <a href="{% url 'mosaic' mosaic_action='Stop' %}" class="flrow-a-btn wide grey"><span>Stop</span></a>
+</div>
+
+<div>
+    <a href="{% url 'mosaic' mosaic_action='Restart' %}" class="flrow-a-btn wide grey"><span>Restart</span></a>
+</div>
+
+
+
