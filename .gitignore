@@ -1,8 +1,7 @@
 ﻿
-*.bootinfo
 
 confidencialy/*
 
 env3/
 .idea/*
-dome/migrations/__pycache__/
+**/__pycache__/*
