@@ -18,6 +18,8 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+
+
     url(r'^$', views.index, name='index'),
 
     url(r'^mosaic/(?P<mosaic_action>\w+)/$', views.StoreDirectView.as_view(), name='mosaic'),

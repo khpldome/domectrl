@@ -17,8 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import include, url
 
+import dome
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+
+    # url(r'^$', dome.views.index, name='index'),
     url(r'^dome/', include('dome.urls')),  # this line added
+
+
 ]
 

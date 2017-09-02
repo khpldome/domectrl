@@ -1,0 +1,105 @@
+<!DOCTYPE html>{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}MadCram{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'lib/bootstrap-3.3.6/css/bootstrap.min.css' %}">
+    {% block css %} {% endblock css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<div class="container">
+    <header>{% block header %}{% endblock header %}</header>
+    <main>{% block main_container %}{% endblock main_container %}</main>
+    <footer>{% block footer %}{% endblock footer %}</footer>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="feedback-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Thank you</h4>
+            </div>
+            <div class="modal-body">
+                <p>Your feedback will allow me to make this a better study tool.</p>
+                <div class="form-group">
+                    <textarea class="form-control" id="feedback-text"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default grey" data-dismiss="modal">Cancel</button>
+                <button id="send-feedback" type="button" class="btn btn-info">Send Feedback</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if messages %}
+    <div class="modal fade" tabindex="-1" role="dialog" id="messages-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Notification</h4>
+                </div>
+                <div class="modal-body">
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if messages %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#messages-modal').modal('show');
+        });
+    </script>
+{% endif %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var sendFeedbackBtn = $('#send-feedback');
+        sendFeedbackBtn.on('click', function () {
+            if (sendFeedbackBtn.text() == 'OK') {
+                $('#feedback-modal').modal('hide');
+            } else {
+                var mes = $('#feedback-text').val();
+                sendFeedbackBtn.text('Sending...').prop('disabled', true);
+                if (mes) {
+                    $.ajax({
+                        method: 'post',
+                        url: '/send-feedback/',
+                        headers: {'X-CSRFToken': getCookie('csrftoken')},
+                        data: {
+                            message: mes,
+                            page: window.location.toString()
+                        }
+                    }).done(function (resp) {
+                        sendFeedbackBtn.text('OK').prop('disabled', false);
+                        $('#feedback-modal').find('.modal-body').html('Message have been sent.');
+                    }).fail(function (resp) {
+                        sendFeedbackBtn.text('OK').prop('disabled', false);
+                        $('#feedback-modal').find('.modal-body').html('Error! Try again later.');
+                    });
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

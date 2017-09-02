@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'store' %}" class="navbar-link">Store</a></li>
+                <li><a href="{% url 'dashboard' %}" class="navbar-link">Dashboard</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" class="navbar-link" data-toggle="modal" data-target="#feedback-modal">Feedback</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'account' %}" class="navbar-link">My Account</a></li>
+                    <li><a href="{% url 'sign_out' %}" class="navbar-link">Sign Out</a></li>
+                {% else %}
+                    <li><a href="{% url 'sign_in' %}" class="navbar-link">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+{% endblock header %}
+
+{% block main_container %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="pull-left panel-title">
+                {% block mc_header_left %}{% endblock mc_header_left %}
+            </div>
+            <div class="pull-right">
+                {% block mc_header_right %}{% endblock mc_header_right %}
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body inner-layout">
+            {% block mc_body %}{% endblock mc_body %}
+        </div>
+    </div>
+{% endblock main_container %}
+
+{% block footer %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <p>Copyright &copy; MadCram Ltd. 2016</p>
+        </div>
+    </div>
+{% endblock footer %}
