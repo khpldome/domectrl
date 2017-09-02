@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dome.apps.DomeConfig',
+    # 'mod_wsgi.server',    # for daemon mode
 ]
 
 MIDDLEWARE = [
