@@ -6,6 +6,9 @@ from django.views.generic import View, TemplateView
 import xmltodict
 import pprint
 
+import win32api as w
+import win32con as c
+
 
 from django.views import View
 
@@ -47,13 +50,13 @@ class StoreDirectView(TemplateView):
     #     # Get clone id
     #     return reverse_lazy('monetize_module', kwargs={'module_id': module_id})
 
-
-
 def start_mosaic(mode):
     print("Stsrt mosaic")
     import os
     import ctypes
     from subprocess import check_output
+
+    str_param = ''
 
     enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
     pathMosaic = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))+r'\exec\Mosaic\configureMosaic-32bit-64bit.exe'
@@ -74,14 +77,14 @@ def start_mosaic(mode):
         str_param = 'query current'
 
     # out = check_output([pathVLC])
-    # out = check_output([pathMosaic, str_param])
-    out = check_output([pathMosaic, 'query', 'current'])
+    out = check_output([pathMosaic, str_param])
+    # out = check_output([pathMosaic, 'query', 'current'])
 
-    doc_dict = xmltodict.parse(out)  # Parse the read document string
-    pprint.pprint(doc_dict)
-
-    print(doc_dict['query']['grids']['grid']['@rows'])
-    print(doc_dict['query']['grids']['grid']['@columns'])
+    # doc_dict = xmltodict.parse(out)  # Parse the read document string
+    # pprint.pprint(doc_dict)
+    #
+    # print(doc_dict['query']['grids']['grid']['@rows'])
+    # print(doc_dict['query']['grids']['grid']['@columns'])
     print(out.decode(enc))
 
     # print(sys.getdefaultencoding())
@@ -89,5 +92,8 @@ def start_mosaic(mode):
     # print(sys.stdout.encoding)
     # print(sys.stderr.encoding)
     # print(pathMosaic)
+
+
+
 
     return out.decode(enc)
