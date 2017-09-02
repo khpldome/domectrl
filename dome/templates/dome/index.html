@@ -5,19 +5,25 @@
 
 <p>Mosaic control</p>
 
-<div class="btn-group" role="group" aria-label="...">
+<div class="col-sm-2 btn-group" role="group" aria-label="...">
     <a href="{% url 'mosaic' mosaic_action='Start' %}" class="flrow-a-btn wide grey"><span>Start</span></a>
 </div>
 
-<div>
+<div class="col-sm-2 btn-group">
     <a href="{% url 'mosaic' mosaic_action='Stop' %}" class="flrow-a-btn wide grey"><span>Stop</span></a>
 </div>
 
-<div>
+<div class="col-sm-2 btn-group">
     <a href="{% url 'mosaic' mosaic_action='Restart' %}" class="flrow-a-btn wide grey"><span>Restart</span></a>
 </div>
+
+<div class="col-sm-2 btn-group">
+    <a href="{% url 'mosaic' mosaic_action='State' %}" class="flrow-a-btn wide grey"><span>State</span></a>
+</div>
+
 <br>
-<div>
+
+<div class="col-sm-12">
     RESULT: {{ data_context|linebreaks }}
 </div>
 
