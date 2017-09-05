@@ -22,6 +22,8 @@ urlpatterns = [
 
     url(r'^$', views.index, name='index'),
 
-    url(r'^mosaic/(?P<mosaic_action>\w+)/$', views.StoreDirectView.as_view(), name='mosaic'),
+    url(r'^mosaic/(?P<mosaic_action>\w+)/$', views.MosaicActionView.as_view(), name='mosaic'),
+
+    url(r'^vlc/(?P<vlc_action>\w+)/$', views.VlcActionView.as_view(), name='vlc'),
 
 ]

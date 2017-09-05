@@ -6,11 +6,8 @@ from django.views.generic import View, TemplateView
 import xmltodict
 import pprint
 
-import win32api as w
-import win32con as c
-
-
-from django.views import View
+# import win32api as w
+# import win32con as c
 
 
 def index(request):
@@ -18,7 +15,7 @@ def index(request):
     return render(request, 'dome/index.html', context)
 
 
-class StoreDirectView(TemplateView):
+class MosaicActionView(TemplateView):
 
     template_name = 'dome/index.html'
 
@@ -28,16 +25,22 @@ class StoreDirectView(TemplateView):
         # messages.error(request, 'User already has this module.')
         # return HttpResponse('Result: ' + text_output)
 
-        return super(StoreDirectView, self).get(request, *args, **kwargs)
+        return super(MosaicActionView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(StoreDirectView, self).get_context_data(**kwargs)
+        context = super(MosaicActionView, self).get_context_data(**kwargs)
+        text_output = ""
         if 'mosaic_action' in kwargs:
             mosaic_action = kwargs['mosaic_action']
-            print("get=", mosaic_action)
+            print("mosaic_action=", mosaic_action)
 
-            text_output = ""
-            text_output = start_mosaic(mosaic_action)
+            text_output = mosaic_func(mosaic_action)
+
+        if 'vlc_action' in kwargs:
+            vlc_action = kwargs['vlc_action']
+            print("vlc_action=", vlc_action)
+
+            text_output = vlc_func(vlc_action)
 
         # context['pages'] = ModulePage.objects.filter(module_id=self.mymodule.id)
         context.update({
@@ -50,35 +53,56 @@ class StoreDirectView(TemplateView):
     #     # Get clone id
     #     return reverse_lazy('monetize_module', kwargs={'module_id': module_id})
 
-def start_mosaic(mode):
-    print("Stsrt mosaic")
+
+class VlcActionView(TemplateView):
+
+    template_name = 'dome/index.html'
+
+    def get(self, request, *args, **kwargs):
+        return super(VlcActionView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(VlcActionView, self).get_context_data(**kwargs)
+        text_output = ""
+
+        if 'vlc_action' in kwargs:
+            vlc_action = kwargs['vlc_action']
+            print("vlc_action=", vlc_action)
+
+            text_output = vlc_func(vlc_action)
+
+        context['data_context'] = text_output
+        return context
+
+
+def mosaic_func(action):
+
     import os
     import ctypes
     from subprocess import check_output
 
-    str_param = ''
-
     enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
-    pathMosaic = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))+r'\exec\Mosaic\configureMosaic-32bit-64bit.exe'
-    pathVLC = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))+r'\exec\vlc\vlc.exe'
-    # MOSAIC_ENABLE = 'set rows=1 cols=8 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2 out=1,3'
-    # MOSAIC_DISABLE = 'disable'
+    configureMosaic_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\Mosaic\configureMosaic-32bit-64bit.exe'
 
-    if mode == "Start":
+    str_param = ''
+    if action == "Start":
+        print("Start mosaic")
         str_param = 'set rows=1 cols=8 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2 out=1,3'
 
-    elif mode == "Stop":
+    elif action == "Stop":
+        print("Stop mosaic")
         str_param = 'disable'
 
-    elif mode == "Restart":
+    elif action == "Restart":
+        print("Restart mosaic")
         str_param = 'help'
 
-    elif mode == "State":
+    elif action == "State":
+        print("State mosaic")
         str_param = 'query current'
 
-    # out = check_output([pathVLC])
-    out = check_output([pathMosaic, str_param])
-    # out = check_output([pathMosaic, 'query', 'current'])
+    out = check_output([configureMosaic_exe, str_param.split(sep=" ")])
+    # out = check_output([configureMosaic_exe, 'query', 'current'])
 
     # doc_dict = xmltodict.parse(out)  # Parse the read document string
     # pprint.pprint(doc_dict)
@@ -91,9 +115,25 @@ def start_mosaic(mode):
     # print(locale.getpreferredencoding())
     # print(sys.stdout.encoding)
     # print(sys.stderr.encoding)
-    # print(pathMosaic)
+
+    return out.decode(enc)
 
 
+def vlc_func(action):
 
+    import os
+    import ctypes
+    from subprocess import check_output
+
+    enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
+    vlc_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\vlc\vlc.exe'
+
+    str_param = ''
+    if action == "Start":
+        print("Start vlc")
+        str_param = '--intf=qt  --extraintf=http:rc --http-password=6393363933 --quiet --file-logging'
+
+    out = check_output([vlc_exe, str_param.split(sep=" ")])
+    print(out.decode(enc))
 
     return out.decode(enc)
