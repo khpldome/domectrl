@@ -32,17 +32,13 @@ def read_dict_content(arg_lst):
     output = "---"
     if len(arg_lst) == 0:
         output = str(l1)
+
     if len(arg_lst) == 3:
-        output = dpath.util.search(x, "arg_lst[0]/arg_lst[1]/arg_lst[2]")
-        # print(json.dumps(output, indent=4, sort_keys=True))
-        # output = str(dict_json[arg_lst[0]][arg_lst[1]][arg_lst[2]]) + " &&& " + str(arg_lst[3:])
-    elif len(arg_lst) == 2:
-        output = dpath.util.search(x, "/" + arg_lst[0] + "/" + arg_lst[1])
-        # output = str(dict_json[arg_lst[0]][arg_lst[1]]) + " &&& " + str(arg_lst[2:])
-    elif len(arg_lst) == 1:
-        output = dpath.util.search(x, "/" + arg_lst[0])
+        blob = "/".join(arg_lst)
+        print(blob)
+        output = dpath.util.get(x, blob)
+        # output = dpath.util.search(x, blob)
         output = json.dumps(output, indent=4, sort_keys=True)
-        # output = str(dict_json[arg_lst[0]]) + " &&& " + str(arg_lst[1:])
 
     return output
 
@@ -108,11 +104,10 @@ if __name__ == "__main__":
     # out = dpath.util.values(x, '/a/b/d/*')
     # out = dpath.util.get(x, '/skype/0/peppy6025')
     # out = dpath.util.get(x, '/deployment/0/plechan121.herokuapp.com')
-    out = dpath.util.get(x, '/deployment/0/plekhanovskaya121.herokuapp.com/gmail')
+    # out = dpath.util.get(x, '/deployment/0/plekhanovskaya121.herokuapp.com/gmail')
+    out = dpath.util.get(x, '/social/0/ok')
     print(out)
 
-    result = dpath.util.search(x, "deployment/0/[herokuapp]")
-    print(json.dumps(result, indent=4, sort_keys=True))
 
 
 
