@@ -80,14 +80,16 @@ def mosaic_func(action):
     import os
     import ctypes
     from subprocess import check_output
+    import subprocess
 
     enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
-    configureMosaic_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\Mosaic\configureMosaic-32bit-64bit.exe'
+    configureMosaic_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\Mosaic\configureMosaic-32bit-64bit.exe '
 
     str_param = ''
     if action == "Start":
         print("Start mosaic")
         str_param = 'set rows=1 cols=8 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2 out=1,3'
+        str_param = 'set rows=1 cols=7 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2'
 
     elif action == "Stop":
         print("Stop mosaic")
@@ -101,22 +103,28 @@ def mosaic_func(action):
         print("State mosaic")
         str_param = 'query current'
 
-    out = check_output([configureMosaic_exe, str_param.split(sep=" ")])
-    # out = check_output([configureMosaic_exe, 'query', 'current'])
+    out = None
+    try:
+        # check_output('>&2 echo "errrrr"; exit 1', shell=True)
+        out = check_output(configureMosaic_exe + str_param, shell=True)
+    except subprocess.CalledProcessError as e:
+        print('e.output: ', e.output)
+        out = e.output
+    # out = check_output(configureMosaic_exe + str_param, shell=True)
 
     # doc_dict = xmltodict.parse(out)  # Parse the read document string
     # pprint.pprint(doc_dict)
     #
     # print(doc_dict['query']['grids']['grid']['@rows'])
     # print(doc_dict['query']['grids']['grid']['@columns'])
-    print(out.decode(enc))
+    print(out)
 
     # print(sys.getdefaultencoding())
     # print(locale.getpreferredencoding())
     # print(sys.stdout.encoding)
     # print(sys.stderr.encoding)
 
-    return out.decode(enc)
+    return out
 
 
 def vlc_func(action):
@@ -126,14 +134,15 @@ def vlc_func(action):
     from subprocess import check_output
 
     enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
-    vlc_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\vlc\vlc.exe'
+    vlc_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\vlc-2.1.6\vlc.exe '
 
     str_param = ''
     if action == "Start":
         print("Start vlc")
         str_param = '--intf=qt  --extraintf=http:rc --http-password=6393363933 --quiet --file-logging'
+        # str_param = '--intf=qt  --extraintf=http:rc --http-password=6393363933 --file-logging'
 
-    out = check_output([vlc_exe, str_param.split(sep=" ")])
+    out = check_output(vlc_exe+str_param, shell=True)
     print(out.decode(enc))
 
     return out.decode(enc)
