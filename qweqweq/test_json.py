@@ -23,7 +23,7 @@ def write_dict2file_json(data):
         json.dump(data, f, indent=4, ensure_ascii=False )
 
 
-# Read dict keys (3 deep)
+# Read dict context
 def read_dict_content(arg_lst):
     dict_json = read_file_json2dict()
     x = {}
@@ -31,16 +31,42 @@ def read_dict_content(arg_lst):
 
     output = "---"
     if len(arg_lst) == 0:
-        output = str(l1)
-
-    if len(arg_lst) == 3:
+        # ToDo custom output
+        output = str(88888887888)
+    else:
         blob = "/".join(arg_lst)
-        print(blob)
+
         output = dpath.util.get(x, blob)
         # output = dpath.util.search(x, blob)
         output = json.dumps(output, indent=4, sort_keys=True)
 
+    print('-->', blob, '\n<--', output)
+
     return output
+
+
+# Write dict context
+def write_dict_content(arg_lst):
+    dict_json = read_file_json2dict()
+    x = {}
+    dpath.util.merge(x, dict_json)
+
+    output = "---"
+    if len(arg_lst) == 0:
+        # ToDo custom output
+        output = str(88888887888)
+    else:
+        blob = "/".join(arg_lst[:-1])
+        value = arg_lst[-1]
+        count = dpath.util.new(x, blob, value)
+        output = str(count)
+
+    print('-->', blob, value, '\n<--', output)
+
+    write_dict2file_json(x)
+
+    return output
+
 
 
 if __name__ == "__main__":

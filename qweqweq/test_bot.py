@@ -1,6 +1,5 @@
 
 import telegram
-
 import logging
 
 import test_json
@@ -29,8 +28,6 @@ TOKEN = '345369460:AAGgeEcjoDtS2YCk9f8_N03rBUxjItk_vco'
 # logging.info("I'm sorry Dave I'm afraid I can't do that.")
 
 
-
-
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
@@ -41,6 +38,7 @@ dispatcher = updater.dispatcher
 
 def start(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text="I'm a bot, please talk to me!")
+
 
 start_handler = CommandHandler('start', start)
 dispatcher.add_handler(start_handler)
@@ -68,32 +66,7 @@ dispatcher.add_handler(caps_handler)
 
 def put(bot, update, args):
     lst = args
-    fname = lst[0]
-    value = lst[1]
-    output = lst[0] + ":" + str(lst[1:])
-    print(output)
-    dict_json = test_json.read_file_json2dict()
-
-    # dict_json.update({fname: value})
-
-    if fname in dict_json.keys():
-        # append the new number to the existing array at this slot
-        # years_dict[line[0]].append(line[1])
-        input1 = dict_json[fname]
-        print('==========' + str(type(input1)))
-        if not type(input1) is list:
-            input1 = str(input1)
-            input1 = input1.split()
-            input1.append(value)
-
-        print(dict_json, "---------", input1.append(value))
-        # dict_json[fname] = input1.append(value)
-
-    else:
-        # create a new array in this slot
-        dict_json[fname] = [value]
-
-    test_json.write_dict2file_json(dict_json)
+    output = test_json.write_dict_content(lst)
     bot.send_message(chat_id=update.message.chat_id, text=output)
 
 
@@ -104,7 +77,6 @@ dispatcher.add_handler(put_handler)
 def get(bot, update, args):
     lst = args
     output = test_json.read_dict_content(lst)
-    # print(output)
     bot.send_message(chat_id=update.message.chat_id, text=output)
 
 
