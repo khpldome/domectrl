@@ -14,7 +14,7 @@ def load_device_list():
 #            Device.cb = sys.getsizeof(Device)
             if Device.StateFlags: #Attached to desktop
                 workingDevices.append(Device)
-                print('state: ', Device.StateFlags)
+                # print('state: ', Device.StateFlags)
 
             i += 1
         except:
@@ -49,7 +49,7 @@ def setPrimary(id, workingDevices, MonitorPositions):
     #get devmodes, correct positions, and update registry
     for i in range(numDevs):
 
-        devmode = w.EnumDisplaySettings(workingDevices[i].DeviceName, c.ENUM_CURRENT_SETTINGS)
+        devmode = w.EnumDisplaySettings(workingDevices[i].DeviceName, c.ENUM_REGISTRY_SETTINGS)
         # devmode.Position_x = MonitorPositions[i][0] + offset_X
         # devmode.Position_y = MonitorPositions[i][1] + offset_Y
         if(w.ChangeDisplaySettingsEx(workingDevices[i].DeviceName, devmode, 
@@ -92,25 +92,74 @@ def setPrimary1(id, workingDevices, MonitorPositions):
         FlagForSec) \
         != c.DISP_CHANGE_SUCCESSFUL): return False
     #apply Registry updates once all settings are complete
-    return w.ChangeDisplaySettingsEx() == c.DISP_CHANGE_SUCCESSFUL;
+    return w.ChangeDisplaySettingsEx()
 
-if(__name__ == "__main__"):
-    print(w.EnumDisplaySettingsEx())
+
+def attachMonitor(id, workingDevices):
+    devmode = w.EnumDisplaySettings(workingDevices[id].DeviceName, c.ENUM_REGISTRY_SETTINGS)
+    # devmode.Position_x = 1920
+    # devmode.Position_y = 0
+    # devmode.Fields = c.DM_POSITION
+    res = w.ChangeDisplaySettingsEx(workingDevices[id].DeviceName, devmode, c.CDS_UPDATEREGISTRY | c.CDS_NORESET)
+    return w.ChangeDisplaySettingsEx(), res
+
+
+def deattachMonitor(id, workingDevices):
+
+    devmode = w.EnumDisplaySettings(workingDevices[id].DeviceName, c.ENUM_REGISTRY_SETTINGS)
+    devmode.Position_x = 0
+    devmode.Position_y = 0
+    devmode.PelsHeight = 0
+    devmode.PelsWidth = 0
+    devmode.Fields = c.DM_POSITION | c.DM_PELSHEIGHT | c.DM_PELSWIDTH
+
+    res = w.ChangeDisplaySettingsEx(workingDevices[id].DeviceName, devmode, c.CDS_UPDATEREGISTRY | c.CDS_RESET)
+    # return w.ChangeDisplaySettingsEx(), res
+    return res
+
+
+def printMonitorsInfo(workingDevices):
+
+    for dev in workingDevices:
+        name = "DeviceName: {:13s}".format(dev.DeviceName)
+        dstr = " DeviceString: {:28s}".format(dev.DeviceString)
+        stfl = " StateFlags: {:016X}".format(dev.StateFlags)
+        dvid = " DeviceID: {:48s}".format(dev.DeviceID)
+
+        devmode = w.EnumDisplaySettings(dev.DeviceName, c.ENUM_REGISTRY_SETTINGS)
+        # PelsHeight = "PelsHeight: {:5d}".format(devmode.PelsHeight)
+        # PelsWidth = " PelsWidth: {:5d}".format(devmode.PelsWidth)
+        Resolution = " {1:5d} x{0:5d}".format(devmode.PelsHeight, devmode.PelsWidth)
+
+        Fields = " Fields: {:016X}".format(devmode.Fields)
+        Position_x = " Position_x: {:5d}".format(devmode.Position_x)
+        Position_y = " Position_y: {:5d}".format(devmode.Position_y)
+        print(name, stfl, dstr, Resolution, Position_x, Position_y, Fields)
+        # print("String:     ", dev.DeviceString)
+        # print("StateFlags: ", dev.StateFlags)
+        # print("DeviceID:   ", dev.DeviceID)
+        # print("DeviceKey:  ", dev.DeviceKey)
+        # print("\n")
+
+
+if __name__ == "__main__":
+    # print(w.EnumDisplaySettingsEx())
 
     devices = load_device_list()
-    for dev in devices:
-        print("Name:       ", dev.DeviceName)
-        print("String:     ", dev.DeviceString)
-        print("StateFlags: ", dev.StateFlags)
-        print("DeviceID:   ", dev.DeviceID)
-        print("DeviceKey:  ", dev.DeviceKey)
-        print("\n")
+    printMonitorsInfo(devices)
 
-    MonitorPositions = {
-        0: (0, -1080),
-        1: (0, 0),
-        2: (1920, 0)
-    }
+    # select monitor by name "\\.\DISPLAY4"
+    # print(attachMonitor(1, devices))
+    # print(deattachMonitor(1, devices))
 
-    f = setPrimary(0, devices, MonitorPositions)
-    print("Set primary: ", f)
+    devices = load_device_list()
+    printMonitorsInfo(devices)
+
+    # MonitorPositions = {
+    #     0: (0, -1080),
+    #     1: (0, 0),
+    #     2: (1920, 0)
+    # }
+    #
+    # f = setPrimary(0, devices, MonitorPositions)
+    # print("Set primary: ", f)
