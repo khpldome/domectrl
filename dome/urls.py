@@ -26,4 +26,6 @@ urlpatterns = [
 
     url(r'^vlc/(?P<vlc_action>\w+)/$', views.VlcActionView.as_view(), name='vlc'),
 
+    url(r'^winapi/(?P<winapi_action>\w+)/$', views.WinapiActionView.as_view(), name='winapi'),
+
 ]
