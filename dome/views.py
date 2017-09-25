@@ -10,6 +10,9 @@ import pprint
 # import win32con as c
 
 
+import qweqweq.winapi_test as wt
+
+
 def index(request):
     context = {'latest_question_list': 22}
     return render(request, 'dome/index.html', context)
@@ -75,6 +78,27 @@ class VlcActionView(TemplateView):
         return context
 
 
+class WinapiActionView(TemplateView):
+
+    template_name = 'dome/index.html'
+
+    def get(self, request, *args, **kwargs):
+        return super(WinapiActionView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(WinapiActionView, self).get_context_data(**kwargs)
+        text_output = ""
+
+        if 'winapi_action' in kwargs:
+            winapi_action = kwargs['winapi_action']
+            print("winapi_action=", winapi_action)
+
+            text_output = winapi_func(winapi_action)
+
+        context['data_context'] = text_output
+        return context
+
+
 def mosaic_func(action):
 
     import os
@@ -108,14 +132,17 @@ def mosaic_func(action):
         # check_output('>&2 echo "errrrr"; exit 1', shell=True)
         out = check_output(configureMosaic_exe + str_param, shell=True)
     except subprocess.CalledProcessError as e:
-        print('e.output: ', e.output)
+        # print('e.output: ', e.output)
         out = e.output
-    # out = check_output(configureMosaic_exe + str_param, shell=True)
 
-    # doc_dict = xmltodict.parse(out)  # Parse the read document string
-    # pprint.pprint(doc_dict)
-    #
-    # print(doc_dict['query']['grids']['grid']['@rows'])
+    doc_dict = xmltodict.parse(out)  # Parse the read document string
+    pprint.pprint(doc_dict)
+
+    if 'error' in doc_dict:
+        grid_err = doc_dict['error']['#text']
+        if action == "Start" and grid_err == 'NvAPI_Mosaic_SetDisplayGrids failed: NVAPI_ERROR':
+            out = "Click 'EnableOneProjector'"
+
     # print(doc_dict['query']['grids']['grid']['@columns'])
     print(out)
 
@@ -146,3 +173,21 @@ def vlc_func(action):
     print(out.decode(enc))
 
     return out.decode(enc)
+
+
+def winapi_func(action):
+
+    out = ''
+    if action == "setPrimaryMonitor":
+        print("setPrimaryMonitor")
+        out = wt.enableLG()
+    elif action == "EnableOneProjector":
+        print("EnableOneProjector")
+        res = wt.enableOneProjector()
+        # ToDo Bad mode
+        if res[1] == -2:
+            out = "Включите проекторы"
+        else:
+            out = wt.enableOneProjector()
+
+    return out

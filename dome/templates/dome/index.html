@@ -25,11 +25,16 @@
     <a href="{% url 'vlc' vlc_action='Start' %}" class="flrow-a-btn wide grey"><span>Start "vlc.exe"</span></a>
 </div>
 
+<div class="col-sm-2 btn-group">
+    <a href="{% url 'winapi' winapi_action='setPrimaryMonitor' %}" class="flrow-a-btn wide grey"><span>setPrimaryMonitor</span></a>
+</div>
 
-<br>
+<div class="col-sm-2 btn-group">
+    <a href="{% url 'winapi' winapi_action='EnableOneProjector' %}" class="flrow-a-btn wide grey"><span>EnableOneProjector</span></a>
+</div>
 
 <div class="col-sm-12">
-    RESULT: {{ data_context|linebreaks }}
+    RESULT: <code>{{ data_context|linebreaks }}</code><br><br>
 </div>
 
 
