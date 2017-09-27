@@ -5,6 +5,12 @@ import pprint
 
 import dpath as dpath
 
+from cryptography.fernet import Fernet
+
+import QuickPyDrive
+
+
+
 TARGET_FILE = 'd:\Surmylo\domectrl\qweqweq\config.json'
 # TARGET_FILE = 'd:\Surmylo\domectrl\qweqweq\temp.json'
 
@@ -17,15 +23,32 @@ def read_file_json2dict():
         return data
 
 
+# Reading data from grive
+def read_gdrive_json2dict():
+    content = QuickPyDrive.getContent_byId(file_id=QuickPyDrive.file_id, cipher=QuickPyDrive.cipher)
+    data = json.loads(content)
+    pprint.pprint(["data", data])
+    return data
+
+
 # Writing JSON data
 def write_dict2file_json(data):
     with open(TARGET_FILE, 'w') as f:
         json.dump(data, f, indent=4, ensure_ascii=False )
 
 
+# Writing JSON data to Google Drive
+def write_dict2gdrive_json(data):
+    content = json.dumps(data, sort_keys=True, indent=4, ensure_ascii=False)
+    print(content)
+    QuickPyDrive.putContent_byId(file_id=QuickPyDrive.file_id, cipher=QuickPyDrive.cipher, content=content)
+
+
 # Read dict context
 def read_dict_content(arg_lst):
-    dict_json = read_file_json2dict()
+    # dict_json = read_file_json2dict()
+    dict_json = read_gdrive_json2dict()
+
     x = {}
     dpath.util.merge(x, dict_json)
 
@@ -47,7 +70,8 @@ def read_dict_content(arg_lst):
 
 # Write dict context
 def write_dict_content(arg_lst):
-    dict_json = read_file_json2dict()
+    # dict_json = read_file_json2dict()
+    dict_json = read_gdrive_json2dict()
     x = {}
     dpath.util.merge(x, dict_json)
 
@@ -63,7 +87,8 @@ def write_dict_content(arg_lst):
 
     print('-->', blob, value, '\n<--', output)
 
-    write_dict2file_json(x)
+    # write_dict2file_json(x)
+    write_dict2gdrive_json(x)
 
     return output
 

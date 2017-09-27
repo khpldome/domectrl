@@ -123,35 +123,39 @@ def putContent_byId(file_id, cipher, content, file_name=""):
     return
 
 
+# cipher_key = Fernet.generate_key()
+cipher_key = b'u6I08Z2C38-4Hr4M5TRksehNLhbTPUwE55KSTz0EJHs='
+print('cipher_key=', cipher_key)
+
+cipher = Fernet(cipher_key)
+gauth = get_gauth()
+drive = GoogleDrive(gauth)
+
+FILE_NAME = 'MyData.txt'  # file name on google grive
+file_id = getID_byName(FILE_NAME)
+
+
 if __name__ == "__main__":
 
-    FILE_NAME = 'MyData.txt'  # file name on google grive
+    import json
 
-    # cipher_key = Fernet.generate_key()
-    cipher_key = b'u6I08Z2C38-4Hr4M5TRksehNLhbTPUwE55KSTz0EJHs='
-    print('cipher_key=', cipher_key)
-    cipher = Fernet(cipher_key)
-
-    gauth = get_gauth()
-    drive = GoogleDrive(gauth)
-
-    file_id = getID_byName(FILE_NAME)
+    json_init_data = {
+        "name": "John",
+        "age": 30,
+        "cars": [
+            {"name": "Ford", "models": ["Fiesta", "Focus", "Mustang"]},
+            {"name": "BMW", "models": ["320", "X3", "X5"]},
+            {"name": "Fiat", "models": ["500", "Panda"]}
+        ]
+    }
+    str_data = json.dumps(json_init_data, indent=4, sort_keys=True)
 
     if file_id is None:
 
-        putContent_byId(file_id=None, cipher=cipher, content="empty file!", file_name=FILE_NAME)
+        putContent_byId(file_id=None, cipher=cipher, content=str_data, file_name=FILE_NAME)
     else:
         content = getContent_byId(file_id=file_id, cipher=cipher)
         print(content)
-        # putContent_byId(file_id, cipher, "asdfdfsd")
-
-
-
-
-
-
-
-
-
+        # putContent_byId(file_id=file_id, cipher=cipher, "asdfdfsd")
 
 

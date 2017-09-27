@@ -1,8 +1,9 @@
 
-import telegram
+
 import logging
 
 import test_json
+
 
 logging.basicConfig(filename='telegram_bot.log',
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -26,6 +27,7 @@ TOKEN = '345369460:AAGgeEcjoDtS2YCk9f8_N03rBUxjItk_vco'
 #
 # bot.send_message(chat_id=chat_id, text="I'm sorry Dave I'm afraid I can't do that.")
 # logging.info("I'm sorry Dave I'm afraid I can't do that.")
+
 
 
 from telegram.ext import Updater
