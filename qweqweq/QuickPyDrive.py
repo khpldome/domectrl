@@ -125,7 +125,7 @@ def putContent_byId(file_id, cipher, content, file_name=""):
 
 if __name__ == "__main__":
 
-    FILE_NAME = 'MyData.txt'
+    FILE_NAME = 'MyData.txt'  # file name on google grive
 
     # cipher_key = Fernet.generate_key()
     cipher_key = b'u6I08Z2C38-4Hr4M5TRksehNLhbTPUwE55KSTz0EJHs='
