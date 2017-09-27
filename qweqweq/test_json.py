@@ -5,17 +5,18 @@ import pprint
 
 import dpath as dpath
 
-from cryptography.fernet import Fernet
-
 import QuickPyDrive
 
 
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+LOCAL_FILE = True   # False - Google Drive file location
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 TARGET_FILE = 'd:\Surmylo\domectrl\qweqweq\config.json'
 # TARGET_FILE = 'd:\Surmylo\domectrl\qweqweq\temp.json'
 
 
-# Reading data back
+# Reading data from local file
 def read_file_json2dict():
     with open(TARGET_FILE, 'r') as f:
         data = json.load(f)
@@ -23,7 +24,7 @@ def read_file_json2dict():
         return data
 
 
-# Reading data from grive
+# Reading data from Google Drive
 def read_gdrive_json2dict():
     content = QuickPyDrive.getContent_byId(file_id=QuickPyDrive.file_id, cipher=QuickPyDrive.cipher)
     data = json.loads(content)
@@ -31,10 +32,10 @@ def read_gdrive_json2dict():
     return data
 
 
-# Writing JSON data
+# Writing JSON data to local file
 def write_dict2file_json(data):
     with open(TARGET_FILE, 'w') as f:
-        json.dump(data, f, indent=4, ensure_ascii=False )
+        json.dump(data, f, indent=4, ensure_ascii=False)
 
 
 # Writing JSON data to Google Drive
@@ -46,19 +47,20 @@ def write_dict2gdrive_json(data):
 
 # Read dict context
 def read_dict_content(arg_lst):
-    # dict_json = read_file_json2dict()
-    dict_json = read_gdrive_json2dict()
+
+    if LOCAL_FILE:
+        dict_json = read_file_json2dict()
+    else:
+        dict_json = read_gdrive_json2dict()
 
     x = {}
     dpath.util.merge(x, dict_json)
 
-    output = "---"
+    blob = "/".join(arg_lst)
     if len(arg_lst) == 0:
         # ToDo custom output
         output = str(88888887888)
     else:
-        blob = "/".join(arg_lst)
-
         output = dpath.util.get(x, blob)
         # output = dpath.util.search(x, blob)
         output = json.dumps(output, indent=4, sort_keys=True)
@@ -70,12 +72,15 @@ def read_dict_content(arg_lst):
 
 # Write dict context
 def write_dict_content(arg_lst):
-    # dict_json = read_file_json2dict()
-    dict_json = read_gdrive_json2dict()
+
+    if LOCAL_FILE:
+        dict_json = read_file_json2dict()
+    else:
+        dict_json = read_gdrive_json2dict()
+
     x = {}
     dpath.util.merge(x, dict_json)
 
-    output = "---"
     if len(arg_lst) == 0:
         # ToDo custom output
         output = str(88888887888)
@@ -87,10 +92,33 @@ def write_dict_content(arg_lst):
 
     print('-->', blob, value, '\n<--', output)
 
-    # write_dict2file_json(x)
-    write_dict2gdrive_json(x)
+    if LOCAL_FILE:
+        write_dict2file_json(x)
+    else:
+        write_dict2gdrive_json(x)
 
     return output
+
+
+# Copying data from Google Drive to local file [/pull]
+def copy_gdrive_2_localFile():
+
+    content = QuickPyDrive.getContent_byId(file_id=QuickPyDrive.file_id, cipher=QuickPyDrive.cipher)
+    data = json.loads(content)
+    pprint.pprint(["data", data])
+
+    with open(TARGET_FILE, 'w') as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
+
+    return str(f.name)
+
+
+# Copying local file data to Google Drive file [/push]
+def copy_localFile_2_gdrive():
+
+    data = read_file_json2dict()
+    write_dict2gdrive_json(data)
+    return len(data)
 
 
 

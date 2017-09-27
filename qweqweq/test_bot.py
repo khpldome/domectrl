@@ -29,7 +29,6 @@ TOKEN = '345369460:AAGgeEcjoDtS2YCk9f8_N03rBUxjItk_vco'
 # logging.info("I'm sorry Dave I'm afraid I can't do that.")
 
 
-
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
@@ -84,6 +83,28 @@ def get(bot, update, args):
 
 get_handler = CommandHandler('get', get, pass_args=True)
 dispatcher.add_handler(get_handler)
+
+
+def pull(bot, update, args):
+    lst = args
+    output = test_json.copy_gdrive_2_localFile()
+    bot.send_message(chat_id=update.message.chat_id, text=output)
+    logging.info("pulled...")
+
+
+pull_handler = CommandHandler('pull', pull, pass_args=True)
+dispatcher.add_handler(pull_handler)
+
+
+def push(bot, update, args):
+    lst = args
+    output = test_json.copy_localFile_2_gdrive()
+    bot.send_message(chat_id=update.message.chat_id, text=output)
+    logging.info("pushed...")
+
+
+push_handler = CommandHandler('push', push, pass_args=True)
+dispatcher.add_handler(push_handler)
 
 
 updater.start_polling()

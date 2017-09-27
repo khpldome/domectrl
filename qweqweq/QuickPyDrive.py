@@ -98,8 +98,8 @@ def getContent_byId(file_id, cipher):
 
     # Initialize GoogleDriveFile instance with file id.
     file = drive.CreateFile({'id': file_id})
-    file_content = file.GetContentString()
-    encrypted_text = file_content
+    encrypted_text = file.GetContentString()
+
     decrypted_text = cipher.decrypt(encrypted_text.encode(encoding='UTF-8'))
     file_content = decrypted_text.decode(encoding='UTF-8')
 
@@ -108,10 +108,10 @@ def getContent_byId(file_id, cipher):
 
 def putContent_byId(file_id, cipher, content, file_name=""):
 
-    if file_name != "":
-        file = drive.CreateFile({'title': file_name})
-    else:
+    if file_name == "":
         file = drive.CreateFile({'id': file_id})
+    else:
+        file = drive.CreateFile({'title': file_name})
 
     bytes_text = content.encode(encoding='UTF-8')  #b'My super secret message'
     encrypted_text = cipher.encrypt(bytes_text)
@@ -131,7 +131,7 @@ cipher = Fernet(cipher_key)
 gauth = get_gauth()
 drive = GoogleDrive(gauth)
 
-FILE_NAME = 'MyData.txt'  # file name on google grive
+FILE_NAME = 'MyData.txt'  # file name on Google Drive
 file_id = getID_byName(FILE_NAME)
 
 
