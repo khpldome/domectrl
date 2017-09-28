@@ -5,22 +5,24 @@ import pprint
 
 import dpath as dpath
 
-import QuickPyDrive
-
-
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 LOCAL_FILE = True   # False - Google Drive file location
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+if not LOCAL_FILE:
+    import QuickPyDrive
+
+
 TARGET_FILE = 'd:\Surmylo\domectrl\qweqweq\config.json'
 # TARGET_FILE = 'd:\Surmylo\domectrl\qweqweq\temp.json'
-
+print(TARGET_FILE)
 
 # Reading data from local file
 def read_file_json2dict():
     with open(TARGET_FILE, 'r') as f:
         data = json.load(f)
         # pprint.pprint(["data", data])
+        print("read_file ", len(data))
         return data
 
 
@@ -59,7 +61,18 @@ def read_dict_content(arg_lst):
     blob = "/".join(arg_lst)
     if len(arg_lst) == 0:
         # ToDo custom output
-        output = str(88888887888)
+        output = ''
+        for k in x.keys():
+            output = output + str(k)
+            if isinstance(x[k], dict):
+                output = output + ' {'
+                for nk in x[k].keys():
+                    output = output + str(nk)
+                output = output + '}'
+            if isinstance(x[k], list):
+                output = output + ' [' + str(len(x[k])) + ']'
+            output = output + "\n"
+        # output = str(1111111122211)
     else:
         output = dpath.util.get(x, blob)
         # output = dpath.util.search(x, blob)

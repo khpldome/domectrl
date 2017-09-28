@@ -46,20 +46,17 @@ dispatcher.add_handler(start_handler)
 
 
 def echo(bot, update):
-    val = 'units_per_em'
-    output = str(update.message.text) + ': ' + str(val)
+    output = 'Returned text: ' + str(update.message.text)
     bot.send_message(chat_id=update.message.chat_id, text=output)
     logging.info("bot.send_message:" + output)
-
 
 echo_handler = MessageHandler(Filters.text, echo)
 dispatcher.add_handler(echo_handler)
 
 
 def caps(bot, update, args):
-    text_caps = ' '.join(args).upper()
-    bot.send_message(chat_id=update.message.chat_id, text=text_caps)
-
+    output = ' '.join(args).upper()
+    bot.send_message(chat_id=update.message.chat_id, text=output)
 
 caps_handler = CommandHandler('caps', caps, pass_args=True)
 dispatcher.add_handler(caps_handler)
@@ -70,7 +67,6 @@ def put(bot, update, args):
     output = test_json.write_dict_content(lst)
     bot.send_message(chat_id=update.message.chat_id, text=output)
 
-
 put_handler = CommandHandler('put', put, pass_args=True)
 dispatcher.add_handler(put_handler)
 
@@ -79,7 +75,6 @@ def get(bot, update, args):
     lst = args
     output = test_json.read_dict_content(lst)
     bot.send_message(chat_id=update.message.chat_id, text=output)
-
 
 get_handler = CommandHandler('get', get, pass_args=True)
 dispatcher.add_handler(get_handler)
@@ -91,7 +86,6 @@ def pull(bot, update, args):
     bot.send_message(chat_id=update.message.chat_id, text=output)
     logging.info("pulled...")
 
-
 pull_handler = CommandHandler('pull', pull, pass_args=True)
 dispatcher.add_handler(pull_handler)
 
@@ -101,7 +95,6 @@ def push(bot, update, args):
     output = test_json.copy_localFile_2_gdrive()
     bot.send_message(chat_id=update.message.chat_id, text=output)
     logging.info("pushed...")
-
 
 push_handler = CommandHandler('push', push, pass_args=True)
 dispatcher.add_handler(push_handler)
