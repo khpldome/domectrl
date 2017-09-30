@@ -13,7 +13,8 @@ if not LOCAL_FILE:
     import QuickPyDrive
 
 
-TARGET_FILE = 'd:\Surmylo\domectrl\qweqweq\config.json'
+# TARGET_FILE = 'd:\Surmylo\domectrl\qweqweq\config.json'
+TARGET_FILE = 'config.json'
 # TARGET_FILE = 'd:\Surmylo\domectrl\qweqweq\temp.json'
 print(TARGET_FILE)
 
