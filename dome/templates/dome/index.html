@@ -33,12 +33,18 @@
     <a href="{% url 'winapi' winapi_action='EnableOneProjector' %}" class="flrow-a-btn wide grey"><span>EnableOneProjector</span></a>
 </div>
 
-<div class="col-sm-12">
-    RESULT: <code>{{ data_context|linebreaks }}</code><br><br>
+<div class="col-sm-2 btn-group">
+    <a href="{% url 'winapi' winapi_action='WinapiInfo' %}" class="flrow-a-btn wide grey"><span>WinAPI Info</span></a>
+</div>
+
+<div class="col-sm-2 btn-group">
+    <a href="{% url 'displaypro' displaypro_action='Start' %}" class="flrow-a-btn wide grey"><span>Start "DisplayPro"</span></a>
 </div>
 
 
-
+<div class="col-sm-12">
+    RESULT: <code>{{ data_context|linebreaks }}</code><br><br>
+</div>
 
 
 

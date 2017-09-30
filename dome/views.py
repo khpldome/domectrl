@@ -6,10 +6,6 @@ from django.views.generic import View, TemplateView
 import xmltodict
 import pprint
 
-# import win32api as w
-# import win32con as c
-
-
 import qweqweq.winapi_test as wt
 
 
@@ -99,21 +95,80 @@ class WinapiActionView(TemplateView):
         return context
 
 
-def mosaic_func(action):
+class DisplayproActionView(TemplateView):
 
-    import os
+    template_name = 'dome/index.html'
+
+    def get(self, request, *args, **kwargs):
+        return super(DisplayproActionView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(DisplayproActionView, self).get_context_data(**kwargs)
+        text_output = ""
+
+        if 'displaypro_action' in kwargs:
+            displaypro_action = kwargs['displaypro_action']
+            print("displaypro_action=", displaypro_action)
+
+            text_output = displaypro_func(displaypro_action)
+
+        context['data_context'] = text_output
+        return context
+
+
+def base_index(request):
+    context = {'latest_question_list': 22}
+    return render(request, 'dome/base.html', context)
+
+
+class BaseView(TemplateView):
+
+    template_name = 'dome/base.html'
+
+    def get(self, request, *args, **kwargs):
+        return super(BaseView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(BaseView, self).get_context_data(**kwargs)
+        text_output = ""
+
+        if 'base_action' in kwargs:
+            base_action = kwargs['base_action']
+            print("base_action=", base_action)
+
+            text_output = base_func(base_action)
+
+        context['data_context'] = text_output
+        return context
+
+
+def _execute_command(str_command):
+
     import ctypes
     from subprocess import check_output
     import subprocess
 
     enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
+    try:
+        out = check_output(str_command, shell=True)
+    except subprocess.CalledProcessError as e:
+        # print('e.output: ', e.output)
+        out = e.output
+
+    return out.decode(enc)
+
+
+def mosaic_func(action):
+
+    import os
+
     configureMosaic_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\Mosaic\configureMosaic-32bit-64bit.exe '
 
     str_param = ''
     if action == "Start":
         print("Start mosaic")
         str_param = 'set rows=1 cols=8 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2 out=1,3'
-        str_param = 'set rows=1 cols=7 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2'
+        # str_param = 'set rows=1 cols=7 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2'
 
     elif action == "Stop":
         print("Stop mosaic")
@@ -127,67 +182,102 @@ def mosaic_func(action):
         print("State mosaic")
         str_param = 'query current'
 
-    out = None
-    try:
-        # check_output('>&2 echo "errrrr"; exit 1', shell=True)
-        out = check_output(configureMosaic_exe + str_param, shell=True)
-    except subprocess.CalledProcessError as e:
-        # print('e.output: ', e.output)
-        out = e.output
+    str_res = ''
+    str_res = _execute_command(configureMosaic_exe + str_param)
 
-    doc_dict = xmltodict.parse(out)  # Parse the read document string
-    pprint.pprint(doc_dict)
+    if action == "Restart":
+        print("mosaic help")
+    else:
+        doc_dict = xmltodict.parse(str_res)  # Parse the read document string
+        pprint.pprint(doc_dict)
 
-    if 'error' in doc_dict:
-        grid_err = doc_dict['error']['#text']
-        if action == "Start" and grid_err == 'NvAPI_Mosaic_SetDisplayGrids failed: NVAPI_ERROR':
-            out = "Click 'EnableOneProjector'"
+        if 'error' in doc_dict:
+            grid_err = doc_dict['error']['#text']
+            if action == "Start" and grid_err == 'NvAPI_Mosaic_SetDisplayGrids failed: NVAPI_ERROR':
+                str_res = "NvAPI_Mosaic_SetDisplayGrids failed: NVAPI_ERROR\n 'EnableOneProjector'"
+            if action == "Start" and grid_err == 'Output index 2 on GPU 0 is out of bounds':
+                str_res = "Output index 2 on GPU 0 is out of bounds\n 'Включите проекторы'"
 
-    # print(doc_dict['query']['grids']['grid']['@columns'])
-    print(out)
-
-    # print(sys.getdefaultencoding())
-    # print(locale.getpreferredencoding())
-    # print(sys.stdout.encoding)
-    # print(sys.stderr.encoding)
-
-    return out
+    return str_res
 
 
 def vlc_func(action):
 
     import os
-    import ctypes
-    from subprocess import check_output
-
-    enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
     vlc_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\vlc-2.1.6\vlc.exe '
 
-    str_param = ''
+    str_res = ''
     if action == "Start":
         print("Start vlc")
-        str_param = '--intf=qt  --extraintf=http:rc --http-password=6393363933 --quiet --file-logging'
-        # str_param = '--intf=qt  --extraintf=http:rc --http-password=6393363933 --file-logging'
+        # str_param = '--intf=qt  --extraintf=http:rc --http-password=6393363933 --quiet --file-logging'
+        str_param = '--extraintf=http --http-password=6393363933 --quiet'
+        str_res = _execute_command(vlc_exe + str_param)
 
-    out = check_output(vlc_exe+str_param, shell=True)
-    print(out.decode(enc))
-
-    return out.decode(enc)
+    return str_res
 
 
 def winapi_func(action):
 
-    out = ''
+    res = None
     if action == "setPrimaryMonitor":
-        print("setPrimaryMonitor")
         out = wt.enableLG()
     elif action == "EnableOneProjector":
-        print("EnableOneProjector")
         res = wt.enableOneProjector()
         # ToDo Bad mode
         if res[1] == -2:
             out = "Включите проекторы"
         else:
             out = wt.enableOneProjector()
+    elif action == "WinapiInfo":
+        out = wt.winApiInfo()
+    else:
+        out = "WinAPI: Unnoun command"
+
+    return out, res
+
+
+def displaypro_func(action):
+
+    displaypro_exe = r'c:\Program Files (x86)\Immersive Display PRO\ImmersiveDisplayPro.bat '
+
+    str_res = ''
+    if action == "Start":
+        print("Start displaypro")
+        str_param = ''
+        str_res = _execute_command(displaypro_exe + str_param)
+
+    return str_res
+
+
+
+
+def base_func(action):
+
+    out = ''
+    if action == "Start":
+        print("Start")
+
+        out, res = winapi_func('EnableOneProjector')
+
+        # ToDo Bad mode
+        if res[1] == 0:
+
+            out += '\n' + mosaic_func('Start')
+            # ToDo Check mosaic is ok
+
+            out += '\n' + displaypro_func('Start')
+            out += '\n' + vlc_func('Start')
+        else:
+            out += '\n' + 'Повторно запустите систему'
+
+    elif action == "Stop":
+        print("EnableOneProjector")
+        out += '\n' + mosaic_func('Stop')
+        out += '\n' + winapi_func('setPrimaryMonitor')[0]
+
+    else:
+        out = "Base: Unnoun command"
 
     return out
+
+

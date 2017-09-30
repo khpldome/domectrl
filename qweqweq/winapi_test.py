@@ -101,7 +101,7 @@ def attachMonitor(dev):
     devmode.Position_y = 0
     devmode.Fields = c.DM_POSITION
     res = w.ChangeDisplaySettingsEx(dev.DeviceName, devmode, c.CDS_UPDATEREGISTRY | c.CDS_NORESET)
-    printMonitorsInfoByNId(dev)
+    stringMonitorsInfoByNId(dev)
     return w.ChangeDisplaySettingsEx(), res
 
 
@@ -154,7 +154,7 @@ def printMonitorsInfo(workingDevices):
         # print("\n")
 
 
-def printMonitorsInfoByNId(dev):
+def stringMonitorsInfoByNId(dev):
 
     name = "DeviceName: {:19s}".format(dev.DeviceName)
     dstr = " DeviceString: {:28s}".format(dev.DeviceString)
@@ -184,11 +184,14 @@ def enableLG():
     devices = load_device_list()
     str_out = ''
     for dev in devices:
-        str_out += printMonitorsInfoByNId(dev) + '\n'
+        str_out += stringMonitorsInfoByNId(dev) + '\n'
 
     dev0 = devices[0]
     dev1 = _definePrimary()
-    changePrimary(dev1, dev0)
+    if dev0.DeviceName != dev1.DeviceName:
+        changePrimary(dev1, dev0)
+    else:
+        str_out = "LG is already primary"
 
     return str_out
 
@@ -212,6 +215,16 @@ def _definePrimary():
             return dev
 
 
+def winApiInfo():
+
+    devices = load_device_list()
+    str_out = ""
+    for dev in devices:
+        str_out += stringMonitorsInfoByNId(dev) + '\n'
+
+    return str_out
+
+
 if __name__ == "__main__":
     # print(w.EnumDisplaySettingsEx())
 
@@ -231,13 +244,10 @@ if __name__ == "__main__":
     # print(deattachMonitor(dev1))
     # print(changePrimary(dev0, dev1))
     # print(changePrimary(dev1, dev0))
-    print(enableOneProjector())
+    # print(enableOneProjector())
 
-    devices = load_device_list()
-    str_out = ""
-    for dev in devices:
-        str_out += printMonitorsInfoByNId(dev) + '\n'
-    # print(str_out)
+
+    print(winApiInfo())
 
     # MonitorPositions = {
     #     0: (0, -1080),
