@@ -150,10 +150,12 @@ def _execute_command(str_command):
 
     enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
     try:
-        out = check_output(str_command, shell=True)
-    except subprocess.CalledProcessError as e:
+        out = check_output(str_command, shell=True, timeout=1)
+    except subprocess.CalledProcessError as err:
         # print('e.output: ', e.output)
-        out = e.output
+        out = err.output
+    except subprocess.TimeoutExpired as err:
+        out = "timeout 1 sec".encode()
 
     return out.decode(enc)
 
@@ -209,8 +211,10 @@ def vlc_func(action):
     str_res = ''
     if action == "Start":
         print("Start vlc")
-        # str_param = '--intf=qt  --extraintf=http:rc --http-password=6393363933 --quiet --file-logging'
-        str_param = '--extraintf=http --http-password=6393363933 --quiet'
+        str_param = '--intf=qt  --extraintf=http:rc --http-password=6393363933 --quiet --file-logging'
+        # str_param = '--extraintf=http --http-password=6393363933 --quiet --qt-start-minimized'
+        # str_param = '--extraintf=http --http-password=6393363933 --quiet'
+
         str_res = _execute_command(vlc_exe + str_param)
 
     return str_res
@@ -219,6 +223,7 @@ def vlc_func(action):
 def winapi_func(action):
 
     res = None
+    out = ''
     if action == "setPrimaryMonitor":
         out = wt.enableLG()
     elif action == "EnableOneProjector":
@@ -227,7 +232,7 @@ def winapi_func(action):
         if res[1] == -2:
             out = "Включите проекторы"
         else:
-            out = wt.enableOneProjector()
+            res = wt.enableOneProjector()
     elif action == "WinapiInfo":
         out = wt.winApiInfo()
     else:
@@ -257,12 +262,12 @@ def base_func(action):
     if action == "Start":
         print("Start")
 
-        out, res = winapi_func('EnableOneProjector')
-
+        output = winapi_func('EnableOneProjector')
+        out = output[0]
         # ToDo Bad mode
-        if res[1] == 0:
-
-            out += '\n' + mosaic_func('Start')
+        if output[1][1] == 0:
+            temp_str = mosaic_func('Start')
+            out += '\n' + temp_str
             # ToDo Check mosaic is ok
 
             out += '\n' + displaypro_func('Start')
