@@ -260,10 +260,10 @@ def vlc_func(action):
     str_out = ''
     if action == "Start":
         print("Start vlc")
-        str_param = '--intf=qt  --extraintf=http:rc --http-password=6393363933 --quiet --file-logging'
-        str_param = '--intf=qt  --extraintf=http --http-password=6393363933 --quiet --file-logging'
-        # str_param = '--extraintf=http --http-password=6393363933 --quiet --qt-start-minimized'
-        # str_param = '--extraintf=http --http-password=6393363933 --quiet'
+        str_param = '--intf=qt  --extraintf=http:rc --http-password=63933 --quiet --file-logging'
+        str_param = '--intf=qt  --extraintf=http --http-password=63933 --quiet --file-logging'
+        # str_param = '--extraintf=http --http-password=63933 --quiet --qt-start-minimized'
+        # str_param = '--extraintf=http --http-password=63933 --quiet'
 
         output_str_xml = _execute_command(vlc_exe + str_param, 5)
         str_out += output_str_xml[0]
@@ -312,7 +312,7 @@ def displaypro_func(action):
         print("Start displaypro")
         str_param = ''
 
-        output_str_xml = _execute_command(displaypro_exe + str_param, 5)
+        output_str_xml = _execute_command(displaypro_exe + str_param)
         str_out += output_str_xml[0]
 
     if action == "Stop":
@@ -337,7 +337,7 @@ def base_func(action):
             str_out += '\n' + mosaic_func('Start')[0]
             # ToDo Check mosaic is ok
 
-            str_out += '\n' + displaypro_func('Start')
+            # str_out += '\n' + displaypro_func('Start')
             str_out += '\n' + vlc_func('Start')
         else:
             str_out += '\n' + 'Повторно запустите систему'
@@ -345,7 +345,7 @@ def base_func(action):
     elif action == "Stop":
         print("Stop system")
         str_out += '\n' + vlc_func('Stop')
-        str_out += '\n' + displaypro_func('Stop')
+        # str_out += '\n' + displaypro_func('Stop')
         str_out += '\n' + mosaic_func('Stop')[0]
         str_out += '\n' + winapi_func('setPrimaryMonitor')
 
