@@ -26,6 +26,10 @@
 </div>
 
 <div class="col-sm-2 btn-group">
+    <a href="{% url 'vlc' vlc_action='Stop' %}" class="flrow-a-btn wide grey"><span>Stop "vlc.exe"</span></a>
+</div>
+
+<div class="col-sm-2 btn-group">
     <a href="{% url 'winapi' winapi_action='setPrimaryMonitor' %}" class="flrow-a-btn wide grey"><span>setPrimaryMonitor</span></a>
 </div>
 
@@ -39,6 +43,10 @@
 
 <div class="col-sm-2 btn-group">
     <a href="{% url 'displaypro' displaypro_action='Start' %}" class="flrow-a-btn wide grey"><span>Start "DisplayPro"</span></a>
+</div>
+
+<div class="col-sm-2 btn-group">
+    <a href="{% url 'displaypro' displaypro_action='Stop' %}" class="flrow-a-btn wide grey"><span>Stop "DisplayPro"</span></a>
 </div>
 
 

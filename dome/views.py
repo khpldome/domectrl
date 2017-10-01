@@ -206,16 +206,30 @@ def mosaic_func(action):
 def vlc_func(action):
 
     import os
+    import psutil
+
     vlc_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\vlc-2.1.6\vlc.exe '
 
     str_res = ''
     if action == "Start":
         print("Start vlc")
         str_param = '--intf=qt  --extraintf=http:rc --http-password=6393363933 --quiet --file-logging'
+        str_param = '--intf=qt  --extraintf=http --http-password=6393363933 --quiet --file-logging'
         # str_param = '--extraintf=http --http-password=6393363933 --quiet --qt-start-minimized'
         # str_param = '--extraintf=http --http-password=6393363933 --quiet'
 
         str_res = _execute_command(vlc_exe + str_param)
+
+    if action == "Stop":
+        print("Stop vlc")
+        # str_param = 'TASKKILL /F /IM vlc.exe'
+        # str_param = 'TASKKILL /IM vlc.exe'
+        # os.system(str_param)
+
+        for process in (process for process in psutil.process_iter() if process.name() == "vlc.exe"):
+            process.kill()
+
+        str_res = 'Stoped vlc.exe'
 
     return str_res
 
@@ -243,6 +257,7 @@ def winapi_func(action):
 
 def displaypro_func(action):
 
+    import psutil
     displaypro_exe = r'c:\Program Files (x86)\Immersive Display PRO\ImmersiveDisplayPro.bat '
 
     str_res = ''
@@ -251,38 +266,45 @@ def displaypro_func(action):
         str_param = ''
         str_res = _execute_command(displaypro_exe + str_param)
 
+    if action == "Stop":
+
+        for process in (process for process in psutil.process_iter() if process.name() == "ImmersiveDisplayPro.exe"):
+            process.kill()
+
+        str_res = 'Stoped ImmersiveDisplayPro.exe'
+
     return str_res
-
-
 
 
 def base_func(action):
 
-    out = ''
+    out_str = ''
     if action == "Start":
         print("Start")
 
         output = winapi_func('EnableOneProjector')
-        out = output[0]
+        out_str = output[0]
         # ToDo Bad mode
         if output[1][1] == 0:
             temp_str = mosaic_func('Start')
-            out += '\n' + temp_str
+            out_str += '\n' + temp_str
             # ToDo Check mosaic is ok
 
-            out += '\n' + displaypro_func('Start')
-            out += '\n' + vlc_func('Start')
+            out_str += '\n' + displaypro_func('Start')
+            out_str += '\n' + vlc_func('Start')
         else:
-            out += '\n' + 'Повторно запустите систему'
+            out_str += '\n' + 'Повторно запустите систему'
 
     elif action == "Stop":
-        print("EnableOneProjector")
-        out += '\n' + mosaic_func('Stop')
-        out += '\n' + winapi_func('setPrimaryMonitor')[0]
+        print("Stop system")
+        out_str += '\n' + mosaic_func('Stop')
+        out_str += '\n' + winapi_func('setPrimaryMonitor')[0]
+        out_str += '\n' + vlc_func('Stop')
+        out_str += '\n' + displaypro_func('Stop')
 
     else:
-        out = "Base: Unnoun command"
+        out_str = "Base: Unnoun command"
 
-    return out
+    return out_str
 
 
