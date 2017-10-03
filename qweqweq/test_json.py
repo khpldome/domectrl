@@ -16,7 +16,8 @@ if not LOCAL_FILE:
 # TARGET_FILE = 'd:\Surmylo\domectrl\qweqweq\config.json'
 TARGET_FILE = 'config.json'
 # TARGET_FILE = 'd:\Surmylo\domectrl\qweqweq\temp.json'
-print(TARGET_FILE)
+print(LOCAL_FILE, TARGET_FILE, dpath)
+
 
 # Reading data from local file
 def read_file_json2dict():
@@ -44,7 +45,7 @@ def write_dict2file_json(data):
 # Writing JSON data to Google Drive
 def write_dict2gdrive_json(data):
     content = json.dumps(data, sort_keys=True, indent=4, ensure_ascii=False)
-    print(content)
+    print(len(content))
     QuickPyDrive.putContent_byId(file_id=QuickPyDrive.file_id, cipher=QuickPyDrive.cipher, content=content)
 
 
