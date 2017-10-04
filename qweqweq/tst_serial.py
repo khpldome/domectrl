@@ -1,5 +1,3 @@
-
-
 import serial
 import time
 
@@ -11,10 +9,10 @@ if __name__ == "__main__":
 
     # s = ser.read(10)  # read up to ten bytes (timeout)
 
-        while ser.is_open:
-            line = ser.readline()  # read a '\n' terminated line
-            print(line)
-        time.sleep(10)
+    while ser.is_open:
+        line = ser.readline()  # read a '\n' terminated line
+        print(line)
+    time.sleep(10)
     ser.close()
 
     print("End")
