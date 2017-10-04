@@ -6,17 +6,17 @@ import pprint
 import dpath as dpath
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-LOCAL_FILE = True   # False - Google Drive file location
+LOCALY = False   # False - Google Drive file location
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-if not LOCAL_FILE:
+if LOCALY:
+    # TARGET_FILE = 'd:\Surmylo\domectrl\qweqweq\config.json'
+    TARGET_FILE = 'config.json'
+    print('LOCALY=', LOCALY, 'TARGET_FILE=', TARGET_FILE)
+else:
     import QuickPyDrive
 
 
-# TARGET_FILE = 'd:\Surmylo\domectrl\qweqweq\config.json'
-TARGET_FILE = 'config.json'
-# TARGET_FILE = 'd:\Surmylo\domectrl\qweqweq\temp.json'
-print(LOCAL_FILE, TARGET_FILE, dpath)
 
 
 # Reading data from local file
@@ -30,7 +30,7 @@ def read_file_json2dict():
 
 # Reading data from Google Drive
 def read_gdrive_json2dict():
-    content = QuickPyDrive.getContent_byId(file_id=QuickPyDrive.file_id, cipher=QuickPyDrive.cipher)
+    content = QuickPyDrive.getContent_byId(file_id=QuickPyDrive.file_id)
     data = json.loads(content)
     pprint.pprint(["data", data])
     return data
@@ -46,13 +46,13 @@ def write_dict2file_json(data):
 def write_dict2gdrive_json(data):
     content = json.dumps(data, sort_keys=True, indent=4, ensure_ascii=False)
     print(len(content))
-    QuickPyDrive.putContent_byId(file_id=QuickPyDrive.file_id, cipher=QuickPyDrive.cipher, content=content)
+    QuickPyDrive.putContent_byId(file_id=QuickPyDrive.file_id, content=content)
 
 
 # Read dict context
 def read_dict_content(arg_lst):
 
-    if LOCAL_FILE:
+    if LOCALY:
         dict_json = read_file_json2dict()
     else:
         dict_json = read_gdrive_json2dict()
@@ -88,7 +88,7 @@ def read_dict_content(arg_lst):
 # Write dict context
 def write_dict_content(arg_lst):
 
-    if LOCAL_FILE:
+    if LOCALY:
         dict_json = read_file_json2dict()
     else:
         dict_json = read_gdrive_json2dict()
@@ -107,7 +107,7 @@ def write_dict_content(arg_lst):
 
     print('-->', blob, value, '\n<--', output)
 
-    if LOCAL_FILE:
+    if LOCALY:
         write_dict2file_json(x)
     else:
         write_dict2gdrive_json(x)
@@ -136,7 +136,6 @@ def copy_localFile_2_gdrive():
     return len(data)
 
 
-
 if __name__ == "__main__":
 
     # https: // github.com / akesterson / dpath - python
@@ -151,7 +150,10 @@ if __name__ == "__main__":
     import dpath.options
     # dpath.options.ALLOW_EMPTY_STRING_KEYS = True
 
-    jd = read_file_json2dict()
+    if LOCALY:
+        dict_json = read_file_json2dict()
+    else:
+        dict_json = read_gdrive_json2dict()
 
     x = {
         "a": {
@@ -164,8 +166,14 @@ if __name__ == "__main__":
         }
     }
 
+    # x = {
+    #     "a": 1,
+    #     "b": 3,
+    #     "c": 7
+    # }
+
     # help(dpath.util.get)
-    out = dpath.util.get(x, '/a/b/d')
+    # out = dpath.util.get(x, '/a/b/d')
 
     # result = dpath.util.search(x, "a/b/[cd]")
     # print(json.dumps(result, indent=4, sort_keys=True))
@@ -185,7 +193,7 @@ if __name__ == "__main__":
     # print(json.dumps(x, indent=4, sort_keys=True))
 
     # help(dpath.util.merge)
-    dpath.util.merge(x, jd)
+    dpath.util.merge(x, dict_json, flags=dpath.MERGE_TYPESAFE )
     print(json.dumps(x, indent=4, sort_keys=True))
 
     # def afilter(jd1):
@@ -199,8 +207,8 @@ if __name__ == "__main__":
     # out = dpath.util.get(x, '/skype/0/peppy6025')
     # out = dpath.util.get(x, '/deployment/0/plechan121.herokuapp.com')
     # out = dpath.util.get(x, '/deployment/0/plekhanovskaya121.herokuapp.com/gmail')
-    out = dpath.util.get(x, '/social/0/ok')
-    print(out)
+    # out = dpath.util.get(x, '/social/0/ok')
+    # print(out)
 
 
 

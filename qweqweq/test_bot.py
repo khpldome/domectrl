@@ -5,15 +5,13 @@ import logging
 import test_json
 
 
+# Enable logging
 logging.basicConfig(filename='telegram_bot.log',
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
-# logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 print("logger:", logger)
 
-logger.setLevel(logging.INFO)
-# logger.setLevel(logging.DEBUG)
 
 TOKEN = '345369460:AAGgeEcjoDtS2YCk9f8_N03rBUxjItk_vco'
 
@@ -53,8 +51,8 @@ def echo(bot, update):
     text = (": " + update.message.text).encode('utf-8')
     output = name + text
     bot.send_message(chat_id=update.message.chat_id, text=output.decode())
-    logging.info("bot.send_message:" + output)
-    print("/echo: " + output)
+    logging.info("bot.send_message: " + output.decode())
+    print("/echo: " + output.decode())
 
 echo_handler = MessageHandler(Filters.text, echo)
 dispatcher.add_handler(echo_handler)
@@ -110,5 +108,21 @@ push_handler = CommandHandler('push', push, pass_args=True)
 dispatcher.add_handler(push_handler)
 
 
+def error(bot, update, error):
+    logger.warning('Update "%s" caused error "%s"' % (update, error))
+
+# log all errors
+dispatcher.add_error_handler(error)
+
+
+# This handler must be added last!!!
+def unknown(bot, update):
+    bot.send_message(chat_id=update.message.chat_id, text="Unknown command!")
+
+unknown_handler = MessageHandler(Filters.command, unknown)
+dispatcher.add_handler(unknown_handler)
+
+
 updater.start_polling()
 
+updater.idle()

@@ -3,7 +3,15 @@
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 
-from cryptography.fernet import Fernet
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ENCRYPT = False   # False - without encription (for android!!!)
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+if ENCRYPT:
+    import cryptography
+    from cryptography.fernet import Fernet
+
+
 
 # gauth = GoogleAuth()
 #
@@ -94,44 +102,60 @@ def getID_byName(file_name):
     return file_id
 
 
-def getContent_byId(file_id, cipher):
+def getContent_byId(file_id):
 
     # Initialize GoogleDriveFile instance with file id.
     file = drive.CreateFile({'id': file_id})
-    encrypted_text = file.GetContentString()
+    text = file.GetContentString()
 
-    decrypted_text = cipher.decrypt(encrypted_text.encode(encoding='UTF-8'))
-    file_content = decrypted_text.decode(encoding='UTF-8')
+    if ENCRYPT:
+        file_content = "... can not decrypt content ..."
+        try:
+            decrypted_text = cipher.decrypt(text.encode(encoding='UTF-8'))  # encripted_text
+            file_content = decrypted_text.decode(encoding='UTF-8')
+        except cryptography.fernet.InvalidToken:
+            pass
+    else:
+        file_content = text
 
     return file_content
 
 
-def putContent_byId(file_id, cipher, content, file_name=""):
+def putContent_byId(file_id, content, file_name=""):
 
     if file_name == "":
         file = drive.CreateFile({'id': file_id})
     else:
         file = drive.CreateFile({'title': file_name})
 
-    bytes_text = content.encode(encoding='UTF-8')  #b'My super secret message'
-    encrypted_text = cipher.encrypt(bytes_text)
-    print(encrypted_text)
+    if ENCRYPT:
+        bytes_text = content.encode(encoding='UTF-8')  #b'My super secret message'
+        text = cipher.encrypt(bytes_text).decode(encoding='UTF-8')  # encrypted_text
+        # print(text)
+    else:
+        text = content
 
-    file.SetContentString(encrypted_text.decode(encoding='UTF-8'))
+    file.SetContentString(text)
     file.Upload()
 
     return
 
 
-# cipher_key = Fernet.generate_key()
-cipher_key = b'u6I08Z2C38-4Hr4M5TRksehNLhbTPUwE55KSTz0EJHs='
-print('cipher_key=', cipher_key)
+if ENCRYPT:
+    # cipher_key = Fernet.generate_key()
+    cipher_key = b'u6I08Z2C38-4Hr4M5TRksehNLhbTPUwE55KSTz0EJHs='
+    print('cipher_key=', cipher_key)
+    cipher = Fernet(cipher_key)
 
-cipher = Fernet(cipher_key)
 gauth = get_gauth()
 drive = GoogleDrive(gauth)
+print('ENCRYPT=', ENCRYPT, 'gauth=', gauth.DEFAULT_SETTINGS)
 
-FILE_NAME = 'MyData.txt'  # file name on Google Drive
+if ENCRYPT:
+    FILE_NAME = 'MyData_enc.txt'  # file name on Google Drive
+else:
+    FILE_NAME = 'MyData.txt'  # file name on Google Drive
+
 file_id = getID_byName(FILE_NAME)
 
 
@@ -152,10 +176,18 @@ if __name__ == "__main__":
 
     if file_id is None:
 
-        putContent_byId(file_id=None, cipher=cipher, content=str_data, file_name=FILE_NAME)
+        putContent_byId(file_id=None, content=str_data, file_name=FILE_NAME)
     else:
-        content = getContent_byId(file_id=file_id, cipher=cipher)
-        print(content)
-        # putContent_byId(file_id=file_id, cipher=cipher, "asdfdfsd")
+        # content = getContent_byId(file_id=file_id)
+        # print(content)
+        putContent_byId(file_id=file_id, content='{"a": 12, "b": 13}')
+
+
+
+
+
+
+
+
 
 
