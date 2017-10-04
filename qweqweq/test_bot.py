@@ -10,6 +10,8 @@ logging.basicConfig(filename='telegram_bot.log',
                     level=logging.INFO)
 # logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
 logger = logging.getLogger()
+print("logger:", logger)
+
 logger.setLevel(logging.INFO)
 # logger.setLevel(logging.DEBUG)
 
@@ -46,9 +48,13 @@ dispatcher.add_handler(start_handler)
 
 
 def echo(bot, update):
-    output = 'Returned text: ' + str(update.message.text)
-    bot.send_message(chat_id=update.message.chat_id, text=output)
+    import socket
+    name = socket.gethostname().encode('utf-8')
+    text = (": " + update.message.text).encode('utf-8')
+    output = name + text
+    bot.send_message(chat_id=update.message.chat_id, text=output.decode())
     logging.info("bot.send_message:" + output)
+    print("/echo: " + output)
 
 echo_handler = MessageHandler(Filters.text, echo)
 dispatcher.add_handler(echo_handler)
@@ -57,6 +63,7 @@ dispatcher.add_handler(echo_handler)
 def caps(bot, update, args):
     output = ' '.join(args).upper()
     bot.send_message(chat_id=update.message.chat_id, text=output)
+    print("/caps: " + output)
 
 caps_handler = CommandHandler('caps', caps, pass_args=True)
 dispatcher.add_handler(caps_handler)
@@ -66,6 +73,7 @@ def put(bot, update, args):
     lst = args
     output = test_json.write_dict_content(lst)
     bot.send_message(chat_id=update.message.chat_id, text=output)
+    print("/put: " + output)
 
 put_handler = CommandHandler('put', put, pass_args=True)
 dispatcher.add_handler(put_handler)
@@ -73,8 +81,10 @@ dispatcher.add_handler(put_handler)
 
 def get(bot, update, args):
     lst = args
+    print("get:", str(lst))
     output = test_json.read_dict_content(lst)
     bot.send_message(chat_id=update.message.chat_id, text=output)
+    print("/get: " + output)
 
 get_handler = CommandHandler('get', get, pass_args=True)
 dispatcher.add_handler(get_handler)
