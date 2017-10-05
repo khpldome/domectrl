@@ -45,12 +45,16 @@ def write_dict2file_json(data):
 # Writing JSON data to Google Drive
 def write_dict2gdrive_json(data):
     content = json.dumps(data, sort_keys=True, indent=4, ensure_ascii=False)
-    print(len(content))
+    # print(len(content))
     QuickPyDrive.putContent_byId(file_id=QuickPyDrive.file_id, content=content)
+    return len(content)
 
 
 # Read dict context
-def read_dict_content(arg_lst):
+def read_dict_content(arg_lst):     # dpath.util.get(x, blob)
+    '''If more than one leaf matches the glob, ValueError is raised. If the glob is
+    not found, KeyError is raised.
+    '''
 
     if LOCALY:
         dict_json = read_file_json2dict()
@@ -69,16 +73,15 @@ def read_dict_content(arg_lst):
             if isinstance(x[k], dict):
                 output = output + ' {'
                 for nk in x[k].keys():
-                    output = output + str(nk)
+                    output = output + " " + str(nk)
                 output = output + '}'
             if isinstance(x[k], list):
                 output = output + ' [' + str(len(x[k])) + ']'
             output = output + "\n"
-        # output = str(1111111122211)
     else:
-        output = dpath.util.get(x, blob)
+        out_dict = dpath.util.get(x, blob)
         # output = dpath.util.search(x, blob)
-        output = json.dumps(output, indent=4, sort_keys=True)
+        output = json.dumps(out_dict, indent=4, sort_keys=True)
 
     print('-->', blob, '\n<--', output)
 
@@ -115,12 +118,16 @@ def write_dict_content(arg_lst):
     return output
 
 
+# my_dict.pop('key', None)
+# This will return my_dict[key] if key exists in the dictionary, and None otherwise.
+
+
 # Copying data from Google Drive to local file [/pull]
 def copy_gdrive_2_localFile():
 
     content = QuickPyDrive.getContent_byId(file_id=QuickPyDrive.file_id, cipher=QuickPyDrive.cipher)
     data = json.loads(content)
-    pprint.pprint(["data", data])
+    # pprint.pprint(["data", data])
 
     with open(TARGET_FILE, 'w') as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
@@ -132,8 +139,8 @@ def copy_gdrive_2_localFile():
 def copy_localFile_2_gdrive():
 
     data = read_file_json2dict()
-    write_dict2gdrive_json(data)
-    return len(data)
+    len = write_dict2gdrive_json(data)
+    return len
 
 
 if __name__ == "__main__":
@@ -211,5 +218,51 @@ if __name__ == "__main__":
     # print(out)
 
 
+
+'''
+/get
+If more than one leaf matches the glob, ValueError is raised. If the glob is not found, KeyError is raised.
+dpath.util.get(x, '/a/b/43')
+
+/srch
+result = dpath.util.search(x, "a/b/[cd]")
+for x in dpath.util.search(x, "a/b/[cd]", yielded=True): print x
+('a/b/c', [])
+('a/b/d', ['red', 'buggy', 'bumpers'])
+result = dpath.util.search(x, '**', afilter=afilter)
+
+/set
+Given a path glob, set all existing elements in the document
+to the given value. Returns the number of elements changed.
+dpath.util.set(x, 'a/b/[cd]', 'Waffles')
+
+/new
+Set the element at the terminus of path to value, and create it if it does not exist 
+(as opposed to 'set' that can only change existing keys). 
+path will NOT be treated like a glob. If it has globbing characters in it, they will become part of the resulting keys
+dpath.util.new(x, 'a/b/e/f/g', "Roffle")
+dpath.util.new(x, 'a/b/e/f/h', [])
+dpath.util.new(x, 'a/b/e/f/h/13', 'Wow this is a big array, it sure is lonely in here by myself')
+
+/mrg
+dpath.util.merge(x, y)
+
+
+                                            /help
+                                            /info
+get(x, '/a/b/43')                           /get a b 43
+search(x, "a/b/[cd]")                       /srch a b [cd]
+search(x, "a/b/[cd]", yielded=True)         /srch a b [cd] -y
+search(x, '**', afilter=afilter)            /srch ** -f
+set(x, 'a/b/[cd]', 'Waffles')               /set a b [cd]
+new(x, 'a/b/e/f/g', "Roffle")               /new a b e f g Roffle
+new(x, 'a/b/e/f/h', [])                     /new a b e f h -l
+new(x, 'a/b/e/f/h/13', 'big array')         /new a b e f h 13 big_sarray
+
+dlt(x, '/a/b/43')                           /dlt a b 43
+                           
+
+
+'''
 
 
