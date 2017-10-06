@@ -5,44 +5,13 @@ import logging
 import test_json
 
 
-# Enable logging
-logging.basicConfig(filename='telegram_bot.log',
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
-logger = logging.getLogger(__name__)
-print("logger:", logger)
-
-
-TOKEN = '345369460:AAGgeEcjoDtS2YCk9f8_N03rBUxjItk_vco'
-
-# bot = telegram.Bot(token=TOKEN)
-# print(bot.get_me())
-# logging.debug(bot.get_me())
-#
-# updates = bot.get_updates()
-# print([u.message.text for u in updates])
-#
-# chat_id = bot.get_updates()[-1].message.chat_id
-# print("chat_id=", chat_id)
-#
-# bot.send_message(chat_id=chat_id, text="I'm sorry Dave I'm afraid I can't do that.")
-# logging.info("I'm sorry Dave I'm afraid I can't do that.")
-
-
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
 
-updater = Updater(token=TOKEN)
-dispatcher = updater.dispatcher
-
 
 def start(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text="I'm a bot, please talk to me!")
-
-
-start_handler = CommandHandler('start', start)
-dispatcher.add_handler(start_handler)
 
 
 def echo(bot, update):
@@ -54,17 +23,11 @@ def echo(bot, update):
     logging.info("bot.send_message: " + output.decode())
     print("/echo: " + output.decode())
 
-echo_handler = MessageHandler(Filters.text, echo)
-dispatcher.add_handler(echo_handler)
-
 
 def caps(bot, update, args):
     output = ' '.join(args).upper()
     bot.send_message(chat_id=update.message.chat_id, text=output)
     print("/caps: " + output)
-
-caps_handler = CommandHandler('caps', caps, pass_args=True)
-dispatcher.add_handler(caps_handler)
 
 
 def put(bot, update, args):
@@ -72,9 +35,6 @@ def put(bot, update, args):
     output = test_json.write_dict_content(lst)
     bot.send_message(chat_id=update.message.chat_id, text=output)
     print("/put: " + output)
-
-put_handler = CommandHandler('put', put, pass_args=True)
-dispatcher.add_handler(put_handler)
 
 
 def get(bot, update, args):
@@ -84,45 +44,97 @@ def get(bot, update, args):
     bot.send_message(chat_id=update.message.chat_id, text=output)
     print("/get: " + output)
 
-get_handler = CommandHandler('get', get, pass_args=True)
-dispatcher.add_handler(get_handler)
+
+def dlt(bot, update, args):  # delete
+    lst = args
+    print("dlt:", str(lst))
+    output = test_json.delete_dict_content(lst)
+    bot.send_message(chat_id=update.message.chat_id, text=output)
+    print("/dlt: " + output)
 
 
 def pull(bot, update, args):
     lst = args
     output = test_json.copy_gdrive_2_localFile()
     bot.send_message(chat_id=update.message.chat_id, text=output)
-    logging.info("pulled...")
-
-pull_handler = CommandHandler('pull', pull, pass_args=True)
-dispatcher.add_handler(pull_handler)
 
 
 def push(bot, update, args):
     lst = args
     output = test_json.copy_localFile_2_gdrive()
     bot.send_message(chat_id=update.message.chat_id, text=output)
-    logging.info("pushed...")
-
-push_handler = CommandHandler('push', push, pass_args=True)
-dispatcher.add_handler(push_handler)
 
 
 def error(bot, update, error):
     logger.warning('Update "%s" caused error "%s"' % (update, error))
-
-# log all errors
-dispatcher.add_error_handler(error)
 
 
 # This handler must be added last!!!
 def unknown(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text="Unknown command!")
 
-unknown_handler = MessageHandler(Filters.command, unknown)
-dispatcher.add_handler(unknown_handler)
+
+def main_bot():
+
+    # Enable logging
+    logging.basicConfig(filename='telegram_bot.log',
+                        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                        level=logging.INFO)
+    logger = logging.getLogger(__name__)
+    # print("logger:", logger)
+
+    TOKEN = '345369460:AAGgeEcjoDtS2YCk9f8_N03rBUxjItk_vco'
+    updater = Updater(token=TOKEN)
+    dispatcher = updater.dispatcher
+
+    start_handler = CommandHandler('start', start)
+    dispatcher.add_handler(start_handler)
+    dispatcher.add_handler(MessageHandler(Filters.text, echo))
+    dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
+    dispatcher.add_handler(CommandHandler('put', put, pass_args=True))
+    dispatcher.add_handler(CommandHandler('get', get, pass_args=True))
+    dispatcher.add_handler(CommandHandler('dlt', dlt, pass_args=True))
+    dispatcher.add_handler(CommandHandler('pull', pull, pass_args=True))
+    dispatcher.add_handler(CommandHandler('push', push, pass_args=True))
+
+    # log all errors
+    dispatcher.add_error_handler(error)
+    dispatcher.add_handler(MessageHandler(Filters.command, unknown))
+
+    updater.start_polling()
+    updater.idle()
 
 
-updater.start_polling()
+def parse_args(cmd, list_args):
+    '''
 
-updater.idle()
+                                                /help
+                                                /info
+    get(x, '/a/b/43')                           /get a b 43
+    search(x, "a/b/[cd]")                       /srch a b [cd]
+    search(x, "a/b/[cd]", yielded=True)         /srch a b [cd] -y
+    search(x, '**', afilter=afilter)            /srch ** -f
+    set(x, 'a/b/[cd]', 'Waffles')               /set a b [cd] Waffles
+    new(x, 'a/b/e/f/g', "Roffle")               /new a b e f g Roffle
+    new(x, 'a/b/e/f/h', [])                     /new a b e f h -l
+    new(x, 'a/b/e/f/h/13', 'big array')         /new a b e f h 13 big_sarray
+
+    dlt(x, '/a/b/43')                           /dlt a b 43
+    '''
+
+    glob = ''
+    val = 'val'
+    flag = None
+    if list_args:
+        pass
+
+    return glob, val, flag
+
+
+if __name__ == '__main__':
+
+    # main_bot()
+
+    res = parse_args("get", ['dfsdfs' '11212'])
+    print(res)
+

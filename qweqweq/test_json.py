@@ -254,7 +254,7 @@ get(x, '/a/b/43')                           /get a b 43
 search(x, "a/b/[cd]")                       /srch a b [cd]
 search(x, "a/b/[cd]", yielded=True)         /srch a b [cd] -y
 search(x, '**', afilter=afilter)            /srch ** -f
-set(x, 'a/b/[cd]', 'Waffles')               /set a b [cd]
+set(x, 'a/b/[cd]', 'Waffles')               /set a b [cd] Waffles
 new(x, 'a/b/e/f/g', "Roffle")               /new a b e f g Roffle
 new(x, 'a/b/e/f/h', [])                     /new a b e f h -l
 new(x, 'a/b/e/f/h/13', 'big array')         /new a b e f h 13 big_sarray
