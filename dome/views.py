@@ -9,6 +9,8 @@ import pprint
 import os
 import psutil
 
+import time
+
 import qweqweq.winapi_test as wt
 
 
@@ -304,7 +306,7 @@ def vlc_func(action):
         # str_param = '--extraintf=http --http-password=63933 --quiet --qt-start-minimized'
         # str_param = '--extraintf=http --http-password=63933 --quiet'
 
-        output_str_xml = _execute_command2(vlc_exe + str_param)
+        output_str_xml = _execute_command(vlc_exe + str_param)
         str_out += output_str_xml[0]
 
     if action == "Stop":
@@ -377,7 +379,9 @@ def base_func(action):
             # ToDo Check mosaic is ok
 
             str_out += '\n' + displaypro_func('Start')
-            str_out += '\n' + vlc_func('Start')
+            # time.sleep(20)
+
+            # str_out += '\n' + vlc_func('Start')
         else:
             str_out += '\n' + 'Повторно запустите систему'
 
