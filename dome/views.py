@@ -9,6 +9,8 @@ import pprint
 import os
 import psutil
 
+import time
+
 import qweqweq.winapi_test as wt
 
 
@@ -175,6 +177,45 @@ def _execute_command(str_command, timeout=0):
     return str_out, xml_out
 
 
+def _execute_command1(str_command, timeout=0):
+
+    import ctypes
+    from subprocess import check_output
+    import subprocess
+
+    enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
+
+    args = [r'c:\Program Files (x86)\Immersive Display PRO\ImmersiveDisplayPro.bat']
+    process_displayPro = subprocess.Popen(args, stdout=subprocess.PIPE, shell=False)
+
+    xml_out = ''
+    str_out = ''
+    # try:
+    #         xml_out += check_output(str_command, shell=True).decode(enc)
+    # except subprocess.CalledProcessError as err:
+    #         # print('e.output: ', e.output)
+    #         xml_out += err.output.decode(enc)
+
+    return str_out, xml_out
+
+
+def _execute_command2(str_command, timeout=0):
+
+    import ctypes
+    from subprocess import check_output
+    import subprocess
+
+    enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
+
+    args = [os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\vlc-2.1.6\vlc.exe ','--intf=qt  --extraintf=http --http-password=63933 --quiet --file-logging']
+    process_vlc = subprocess.Popen(args, stdout=subprocess.PIPE, shell=False)
+
+    xml_out = ''
+    str_out = ''
+
+    return str_out, xml_out
+
+
 def mosaic_func(action):
 
     configureMosaic_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\Mosaic\configureMosaic-32bit-64bit.exe '
@@ -184,7 +225,7 @@ def mosaic_func(action):
     str_code = ''
     if action == "Start":
         print("Start mosaic")
-        str_param = 'set rows=1 cols=8 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2 out=1,3'
+        str_param = 'set cols=2 rows=4 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2 out=1,3'
         # str_param = 'set rows=1 cols=7 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2'
 
     elif action == "Stop":
@@ -265,7 +306,7 @@ def vlc_func(action):
         # str_param = '--extraintf=http --http-password=63933 --quiet --qt-start-minimized'
         # str_param = '--extraintf=http --http-password=63933 --quiet'
 
-        output_str_xml = _execute_command(vlc_exe + str_param, 5)
+        output_str_xml = _execute_command(vlc_exe + str_param)
         str_out += output_str_xml[0]
 
     if action == "Stop":
@@ -312,7 +353,7 @@ def displaypro_func(action):
         print("Start displaypro")
         str_param = ''
 
-        output_str_xml = _execute_command(displaypro_exe + str_param)
+        output_str_xml = _execute_command1(displaypro_exe + str_param)
         str_out += output_str_xml[0]
 
     if action == "Stop":
@@ -337,15 +378,17 @@ def base_func(action):
             str_out += '\n' + mosaic_func('Start')[0]
             # ToDo Check mosaic is ok
 
-            # str_out += '\n' + displaypro_func('Start')
-            str_out += '\n' + vlc_func('Start')
+            str_out += '\n' + displaypro_func('Start')
+            # time.sleep(20)
+
+            # str_out += '\n' + vlc_func('Start')
         else:
             str_out += '\n' + 'Повторно запустите систему'
 
     elif action == "Stop":
         print("Stop system")
         str_out += '\n' + vlc_func('Stop')
-        # str_out += '\n' + displaypro_func('Stop')
+        str_out += '\n' + displaypro_func('Stop')
         str_out += '\n' + mosaic_func('Stop')[0]
         str_out += '\n' + winapi_func('setPrimaryMonitor')
 
