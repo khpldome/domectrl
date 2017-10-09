@@ -4,9 +4,10 @@ import json
 import pprint
 
 import dpath as dpath
+from dpath import path as path
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-LOCALY = False   # False - Google Drive file location
+LOCALY = True   # False - Google Drive file location
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 if LOCALY:
@@ -15,8 +16,6 @@ if LOCALY:
     print('LOCALY=', LOCALY, 'TARGET_FILE=', TARGET_FILE)
 else:
     import QuickPyDrive
-
-
 
 
 # Reading data from local file
@@ -50,9 +49,32 @@ def write_dict2gdrive_json(data):
     return len(content)
 
 
-# Read dict context
-def read_dict_content(arg_lst):     # dpath.util.get(x, blob)
-    '''If more than one leaf matches the glob, ValueError is raised. If the glob is
+def afilter(x, target_str):
+    if target_str in str(x):
+        return True
+    return False
+
+
+def top_dict_content(in_dict):
+
+    output = ''
+    for k in in_dict.keys():
+        output = output + str(k)
+        if isinstance(in_dict[k], dict):
+            output = output + ' {'
+            for nk in in_dict[k].keys():
+                output = output + " " + str(nk)
+            output = output + '}'
+        if isinstance(in_dict[k], list):
+            output = output + ' [' + str(len(in_dict[k])) + ']'
+        output = output + "\n"
+
+    return output
+
+
+def get_dict_content(glob, val, flag):
+    '''
+    If more than one leaf matches the glob, ValueError is raised. If the glob is
     not found, KeyError is raised.
     '''
 
@@ -61,65 +83,89 @@ def read_dict_content(arg_lst):     # dpath.util.get(x, blob)
     else:
         dict_json = read_gdrive_json2dict()
 
-    x = {}
-    dpath.util.merge(x, dict_json)
-
-    blob = "/".join(arg_lst)
-    if len(arg_lst) == 0:
-        # ToDo custom output
-        output = ''
-        for k in x.keys():
-            output = output + str(k)
-            if isinstance(x[k], dict):
-                output = output + ' {'
-                for nk in x[k].keys():
-                    output = output + " " + str(nk)
-                output = output + '}'
-            if isinstance(x[k], list):
-                output = output + ' [' + str(len(x[k])) + ']'
-            output = output + "\n"
-    else:
-        out_dict = dpath.util.get(x, blob)
-        # output = dpath.util.search(x, blob)
+    if len(glob) > 0:
+        out_dict = dpath.util.get(dict_json, glob)
         output = json.dumps(out_dict, indent=4, sort_keys=True)
-
-    print('-->', blob, '\n<--', output)
+    else:
+        output = top_dict_content(dict_json)
 
     return output
 
 
-# Write dict context
-def write_dict_content(arg_lst):
+def search_dict_content(glob, val, flag):
+    '''
+    '''
 
     if LOCALY:
         dict_json = read_file_json2dict()
     else:
         dict_json = read_gdrive_json2dict()
 
-    x = {}
-    dpath.util.merge(x, dict_json)
+    res_dict = dpath.util.search(dict_json, glob)
+    output = json.dumps(res_dict, indent=4, sort_keys=True)
 
-    if len(arg_lst) == 0:
-        # ToDo custom output
-        output = str(88888887888)
-    else:
-        blob = "/".join(arg_lst[:-1])
-        value = arg_lst[-1]
-        count = dpath.util.new(x, blob, value)
-        output = str(count)
-
-    print('-->', blob, value, '\n<--', output)
-
-    if LOCALY:
-        write_dict2file_json(x)
-    else:
-        write_dict2gdrive_json(x)
+    print('-->', glob, val, flag, '\n<--', output)
 
     return output
 
 
-# my_dict.pop('key', None)
-# This will return my_dict[key] if key exists in the dictionary, and None otherwise.
+def set_dict_content(glob, val, flag):
+
+    if LOCALY:
+        dict_json = read_file_json2dict()
+    else:
+        dict_json = read_gdrive_json2dict()
+
+    count = dpath.util.set(dict_json, glob, val)
+    output = str(count)
+
+    print('-->', glob, val, flag, '\n<--', output)
+
+    if LOCALY:
+        write_dict2file_json(dict_json)
+    else:
+        write_dict2gdrive_json(dict_json)
+
+    return output
+
+
+def new_dict_content(glob, val, flag):
+
+    if LOCALY:
+        dict_json = read_file_json2dict()
+    else:
+        dict_json = read_gdrive_json2dict()
+
+    count = dpath.util.new(dict_json, glob, val)
+    output = str(count)
+    print('-->', blob, value, '\n<--', output)
+
+    if LOCALY:
+        write_dict2file_json(dict_json)
+    else:
+        write_dict2gdrive_json(dict_json)
+
+    return output
+
+
+def delete_dict_content(glob, val, flag):
+
+    if LOCALY:
+        dict_json = read_file_json2dict()
+    else:
+        dict_json = read_gdrive_json2dict()
+
+    count = dpath.util.delete(dict_json, glob)
+    output = str(count)
+    print('-->', glob, val, flag, '\n<--', output)
+
+    if LOCALY:
+        write_dict2file_json(dict_json)
+    else:
+        write_dict2gdrive_json(dict_json)
+
+    return output
+
 
 
 # Copying data from Google Drive to local file [/pull]
@@ -173,6 +219,8 @@ if __name__ == "__main__":
         }
     }
 
+    res = dpath.path.paths(x, dirs=True, leaves=False, path=[], skip=False)
+    print(res)
     # x = {
     #     "a": 1,
     #     "b": 3,
@@ -194,14 +242,13 @@ if __name__ == "__main__":
     # print(out1)
 
     # dpath.util.set(x, 'a/b/[cd]', 'Waffles')
-    # print(json.dumps(x, indent=4, sort_keys=True))
 
     # dpath.util.new(x, 'a/b/e/f/g', "Roffle")
     # print(json.dumps(x, indent=4, sort_keys=True))
 
     # help(dpath.util.merge)
-    dpath.util.merge(x, dict_json, flags=dpath.MERGE_TYPESAFE )
-    print(json.dumps(x, indent=4, sort_keys=True))
+    # dpath.util.merge(x, dict_json, flags=dpath.MERGE_TYPESAFE)
+    # print(json.dumps(x, indent=4, sort_keys=True))
 
     # def afilter(jd1):
     #     if "Waffles" in str(jd1):
