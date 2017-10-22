@@ -301,10 +301,11 @@ def vlc_func(action):
     str_out = ''
     if action == "Start":
         print("Start vlc")
-        str_param = '--intf=qt  --extraintf=http:rc --http-password=63933 --quiet --file-logging'
+        # str_param = '--intf=qt  --extraintf=http:rc --http-password=63933 --quiet --file-logging'
         str_param = '--intf=qt  --extraintf=http --http-password=63933 --quiet --file-logging'
         # str_param = '--extraintf=http --http-password=63933 --quiet --qt-start-minimized'
         # str_param = '--extraintf=http --http-password=63933 --quiet'
+        str_param = ''
 
         output_str_xml = _execute_command(vlc_exe + str_param)
         str_out += output_str_xml[0]
