@@ -5,13 +5,53 @@ import logging
 import test_json
 
 
-from telegram.ext import Updater
-from telegram.ext import CommandHandler
+from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
 from telegram.ext import MessageHandler, Filters
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove)
+
+
+# Enable logging
+logging.basicConfig(filename='telegram_bot.log',
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 def start(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text="I'm a bot, please talk to me!")
+    # bot.send_message(chat_id=update.message.chat_id, text="I'm a bot, please talk to me!")
+    keyboard = [[InlineKeyboardButton("/get", callback_data='/get'),
+                 InlineKeyboardButton("Option 2", callback_data='2')],
+                [InlineKeyboardButton("Option 3", callback_data='3')]]
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    update.message.reply_text('Please choose:', reply_markup=reply_markup)
+
+
+def button(bot, update):
+    query = update.callback_query
+
+    bot.edit_message_text(text="Typed: %s" % query.data,
+                          chat_id=query.message.chat_id,
+                          message_id=query.message.message_id)
+
+###############################################################################
+
+
+def info(bot, update):
+    reply_keyboard = [['Boy', 'Girl', '/get'], ]
+
+    update.message.reply_text(
+        'Send /cancel to stop talking to me.\n\n',
+        reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
+
+
+def cancel(bot, update):
+    user = update.message.from_user
+    logger.info("User %s canceled the conversation." % user.first_name)
+    update.message.reply_text('Bye! I hope we can talk again some day.',
+                              reply_markup=ReplyKeyboardRemove())
 
 
 def echo(bot, update):
@@ -29,37 +69,73 @@ def caps(bot, update, args):
     bot.send_message(chat_id=update.message.chat_id, text=output)
     print("/caps: " + output)
 
+    keyboard = [[InlineKeyboardButton("/caps", callback_data='/caps'),
+                 InlineKeyboardButton("/echo", callback_data='/echo')],
+
+                [InlineKeyboardButton("/get", callback_data=output)]]
+
+    update.message.reply_text(reply_markup=InlineKeyboardMarkup(keyboard))
+
+
+def get(bot, update, args):
+
+    glob, val, flag = parse_args('get', args)
+    output, list_keys = test_json.get_dict_content(glob, val, flag)
+    # bot.send_message(chat_id=update.message.chat_id, text=output)
+    # print("->/get " + args + '/n<-' + output)
+
+    user = update.message.from_user
+    output = user.first_name + ' ' + user.last_name + ':\n' + output
+    # {'id': 442763659, 'first_name': 'Serhii', 'is_bot': False, 'last_name': 'Surmylo', 'username': 'Serhii_Surmylo',
+    #  'language_code': 'ru'}
+    if user.id == 442763659:
+        if len(list_keys) > 0:
+            line = []
+            for i in list_keys:
+                # reply_keyboard = [['/get '+list_keys[0], '/get '+list_keys[1], '/get '+list_keys[2], ],
+                #                   ['/get ', '/info'], ]
+                line.append('/get ' + glob + ' ' + i)
+                reply_keyboard = [line, ['/get ', '/info'], ]
+        else:
+            reply_keyboard = [['/get', ]]
+
+        update.message.reply_text(
+            output,
+            reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
+    else:
+        update.message.reply_text('Unaccepted action!')
+
+
+def srch(bot, update, args):
+
+    glob, val, flag = parse_args('srch', args)
+    output = test_json.search_dict_content(glob, val, flag)
+    bot.send_message(chat_id=update.message.chat_id, text=output)
+    print("->/srch " + str(args) + '/n<-' + str(output))
+
 
 def set(bot, update, args):
 
-    glob, val, flag = parse_args(args)
+    glob, val, flag = parse_args('set', args)
     output = test_json.set_dict_content(glob, val, flag)
     bot.send_message(chat_id=update.message.chat_id, text=output)
     print("/set: " + output)
 
 
-def get(bot, update, args):
+def new(bot, update, args):
 
-    glob, val, flag = parse_args(args)
-    output = test_json.get_dict_content(glob, val, flag)
+    glob, val, flag = parse_args('new', args)
+    output = test_json.new_dict_content(glob, val, flag)
     bot.send_message(chat_id=update.message.chat_id, text=output)
-    print("/get: " + output)
-
-
-def srch(bot, update, args):
-
-    glob, val, flag = parse_args(args)
-    output = test_json.search_dict_content(glob, val, flag)
-    bot.send_message(chat_id=update.message.chat_id, text=output)
-    print("/srch: " + output)
+    print("->/new " + str(args) + '/n<-' + output)
 
 
 def dlt(bot, update, args):  # delete
 
-    glob, val, flag = parse_args(args)
+    glob, val, flag = parse_args('dlt', args)
     output = test_json.delete_dict_content(glob, val, flag)
     bot.send_message(chat_id=update.message.chat_id, text=output)
-    print("/dlt: " + output)
+    print("->/dlt " + str(args) + '/n<-' + output)
 
 
 def pull(bot, update, args):
@@ -85,24 +161,23 @@ def unknown(bot, update):
 
 def main_bot():
 
-    # Enable logging
-    logging.basicConfig(filename='telegram_bot.log',
-                        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                        level=logging.INFO)
-    logger = logging.getLogger(__name__)
-    # print("logger:", logger)
-
     TOKEN = '345369460:AAGgeEcjoDtS2YCk9f8_N03rBUxjItk_vco'
     updater = Updater(token=TOKEN)
     dispatcher = updater.dispatcher
 
     start_handler = CommandHandler('start', start)
     dispatcher.add_handler(start_handler)
+    dispatcher.add_handler(CallbackQueryHandler(button))
+
+    dispatcher.add_handler(CommandHandler('info', info))
+    dispatcher.add_handler(CommandHandler('cancel', cancel))
+
     dispatcher.add_handler(MessageHandler(Filters.text, echo))
     dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
-    dispatcher.add_handler(CommandHandler('set', set, pass_args=True))
     dispatcher.add_handler(CommandHandler('get', get, pass_args=True))
     dispatcher.add_handler(CommandHandler('srch', srch, pass_args=True))
+    dispatcher.add_handler(CommandHandler('set', set, pass_args=True))
+    dispatcher.add_handler(CommandHandler('new', new, pass_args=True))
     dispatcher.add_handler(CommandHandler('dlt', dlt, pass_args=True))
     dispatcher.add_handler(CommandHandler('pull', pull, pass_args=True))
     dispatcher.add_handler(CommandHandler('push', push, pass_args=True))
@@ -115,9 +190,8 @@ def main_bot():
     updater.idle()
 
 
-def parse_args(list_args):
+def parse_args(cmd, list_args):
     '''
-    Может быть либо value, либо flag. Одновременно оба быть не могут!
                                                 /help
                                                 /info
     get(x, '/a/b/43')                           /get a b 43
@@ -125,7 +199,6 @@ def parse_args(list_args):
     search(x, "a/b/[cd]", yielded=True)         /srch a b [cd] -y
     search(x, '**', afilter=afilter)            /srch ** -f
     set(x, 'a/b', 'Waffles', afilter=afilter)   /set a b [cd] Waffles -fRafff
-    delete(x, 'a/b/e/f/g')                      /dlt a b e f g
     new(x, 'a/b/e/f/g', "Roffle")               /new a b e f g Roffle
     new(x, 'a/b/e/f/h', [])                     /new a b e f h -l
     new(x, 'a/b/e/f/h/13', 'big array')         /new a b e f h 13 big_sarray
@@ -140,12 +213,14 @@ def parse_args(list_args):
         glob = "/".join(list_args[:-1])
         last = list_args[-1]    # take last item
 
-        # Проверяем последний (если он из флагов)
+        # Check last for flag or value
         if last[:2] in ['-y', '-f', '-l']:
             # Handle flags
             flag = last
-        else:
+        elif cmd in ['set', 'new']:
             val = last
+        else:
+            glob += '/' + last
     else:
         print('Short command!')
         glob = "/".join(list_args)

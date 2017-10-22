@@ -49,8 +49,8 @@ def write_dict2gdrive_json(data):
     return len(content)
 
 
-def afilter(x, target_str):
-    if target_str in str(x):
+def afilter(in_dict, target_str):
+    if target_str in str(in_dict):
         return True
     return False
 
@@ -58,43 +58,58 @@ def afilter(x, target_str):
 def top_dict_content(in_dict):
 
     output = ''
-    for k in in_dict.keys():
-        output = output + str(k)
-        if isinstance(in_dict[k], dict):
-            output = output + ' {'
-            for nk in in_dict[k].keys():
-                output = output + " " + str(nk)
-            output = output + '}'
-        if isinstance(in_dict[k], list):
-            output = output + ' [' + str(len(in_dict[k])) + ']'
-        output = output + "\n"
+    list_keys = []
 
-    return output
+    if isinstance(in_dict, dict):
+        for k in in_dict.keys():
+            output = output + str(k)
+            if isinstance(in_dict[k], dict):
+                output = output + ' {'
+                for nk in in_dict[k].keys():
+                    output = output + " " + str(nk)
+                output = output + '}'
+                list_keys.append(k)
+            elif isinstance(in_dict[k], list):
+                output = output + ' [' + str(len(in_dict[k])) + ']'
+                list_keys.append(k)
+            else:
+                list_keys.append(k)
+            output = output + "\n"
+
+    elif isinstance(in_dict, list):
+        output = output + ' [' + str(len(in_dict)) + ']'
+        list_keys.append(str(len(in_dict)))
+    # output = dpath.path.paths(in_dict)
+
+    return output, list_keys
 
 
 def get_dict_content(glob, val, flag):
-    '''
-    If more than one leaf matches the glob, ValueError is raised. If the glob is
-    not found, KeyError is raised.
-    '''
 
     if LOCALY:
         dict_json = read_file_json2dict()
     else:
         dict_json = read_gdrive_json2dict()
 
+    list_keys = []
     if len(glob) > 0:
-        out_dict = dpath.util.get(dict_json, glob)
-        output = json.dumps(out_dict, indent=4, sort_keys=True)
+        try:
+            out_dict = dpath.util.get(dict_json, glob)
+            temp, list_keys = top_dict_content(out_dict)
+            output = json.dumps(out_dict, indent=4, sort_keys=True)
+        except KeyError:
+            output = 'KeyError - not found'
+        except ValueError:
+            output = 'ValueError - more then one leaf'
     else:
-        output = top_dict_content(dict_json)
+        output, list_keys = top_dict_content(dict_json)
 
-    return output
+    print('/get -->', glob, val, flag, '\n<--', output)
+
+    return output, list_keys
 
 
 def search_dict_content(glob, val, flag):
-    '''
-    '''
 
     if LOCALY:
         dict_json = read_file_json2dict()
@@ -104,7 +119,7 @@ def search_dict_content(glob, val, flag):
     res_dict = dpath.util.search(dict_json, glob)
     output = json.dumps(res_dict, indent=4, sort_keys=True)
 
-    print('-->', glob, val, flag, '\n<--', output)
+    print('/srch -->', glob, val, flag, '\n<--', output)
 
     return output
 
@@ -119,7 +134,7 @@ def set_dict_content(glob, val, flag):
     count = dpath.util.set(dict_json, glob, val)
     output = str(count)
 
-    print('-->', glob, val, flag, '\n<--', output)
+    print('set -->', glob, val, flag, '\n<--', output)
 
     if LOCALY:
         write_dict2file_json(dict_json)
@@ -136,9 +151,12 @@ def new_dict_content(glob, val, flag):
     else:
         dict_json = read_gdrive_json2dict()
 
-    count = dpath.util.new(dict_json, glob, val)
-    output = str(count)
-    print('-->', blob, value, '\n<--', output)
+    if flag == '-l':    # create list
+        output = dpath.util.new(dict_json, glob, [])
+    else:
+        output = dpath.util.new(dict_json, glob, val)
+
+    print('new -->', glob, val, flag, '\n<--', output)
 
     if LOCALY:
         write_dict2file_json(dict_json)
@@ -157,7 +175,7 @@ def delete_dict_content(glob, val, flag):
 
     count = dpath.util.delete(dict_json, glob)
     output = str(count)
-    print('-->', glob, val, flag, '\n<--', output)
+    print('dlt -->', glob, val, flag, '\n<--', output)
 
     if LOCALY:
         write_dict2file_json(dict_json)
@@ -191,7 +209,7 @@ def copy_localFile_2_gdrive():
 
 if __name__ == "__main__":
 
-    # https: // github.com / akesterson / dpath - python
+    # https://github.com/akesterson/dpath-python
 
     # # lst = ["hinting", "2dgg"]
     # # lst = ["mobile", "+380661395414"]
