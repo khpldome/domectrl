@@ -1,0 +1,26 @@
+1. Ставим xammp по умолчанию C://xammp
+2. Ставим python36-32 по умолчанию
+3. Установить Visual C++ 2015 Build Tools http://landinghub.visualstudio.com/visual-cpp-build-tools
+4. ДОбавляем переменную среды для пользователя MOD_WSGI_APACHE_ROOTDIR с параметром c:/xampp/apache
+5. Добавляем системную переменную среды Path параметр C:\Users\Fulldome\AppData\Local\Programs\Python\Python36-32
+6. В файл c:\xampp\apache\conf\httpd.conf Добавляем
+
+LoadFile "C:/Users/Fulldome/AppData/Local/Programs/Python/Python36-32/python36.dll"
+LoadModule wsgi_module "C:/Users/Fulldome/AppData/Local/Programs/Python/Python36-32/lib/site-packages/mod_wsgi/server/mod_wsgi.cp36-win32.pyd"
+WSGIPythonHome "C:/Users/Fulldome/AppData/Local/Programs/Python/Python36-32"
+
+
+<Directory "d:/PROJECTS/_python/domectrl/domectrl" >
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+
+# Python WSGI interface module
+<IfModule wsgi_module>
+    WSGIScriptAlias / d:/PROJECTS/_python/domectrl/domectrl/wsgi.py
+    WSGIPythonPath d:/PROJECTS/_python/domectrl/domectrl
+</IfModule> 
+
+7. Добавить адрес сервера в settings.py ALLOWED_HOSTS = ['192.168.0.101', 'localhost', '127.0.0.1', '192.168.0.119']

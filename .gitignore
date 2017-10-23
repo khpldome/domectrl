@@ -6,6 +6,5 @@ env3/
 .idea/*
 **/__pycache__/*
 
-notes/*
 exec/vlc-2.1.6/*
 exec/vlc/*
