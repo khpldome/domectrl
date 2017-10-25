@@ -219,6 +219,8 @@ def _execute_command2(str_command, timeout=0):
 
 def mosaic_func(action):
 
+    import pyautogui
+
     configureMosaic_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\Mosaic\configureMosaic-32bit-64bit.exe '
 
     str_param = ''
@@ -228,6 +230,9 @@ def mosaic_func(action):
         print("Start mosaic")
         str_param = 'set cols=2 rows=4 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2 out=1,3'
         # str_param = 'set rows=1 cols=7 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2'
+
+        pyautogui.keyDown('shift', 'S')
+
 
     elif action == "Stop":
         print("Stop mosaic")
