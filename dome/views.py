@@ -207,7 +207,8 @@ def _execute_command2(str_command, timeout=0):
 
     enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
 
-    args = [os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\vlc-2.1.6\vlc.exe ','--intf=qt  --extraintf=http --http-password=63933 --quiet --file-logging']
+    args = [os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\vlc-2.1.6\vlc.bat','']
+    # args = [os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\vlc-2.1.6\vlc.exe ','--intf=qt  --extraintf=http --http-password=63933 --quiet --file-logging']
     process_vlc = subprocess.Popen(args, stdout=subprocess.PIPE, shell=False)
 
     xml_out = ''
@@ -218,6 +219,8 @@ def _execute_command2(str_command, timeout=0):
 
 def mosaic_func(action):
 
+    import pyautogui
+
     configureMosaic_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\Mosaic\configureMosaic-32bit-64bit.exe '
 
     str_param = ''
@@ -227,6 +230,9 @@ def mosaic_func(action):
         print("Start mosaic")
         str_param = 'set cols=2 rows=4 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2 out=1,3'
         # str_param = 'set rows=1 cols=7 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2'
+
+        pyautogui.keyDown('shift', 'S')
+
 
     elif action == "Stop":
         print("Stop mosaic")
@@ -296,18 +302,21 @@ def mosaic_func(action):
 
 def vlc_func(action):
 
-    vlc_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\vlc-2.1.6\vlc.exe '
+    vlc_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\vlc-2.1.6\vlc.bat'
 
     str_out = ''
     if action == "Start":
         print("Start vlc")
         # str_param = '--intf=qt  --extraintf=http:rc --http-password=63933 --quiet --file-logging'
-        str_param = '--intf=qt  --extraintf=http --http-password=63933 --quiet --file-logging'
+        # str_param = '--intf=qt  --extraintf=http --http-password=63933 --quiet --file-logging'
         # str_param = '--extraintf=http --http-password=63933 --quiet --qt-start-minimized'
         # str_param = '--extraintf=http --http-password=63933 --quiet'
+        # без интерфейса https://wiki.videolan.org/VLC_command-line_help/
+        # str_param = 'vlc -Ihttp'
+        # str_param = 'vlc --intf=http'
         str_param = ''
 
-        output_str_xml = _execute_command(vlc_exe + str_param)
+        output_str_xml = _execute_command2(vlc_exe + str_param)
         str_out += output_str_xml[0]
 
     if action == "Stop":
@@ -382,7 +391,7 @@ def base_func(action):
             str_out += '\n' + displaypro_func('Start')
             # time.sleep(20)
 
-            # str_out += '\n' + vlc_func('Start')
+            str_out += '\n' + vlc_func('Start')
         else:
             str_out += '\n' + 'Повторно запустите систему'
 

@@ -1,23 +1,5 @@
 import win32api as w
 import win32con as c
-import sys
-
-
-import telegram
-
-# logging.basicConfig(filename='telegram_bot2.log',
-#                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-#                     level=logging.INFO)
-# logger = logging.getLogger()
-# # logger.setLevel(logging.INFO)
-# logger.setLevel(logging.DEBUG)
-#
-# TOKEN = '345369460:AAGgeEcjoDtS2YCk9f8_N03rBUxjItk_vco'
-# bot = telegram.Bot(token=TOKEN)
-# logging.debug(bot.get_me())
-# bot.send_message(chat_id=442763659, text="I'm started.")
-
-
 
 
 def load_device_list():

@@ -1,14 +1,19 @@
-
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import logging
 
 import test_json
+import test_conversation as tc
 
-
-from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
-from telegram.ext import MessageHandler, Filters
+from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters, RegexHandler,
+                          ConversationHandler)
+from telegram.ext import CallbackQueryHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove)
+
+
+GENDER, PHOTO, LOCATION, BIO = range(4)
 
 
 # Enable logging
@@ -165,14 +170,13 @@ def main_bot():
     updater = Updater(token=TOKEN)
     dispatcher = updater.dispatcher
 
-    start_handler = CommandHandler('start', start)
-    dispatcher.add_handler(start_handler)
-    dispatcher.add_handler(CallbackQueryHandler(button))
+    dispatcher.add_handler(CommandHandler('start', start))
+    # dispatcher.add_handler(CallbackQueryHandler(button))
 
     dispatcher.add_handler(CommandHandler('info', info))
     dispatcher.add_handler(CommandHandler('cancel', cancel))
 
-    dispatcher.add_handler(MessageHandler(Filters.text, echo))
+    # dispatcher.add_handler(MessageHandler(Filters.text, echo))
     dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
     dispatcher.add_handler(CommandHandler('get', get, pass_args=True))
     dispatcher.add_handler(CommandHandler('srch', srch, pass_args=True))
@@ -181,6 +185,27 @@ def main_bot():
     dispatcher.add_handler(CommandHandler('dlt', dlt, pass_args=True))
     dispatcher.add_handler(CommandHandler('pull', pull, pass_args=True))
     dispatcher.add_handler(CommandHandler('push', push, pass_args=True))
+
+    # Add conversation handler with the states GENDER, PHOTO, LOCATION and BIO
+    conv_handler = ConversationHandler(
+        entry_points=[CommandHandler('start2', tc.start2)],
+
+        states={
+            GENDER: [RegexHandler('^(Boy|Girl|Other)$', tc.gender)],
+
+            PHOTO: [MessageHandler(Filters.photo, tc.photo),
+                    CommandHandler('skip', tc.skip_photo)],
+
+            LOCATION: [MessageHandler(Filters.location, tc.location),
+                       CommandHandler('skip', tc.skip_location)],
+
+            BIO: [MessageHandler(Filters.text, tc.bio)]
+        },
+
+        fallbacks=[CommandHandler('cancel', tc.cancel2)]
+    )
+
+    dispatcher.add_handler(conv_handler)
 
     # log all errors
     dispatcher.add_error_handler(error)
