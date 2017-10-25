@@ -234,7 +234,6 @@ def mosaic_func(action):
 
         pyautogui.keyDown('shift', 'S')
 
-
     elif action == "Stop":
         print("Stop mosaic")
 
