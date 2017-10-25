@@ -228,6 +228,7 @@ def mosaic_func(action):
     str_code = ''
     if action == "Start":
         print("Start mosaic")
+        # str_param = 'set cols=1 rows=2 res=1280,720,60 out=0,0 out=0,1'
         str_param = 'set cols=2 rows=4 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2 out=1,3'
         # str_param = 'set rows=1 cols=7 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2'
 
@@ -248,6 +249,7 @@ def mosaic_func(action):
 
     elif action == "Restart":
         print("Restart mosaic")
+        wt.Show()
         str_param = 'help'
 
     elif action == "State":
