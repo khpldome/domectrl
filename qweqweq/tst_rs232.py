@@ -1,11 +1,12 @@
-import serial
 import time
+
+import serial
 
 if __name__ == "__main__":
 
-    ser = serial.Serial('COM4', 9600, parity=serial.PARITY_NONE)
+    ser = serial.Serial('COM2', 9600, parity=serial.PARITY_NONE)
     print(ser.name)
-    print(ser.write(b'hello'))
+    print(ser.write(b'/n*pow=?#/n'))
 
     # s = ser.read(10)  # read up to ten bytes (timeout)
 
