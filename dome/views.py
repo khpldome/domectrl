@@ -9,11 +9,21 @@ import pprint
 import os
 import psutil
 
+import pyautogui as pag
+
+
 import time
 
 import qweqweq.winapi_test as wt
 
 import rs232_ctrl.main_rs232 as rs232
+
+
+###############################################################################
+import domectrl.config_fds as conf
+###############################################################################
+
+
 
 
 def index(request):
@@ -40,7 +50,7 @@ class MosaicActionView(TemplateView):
             mosaic_action = kwargs['mosaic_action']
             print("mosaic_action=", mosaic_action)
 
-            text_output = mosaic_func(mosaic_action)[0]
+            text_output = mosaic_surround_func(mosaic_action)[0]
 
         if 'vlc_action' in kwargs:
             vlc_action = kwargs['vlc_action']
@@ -219,9 +229,56 @@ def _execute_command2(str_command, timeout=0):
     return str_out, xml_out
 
 
-def mosaic_func(action):
+def mosaic_surround_func(action):
 
-    import pyautogui
+    str_out = ''
+    str_code = ''
+    if conf.VIDEO_CARD_NAME == 'NVS 810':
+        str_out, str_code = mosaic_func(action)
+    elif conf.VIDEO_CARD_NAME == 'GTX 1070':
+        str_out, str_code = surround_func(action)
+
+    return str_out, str_code
+
+
+def surround_func(action):
+
+    str_out = ''
+    str_code = ''
+    if action == "Start":
+        print("Start surround")
+        # pag.hotkey('ctrl', 'shift', 'esc')
+        # pag.hotkey('ctrl', 'shift', 'alt', 'm')
+        pag.keyDown('ctrl')
+        pag.keyDown('shift')
+        pag.keyDown('alt')
+        pag.keyDown('m')
+        time.sleep(0.1)
+        pag.keyUp('m')
+        pag.keyUp('alt')
+        pag.keyUp('shift')
+        pag.keyUp('ctrl')
+    elif action == "Stop":
+        print("Stop surround")
+        # pag.hotkey('esc')
+        pag.keyDown('ctrl')
+        pag.keyDown('shift')
+        pag.keyDown('alt')
+        pag.keyDown('m')
+        time.sleep(0.1)
+        pag.keyUp('m')
+        pag.keyUp('alt')
+        pag.keyUp('shift')
+        pag.keyUp('ctrl')
+
+    elif action == "State":
+        print("State mosaic")
+        str_out, str_code = mosaic_func('State')
+
+    return str_out, str_code
+
+
+def mosaic_func(action):
 
     configureMosaic_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\Mosaic\configureMosaic-32bit-64bit.exe '
 
@@ -233,8 +290,6 @@ def mosaic_func(action):
         # str_param = 'set cols=1 rows=2 res=1280,720,60 out=0,0 out=0,1'
         str_param = 'set cols=2 rows=4 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2 out=1,3'
         # str_param = 'set rows=1 cols=7 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2'
-
-        pyautogui.keyDown('shift', 'S')
 
     elif action == "Stop":
         print("Stop mosaic")
@@ -388,7 +443,7 @@ def base_func(action):
         str_out = winapi_func('EnableOneProjector')
         # ToDo Bad mode
         if str_out != "Включите проекторы":
-            str_out += '\n' + mosaic_func('Start')[0]
+            str_out += '\n' + mosaic_surround_func('Start')[0]
             # ToDo Check mosaic is ok
 
             str_out += '\n' + displaypro_func('Start')
@@ -402,7 +457,7 @@ def base_func(action):
         print("Stop system")
         str_out += '\n' + vlc_func('Stop')
         str_out += '\n' + displaypro_func('Stop')
-        str_out += '\n' + mosaic_func('Stop')[0]
+        str_out += '\n' + mosaic_surround_func('Stop')[0]
         str_out += '\n' + winapi_func('setPrimaryMonitor')
 
     elif action == "Projectors_ON":

@@ -1,3 +1,6 @@
+
+import os
+
 import win32api as w
 import win32con as c
 
@@ -225,6 +228,7 @@ def winApiInfo():
     return str_out
 
 
+
 if __name__ == "__main__":
     # print(w.EnumDisplaySettingsEx())
 
@@ -246,14 +250,4 @@ if __name__ == "__main__":
     # print(changePrimary(dev1, dev0))
     # print(enableOneProjector())
 
-
-    print(winApiInfo())
-
-    # MonitorPositions = {
-    #     0: (0, -1080),
-    #     1: (0, 0),
-    #     2: (1920, 0)
-    # }
-    #
-    # f = setPrimary(0, devices, MonitorPositions)
-    # print("Set primary: ", f)
+    print(winApi_getVideoCard())
