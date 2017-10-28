@@ -248,6 +248,20 @@ def mosaic_surround_func(action):
     return str_out, dict_code
 
 
+def get_mosaic_surround_state():
+
+    str_out, dict_code = mosaic_func('State')
+    print("dict_code", dict_code['grids'], dict_code['rows'], dict_code['cols'])
+
+    if dict_code['grids'] == 0:
+        return 'Fail'
+    else:
+        if dict_code['rows'] == 1 and dict_code['cols'] == 1:
+            return 'False'
+        else:
+            return 'True'
+
+
 def surround_func(action):
 
     str_out = ''
@@ -525,8 +539,18 @@ def base_func_Kyiv(action):
         print("Start")
 
         str_out += '\n' + mosaic_surround_func('Start')[0]
-        str_out += '\n' + displaypro_func('Start')
-        str_out += '\n' + vlc_func('Start')
+
+        for i in range(10):
+            state = get_mosaic_surround_state()
+            if state == 'True':
+                str_out += '\n' + displaypro_func('Start')
+                str_out += '\n' + vlc_func('Start')
+                break
+            elif state == 'Fail':
+                str_out += '\n' + 'Включите проекторы'
+            elif state == 'False':
+                str_out += '\n' + '...5sec...'
+                time.sleep(5)
 
     elif action == "Stop":
         print("Stop system")
