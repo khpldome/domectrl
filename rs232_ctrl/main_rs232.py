@@ -58,7 +58,7 @@ def get_serial_ports():
         try:
             s = serial.Serial(port)
             s.close()
-            dev_dict.update({port: ['OPEN', 3, '']})
+            dev_dict.update({port: ''})
         except serial.SerialException as err:
             pass
     return dev_dict
@@ -160,7 +160,7 @@ def get_usart_data(ser, action):
                 if cnt == 2 and response:
                     str_result = ''
                     response = response.decode().strip()
-                    print("response= ", response)
+                    # print("response= ", response)
 
                     # str_re = '*POW=(.*)#'
                     # try:
@@ -183,13 +183,12 @@ def get_usart_data(ser, action):
         print("cannot open serial port ")
 
 
-
 def projector_func(action):
 
     ports_dict = get_serial_ports()
     print(ports_dict)
     state = ''
-    for i in range(5):
+    for i in range(10):
 
         set_pause = False
         for port_name in ports_dict.keys():
@@ -201,16 +200,17 @@ def projector_func(action):
                 if ser is not None:
 
                     res = get_usart_data(ser, '?')
-                    ports_dict[port_name][2] = res
-                    state = ports_dict[port_name][2]
-                    print("Serial port name:", port_name, state)
+                    ports_dict[port_name] = res
+                    state = ports_dict[port_name]
+                    print(i, "? state: ", port_name, state)
 
                     if action == 'ON':
                         if state == '*POW=ON#':
                             pass
                         elif state == '*POW=OFF#' or state == '':
                             res = get_usart_data(ser, action)
-                            ports_dict[port_name][2] = res
+                            ports_dict[port_name] = res
+                            set_pause = True
                         else:
                             set_pause = True
 
@@ -219,17 +219,26 @@ def projector_func(action):
                             pass
                         elif state == '*POW=ON#' or state == '':
                             res = get_usart_data(ser, action)
-                            ports_dict[port_name][2] = res
+                            ports_dict[port_name] = res
+                            set_pause = True
                         else:
                             set_pause = True
                 else:
-                    print('Can not open ...')
+                    print('Can not open ', port_name)
 
                 ser.close()
 
+                print("  > cmd:", action, port_name, state)
+
         if set_pause is True:
             set_pause = False
-            time.sleep(30)
+
+            if action == 'ON':
+                print('  ...5s...')
+                time.sleep(5)
+            elif action == 'OFF':
+                print('  ...30s...')
+                time.sleep(30)
 
     return ports_dict
 
@@ -237,9 +246,10 @@ def projector_func(action):
 if __name__ == "__main__":
 
     # main_dispatcher()
+    res_dict = projector_func('ON')
+    res_dict = projector_func('OFF')
 
-    pprint.pprint(projector_func('OFF'))
-
+    print(res_dict, len(res_dict))
     print("Bye...")
 
     sys.exit()

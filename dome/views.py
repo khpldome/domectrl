@@ -13,6 +13,8 @@ import time
 
 import qweqweq.winapi_test as wt
 
+import rs232_ctrl.main_rs232 as rs232
+
 
 def index(request):
     context = {'latest_question_list': 22}
@@ -403,8 +405,18 @@ def base_func(action):
         str_out += '\n' + mosaic_func('Stop')[0]
         str_out += '\n' + winapi_func('setPrimaryMonitor')
 
+    elif action == "Projectors_ON":
+        print("projector_func('ON')")
+        res_dict = rs232.projector_func('ON')
+        str_out += '\n' + str(res_dict) + ' len= ' + str(len(res_dict))
+
+    elif action == "Projectors_OFF":
+        print("projector_func('OFF')")
+        res_dict = rs232.projector_func('OFF')
+        str_out += '\n' + str(res_dict) + ' len= ' + str(len(res_dict))
+
     else:
-        str_out = "Base: Unnoun command"
+        str_out = "Base: Unknown command"
 
     return str_out
 
