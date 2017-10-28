@@ -24,6 +24,12 @@ import domectrl.config_fds as conf
 ###############################################################################
 
 
+from json import loads, dumps
+from collections import OrderedDict
+
+
+def to_dict(input_ordered_dict):
+    return loads(dumps(input_ordered_dict))
 
 
 def index(request):
@@ -197,7 +203,8 @@ def _execute_command1(str_command, timeout=0):
 
     enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
 
-    args = [r'c:\Program Files (x86)\Immersive Display PRO\ImmersiveDisplayPro.bat']
+    # args = ['c:\Program Files (x86)\Immersive Display PRO\ImmersiveDisplayPro.bat']
+    args = [conf.ABSPATH_DISPLAYPRO]
     process_displayPro = subprocess.Popen(args, stdout=subprocess.PIPE, shell=False)
 
     xml_out = ''
@@ -219,8 +226,8 @@ def _execute_command2(str_command, timeout=0):
 
     enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
 
-    args = [os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\vlc-2.1.6\vlc.bat','']
-    # args = [os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\vlc-2.1.6\vlc.exe ','--intf=qt  --extraintf=http --http-password=63933 --quiet --file-logging']
+    # args = [os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\vlc-2.1.6\vlc.bat', '']
+    args = [os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.RELPATH_VLC, '']
     process_vlc = subprocess.Popen(args, stdout=subprocess.PIPE, shell=False)
 
     xml_out = ''
@@ -232,50 +239,57 @@ def _execute_command2(str_command, timeout=0):
 def mosaic_surround_func(action):
 
     str_out = ''
-    str_code = ''
+    dict_code = {}
     if conf.VIDEO_CARD_NAME == 'NVS 810':
-        str_out, str_code = mosaic_func(action)
+        str_out, dict_code = mosaic_func(action)
     elif conf.VIDEO_CARD_NAME == 'GTX 1070':
-        str_out, str_code = surround_func(action)
+        str_out, dict_code = surround_func(action)
 
-    return str_out, str_code
+    return str_out, dict_code
 
 
 def surround_func(action):
 
     str_out = ''
-    str_code = ''
+    dict_code = {}
+
+    str_out, dict_code = mosaic_func('State')
+
     if action == "Start":
-        print("Start surround")
-        # pag.hotkey('ctrl', 'shift', 'esc')
-        # pag.hotkey('ctrl', 'shift', 'alt', 'm')
-        pag.keyDown('ctrl')
-        pag.keyDown('shift')
-        pag.keyDown('alt')
-        pag.keyDown('m')
-        time.sleep(0.1)
-        pag.keyUp('m')
-        pag.keyUp('alt')
-        pag.keyUp('shift')
-        pag.keyUp('ctrl')
+        print("Start surround", dict_code['rows'], dict_code['cols'])
+
+        if dict_code['rows'] == 1 and dict_code['cols'] == 1:
+            pag.keyDown('ctrl')
+            pag.keyDown('shift')
+            pag.keyDown('alt')
+            pag.keyDown('m')
+            time.sleep(0.1)
+            pag.keyUp('m')
+            pag.keyUp('alt')
+            pag.keyUp('shift')
+            pag.keyUp('ctrl')
+
     elif action == "Stop":
-        print("Stop surround")
-        # pag.hotkey('esc')
-        pag.keyDown('ctrl')
-        pag.keyDown('shift')
-        pag.keyDown('alt')
-        pag.keyDown('m')
-        time.sleep(0.1)
-        pag.keyUp('m')
-        pag.keyUp('alt')
-        pag.keyUp('shift')
-        pag.keyUp('ctrl')
+        print("Stop surround", dict_code['rows'], dict_code['cols'])
+
+        if dict_code['rows'] == 1 and dict_code['cols'] == 1:
+            pass
+        else:
+            pag.keyDown('ctrl')
+            pag.keyDown('shift')
+            pag.keyDown('alt')
+            pag.keyDown('m')
+            time.sleep(0.1)
+            pag.keyUp('m')
+            pag.keyUp('alt')
+            pag.keyUp('shift')
+            pag.keyUp('ctrl')
 
     elif action == "State":
         print("State mosaic")
-        str_out, str_code = mosaic_func('State')
+        # str_out, dict_code = mosaic_func('State')
 
-    return str_out, str_code
+    return str_out, dict_code
 
 
 def mosaic_func(action):
@@ -284,7 +298,7 @@ def mosaic_func(action):
 
     str_param = ''
     str_out = ''
-    str_code = ''
+    dict_code = {}
     if action == "Start":
         print("Start mosaic")
         # str_param = 'set cols=1 rows=2 res=1280,720,60 out=0,0 out=0,1'
@@ -321,7 +335,8 @@ def mosaic_func(action):
         str_out = xml_out
 
     else:
-        doc_dict = xmltodict.parse(xml_out)  # Parse the read document string
+        odered_dict = xmltodict.parse(xml_out)  # Parse the read document string
+        doc_dict = to_dict(odered_dict)
         pprint.pprint(doc_dict)
 
         if 'error' in doc_dict:
@@ -339,23 +354,32 @@ def mosaic_func(action):
         else:
             str_out += xml_out
 
+            dict_code = {}
             if action == "State":
 
                 grids = doc_dict['query']['grids']
                 if grids is None:
                     str_out += "Projectors disabled"
-                    str_code = "Projectors disabled"
+                    dict_code.update({'grids': 0})
                 else:
-                    rows = doc_dict['query']['grids']['grid']['@rows']
-                    cols = doc_dict['query']['grids']['grid']['@columns']
-                    if rows == "1" and cols == "8":
-                        str_out += "Mosaic enabled"
-                        str_code = "Mosaic enabled"
-                    elif rows == "1" and cols == "1":
-                        str_out += "Mosaic disabled"
-                        str_code = "Mosaic enabled"
+                    if isinstance(doc_dict['query']['grids']['grid'], list):
+                        rows = doc_dict['query']['grids']['grid'][0]['@rows']
+                        cols = doc_dict['query']['grids']['grid'][0]['@columns']
+                    elif isinstance(doc_dict['query']['grids']['grid'], dict):
+                        rows = doc_dict['query']['grids']['grid']['@rows']
+                        cols = doc_dict['query']['grids']['grid']['@columns']
 
-    return str_out, str_code
+                    dict_code.update({'grids': 1})
+                    dict_code.update({'rows': int(rows), 'cols': int(cols)})
+
+                    # if rows == "1" and cols == "8":
+                    #     str_out += "Mosaic enabled"
+                    #     dict_code = "Mosaic enabled"
+                    # elif rows == "1" and cols == "1":
+                    #     str_out += "Mosaic disabled"
+                    #     dict_code = "Mosaic enabled"
+
+    return str_out, dict_code
 
 
 def vlc_func(action):
@@ -365,17 +389,27 @@ def vlc_func(action):
     str_out = ''
     if action == "Start":
         print("Start vlc")
-        # str_param = '--intf=qt  --extraintf=http:rc --http-password=63933 --quiet --file-logging'
-        # str_param = '--intf=qt  --extraintf=http --http-password=63933 --quiet --file-logging'
-        # str_param = '--extraintf=http --http-password=63933 --quiet --qt-start-minimized'
-        # str_param = '--extraintf=http --http-password=63933 --quiet'
-        # без интерфейса https://wiki.videolan.org/VLC_command-line_help/
-        # str_param = 'vlc -Ihttp'
-        # str_param = 'vlc --intf=http'
-        str_param = ''
 
-        output_str_xml = _execute_command2(vlc_exe + str_param)
-        str_out += output_str_xml[0]
+        vlc_is_running = False
+        for process in psutil.process_iter():
+            if process.name() == "vlc.exe":
+                vlc_is_running = True
+                break
+
+        if vlc_is_running is False:
+            # str_param = '--intf=qt  --extraintf=http:rc --http-password=63933 --quiet --file-logging'
+            # str_param = '--intf=qt  --extraintf=http --http-password=63933 --quiet --file-logging'
+            # str_param = '--extraintf=http --http-password=63933 --quiet --qt-start-minimized'
+            # str_param = '--extraintf=http --http-password=63933 --quiet'
+            # без интерфейса https://wiki.videolan.org/VLC_command-line_help/
+            # str_param = 'vlc -Ihttp'
+            # str_param = 'vlc --intf=http'
+            str_param = ''
+
+            output_str_xml = _execute_command2(vlc_exe + str_param)
+            str_out += output_str_xml[0]
+        else:
+            str_out += ''
 
     if action == "Stop":
         print("Stop vlc")
@@ -419,10 +453,19 @@ def displaypro_func(action):
     str_out = ''
     if action == "Start":
         print("Start displaypro")
-        str_param = ''
 
-        output_str_xml = _execute_command1(displaypro_exe + str_param)
-        str_out += output_str_xml[0]
+        displaypro_is_running = False
+        for process in psutil.process_iter():
+            if process.name() == "ImmersiveDisplayPro.exe":
+                displaypro_is_running = True
+                break
+
+        if displaypro_is_running is False:
+            str_param = ''
+            output_str_xml = _execute_command1(displaypro_exe + str_param)
+            str_out += output_str_xml[0]
+        else:
+            str_out += ""
 
     if action == "Stop":
         result = None
@@ -435,6 +478,15 @@ def displaypro_func(action):
 
 
 def base_func(action):
+    if conf.SERVER_NAME == 'fds-Kharkiv':
+        str_out = base_func_Kharkiv(action)
+    elif conf.SERVER_NAME == 'fds-Kyiv':
+        str_out = base_func_Kyiv(action)
+
+    return str_out
+
+
+def base_func_Kharkiv(action):
 
     str_out = ''
     if action == "Start":
@@ -459,6 +511,29 @@ def base_func(action):
         str_out += '\n' + displaypro_func('Stop')
         str_out += '\n' + mosaic_surround_func('Stop')[0]
         str_out += '\n' + winapi_func('setPrimaryMonitor')
+
+    else:
+        str_out = "Base: Unknown command"
+
+    return str_out
+
+
+def base_func_Kyiv(action):
+
+    str_out = ''
+    if action == "Start":
+        print("Start")
+
+        str_out += '\n' + mosaic_surround_func('Start')[0]
+        str_out += '\n' + displaypro_func('Start')
+        str_out += '\n' + vlc_func('Start')
+
+    elif action == "Stop":
+        print("Stop system")
+
+        str_out += '\n' + vlc_func('Stop')
+        str_out += '\n' + displaypro_func('Stop')
+        str_out += '\n' + mosaic_surround_func('Stop')[0]
 
     elif action == "Projectors_ON":
         print("projector_func('ON')")
