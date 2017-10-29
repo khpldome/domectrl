@@ -193,7 +193,6 @@ def _execute_command(str_command, timeout=0):
 def _execute_command1(str_command, timeout=0):
 
     import ctypes
-    from subprocess import check_output
     import subprocess
 
     enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
