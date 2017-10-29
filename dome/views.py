@@ -261,12 +261,13 @@ def surround_func(action):
     str_out = ''
     dict_code = {}
 
-    str_out, dict_code = mosaic_func('State')
+    # str_out, dict_code = mosaic_func('State')
+    state = get_mosaic_surround_state()
+    str_out += state
+    print("Start surround", state)
 
     if action == "Start":
-        print("Start surround", dict_code['rows'], dict_code['cols'])
-
-        if dict_code['rows'] == 1 and dict_code['cols'] == 1:
+        if state == 'False':
             pag.keyDown('ctrl')
             pag.keyDown('shift')
             pag.keyDown('alt')
@@ -278,11 +279,7 @@ def surround_func(action):
             pag.keyUp('ctrl')
 
     elif action == "Stop":
-        print("Stop surround", dict_code['rows'], dict_code['cols'])
-
-        if dict_code['rows'] == 1 and dict_code['cols'] == 1:
-            pass
-        else:
+        if state == 'True':
             pag.keyDown('ctrl')
             pag.keyDown('shift')
             pag.keyDown('alt')
@@ -295,7 +292,6 @@ def surround_func(action):
 
     elif action == "State":
         print("State mosaic")
-        # str_out, dict_code = mosaic_func('State')
 
     return str_out, dict_code
 
@@ -532,7 +528,7 @@ def base_func_Kyiv(action):
     if action == "Start":
         print("Start")
 
-        str_out += '\n' + mosaic_surround_func('Start')[0]
+        str_out += '\n Initial state= ' + mosaic_surround_func('Start')[0]
 
         for i in range(10):
             state = get_mosaic_surround_state()
@@ -546,12 +542,16 @@ def base_func_Kyiv(action):
                 str_out += '\n' + '...5sec...'
                 time.sleep(5)
 
+        str_out += '\n Result state= ' + mosaic_surround_func('State')[0]
+
     elif action == "Stop":
         print("Stop system")
 
         str_out += '\n' + vlc_func('Stop')
         str_out += '\n' + displaypro_func('Stop')
         str_out += '\n' + mosaic_surround_func('Stop')[0]
+        time.sleep(5)
+        str_out += '\n Result state= ' + mosaic_surround_func('State')[0]
 
     elif action == "Projectors_ON":
         print("projector_func('ON')")
