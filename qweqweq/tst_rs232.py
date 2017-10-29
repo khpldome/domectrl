@@ -4,7 +4,7 @@ import serial
 
 if __name__ == "__main__":
 
-    ser = serial.Serial('COM2', 9600, parity=serial.PARITY_NONE)
+    ser = serial.Serial('COM2', 115200, parity=serial.PARITY_NONE)
     print(ser.name)
     print(ser.write(b'/n*pow=?#/n'))
 

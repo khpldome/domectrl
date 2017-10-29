@@ -8,24 +8,19 @@ import pprint
 
 import os
 import psutil
-
+import time
 import pyautogui as pag
 
-
-import time
-
 import qweqweq.winapi_test as wt
-
 import rs232_ctrl.main_rs232 as rs232
 
-
-###############################################################################
 import domectrl.config_fds as conf
-###############################################################################
-
 
 from json import loads, dumps
-from collections import OrderedDict
+
+###############################################################################
+pag.FAILSAFE = False  # disables the fail-safe
+###############################################################################
 
 
 def to_dict(input_ordered_dict):

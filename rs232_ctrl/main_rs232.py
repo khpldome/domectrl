@@ -56,9 +56,16 @@ def get_serial_ports():
     dev_dict = {}
     for port in ports:
         try:
-            s = serial.Serial(port)
-            s.close()
-            dev_dict.update({port: ''})
+            print("@@@", port)
+            ser = open_serial(port)
+            if ser is not None:
+
+                res = get_usart_data(ser, '?')
+                if res is not None:
+                    dev_dict.update({port: res})
+
+            close_serial(ser)
+
         except serial.SerialException as err:
             pass
     return dev_dict
@@ -69,7 +76,7 @@ def open_serial(dev_name):
     ser = serial.Serial()
 
     ser.port = dev_name
-    ser.baudrate = 9600
+    ser.baudrate = 115200
     ser.bytesize = serial.EIGHTBITS  # number of bits per bytes
     ser.parity = serial.PARITY_NONE  # set parity check: no parity
     ser.stopbits = serial.STOPBITS_ONE  # number of stop bits
@@ -99,41 +106,6 @@ def open_serial(dev_name):
 def close_serial(ser):
     if ser.isOpen():
         ser.close()
-
-
-
-print("================ serial ================")
-
-def proc_usart(shrd_serial_dev, cont, output):
-
-    if open_serial(shrd_serial_dev):
-        print("Serial port name:", shrd_serial_dev.raw)
-    else:
-        print("Can not open serial port")
-        return
-
-    try:
-        while cont:
-
-            str_recv = get_usart_line()
-            # print ">usart", str_recv
-
-            if str_recv:
-                # result = parse_usart_position(str_recv)
-                result = 1
-
-                if result is not None:
-
-                    # Send list to queue
-                    uart_list = []
-                    uart_list.append(">usart")  # id
-                    uart_list.append(result)  # list of data
-                    output.put(uart_list)
-
-    except KeyboardInterrupt:
-
-        ser.close()
-        print("Ctrl+C")
 
 
 def get_usart_data(ser, action):
@@ -183,50 +155,64 @@ def get_usart_data(ser, action):
         print("cannot open serial port ")
 
 
+ports_dict = {}
+
+
 def projector_func(action):
 
-    ports_dict = get_serial_ports()
-    print(ports_dict)
-    state = ''
+    global ports_dict
+
+    if len(ports_dict) == 0:
+        ports_dict = get_serial_ports()
+        print(ports_dict)
+
     for i in range(10):
 
         set_pause = False
+        state = ''
         for port_name in ports_dict.keys():
-
+            state = ports_dict[port_name]
             if (action == 'ON' and state == '*POW=ON#') or (action == 'OFF' and state == '*POW=OFF#'):
+                # ports_dict[port_name] = state
                 pass
             else:
                 ser = open_serial(port_name)
                 if ser is not None:
 
                     res = get_usart_data(ser, '?')
-                    ports_dict[port_name] = res
-                    state = ports_dict[port_name]
-                    print(i, "? state: ", port_name, state)
+                    if res is None:
+                        # close_serial(ser)
+                        print("@@@SDFS",)
+                        # ports_dict.pop(port_name, None)
+                        # ports_dict.pop(port_name, None)
+                    else:
+                        ports_dict[port_name] = res
 
-                    if action == 'ON':
-                        if state == '*POW=ON#':
-                            pass
-                        elif state == '*POW=OFF#' or state == '':
-                            res = get_usart_data(ser, action)
-                            ports_dict[port_name] = res
-                            set_pause = True
-                        else:
-                            set_pause = True
+                        print(i, "? state: ", port_name, state)
 
-                    elif action == 'OFF':
-                        if state == '*POW=OFF#':
-                            pass
-                        elif state == '*POW=ON#' or state == '':
-                            res = get_usart_data(ser, action)
-                            ports_dict[port_name] = res
-                            set_pause = True
-                        else:
-                            set_pause = True
+                        if action == 'ON':
+                            if state == '*POW=ON#':
+                                pass
+                            elif state == '*POW=OFF#' or state == '':
+                                res = get_usart_data(ser, action)
+                                ports_dict[port_name] = res
+                                set_pause = True
+                            else:
+                                set_pause = True
+
+                        elif action == 'OFF':
+                            if state == '*POW=OFF#':
+                                pass
+                            elif state == '*POW=ON#' or state == '':
+                                res = get_usart_data(ser, action)
+                                ports_dict[port_name] = res
+                                set_pause = True
+                            else:
+                                set_pause = True
                 else:
                     print('Can not open ', port_name)
 
-                ser.close()
+                close_serial(ser)
 
                 print("  > cmd:", action, port_name, state)
 
