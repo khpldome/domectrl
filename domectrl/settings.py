@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 
 import os
+import domectrl.config_fds as conf
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,7 +28,7 @@ SECRET_KEY = 'e=%ca7=6mhc^z@&l1=p+mv$k!-@y8mi#h%d17d@vie@(hv*93_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.101', 'localhost', '127.0.0.1', '10.0.11.107', '192.168.1.11']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', conf.ALLOWED_IP]
 # ALLOWED_HOSTS = ['*']
 
 # Application definition
