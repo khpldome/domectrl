@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     # 'djrill',
     # 'mailchimp',
+    # 'dome',
     'domeuser',
 
 ]
