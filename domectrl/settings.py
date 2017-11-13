@@ -42,6 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dome.apps.DomeConfig',
     # 'mod_wsgi.server',    # for daemon mode
+
+    # 'djrill',
+    # 'mailchimp',
+    'domeuser',
+
 ]
 
 MIDDLEWARE = [
@@ -104,6 +109,10 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'domeuser.User'
+LOGIN_URL = '/account/sign-in/'
+
 
 
 # Internationalization

@@ -22,6 +22,8 @@ import dome
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
+    url(r'^account/', include('domeuser.urls')),
+
     # url(r'^$', dome.views.index, name='index'),
     url(r'^dome/', include('dome.urls')),  # this line added
 

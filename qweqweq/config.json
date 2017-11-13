@@ -1,0 +1,45 @@
+{
+    "age": 30,
+    "bank": {
+        "PrivatBank": {
+            "345245243524": "23333"
+        }
+    },
+    "cars": [
+        {
+            "models": "hh",
+            "name": "Ford"
+        },
+        {
+            "models": [
+                "320",
+                "X3",
+                "X5"
+            ],
+            "name": "BMW"
+        },
+        {
+            "models": [
+                "500",
+                "Panda"
+            ],
+            "name": "Fiat"
+        },
+        "gjkk"
+    ],
+    "name": "fff",
+    "sdsd": {
+        "sdsdsd": "\"swwwwww\""
+    },
+    "www": {
+        "ewewewe": {
+            "'arqeqerqe": {
+                "qerqwerqwe": "qerqwe'"
+            }
+        }
+    },
+    "link": {
+        "Univers_25": "http://www.cablook.com/mixlook/eksperiment-vselennaya-25-kak-raj-stal-adom/#.WGq_uqYNjEE.facebook",
+        "vlc": "https://www.howtogeek.com/117261/how-to-activate-vlcs-web-interface-control-vlc-from-a-browser-use-any-smartphone-as-a-remote/"
+    }
+}

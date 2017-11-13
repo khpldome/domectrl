@@ -1,0 +1,9 @@
+
+c:\Users\Serhii\AppData\Local\Programs\Python\Python36-32\Scripts\pip
+
+
+python manage.py makemigrations
+python manage.py migrate
+
+
+

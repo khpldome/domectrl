@@ -1,0 +1,55 @@
+{% extends "outer_layout.html" %}
+
+{% block main_container %}
+    <div class="row">
+
+        <div class="col-md-5 col-md-offset-1">
+            <div class="panel panel-default w-block">
+                <div class="panel-heading">Create Account</div>
+                <div class="panel-body">
+                    <form action="{{ app_path }}" method="post" id="reg-form">{% csrf_token %}
+                        <input type="hidden" name="form_name" value="RegForm"/>
+                        {% for field in reg_form %}
+                            <div class="form-group">
+                                {{ field.errors }}
+                                {{ field.label_tag }}
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+                        <div class="align-right">
+                            <button type="submit" class="btn btn-info">Create Account</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="panel panel-default w-block">
+                <div class="panel-heading">Sign In</div>
+                <div class="panel-body">
+                    <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+                        <input type="hidden" name="form_name" value="SignInForm"/>
+                        {% for error in sign_in_form.non_field_errors %}
+                            <p class="form-error-list">{{ error }}</p>
+                        {% endfor %}
+                        <div class="form-group">
+                            {{ sign_in_form.username.errors }}
+                            {{ sign_in_form.username.label_tag }} {{ sign_in_form.username }}
+                        </div>
+                        <div class="form-group">
+                            {{ sign_in_form.password.errors }}
+                            {{ sign_in_form.password.label_tag }}
+                            <a href="{% url 'password_reset' %}" class="pull-right" tabindex="5">Forgot Password?</a>
+                            {{ sign_in_form.password }}
+                        </div>
+                        <div class="align-right">
+                            <button type="submit" class="btn btn-info" tabindex="3">Sign In</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock main_container %}

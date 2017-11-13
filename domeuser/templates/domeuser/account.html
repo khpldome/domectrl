@@ -1,0 +1,81 @@
+{% extends "inner_layout.html" %}
+
+{% load staticfiles %}
+
+{% block main_container %}
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#account-details" role="tab" data-toggle="tab"
+               aria-controls="account-details">Account Details</a>
+        </li>
+        <li>
+            <a href="#change-email" role="tab" data-toggle="tab"
+               aria-controls="change-email">Change Email</a>
+        </li>
+        <li>
+            <a href="#change-password" role="tab" data-toggle="tab"
+               aria-controls="change-password">Change Password</a>
+        </li>
+    </ul>
+    <div id="alert-area">
+        <div class="alert alert-danger hid" role="alert">
+            <button type="button" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="alert-content"></div>
+        </div>
+    </div>
+    <div class="tab-content central">
+
+        <div class="tab-pane active" role="tabpanel" id="account-details">
+            <label for="user-name">First Name</label>
+            <input id="user-name" type="text" class="form-control" value="{{ user.first_name }}">
+            <div class="align-right">
+                <button id="save-name" class="btn btn-info" role="button">Save</button>
+            </div>
+        </div>
+
+        <div class="tab-pane" role="tabpanel" id="change-email">
+            <div class="form-group">
+                <label for="current-email">Current Email Address</label>
+                <input id="current-email" type="text" class="form-control"
+                       value="{{ user.email }}" disabled>
+            </div>
+            <div class="form-group">
+                <label for="current-passwd1">Current Password</label>
+                <input type="password" class="form-control" id="current-passwd1">
+            </div>
+            <div class="form-group">
+                <label for="new-email">New Email Address</label>
+                <input id="new-email" type="text" class="form-control">
+            </div>
+            <div class="align-right">
+                <button id="save-email" class="btn btn-info">Save</button>
+            </div>
+        </div>
+
+        <div class="tab-pane" role="tabpanel" id="change-password">
+            <div class="form-group">
+                <label for="current-passwd2">Current Password</label>
+                <input id="current-passwd2" type="password" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="new-passwd">New Password</label>
+                <input id="new-passwd" type="password" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="re-passwd">Re-Type New Password</label>
+                <input id="re-passwd" type="password" class="form-control">
+            </div>
+            <div class="align-right">
+                <button id="save-passwd" class="btn btn-info">Save</button>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock main_container %}
+
+{% block js %}
+    <script src="{% static 'maduser/js/account.js' %}"></script>
+{% endblock js %}
