@@ -9,8 +9,7 @@ from domectrl import settings
 import logging
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from django.db.models import Sum
-import decimal
+
 
 logger = logging.getLogger(__name__)
 
@@ -30,6 +29,7 @@ class MyUserManager(BaseUserManager):
     def create_superuser(self, email, first_name, password):
         user = self.create_user(email, password=password, first_name=first_name)
         user.is_admin = True
+        user.is_staff = True
         user.save(using=self._db)
         return user
 
@@ -39,6 +39,7 @@ class User(AbstractBaseUser):
     email = models.EmailField("Email Address", max_length=100, unique=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField("Created", default=timezone.now)
     randomize = models.BooleanField(default=False)
 
