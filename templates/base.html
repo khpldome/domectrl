@@ -8,13 +8,52 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-
+<!-- Google Tag Manager -->
+{% if not debug %}
+<noscript>
+    <iframe src="//www.googletagmanager.com/ns.html?id=GTM-3FG735" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<script>(function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({
+        'gtm.start': new Date().getTime(), event: 'gtm.js'
+    });
+    var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+    j.async = true;
+    j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl;
+    f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', 'GTM-3FG735');</script>
+{% endif %}
+<!-- End Google Tag Manager -->
 <div class="container">
     <header>{% block header %}{% endblock header %}</header>
     <main>{% block main_container %}{% endblock main_container %}</main>
     <footer>{% block footer %}{% endblock footer %}</footer>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" id="feedback-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Thank you</h4>
+            </div>
+            <div class="modal-body">
+                <p>Your feedback will allow me to make this a better study tool.</p>
+                <div class="form-group">
+                    <textarea class="form-control" id="feedback-text"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default grey" data-dismiss="modal">Cancel</button>
+                <button id="send-feedback" type="button" class="btn btn-info">Send Feedback</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% if messages %}
     <div class="modal fade" tabindex="-1" role="dialog" id="messages-modal">
@@ -41,6 +80,17 @@
     </div>
 {% endif %}
 
+<script src="{% static 'lib/jquery-1.12.1.min.js' %}"></script>
+<script src="{% static 'lib/bootstrap-3.3.6/js/bootstrap.min.js' %}"></script>
+
+{#{% if not debug %}#}
+{#<script src='//vws.responsivevoice.com/v/e?key=Pb4dEjOh'></script>#}
+<script src="https://code.responsivevoice.org/responsivevoice.js" type="text/javascript"></script>
+{#<script src="{% static 'lib/responsivevoice.js' %}"></script>#}
+{#{% endif %}#}
+
+<script src="{% static 'madquiz/js/shared.js' %}"></script>
+{% block js %}{% endblock js %}
 {% if messages %}
     <script type="text/javascript">
         $(document).ready(function () {
@@ -48,6 +98,36 @@
         });
     </script>
 {% endif %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var sendFeedbackBtn = $('#send-feedback');
+        sendFeedbackBtn.on('click', function () {
+            if (sendFeedbackBtn.text() == 'OK') {
+                $('#feedback-modal').modal('hide');
+            } else {
+                var mes = $('#feedback-text').val();
+                sendFeedbackBtn.text('Sending...').prop('disabled', true);
+                if (mes) {
+                    $.ajax({
+                        method: 'post',
+                        url: '/send-feedback/',
+                        headers: {'X-CSRFToken': getCookie('csrftoken')},
+                        data: {
+                            message: mes,
+                            page: window.location.toString()
+                        }
+                    }).done(function (resp) {
+                        sendFeedbackBtn.text('OK').prop('disabled', false);
+                        $('#feedback-modal').find('.modal-body').html('Message have been sent.');
+                    }).fail(function (resp) {
+                        sendFeedbackBtn.text('OK').prop('disabled', false);
+                        $('#feedback-modal').find('.modal-body').html('Error! Try again later.');
+                    });
+                }
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

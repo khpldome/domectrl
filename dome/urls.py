@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 
 from . import views
+from . import views2
 
 urlpatterns = [
 
@@ -32,5 +33,7 @@ urlpatterns = [
     url(r'^displaypro/(?P<displaypro_action>\w+)/$', views.DisplayproActionView.as_view(), name='displaypro'),
 
     url(r'^base/(?P<base_action>\w+)/$', views.BaseView.as_view(), name='base'),
+
+    url(r'^dashboard/$', views2.DashboardView.as_view(), name='dashboard'),
 
 ]
