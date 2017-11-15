@@ -1,0 +1,169 @@
+{% extends "inner_layout.html" %}
+
+{% load staticfiles %}
+
+{% block main_container %}
+    <div class="panel panel-default">
+        <div class="panel-heading">Study Modules</div>
+        <div class="panel-body">
+{##}
+            {#===============================================================================================#}
+{#            {% if object_list or True %}#}
+{#                <h3>Module drafts</h3>#}
+{#                <div class="panel-content">#}
+{#                    <a class="mdl-preview" href="{% url 'new_study_module' %}">Click to create a new study module</a>#}
+{#                    {% for module in object_list %}#}
+{#                        <div class="mdl-preview">#}
+{#                            <div class="dashboard-module-image"#}
+{#                                 style="background: url('{% if module.image %}{{ module.image.url }}{% else %}{% static 'img/default_cover_image.jpg' %}{% endif %}') no-repeat calc(50%);">#}
+{#                            </div>#}
+{#                            <p title="ID: {{ module.id }}, ver: {{ module.version }}">#}
+{#                                {{ module.name }}#}
+{#                            </p>#}
+{#                            <button class="study btn btn-info" data-toggle="modal" data-target="#study-settings"#}
+{#                                    data-url="{% url 'study_module_start' module_id=module.id %}">Study#}
+{#                            </button>#}
+{#                            <a class="btn btn-default grey" href="{% url 'edit_module' module_id=module.id %}">Edit</a>#}
+{#                        </div>#}
+{#                    {% endfor %}#}
+{#                </div>#}
+{#            {% endif %}#}
+{##}
+            {#===============================================================================================#}
+{#            {% if published_qs %}#}
+{#                <hr>#}
+{#                <h3>Published by me</h3>#}
+{#                <div class="panel-content">#}
+{#                    {% for module in published_qs %}#}
+{#                        <div class="mdl-preview">#}
+{#                            <div class="dashboard-module-image"#}
+{#                                 style="background: url('{% if module.image %}{{ module.image.url }}{% else %}{% static 'img/default_cover_image.jpg' %}{% endif %}') no-repeat calc(50%);">#}
+{#                            </div>#}
+{#                            <p title="ID: {{ module.id }}, ver: {{ module.version }}">#}
+{#                                {{ module.name }}#}
+{#                            </p>#}
+{#                            <button class="study btn btn-info" data-toggle="modal" data-target="#study-settings"#}
+{#                                    data-url="{% url 'study_module_start' module_id=module.id %}">Study#}
+{#                            </button>#}
+{##}
+{#                            {% if module.edit_version %}#}
+{#                                <a class="btn btn-default grey" href="{% url 'edit_module' module_id=module.id %}">Edit</a>#}
+{#                            {% endif %}#}
+{##}
+{#                        </div>#}
+{#                    {% endfor %}#}
+{#                </div>#}
+{#            {% endif %}#}
+{##}
+            {#===============================================================================================#}
+{#            {% if purchased_qs %}#}
+{#                <hr>#}
+{#                <h3>Purchased by me</h3>#}
+{#                <div class="panel-content">#}
+{#                    {% for module in purchased_qs %}#}
+{#                        <div class="mdl-preview">#}
+{#                            <div class="dashboard-module-image"#}
+{#                                 style="background: url('{% if module.image %}{{ module.image.url }}{% else %}{% static 'img/default_cover_image.jpg' %}{% endif %}') no-repeat calc(50%);">#}
+{#                            </div>#}
+{#                            <p title="ID: {{ module.id }}, ver: {{ module.version }}">#}
+{#                                {{ module.name }}#}
+{#                            </p>#}
+{#                            <button class="study btn btn-info" data-toggle="modal" data-target="#study-settings"#}
+{#                                    data-url="{% url 'study_module_start' module_id=module.id %}">Study#}
+{#                            </button>#}
+{##}
+{#                            {% if module.store_version %}#}
+{#                                <a class="btn btn-default grey"#}
+{#                                   href="{% url 'update_module' module_id=module.id shared='false' %}">Update</a>#}
+{#                            {% else %}#}
+{#                                <a class="btn btn-default grey disabled">Up to date</a>#}
+{#                                <button class="mod-delete btn btn-danger" data-toggle="modal" data-target="#confirm-delete"#}
+{#                                        data-url="{% url 'delete_user_module' module_id=module.id %}"#}
+{#                                        data-whatever="{{ module.name }}">Delete#}
+{#                                </button>#}
+{#                                <a class="btn btn-default grey" href="{% url 'delete_user_module' module_id=module.id %}">Del</a>#}
+{#                            {% endif %}#}
+{#                        </div>#}
+{##}
+{#                    {% endfor %}#}
+{#                </div>#}
+{##}
+{#            {% endif %}#}
+{##}
+            {#===============================================================================================#}
+{#            {% if shared_qs %}#}
+{#                <hr>#}
+{#                <h3>Shared with me</h3>#}
+{#                <div class="panel-content">#}
+{#                    {% for module in shared_qs %}#}
+{#                        <div class="mdl-preview">#}
+{#                            <div class="dashboard-module-image"#}
+{#                                 style="background: url('{% if module.image %}{{ module.image.url }}{% else %}{% static 'img/default_cover_image.jpg' %}{% endif %}') no-repeat calc(50%);">#}
+{#                            </div>#}
+{#                            <p title="ID: {{ module.id }}, ver: {{ module.version }}">#}
+{#                                {{ module.name }}#}
+{#                            </p>#}
+{#                            <button class="study btn btn-info" data-toggle="modal" data-target="#study-settings"#}
+{#                                    data-url="{% url 'study_module_start' module_id=module.id %}">Study#}
+{#                            </button>#}
+{##}
+{#                            {% if module.store_version %}#}
+{#                                <a class="btn btn-default grey" href="{% url 'update_module' module_id=module.id shared='true' %}">Update</a>#}
+{#                            {% else %}#}
+{#                                <a class="btn btn-default grey disabled">Up to date</a>#}
+{#                                <button class="mod-delete btn btn-danger" data-toggle="modal" data-target="#confirm-delete"#}
+{#                                        data-url="{% url 'delete_user_module' module_id=module.id %}"#}
+{#                                        data-whatever="{{ module.name }}">Delete#}
+{#                                </button>#}
+{#                            {% endif %}#}
+{#                        </div>#}
+{#                    {% endfor %}#}
+{#                </div>#}
+{#            {% endif %}#}
+
+        </div>
+    </div>
+
+
+{#    {% include "madquiz/modal_study_settings.html" %}#}
+
+
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Confirm Deletion</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this module?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">Cancel
+                    </button>
+                    <form id="go-delete" action="" style="display:inline" method="get">
+                        <button type="submit" name="post" value="yes"
+                                class="btn btn-danger btn-ok">Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock main_container %}
+
+{% block js %}
+
+    <script src="{% static 'madquiz/js/dashboard.js' %}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+    </script>
+{% endblock js %}
