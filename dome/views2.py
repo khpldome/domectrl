@@ -39,7 +39,8 @@ class IndexView(View):
 
 
 class DashboardView(LoginRequiredMixin, ListView):
-    template_name = 'dome/dashboard.html'
+    # template_name = 'dome/dashboard.html'
+    template_name = 'dome/index.html'
 
     def get(self, request, *args, **kwargs):
         # RecipientView.handle_tokens(request)
