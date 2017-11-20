@@ -4,59 +4,61 @@
 
 {% block main_container %}
     <div class="panel panel-default">
-        <div class="panel-heading">Управление узлами</div>
-        <div class="panel-body">
+    <div class="panel-heading">Управление узлами</div>
+    <div class="panel-body">
 
 
-        <div class="col-sm-2 btn-group" role="group" aria-label="...">
-            <a href="{% url 'mosaic' mosaic_action='Start' %}" class="flrow-a-btn wide grey"><span>Start</span></a>
-        </div>
+    <div class="col-sm-2 btn-group" role="group" aria-label="...">
+        <a href="{% url 'mosaic' mosaic_action='Start' %}" class="flrow-a-btn wide grey"><span>Start</span></a>
+    </div>
 
-        <div class="col-sm-2 btn-group">
-            <a href="{% url 'mosaic' mosaic_action='Stop' %}" class="flrow-a-btn wide grey"><span>Stop</span></a>
-        </div>
+    <div class="col-sm-2 btn-group">
+        <a href="{% url 'mosaic' mosaic_action='Stop' %}" class="flrow-a-btn wide grey"><span>Stop</span></a>
+    </div>
 
-        <div class="col-sm-2 btn-group">
-            <a href="{% url 'mosaic' mosaic_action='Restart' %}" class="flrow-a-btn wide grey"><span>Restart</span></a>
-        </div>
+    <div class="col-sm-2 btn-group">
+        <a href="{% url 'mosaic' mosaic_action='Restart' %}" class="flrow-a-btn wide grey"><span>Restart</span></a>
+    </div>
 
-        <div class="col-sm-2 btn-group">
-            <a href="{% url 'mosaic' mosaic_action='State' %}" class="flrow-a-btn wide grey"><span>State</span></a>
-        </div>
+    <div class="col-sm-2 btn-group">
+        <a href="{% url 'mosaic' mosaic_action='State' %}" class="flrow-a-btn wide grey"><span>State</span></a>
+    </div>
 
-        <div class="col-sm-2 btn-group">
-            <a href="{% url 'vlc' vlc_action='Start' %}" class="flrow-a-btn wide grey"><span>Start "vlc.exe"</span></a>
-        </div>
+    <div class="col-sm-2 btn-group">
+        <a href="{% url 'vlc' vlc_action='Start' %}" class="flrow-a-btn wide grey"><span>Start "vlc.exe"</span></a>
+    </div>
 
-        <div class="col-sm-2 btn-group">
-            <a href="{% url 'vlc' vlc_action='Stop' %}" class="flrow-a-btn wide grey"><span>Stop "vlc.exe"</span></a>
-        </div>
+    <div class="col-sm-2 btn-group">
+        <a href="{% url 'vlc' vlc_action='Stop' %}" class="flrow-a-btn wide grey"><span>Stop "vlc.exe"</span></a>
+    </div>
 
-        <div class="col-sm-2 btn-group">
-            <a href="{% url 'winapi' winapi_action='setPrimaryMonitor' %}" class="flrow-a-btn wide grey"><span>setPrimaryMonitor</span></a>
-        </div>
+    <div class="col-sm-2 btn-group">
+        <a href="{% url 'winapi' winapi_action='setPrimaryMonitor' %}" class="flrow-a-btn wide grey"><span>setPrimaryMonitor</span></a>
+    </div>
 
-        <div class="col-sm-2 btn-group">
-            <a href="{% url 'winapi' winapi_action='EnableOneProjector' %}" class="flrow-a-btn wide grey"><span>EnableOneProjector</span></a>
-        </div>
+    <div class="col-sm-2 btn-group">
+        <a href="{% url 'winapi' winapi_action='EnableOneProjector' %}" class="flrow-a-btn wide grey"><span>EnableOneProjector</span></a>
+    </div>
 
-        <div class="col-sm-2 btn-group">
-            <a href="{% url 'winapi' winapi_action='WinapiInfo' %}" class="flrow-a-btn wide grey"><span>WinAPI Info</span></a>
-        </div>
+    <div class="col-sm-2 btn-group">
+        <a href="{% url 'winapi' winapi_action='WinapiInfo' %}"
+           class="flrow-a-btn wide grey"><span>WinAPI Info</span></a>
+    </div>
 
-        <div class="col-sm-2 btn-group">
-            <a href="{% url 'displaypro' displaypro_action='Start' %}" class="flrow-a-btn wide grey"><span>Start "DisplayPro"</span></a>
-        </div>
+    <div class="col-sm-2 btn-group">
+        <a href="{% url 'displaypro' displaypro_action='Start' %}" class="flrow-a-btn wide grey"><span>Start "DisplayPro"</span></a>
+    </div>
 
-        <div class="col-sm-2 btn-group">
-            <a href="{% url 'displaypro' displaypro_action='Stop' %}" class="flrow-a-btn wide grey"><span>Stop "DisplayPro"</span></a>
-        </div>
+    <div class="col-sm-2 btn-group">
+        <a href="{% url 'displaypro' displaypro_action='Stop' %}"
+           class="flrow-a-btn wide grey"><span>Stop "DisplayPro"</span></a>
+    </div>
 
-        <br><br><br>
+    <br><br><br>
 
-        <div class="col-sm-12">
-            <code>{{ data_context|linebreaks }}</code><br><br>
-        </div>
+    <div class="col-sm-12">
+        <code>{{ data_context|linebreaks }}</code><br><br>
+    </div>
 
 
 {% endblock main_container %}
