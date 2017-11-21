@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     # 'mailchimp',
     # 'dome',
     'domeuser',
+    'domeplaylist',
 
 ]
 
@@ -67,13 +68,13 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'domectrl.urls'
 
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'domectrl/static'), ]
-
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join('static'), )
 
+
+MEDIA_ROOT = ''
+MEDIA_URL = '/media/'
 
 
 TEMPLATES = [

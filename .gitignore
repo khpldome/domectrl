@@ -10,4 +10,7 @@ exec/vlc-2.1.6/*
 exec/vlc/*
 exec/ImmersiveCalibrationPRO_v3.0r1/
 
-.db.sqlite3
+db.sqlite3
+
+media/playitem_imgs
+
