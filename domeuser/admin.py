@@ -10,13 +10,13 @@ logger = logging.getLogger(__name__)
 
 class MadcramAdminSite(AdminSite):
     # Text to put at the end of each page's <title>.
-    site_title = ugettext_lazy('Madcram admin')
+    site_title = ugettext_lazy('FireFly admin')
 
     # Text to put in each page's <h1>.
-    site_header = ugettext_lazy('Madcram administration')
+    site_header = ugettext_lazy('FireFly administration')
 
     # Text to put at the top of the admin index page.
-    index_title = ugettext_lazy('Madcram site administration')
+    index_title = ugettext_lazy('FireFly site administration')
 
 
 def push_to_mailchimp(modeladmin, request, queryset):
