@@ -10,19 +10,4 @@ exec/vlc-2.1.6/*
 exec/vlc/*
 exec/ImmersiveCalibrationPRO_v3.0r1/
 
-qweqweq/bot_keyboard.py
-qweqweq/conversationbot.py
-qweqweq/conversationbot2.py
-qweqweq/conversbot.log
-qweqweq/conversbot2.log
-qweqweq/inlinebot.py
-qweqweq/mwt.py
-qweqweq/mycreds.txt
-qweqweq/task.py
-qweqweq/telegram_bot.log
-qweqweq/temp.json
-qweqweq/test_bot2.py
-qweqweq/test_conversation.py
-
-
 .db.sqlite3
