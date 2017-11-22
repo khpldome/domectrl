@@ -33,7 +33,6 @@ d:\Surmylo\domectrl\qweqweq\minimalization\min_task.py > d:\Surmylo\domectrl\qwe
 
 
 
-
 pyminifier ^
 --obfuscate ^
 d:\Surmylo\domectrl\qweqweq ^
