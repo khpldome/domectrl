@@ -7,3 +7,55 @@ python manage.py migrate
 
 git rm --cached db.sqlite3
 
+
+pyminifier /tmp/tumult.py
+python pyminifier.py pyminifier.py > minified_pyminifier.py
+
+
+pyminifier d:\Surmylo\domectrl\qweqweq\minimalization\task.py > min_task22.py +
+pyminifier \qweqweq\minimalization\task.py > min_task22.py
+pyminifier d:\Surmylo\domectrl\qweqweq\minimalization\task.py > d:\Surmylo\domectrl\qweqweq\minimalization\min_task22.py +
+
+
++
+pyminifier ^
+--obfuscate ^
+d:\Surmylo\domectrl\qweqweq\minimalization\task.py > d:\Surmylo\domectrl\qweqweq\minimalization\min_task.py
+
+
+chcp 65001
+set PYTHONIOENCODING=utf-8
+
++
+pyminifier ^
+--nonlatin ^
+d:\Surmylo\domectrl\qweqweq\minimalization\min_task.py > d:\Surmylo\domectrl\qweqweq\minimalization\obf_task.py
+
+
+
+
+pyminifier ^
+--obfuscate ^
+d:\Surmylo\domectrl\qweqweq ^
+--outfile=d:\Surmylo\domectrl\qweqweq_min
+
+
+-
+pyminifier -d "d:\Surmylo\domectrl\qweqweq_min" "d:\Surmylo\domectrl\qweqweq\"
+
+
+$ pyminifier --destdir=/tmp/minified_pyminifier pyminifier/*.py
+
++-
+pyminifier --obfuscate --destdir=d:\Surmylo\domectrl\qweqweq_min d:\Surmylo\domectrl\qweqweq\conversationbot.py
+
++
+pyminifier --obfuscate --nonlatin --outfile=d:\Surmylo\domectrl\qweqweq_min\mconversationbot.py d:\Surmylo\domectrl\qweqweq\conversationbot.py
+
+
+pyminifier --obfuscate --nonlatin --outfile=d:\Surmylo\domectrl\qweqweq_min\mconversationbot.py d:\Surmylo\domectrl\qweqweq\conversationbot.py
+pyminifier --obfuscate --nonlatin --outfile=d:\Surmylo\domectrl\qweqweq_min\mviews.py d:\Surmylo\domectrl\domeuser\views.py
+
+
+
+
