@@ -38,7 +38,6 @@ pyminifier ^
 d:\Surmylo\domectrl\qweqweq ^
 --outfile=d:\Surmylo\domectrl\qweqweq_min
 
-
 -
 pyminifier -d "d:\Surmylo\domectrl\qweqweq_min" "d:\Surmylo\domectrl\qweqweq\"
 
