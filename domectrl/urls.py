@@ -24,9 +24,9 @@ urlpatterns = [
 
     url(r'^account/', include('domeuser.urls')),
 
-    # url(r'^$', dome.views.index, name='index'),
-    url(r'^dome/', include('dome.urls')),  # this line added
+    url(r'^dome/', include('dome.urls')),
 
+    url(r'^domeplaylist/', include('domeplaylist.urls')),
 
 ]
 

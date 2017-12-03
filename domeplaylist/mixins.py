@@ -3,9 +3,8 @@ from __future__ import print_function
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponse
 
-# from madquiz.models import StudyModule, ModulePage, UserModule
-#
-#
+from domeplaylist.models import PlayList, PlayItem
+
 # class ModulePermissionMixin(object):
 #     """
 #     * Checks whether the user is the author of the module and whether the page is
@@ -69,8 +68,30 @@ from django.http import HttpResponseRedirect, HttpResponse
 #                 )
 #
 #         return super(ModulePermissionMixin, self).dispatch(request, *args, **kwargs)
-#
-#
+
+
+class ModulePermissionMixin(object):
+    """
+    * Checks whether the user is the author of the module and whether the page is
+      belong to the module, if not redirects to 'no access' view.
+    * Sets 'mymodule', 'mypage' properties to the view.
+    * Allows permission for paypal payment
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        print("module permission")
+
+        if 'playlist_id' in kwargs:
+            try:
+                playlist = PlayList.objects.get(pk=kwargs['playlist_id'])
+                self.myplaylist = playlist
+
+            except PlayList.DoesNotExist:
+                return HttpResponseRedirect(reverse_lazy('no_access'))
+
+        return super(ModulePermissionMixin, self).dispatch(request, *args, **kwargs)
+
+
 # class StorePermissionMixin(object):
 #     """
 #     Checks module existence only
