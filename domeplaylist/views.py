@@ -70,16 +70,16 @@ class PlayListEditView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(PlayListEditView, self).get_context_data(**kwargs)
-        context['pages'] = PlayItem.objects.filter(module_id=self.myplaylist.id)
+        context['pages'] = PlayItem.objects.filter(playlist_id=self.myplaylist.id)
         return context
 
     def get_valid_pages_count(self):
-        valid_pages_count = PlayItem.objects.filter(module_id=self.myplaylist.id).count()
+        valid_pages_count = PlayItem.objects.filter(playlist_id=self.myplaylist.id).count()
         return valid_pages_count
 
     def get_success_url(self):
-        module_id = self.myplaylist.id
-        return reverse_lazy('edit_playlist', kwargs={'playlist_id': module_id})
+        playlist_id = self.myplaylist.id
+        return reverse_lazy('edit_playlist', kwargs={'playlist_id': playlist_id})
 
 
 class NoAccessView(TemplateView):
