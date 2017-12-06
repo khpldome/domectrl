@@ -33,6 +33,44 @@ from domeplaylist.mixins import ModulePermissionMixin, AjaxHandlerMixin
 from django.conf import settings
 
 
+class DashboardView(LoginRequiredMixin, ListView):
+    template_name = 'domeplaylist/dashboard.html'
+
+    def get(self, request, *args, **kwargs):
+        return super(DashboardView, self).get(request, *args, **kwargs)
+
+    def get_queryset(self):
+        res_qs = PlayList.objects.all()
+        return res_qs
+
+    def get_context_data(self, **kwargs):
+        context = super(DashboardView, self).get_context_data(**kwargs)
+        return context
+
+
+# class StoreView(StorePermissionMixin, ListView):
+class SetView(ListView):
+    model = PlayList
+    template_name = 'domeplaylist/playlist_set.html'
+    context_object_name = "play_list"
+    paginate_by = 48
+
+    def get_queryset(self):
+        res_qs = PlayList.objects.all()
+        return res_qs
+
+    def get_context_data(self, **kwargs):
+        context = super(SetView, self).get_context_data(**kwargs)
+        # parent_ids = [x['module__parent'] for x in UserModule.objects.filter(user=self.request.user.id).values('module__parent').distinct()]
+        # for obj in context['study_list']:
+        #     obj.purchased_flag = obj.parent_id in parent_ids
+
+        context.update({
+            # 'form': StoreSearchForm(),
+        })
+        return context
+
+
 class PlayListEditView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
 # class PlayListEditView(LoginRequiredMixin, UpdateView):
     template_name = 'domeplaylist/edit_playlist.html'
@@ -47,9 +85,6 @@ class PlayListEditView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
         return kwargs
 
     def get_object(self, **kwargs):
-        # if self.mymodule.frozen_at:
-        #     self.mymodule = self.mymodule.save(force_clone=True)
-        # return self.mymodule
         return self.myplaylist
 
     def get(self, request, *args, **kwargs):
@@ -233,16 +268,39 @@ class GenericPageFormView(GenericInfoPageFormView):
         )
 
 
-class NewPageFormView(GenericPageFormView, CreateView):
+class NewPlayItemFormView(GenericPageFormView, CreateView):
     def form_valid(self, form, answer_formset):
         # form.instance.page_type = self.page_type.val
         # form.instance.module_id = self.mymodule.id
         # form.instance.updated = True
-        return super(NewPageFormView, self).form_valid(form, answer_formset)
+        return super(NewPlayItemFormView, self).form_valid(form, answer_formset)
 
 
-class EditPageFormView(GenericPageFormView, UpdateView):
+class EditPlayItemFormView(GenericPageFormView, UpdateView):
     def post(self, request, *args, **kwargs):
         self.object = self.mypage
-        return super(EditPageFormView, self).post(request, *args, **kwargs)
+        return super(EditPlayItemFormView, self).post(request, *args, **kwargs)
 
+
+# class DeletePlayItemView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
+class DeletePlayItemView(LoginRequiredMixin, DeleteView):
+    def get_object(self, queryset=None):
+        return self.mypage
+
+    def get_success_url(self):
+        return reverse_lazy('edit_playlist',
+                            kwargs={'playlist_id': self.myplaylist.id})
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Calls the delete() method on the fetched object and then
+        redirects to the success URL.
+        """
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.delete()
+
+        self.mymodule.published_at = None
+        self.mymodule.save(force_update=True)
+
+        return HttpResponseRedirect(success_url)
