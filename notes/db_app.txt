@@ -55,5 +55,5 @@ pyminifier --obfuscate --nonlatin --outfile=d:\Surmylo\domectrl\qweqweq_min\mcon
 pyminifier --obfuscate --nonlatin --outfile=d:\Surmylo\domectrl\qweqweq_min\mviews.py d:\Surmylo\domectrl\domeuser\views.py
 
 
-
+http://127.0.0.1:8000/domeplaylist/playlist/1/edit/
 

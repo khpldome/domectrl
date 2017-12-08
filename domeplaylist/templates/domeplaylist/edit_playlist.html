@@ -45,16 +45,17 @@
 {#                    <a href="{% url 'choose_page_type' module_id=object.id %}" class="btn btn-info marg-b">Add New Page</a>#}
                 </div>
                 <div id="page-list">
-                    {% for page in pages %}
-                        <div class="flex-row {% if page.page_type == 1 %} info-page {% endif %}"
-                            data-page-id="{{ page.id }}">
+                    {% for playitem in pages %}
+                        <div class="flex-row {% if playitem.page_type == 1 %} info-page {% endif %}"
+                            data-page-id="{{ playitem.id }}">
                             <div class="handle-list">
                                 <div></div>
                                 <div></div>
                                 <div></div>
                             </div>
-                            <div class="w30">{{ page.get_page_type_display }}</div>
-                            <div class="grow1">{{ page.title }}</div>
+                            <div class="w30">{{ playitem.get_page_type_display }}</div>
+                            <div class="grow1">{{ playitem.title }}</div>
+                            <div class="grow1">{{ playitem.text }}</div>
                         </div>
                     {% endfor %}
                 </div>
