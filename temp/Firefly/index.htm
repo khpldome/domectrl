@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>FireFly</title>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.css"> -->
+    <link rel="stylesheet" href="style/normalize.css">
+    <link rel="stylesheet" href="style/main.css">
+
+</head>
+<body>
+    <div class="grid">
+        <header>
+            <div class="logo">
+                <img class="logo-img" src="" alt="firefly" />
+            </div>
+            <nav>
+                <a href="#" class="tab-link link-playlists active">
+                    <span class="link-playlists-text">Плейлисты</span>
+                </a>
+                <a href="#" class="tab-link link-more">
+                    <span class="link-more-text">Еще</span>
+                </a>
+            </nav>
+            <div class="projectors-turn">
+                <!-- <span class="projectors-turn-on">Вкл</span> -->
+                <span class="icon icon-projectors-turn-on"><!-- Вкл --></span>
+                <!-- <span class="projectors-turn-off" style="display: none;">Выкл</span> -->
+                <span class="icon icon-projectors-turn-off" style="display: none;"><!-- Выкл --></span>
+            </div>
+            <div class="status">
+                <span class="icon icon-speed"></span>
+                <div class="status-project">
+                    <span class="icon icon-status-project-on">Проекторы</span>
+                </div>
+                <div class="status-player">
+                    <span class="icon icon-status-player-on">Плеер</span>
+                </div>
+                <div class="status-calib disabled">
+                    <span class="icon icon-status-calib-off">Калибровки</span>
+                </div>
+                <div class="status-mosaic">
+                    <span class="icon icon-status-mosaic-on">Мозаика</span>
+                </div>
+            </div>
+            <div class="account">
+                <span class="icon icon-log">User Name</span>
+            </div>
+        </header>
+        <div class="grid-tabs">
+            <div class="tab tab-playlists">
+                <aside class="sidebar sidebar-playlists">
+                    <div class="playlist-new">
+                        <a href="#">
+                            <span class="icon icon-plus"></span>
+                            <span>Новый плейлист</span>
+                        </a>
+                    </div>
+                    <ul class="playlists">
+                        <li class="playlists-item">
+                            <span>Lorem ipsum dolor</span>
+                        </li>
+                        <li class="playlists-item">
+                            <span>Lorem ipsum dolor sit amet</span>
+                        </li>
+                        <li class="playlists-item">
+                            <span>Lorem ips</span>
+                        </li>
+                        <li class="playlists-item">
+                            <span>Lorem</span>
+                        </li>
+                        <li class="playlists-item playlists-item-active">
+                            <span>Имя активного плейлиста</span>
+                        </li>
+                        <li class="playlists-item">
+                            <span>Dolor sit amet</span>
+                        </li>
+                        <li class="playlists-item playlist-item-dragged">
+                            <span class="icon icon-vdots"></span>
+                            <span>Sed do eiusmod
+                            tempor incididunt ut</span>
+                            <span class="icon icon-trash"></span>
+                        </li>
+                        <li class="playlists-item">
+                            <span>Lorem ipsum</span>
+                        </li>
+                    </ul>
+                </aside>
+                <div class="playlist-current">
+                    <div class="playlist-title">
+                        <h2>Имя активного плейлиста</h2>
+                        <a href="#" title="Добавить видео" class="playlist-video-add">
+                            <span class="icon icon-add-video"></span>
+                        </a>
+                        <a href="#" title="Развернуть" class="playlist-collapse">
+                            <span class="icon icon-collapse"></span>
+                        </a>
+                        <div class="playlist-collapse-active"></div>
+                        <a href="#" title="Свернуть" class="playlist-expand">
+                            <span class="icon icon-expand"></span>
+                        </a>
+                    </div>
+                    <div class="playlist-items-container">
+                        <div class="playlist-item playlist-item-1">
+                            <div class="playlist-item-move">
+                                <span class="no-icon"></span>
+                            </div>
+                            <div class="playlist-item-poster-play">
+                                <div class="playlist-item-play">
+                                    <span class="no-icon"></span>
+                                </div>
+                                <div class="playlist-item-poster">
+                                    <img  class="playlist-item-poster-img">
+                                </div>
+                            </div>
+                            <div class="playlist-item-title">
+                                <h3>Eos alias.avi</h3>
+                            </div>
+                            <div class="playlist-item-info">
+                                <div class="playlist-item-info-time">
+                                    <span class="icon icon-time">15:20</span>
+                                </div>
+                                <div class="playlist-item-info-size">
+                                    <span class="icon icon-size">4096x4096@23.97fps</span>
+                                </div>
+                                <div class="playlist-item-info-bitrate">
+                                    <span class="icon icon-bitrate">384 kbps</span>
+                                </div>
+                            </div>
+                            <div class="playlist-item-trash">
+                                <span class="no-icon"></span>
+                            </div>
+                        </div>
+                        <div class="playlist-item playlist-item-2">
+                            <div class="playlist-item-move">
+                                <span class="no-icon"></span>
+                            </div>
+                            <div class="playlist-item-poster-play">
+                                <div class="playlist-item-play">
+                                    <span class="no-icon"></span>
+                                </div>
+                                <div class="playlist-item-poster">
+                                    <img src="" alt="" class="playlist-item-poster-img" />
+                                </div>
+                            </div>
+                            <div class="playlist-item-title">
+                                <h3>Lorem ipsum.avi</h3>
+                            </div>
+                            <div class="playlist-item-info">
+                                <div class="playlist-item-info-time">
+                                    <span class="icon icon-time">15:20</span>
+                                </div>
+                                <div class="playlist-item-info-size">
+                                    <span class="icon icon-size">4096x4096@23.97fps</span>
+                                </div>
+                                <div class="playlist-item-info-bitrate">
+                                    <span class="icon icon-bitrate">384 kbps</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="playlist-item playlist-item-3 playlist-active">
+                            <div class="playlist-item-move">
+                                <span class="no-icon"></span>
+                            </div>
+                            <div class="playlist-item-poster-play">
+                                <div class="playlist-item-play">
+                                    <span class="no-icon"></span>
+                                </div>
+                                <div class="playlist-item-poster">
+                                    <img src="" alt="" class="playlist-item-poster-img" />
+                                </div>
+                            </div>
+                            <div class="playlist-item-title">
+                                <h3>Dolor sit amet.mp4</h3>
+                            </div>
+                            <div class="playlist-item-info">
+                                <div class="playlist-item-info-time">
+                                    <span class="icon icon-time">15:20</span>
+                                </div>
+                                <div class="playlist-item-info-size">
+                                    <span class="icon icon-size">4096x4096@23.97fps</span>
+                                </div>
+                                <div class="playlist-item-info-bitrate">
+                                    <span class="icon icon-bitrate">384 kbps</span>
+                                </div>
+                            </div>
+                            <div class="playlist-item-icon-trash">
+                                <span class="no-icon"></span>
+                            </div>
+                        </div>
+                        <div class="playlist-item playlist-item-4">
+                            <div class="playlist-item-move">
+                                <span class="no-icon"></span>
+                            </div>
+                            <div class="playlist-item-poster-play">
+                                <div class="playlist-item-play">
+                                    <span class="no-icon"></span>
+                                </div>
+                                <div class="playlist-item-poster">
+                                    <img src="" alt="" class="playlist-item-poster-img" />
+                                </div>
+                            </div>
+                            <div class="playlist-item-title">
+                                <h3>Laboriosam.avi</h3>
+                            </div>
+                            <div class="playlist-item-info">
+                                <div class="playlist-item-info-time">
+                                    <span class="icon icon-time">15:20</span>
+                                </div>
+                                <div class="playlist-item-info-size">
+                                    <span class="icon icon-size">4096x4096@23.97fps</span>
+                                </div>
+                                <div class="playlist-item-info-bitrate">
+                                    <span class="icon icon-bitrate">384 kbps</span>
+                                </div>
+                            </div>
+                            <div class="playlist-item-icon-trash">
+                                <span class="no-icon"></span>
+                            </div>
+                        </div>
+                        <div class="playlist-item playlist-item-5">
+                            <div class="playlist-item-move">
+                                <span class="no-icon"></span>
+                            </div>
+                            <div class="playlist-item-poster-play">
+                                <div class="playlist-item-play">
+                                    <span class="no-icon"></span>
+                                </div>
+                                <div class="playlist-item-poster">
+                                    <img src="" alt="" class="playlist-item-poster-img" />
+                                </div>
+                            </div>
+                            <div class="playlist-item-title">
+                                <h3>Duis aute irure.mp4</h3>
+                            </div>
+                            <div class="playlist-item-info">
+                                <div class="playlist-item-info-time">
+                                    <span class="icon icon-time">15:20</span>
+                                </div>
+                                <div class="playlist-item-info-size">
+                                    <span class="icon icon-size">4096x4096@23.97fps</span>
+                                </div>
+                                <div class="playlist-item-info-bitrate">
+                                    <span class="icon icon-bitrate">384 kbps</span>
+                                </div>
+                            </div>
+                            <div class="playlist-item-icon-trash">
+                                <span class="no-icon"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--             <div class="tab tab-more">
+                <aside class='sidebar sidebar-more'>
+                
+                </aside>
+            </div> -->
+        </div>
+    </div>
+</body>
+</html>

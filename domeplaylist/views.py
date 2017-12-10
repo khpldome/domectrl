@@ -35,6 +35,7 @@ from django.conf import settings
 
 class DashboardView(LoginRequiredMixin, ListView):
     template_name = 'domeplaylist/dashboard.html'
+    context_object_name = "playlist"
 
     def get(self, request, *args, **kwargs):
         return super(DashboardView, self).get(request, *args, **kwargs)
@@ -45,7 +46,13 @@ class DashboardView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
+
+        playitem_qs = PlayItem.objects.all()
+        context['playitem_qs'] = playitem_qs
         return context
+
+
+
 
 
 # class StoreView(StorePermissionMixin, ListView):
