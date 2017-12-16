@@ -7,7 +7,8 @@
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.css"> -->
     <link rel="stylesheet" href="style/normalize.css">
     <link rel="stylesheet" href="style/main.css">
-
+    <script src=js/jquery.js type="text/javascript" charset="utf-8"></script>
+    <script src=js/firefly.js type="text/javascript" charset="utf-8" /></script>
 </head>
 <body>
     <div class="grid">
@@ -16,10 +17,10 @@
                 <img class="logo-img" src="" alt="firefly" />
             </div>
             <nav>
-                <a href="#" class="tab-link link-playlists active">
+                <a href="#playlists" class="tab-link link-playlists tab-link-active">
                     <span class="link-playlists-text">Плейлисты</span>
                 </a>
-                <a href="#" class="tab-link link-more">
+                <a href="#more" class="tab-link link-more">
                     <span class="link-more-text">Еще</span>
                 </a>
             </nav>
@@ -93,22 +94,23 @@
                         <a href="#" title="Добавить видео" class="playlist-video-add">
                             <span class="icon icon-add-video"></span>
                         </a>
-                        <a href="#" title="Развернуть" class="playlist-collapse">
-                            <span class="icon icon-collapse"></span>
-                        </a>
-                        <div class="playlist-collapse-active"></div>
-                        <a href="#" title="Свернуть" class="playlist-expand">
+                        <a href="#expand" title="Развернуть" class="playlist-expand">
                             <span class="icon icon-expand"></span>
                         </a>
+                        <div class="playlist-expand-button-bg pressed"></div>
+                        <a href="#collaps" title="Свернуть" class="playlist-collapse">
+                            <span class="icon icon-collapse"></span>
+                        </a>
+                        <div class="playlist-collapse-button-bg"></div>
                     </div>
                     <div class="playlist-items-container">
                         <div class="playlist-item playlist-item-1">
                             <div class="playlist-item-move">
-                                <span class="no-icon"></span>
+                                <span class="icon-move"></span>
                             </div>
                             <div class="playlist-item-poster-play">
                                 <div class="playlist-item-play">
-                                    <span class="no-icon"></span>
+                                    <span class="icon-play"></span>
                                 </div>
                                 <div class="playlist-item-poster">
                                     <img  class="playlist-item-poster-img">
@@ -129,23 +131,23 @@
                                 </div>
                             </div>
                             <div class="playlist-item-trash">
-                                <span class="no-icon"></span>
+                                <span class="icon-trash"></span>
                             </div>
                         </div>
                         <div class="playlist-item playlist-item-2">
                             <div class="playlist-item-move">
-                                <span class="no-icon"></span>
+                                <span class="icon-move"></span>
                             </div>
                             <div class="playlist-item-poster-play">
                                 <div class="playlist-item-play">
-                                    <span class="no-icon"></span>
+                                    <span class="icon-play"></span>
                                 </div>
                                 <div class="playlist-item-poster">
-                                    <img src="" alt="" class="playlist-item-poster-img" />
+                                    <img  class="playlist-item-poster-img">
                                 </div>
                             </div>
                             <div class="playlist-item-title">
-                                <h3>Lorem ipsum.avi</h3>
+                                <h3>Eos alias.avi</h3>
                             </div>
                             <div class="playlist-item-info">
                                 <div class="playlist-item-info-time">
@@ -157,22 +159,25 @@
                                 <div class="playlist-item-info-bitrate">
                                     <span class="icon icon-bitrate">384 kbps</span>
                                 </div>
+                            </div>
+                            <div class="playlist-item-trash">
+                                <span class="icon-trash"></span>
                             </div>
                         </div>
-                        <div class="playlist-item playlist-item-3 playlist-active">
+                        <div class="playlist-item playlist-item-3 active">
                             <div class="playlist-item-move">
-                                <span class="no-icon"></span>
+                                <span class="icon-move"></span>
                             </div>
                             <div class="playlist-item-poster-play">
                                 <div class="playlist-item-play">
-                                    <span class="no-icon"></span>
+                                    <span class="icon-play"></span>
                                 </div>
                                 <div class="playlist-item-poster">
-                                    <img src="" alt="" class="playlist-item-poster-img" />
+                                    <img  class="playlist-item-poster-img">
                                 </div>
                             </div>
                             <div class="playlist-item-title">
-                                <h3>Dolor sit amet.mp4</h3>
+                                <h3>Eos alias.avi</h3>
                             </div>
                             <div class="playlist-item-info">
                                 <div class="playlist-item-info-time">
@@ -185,24 +190,24 @@
                                     <span class="icon icon-bitrate">384 kbps</span>
                                 </div>
                             </div>
-                            <div class="playlist-item-icon-trash">
-                                <span class="no-icon"></span>
+                            <div class="playlist-item-trash">
+                                <span class="icon-trash"></span>
                             </div>
                         </div>
                         <div class="playlist-item playlist-item-4">
                             <div class="playlist-item-move">
-                                <span class="no-icon"></span>
+                                <span class="icon-move"></span>
                             </div>
                             <div class="playlist-item-poster-play">
                                 <div class="playlist-item-play">
-                                    <span class="no-icon"></span>
+                                    <span class="icon-play"></span>
                                 </div>
                                 <div class="playlist-item-poster">
-                                    <img src="" alt="" class="playlist-item-poster-img" />
+                                    <img  class="playlist-item-poster-img">
                                 </div>
                             </div>
                             <div class="playlist-item-title">
-                                <h3>Laboriosam.avi</h3>
+                                <h3>Eos alias.avi</h3>
                             </div>
                             <div class="playlist-item-info">
                                 <div class="playlist-item-info-time">
@@ -215,24 +220,24 @@
                                     <span class="icon icon-bitrate">384 kbps</span>
                                 </div>
                             </div>
-                            <div class="playlist-item-icon-trash">
-                                <span class="no-icon"></span>
+                            <div class="playlist-item-trash">
+                                <span class="icon-trash"></span>
                             </div>
                         </div>
                         <div class="playlist-item playlist-item-5">
                             <div class="playlist-item-move">
-                                <span class="no-icon"></span>
+                                <span class="icon-move"></span>
                             </div>
                             <div class="playlist-item-poster-play">
                                 <div class="playlist-item-play">
-                                    <span class="no-icon"></span>
+                                    <span class="icon-play"></span>
                                 </div>
                                 <div class="playlist-item-poster">
-                                    <img src="" alt="" class="playlist-item-poster-img" />
+                                    <img  class="playlist-item-poster-img">
                                 </div>
                             </div>
                             <div class="playlist-item-title">
-                                <h3>Duis aute irure.mp4</h3>
+                                <h3>Eos alias.avi</h3>
                             </div>
                             <div class="playlist-item-info">
                                 <div class="playlist-item-info-time">
@@ -245,18 +250,319 @@
                                     <span class="icon icon-bitrate">384 kbps</span>
                                 </div>
                             </div>
-                            <div class="playlist-item-icon-trash">
-                                <span class="no-icon"></span>
+                            <div class="playlist-item-trash">
+                                <span class="icon-trash"></span>
+                            </div>
+                        </div>
+                        <div class="playlist-item playlist-item-6">
+                            <div class="playlist-item-move">
+                                <span class="icon-move"></span>
+                            </div>
+                            <div class="playlist-item-poster-play">
+                                <div class="playlist-item-play">
+                                    <span class="icon-play"></span>
+                                </div>
+                                <div class="playlist-item-poster">
+                                    <img  class="playlist-item-poster-img">
+                                </div>
+                            </div>
+                            <div class="playlist-item-title">
+                                <h3>Eos alias.avi</h3>
+                            </div>
+                            <div class="playlist-item-info">
+                                <div class="playlist-item-info-time">
+                                    <span class="icon icon-time">15:20</span>
+                                </div>
+                                <div class="playlist-item-info-size">
+                                    <span class="icon icon-size">4096x4096@23.97fps</span>
+                                </div>
+                                <div class="playlist-item-info-bitrate">
+                                    <span class="icon icon-bitrate">384 kbps</span>
+                                </div>
+                            </div>
+                            <div class="playlist-item-trash">
+                                <span class="icon-trash"></span>
+                            </div>
+                        </div>
+                        <div class="playlist-item playlist-item-7">
+                            <div class="playlist-item-move">
+                                <span class="icon-move"></span>
+                            </div>
+                            <div class="playlist-item-poster-play">
+                                <div class="playlist-item-play">
+                                    <span class="icon-play"></span>
+                                </div>
+                                <div class="playlist-item-poster">
+                                    <img  class="playlist-item-poster-img">
+                                </div>
+                            </div>
+                            <div class="playlist-item-title">
+                                <h3>Eos alias.avi</h3>
+                            </div>
+                            <div class="playlist-item-info">
+                                <div class="playlist-item-info-time">
+                                    <span class="icon icon-time">15:20</span>
+                                </div>
+                                <div class="playlist-item-info-size">
+                                    <span class="icon icon-size">4096x4096@23.97fps</span>
+                                </div>
+                                <div class="playlist-item-info-bitrate">
+                                    <span class="icon icon-bitrate">384 kbps</span>
+                                </div>
+                            </div>
+                            <div class="playlist-item-trash">
+                                <span class="icon-trash"></span>
+                            </div>
+                        </div>
+                        <div class="playlist-item playlist-item-8">
+                            <div class="playlist-item-move">
+                                <span class="icon-move"></span>
+                            </div>
+                            <div class="playlist-item-poster-play">
+                                <div class="playlist-item-play">
+                                    <span class="icon-play"></span>
+                                </div>
+                                <div class="playlist-item-poster">
+                                    <img  class="playlist-item-poster-img">
+                                </div>
+                            </div>
+                            <div class="playlist-item-title">
+                                <h3>Eos alias.avi</h3>
+                            </div>
+                            <div class="playlist-item-info">
+                                <div class="playlist-item-info-time">
+                                    <span class="icon icon-time">15:20</span>
+                                </div>
+                                <div class="playlist-item-info-size">
+                                    <span class="icon icon-size">4096x4096@23.97fps</span>
+                                </div>
+                                <div class="playlist-item-info-bitrate">
+                                    <span class="icon icon-bitrate">384 kbps</span>
+                                </div>
+                            </div>
+                            <div class="playlist-item-trash">
+                                <span class="icon-trash"></span>
+                            </div>
+                        </div>
+                        <div class="playlist-item playlist-item-9">
+                            <div class="playlist-item-move">
+                                <span class="icon-move"></span>
+                            </div>
+                            <div class="playlist-item-poster-play">
+                                <div class="playlist-item-play">
+                                    <span class="icon-play"></span>
+                                </div>
+                                <div class="playlist-item-poster">
+                                    <img  class="playlist-item-poster-img">
+                                </div>
+                            </div>
+                            <div class="playlist-item-title">
+                                <h3>Eos alias.avi</h3>
+                            </div>
+                            <div class="playlist-item-info">
+                                <div class="playlist-item-info-time">
+                                    <span class="icon icon-time">15:20</span>
+                                </div>
+                                <div class="playlist-item-info-size">
+                                    <span class="icon icon-size">4096x4096@23.97fps</span>
+                                </div>
+                                <div class="playlist-item-info-bitrate">
+                                    <span class="icon icon-bitrate">384 kbps</span>
+                                </div>
+                            </div>
+                            <div class="playlist-item-trash">
+                                <span class="icon-trash"></span>
+                            </div>
+                        </div>
+                        <div class="playlist-item playlist-item-10">
+                            <div class="playlist-item-move">
+                                <span class="icon-move"></span>
+                            </div>
+                            <div class="playlist-item-poster-play">
+                                <div class="playlist-item-play">
+                                    <span class="icon-play"></span>
+                                </div>
+                                <div class="playlist-item-poster">
+                                    <img  class="playlist-item-poster-img">
+                                </div>
+                            </div>
+                            <div class="playlist-item-title">
+                                <h3>Eos alias.avi</h3>
+                            </div>
+                            <div class="playlist-item-info">
+                                <div class="playlist-item-info-time">
+                                    <span class="icon icon-time">15:20</span>
+                                </div>
+                                <div class="playlist-item-info-size">
+                                    <span class="icon icon-size">4096x4096@23.97fps</span>
+                                </div>
+                                <div class="playlist-item-info-bitrate">
+                                    <span class="icon icon-bitrate">384 kbps</span>
+                                </div>
+                            </div>
+                            <div class="playlist-item-trash">
+                                <span class="icon-trash"></span>
+                            </div>
+                        </div>
+                        <div class="playlist-item playlist-item-11">
+                            <div class="playlist-item-move">
+                                <span class="icon-move"></span>
+                            </div>
+                            <div class="playlist-item-poster-play">
+                                <div class="playlist-item-play">
+                                    <span class="icon-play"></span>
+                                </div>
+                                <div class="playlist-item-poster">
+                                    <img  class="playlist-item-poster-img">
+                                </div>
+                            </div>
+                            <div class="playlist-item-title">
+                                <h3>Eos alias.avi</h3>
+                            </div>
+                            <div class="playlist-item-info">
+                                <div class="playlist-item-info-time">
+                                    <span class="icon icon-time">15:20</span>
+                                </div>
+                                <div class="playlist-item-info-size">
+                                    <span class="icon icon-size">4096x4096@23.97fps</span>
+                                </div>
+                                <div class="playlist-item-info-bitrate">
+                                    <span class="icon icon-bitrate">384 kbps</span>
+                                </div>
+                            </div>
+                            <div class="playlist-item-trash">
+                                <span class="icon-trash"></span>
+                            </div>
+                        </div>
+                        <div class="playlist-item playlist-item-12">
+                            <div class="playlist-item-move">
+                                <span class="icon-move"></span>
+                            </div>
+                            <div class="playlist-item-poster-play">
+                                <div class="playlist-item-play">
+                                    <span class="icon-play"></span>
+                                </div>
+                                <div class="playlist-item-poster">
+                                    <img  class="playlist-item-poster-img">
+                                </div>
+                            </div>
+                            <div class="playlist-item-title">
+                                <h3>Eos alias.avi</h3>
+                            </div>
+                            <div class="playlist-item-info">
+                                <div class="playlist-item-info-time">
+                                    <span class="icon icon-time">15:20</span>
+                                </div>
+                                <div class="playlist-item-info-size">
+                                    <span class="icon icon-size">4096x4096@23.97fps</span>
+                                </div>
+                                <div class="playlist-item-info-bitrate">
+                                    <span class="icon icon-bitrate">384 kbps</span>
+                                </div>
+                            </div>
+                            <div class="playlist-item-trash">
+                                <span class="icon-trash"></span>
+                            </div>
+                        </div>
+                        <div class="playlist-item playlist-item-13">
+                            <div class="playlist-item-move">
+                                <span class="icon-move"></span>
+                            </div>
+                            <div class="playlist-item-poster-play">
+                                <div class="playlist-item-play">
+                                    <span class="icon-play"></span>
+                                </div>
+                                <div class="playlist-item-poster">
+                                    <img  class="playlist-item-poster-img">
+                                </div>
+                            </div>
+                            <div class="playlist-item-title">
+                                <h3>Eos alias.avi</h3>
+                            </div>
+                            <div class="playlist-item-info">
+                                <div class="playlist-item-info-time">
+                                    <span class="icon icon-time">15:20</span>
+                                </div>
+                                <div class="playlist-item-info-size">
+                                    <span class="icon icon-size">4096x4096@23.97fps</span>
+                                </div>
+                                <div class="playlist-item-info-bitrate">
+                                    <span class="icon icon-bitrate">384 kbps</span>
+                                </div>
+                            </div>
+                            <div class="playlist-item-trash">
+                                <span class="icon-trash"></span>
+                            </div>
+                        </div>
+                        <div class="playlist-item playlist-item-14">
+                            <div class="playlist-item-move">
+                                <span class="icon-move"></span>
+                            </div>
+                            <div class="playlist-item-poster-play">
+                                <div class="playlist-item-play">
+                                    <span class="icon-play"></span>
+                                </div>
+                                <div class="playlist-item-poster">
+                                    <img  class="playlist-item-poster-img">
+                                </div>
+                            </div>
+                            <div class="playlist-item-title">
+                                <h3>Eos alias.avi</h3>
+                            </div>
+                            <div class="playlist-item-info">
+                                <div class="playlist-item-info-time">
+                                    <span class="icon icon-time">15:20</span>
+                                </div>
+                                <div class="playlist-item-info-size">
+                                    <span class="icon icon-size">4096x4096@23.97fps</span>
+                                </div>
+                                <div class="playlist-item-info-bitrate">
+                                    <span class="icon icon-bitrate">384 kbps</span>
+                                </div>
+                            </div>
+                            <div class="playlist-item-trash">
+                                <span class="icon-trash"></span>
+                            </div>
+                        </div>
+                        <div class="playlist-item playlist-item-15">
+                            <div class="playlist-item-move">
+                                <span class="icon-move"></span>
+                            </div>
+                            <div class="playlist-item-poster-play">
+                                <div class="playlist-item-play">
+                                    <span class="icon-play"></span>
+                                </div>
+                                <div class="playlist-item-poster">
+                                    <img  class="playlist-item-poster-img">
+                                </div>
+                            </div>
+                            <div class="playlist-item-title">
+                                <h3>Eos alias.avi</h3>
+                            </div>
+                            <div class="playlist-item-info">
+                                <div class="playlist-item-info-time">
+                                    <span class="icon icon-time">15:20</span>
+                                </div>
+                                <div class="playlist-item-info-size">
+                                    <span class="icon icon-size">4096x4096@23.97fps</span>
+                                </div>
+                                <div class="playlist-item-info-bitrate">
+                                    <span class="icon icon-bitrate">384 kbps</span>
+                                </div>
+                            </div>
+                            <div class="playlist-item-trash">
+                                <span class="icon-trash"></span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-<!--             <div class="tab tab-more">
+            <div class="tab tab-more" style="display: none;">
                 <aside class='sidebar sidebar-more'>
-                
+                asdasdasdasdas
                 </aside>
-            </div> -->
+                asdasdasdasdas
+            </div>
         </div>
     </div>
 </body>

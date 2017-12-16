@@ -12,10 +12,10 @@ class PlayList(models.Model):
     )
     # summaryfactor = models.ForeignKey(SummaryFactor, related_name="related_mzodiac", on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=50)
-    zodiac_choice = models.PositiveSmallIntegerField(blank=False, null=False, choices=THEME)
+    theme = models.PositiveSmallIntegerField(blank=False, null=False, choices=THEME)
 
     def __str__(self):
-        return "id:{} {} of {}".format(self.id, self.zodiac_choice, self.title)
+        return "id:{} {} of {}".format(self.id, self.theme, self.title)
 
 
 class PlayItem(models.Model):

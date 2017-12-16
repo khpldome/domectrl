@@ -47,7 +47,7 @@ class PlayListForm(forms.ModelForm):
         model = PlayList
         # 'published_at' used here for setting to None after editing
         fields = (
-            'id', 'title', 'zodiac_choice',
+            'id', 'title', "theme",
             # 'published_at'
         )
 

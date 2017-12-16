@@ -3,11 +3,11 @@
 {% load staticfiles %}
 
 {#{% block main_container %}#}
-    {#    <div class="panel panel-default">#}
+{#    <div class="panel panel-default">#}
 {#        <div class="panel-heading">My Playlists</div>#}
 {#        <div class="panel-body">#}
 {##}
-            {#===============================================================================================#}
+{#===============================================================================================#}
 {#            {% if object_list %}#}
 {#                <div class="panel-content">#}
 {#                    <a class="mdl-preview" href="{% url 'new_study_module' %}">Click to create a new study module</a>#}
@@ -25,7 +25,7 @@
 {#                    {% endfor %}#}
 {#                </div>#}
 {#            {% endif %}#}
-            {#===============================================================================================#}
+{#===============================================================================================#}
 {##}
 {#        </div>#}
 {#    </div>#}
@@ -58,137 +58,87 @@
 {#    </div>#}
 
 
-
 {#{% endblock main_container %}#}
 
 {% block aside_bar %}
-                    <div class="playlist-new">
-                        <a href="#">
-                            <span class="icon icon-plus"></span>
-                            <span>Новый плейлист</span>
-                        </a>
-                    </div>
 
-            {#===============================================================================================#}
-            {% if object_list %}
-                <div class="panel-content">
-{#                    <a class="mdl-preview" href="{% url 'new_study_module' %}">Click to create a new study module</a>#}
-                    <ul class="playlists">
+    <div class="playlist-new">
+        <a href="#">
+            <span class="icon icon-plus"></span>
+            <span>Новый плейлист</span>
+        </a>
+    </div>
 
-                    {% for module in playlist %}
+    {#===============================================================================================#}
+    {% if object_list %}
 
-{#                        <div class="mdl-preview">#}
-{#                            <div class="dashboard-module-image"#}
-{#                                 style="background: url('{% if module.image %}{{ module.image.url }}{% else %}{% static 'img/default_cover_image.jpg' %}{% endif %}') no-repeat calc(50%);">#}
-{#                            </div>#}
-{#                            <p title="ID: {{ module.id }}, ver: {{ module.version }}">#}
-{#                                {{ module.title}}#}
-{#                                {{ module.zodiac_choice}}#}
-{#                            </p>#}
-{#                            <a class="btn btn-default grey" href="{% url 'edit_playlist' playlist_id=module.id %}">Edit</a>#}
-{#                        </div>#}
+        <ul class="playlists">
 
-                        <li class="playlists-item">
-                            <span>{{ module.title}}</span>
-                        </li>
-                        <!--<li class="playlists-item playlists-item-active">-->
-                            <!--<span>Имя активного плейлиста</span>-->
-                        <!--</li>-->
+            {% for module in playlist %}
 
+                <li class="playlists-item">
+                    <span>{{ module.title }}</span>
+                </li>
+            {% endfor %}
+        </ul>
 
-                    {% endfor %}
-                    </ul>
-
-                </div>
-            {% endif %}
-            {#===============================================================================================#}
+    {% endif %}
+    {#===============================================================================================#}
 
 
 {% endblock aside_bar %}
 
 {% block main_bar %}
-                    <div class="playlist-title">
-                        <h2>Имя активного плейлиста</h2>
-                        <a href="#" title="Добавить видео" class="playlist-video-add">
-                            <span class="icon icon-add-video"></span>
-                        </a>
-                        <a href="#" title="Развернуть" class="playlist-collapse">
-                            <span class="icon icon-collapse"></span>
-                        </a>
-                        <div class="playlist-collapse-active"></div>
-                        <a href="#" title="Свернуть" class="playlist-expand">
-                            <span class="icon icon-expand"></span>
-                        </a>
+
+    <div class="playlist-title">
+        <h2>Имя активного плейлиста</h2>
+        <a href="#" title="Добавить видео" class="playlist-video-add">
+            <span class="icon icon-add-video"></span>
+        </a>
+        <a href="#" title="Развернуть" class="playlist-collapse">
+            <span class="icon icon-collapse"></span>
+        </a>
+        <div class="playlist-collapse-active"></div>
+        <a href="#" title="Свернуть" class="playlist-expand">
+            <span class="icon icon-expand"></span>
+        </a>
+    </div>
+
+    <div class="playlist-items-container">
+        {% for item in playitem_qs %}
+            <div class="playlist-item playlist-item-1">
+
+                <div class="playlist-item-move">
+                    <span class="icon-move"></span>
+                </div>
+                <div class="playlist-item-poster-play">
+                    <div class="playlist-item-play">
+                        <span class="icon-play"></span>
                     </div>
-                    <div class="playlist-items-container">
-
-                    {% for item in playitem_qs %}
-
-                            <div class="playlist-item playlist-item-1">
-                                <div class="playlist-item-move">
-                                    <span class="no-icon"></span>
-                                </div>
-                                <div class="playlist-item-poster-play">
-                                    <div class="playlist-item-play">
-                                        <span class="no-icon"></span>
-                                    </div>
-                                    <div class="playlist-item-poster">
-                                        <img class="playlist-item-poster-img">
-                                    </div>
-                                </div>
-                                <div class="playlist-item-title">
-                                    <h3>{{ item.title}}</h3>
-                                </div>
-                                <div class="playlist-item-info">
-                                    <div class="playlist-item-info-time">
-                                        <span class="icon icon-time">15:20</span>
-                                    </div>
-                                    <div class="playlist-item-info-size">
-                                        <span class="icon icon-size">4096x4096@23.97fps</span>
-                                    </div>
-                                    <div class="playlist-item-info-bitrate">
-                                        <span class="icon icon-bitrate">384 kbps</span>
-                                    </div>
-                                </div>
-                                <div class="playlist-item-trash">
-                                    <span class="no-icon"></span>
-                                </div>
-                            </div>
-
-                    {% endfor %}
-
-
-                        <!--<div class="playlist-item playlist-item-1">-->
-                            <!--<div class="playlist-item-move">-->
-                                <!--<span class="no-icon"></span>-->
-                            <!--</div>-->
-                            <!--<div class="playlist-item-poster-play">-->
-                                <!--<div class="playlist-item-play">-->
-                                    <!--<span class="no-icon"></span>-->
-                                <!--</div>-->
-                                <!--<div class="playlist-item-poster">-->
-                                    <!--<img  class="playlist-item-poster-img">-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="playlist-item-title">-->
-                                <!--<h3>Eos alias.avi</h3>-->
-                            <!--</div>-->
-                            <!--<div class="playlist-item-info">-->
-                                <!--<div class="playlist-item-info-time">-->
-                                    <!--<span class="icon icon-time">15:20</span>-->
-                                <!--</div>-->
-                                <!--<div class="playlist-item-info-size">-->
-                                    <!--<span class="icon icon-size">4096x4096@23.97fps</span>-->
-                                <!--</div>-->
-                                <!--<div class="playlist-item-info-bitrate">-->
-                                    <!--<span class="icon icon-bitrate">384 kbps</span>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="playlist-item-trash">-->
-                                <!--<span class="no-icon"></span>-->
-                            <!--</div>-->
-                        <!--</div>-->
+                    <div class="playlist-item-poster">
+                        <img class="playlist-item-poster-img">
                     </div>
+                </div>
+                <div class="playlist-item-title">
+                    <h3>{{ item.title }}</h3>
+                </div>
+                <div class="playlist-item-info">
+                    <div class="playlist-item-info-time">
+                        <span class="icon icon-time">15:20</span>
+                    </div>
+                    <div class="playlist-item-info-size">
+                        <span class="icon icon-size">4096x4096@23.97fps</span>
+                    </div>
+                    <div class="playlist-item-info-bitrate">
+                        <span class="icon icon-bitrate">384 kbps</span>
+                    </div>
+                </div>
+                <div class="playlist-item-trash">
+                    <span class="icon-trash"></span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 
 {% endblock main_bar %}
 
@@ -196,11 +146,12 @@
 
 {% block js %}
 
-    <script src="{% static 'madquiz/js/dashboard.js' %}"></script>
+    <script src="{% static 'domeplaylist/js/firefly.js' %}"></script>
+    <script src="{% static 'domeplaylist/js/jquery.js' %}"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-        });
-    </script>
+{#    <script type="text/javascript">#}
+{#        $(document).ready(function () {#}
+{##}
+{#        });#}
+{#    </script>#}
 {% endblock js %}

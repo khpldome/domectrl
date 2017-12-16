@@ -19,7 +19,7 @@ class PlayListAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'title',
-        'zodiac_choice',
+        'theme',
     )
 
     inlines = (PlayItemInline,)
