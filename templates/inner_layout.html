@@ -53,7 +53,16 @@
                 </div>
             </div>
             <div class="account">
-                <span class="icon icon-log">User Name</span>
+                <span class="icon icon-log">{{ user.email }}</span>
+
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'account' %}" class="navbar-link">My Account</a></li>
+                    <li><a href="{% url 'sign_out' %}" class="navbar-link">Sign Out</a></li>
+                {% else %}
+                    <li><a href="{% url 'sign_in' %}" class="navbar-link">Login</a></li>
+                {% endif %}
+
+
             </div>
 
 {% endblock header %}
