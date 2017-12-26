@@ -1,18 +1,11 @@
 body {
-    background: #f08c78; /*tmp*/
     color: rgb(255, 255, 255)
 }
 
 .grid {
     display: grid;
     grid-gap: 0em;
-    grid-template-columns: 15% 1fr;
-    grid-template-rows: 60px 1fr;
-    grid-template-areas:
-        "header header"
-        "content content";
-    background: #9c9;
-    margin: 0.5em;
+    grid-template-rows: 60px 1fr 120px;
 }
 
 header, nav, .status, .grid-tabs, .account, .link-playlists, .link-more {
@@ -21,17 +14,25 @@ header, nav, .status, .grid-tabs, .account, .link-playlists, .link-more {
     width: 100%;
 }
 
+header, footer {
+    background: rgb(19, 20, 24);
+}
+
 header {
     display: grid;
-    grid-area: header;
-    background: rgb(19, 20, 24);
-    grid-template-areas: "logo nav turn status account";
     grid-template-columns: 1.1fr 1.8fr 0.5fr 4.4fr 1.1fr;
+    grid-row: 1/2;
+    grid-column: 1/2;
+    // grid-template-areas: "logo nav turn status account"; //238 170 119+1 (brdr) 148+1(brdr) 30+25+20+9+101+9++67+9+108+63+154+80+29+16+32
     text-align: left;
 }
 
+.logo, nav, .projectors-turn, .status, .account {
+    grid-row: 1/2
+}
+
 header .logo {
-    grid-area: logo;
+    grid-column: 1/2;
 }
 
 .logo-img {
@@ -39,7 +40,7 @@ header .logo {
 }
 
 header nav {
-    grid-area: nav;
+    grid-column: 2/3;
     display: grid;
     grid-template-areas: "playlists more";
     grid-template-columns: 1fr 0.6fr;
@@ -67,7 +68,6 @@ nav a.link-more:before {
     display: flex;
     align-items: center;
     height: 80%;
-    box-sizing: border-box;
     padding-left: 15px;
 }
 
@@ -76,7 +76,6 @@ nav .link-playlists span, nav .link-more span {
     align-items: center;
     justify-content: center;
     height: 80%;
-    box-sizing: border-box;
     width: 100%;
 }
 
@@ -95,7 +94,7 @@ nav .link-more {
 }
 
 header .projectors-turn {
-    grid-area: turn;
+    grid-column: 3/4;
 }
 
 .icon-projectors-turn-on {
@@ -109,7 +108,7 @@ header .projectors-turn {
 // }
 
 header .status {
-    grid-area: status;
+    grid-column: 4/5;
     display: grid;
     grid-template-areas: "speed project player calib mosaic";
     grid-template-columns: 0.4fr 1fr 1fr 1fr 1fr;
@@ -165,7 +164,7 @@ header .status {
 }
 
 header .account {
-    grid-area: account;
+    grid-column: 5/6;
 }
 
 .icon-log:after {
@@ -174,7 +173,8 @@ header .account {
 }
 
 .grid-tabs {
-    grid-area: content;
+    grid-row: 2/3;
+    grid-column: 1/2;
     background-color: rgb(31, 33, 39);
 }
 
@@ -186,12 +186,46 @@ header .account {
 
 .sidebar-playlists {
     grid-area: sidebar-playlists;
+    margin: 1.5em 0 0 1.5em;
+    display: grid;
+    grid-template-rows: 68px repeat(3, 50px);
+    align-items: center;
+    border: 2px solid rgba(255,255,255,0);
+}
+
+.sidebar-playlists-new {
+    display: grid;
+    height: 100%;
+    box-sizing: border-box;
+    align-items: center;
+    border-bottom: 2px solid #36383d;
+}
+
+.sidebar-playlists-new-button {
+    text-decoration: none;
+}
+
+.sidebar-playlists-new-button span:before {
+    content: url(../img/icon-time.svg);
+    padding-right: 5px;
+}
+
+.playlists-item {
+    width: 80%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .playlist-current {
     grid-area: playlist-current;
-    margin: 1.5em 1.5em 0 0;
+    margin-top: 1.5em;
+    margin-right: 1.5em;
+    margin-bottom: 1.5em;
+    margin-left: 0;
     border: 2px solid #2abbff;
+    display: grid;
+    grid-template-rows: 68px 50px 1fr;
 }
 
 .playlist-current h2 {
@@ -204,6 +238,7 @@ header .account {
     grid-template-columns: 1fr 68px 68px 68px;
     align-items: center;
     text-align: center;
+    grid-template-rows: 100%;
 }
 
 .playlist-title h2 {
@@ -227,21 +262,40 @@ header .account {
     grid-row: 1/2;
 }
 
-.icon-add-video:before {
-    content:url(../img/icon-add-video.svg)
+.icon-add-video {
+    display: block;
+    height: 100%;
+    height: calc(100% + 2px);
+    background-image: url(../img/icon-add-video.svg);
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.icon-collapse:before {
-    content:url(../img/icon-collapse.svg)
+.icon-collapse {
+    display: block;
+    height: 100%;
+    background-image:url(../img/icon-collapse.svg);
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.icon-expand:before {
-    content:url(../img/icon-expand.svg)
+.icon-expand {
+    height: 100%;
+    background:url(../img/icon-expand.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.icon-expand.pressed {
+    background:rgba(255,255,255,0.1) url(../img/icon-expand.svg) center no-repeat;
+}
+
+.icon-collapse.pressed {
+    background:rgba(255,255,255,0.1) url(../img/icon-collapse.svg) center no-repeat;
 }
 
 .playlist-items-container {
     display: grid;
-    grid-template-rows: repeat(15, 120px);
 }
 
 .playlist-item {
@@ -267,7 +321,7 @@ header .account {
     text-align: center;
 }
 
-.active .icon-move:after {
+.active .icon-move {
     content: url(../img/icon-time.svg);
     // padding-left: 8px;
 }
@@ -297,7 +351,6 @@ header .account {
 
 .playlist-item-poster-play img {
     content: url('../img/poster.png');
-    width: 100%;
     height: 100%;
 }
 
@@ -350,17 +403,12 @@ header .account {
     text-align: center;
 }
 
-.active .icon-trash:after {
+.active .icon-trash {
     content: url(../img/icon-time.svg);
-    // padding-left: 8px;
 }
 
 .disabled {
     color: rgb(102, 102, 102);
-}
-
-.collapsed {
-    grid-template-rows: repeat(15, 60px);
 }
 
 .collapsed .playlist-item-poster-play img {
@@ -391,11 +439,26 @@ header .account {
     grid-row: 1/2;
 }
 
-.pressed {
-    background: rgba(255,255,255,0.1);
-    display: block;
+.playlist-player {
+    height: 50px;
+    display: grid;
+    grid-template-areas: "play stop current-position bar duration volume-icon volume-bar volume-value lock repeat full";
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    text-align: center;
+    align-items: center;
+    border-bottom: 2px solid #36383d;
+    box-sizing: border-box;
 }
 
 .tab-link-active {
 
+}
+
+footer {
+    grid-row: 3/4;
+    grid-column: 1/2;
+}
+
+.feedback-disable {
+    display: none;
 }

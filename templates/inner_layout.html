@@ -1,71 +1,64 @@
 {% extends "base.html" %}
 
 {% block header %}
-
-<div class="logo">
-    <img class="logo-img" src="" alt="firefly"/>
-</div>
-<nav>
-    <a href="#" class="tab-link link-playlists active">
-        <span class="link-playlists-text">Плейлисты</span>
-    </a>
-    <a href="#" class="tab-link link-more">
-        <span class="link-more-text">Еще</span>
-    </a>
-</nav>
-<div class="projectors-turn">
-    <!-- <span class="projectors-turn-on">Вкл</span> -->
-    <span class="icon icon-projectors-turn-on"><!-- Вкл --></span>
-    <!-- <span class="projectors-turn-off" style="display: none;">Выкл</span> -->
-    <span class="icon icon-projectors-turn-off" style="display: none;"><!-- Выкл --></span>
-</div>
-<div class="status">
-    <span class="icon icon-speed"></span>
-    <div class="status-project">
-        <span class="icon icon-status-project-on">Проекторы</span>
+    <div class="logo">
+        <img class="logo-img" src="" alt="firefly"/>
     </div>
-    <div class="status-player">
-        <span class="icon icon-status-player-on">Плеер</span>
+    <nav>
+        <a href="#playlists" class="tab-link link-playlists tab-link-active">
+            <span class="link-playlists-text">Плейлисты</span>
+        </a>
+        <a href="#more" class="tab-link link-more">
+            <span class="link-more-text">Еще</span>
+        </a>
+    </nav>
+    <div class="projectors-turn">
+        <!-- <span class="projectors-turn-on">Вкл</span> -->
+        <span class="icon icon-projectors-turn-on"><!-- Вкл --></span>
+        <!-- <span class="projectors-turn-off" style="display: none;">Выкл</span> -->
+        <span class="icon icon-projectors-turn-off" style="display: none;"><!-- Выкл --></span>
     </div>
-    <div class="status-calib disabled">
-        <span class="icon icon-status-calib-off">Калибровки</span>
+    <div class="status">
+        <span class="icon icon-speed"></span>
+        <div class="status-project">
+            <span class="icon icon-status-project-on">Проекторы</span>
+        </div>
+        <div class="status-player">
+            <span class="icon icon-status-player-on">Плеер</span>
+        </div>
+        <div class="status-calib disabled">
+            <span class="icon icon-status-calib-off">Калибровки</span>
+        </div>
+        <div class="status-mosaic">
+            <span class="icon icon-status-mosaic-on">Мозаика</span>
+        </div>
     </div>
-    <div class="status-mosaic">
-        <span class="icon icon-status-mosaic-on">Мозаика</span>
+    <div class="account">
+        <span class="icon icon-log"></span>
+        <div class="account-detail" style="display:none">
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'account' %}" class="navbar-link">My Account</a></li>
+                <li><a href="{% url 'sign_out' %}" class="navbar-link">Sign Out</a></li>
+            {% else %}
+                <li><a href="{% url 'sign_in' %}" class="navbar-link">Login</a></li>
+            {% endif %}
+        </div>
     </div>
-</div>
-<div class="account">
-    <span class="icon icon-log">{{ user.email }}</span>
-
-    {% if user.is_authenticated %}
-    <li><a href="{% url 'account' %}" class="navbar-link">My Account</a></li>
-    <li><a href="{% url 'sign_out' %}" class="navbar-link">Sign Out</a></li>
-    {% else %}
-    <li><a href="{% url 'sign_in' %}" class="navbar-link">Login</a></li>
-    {% endif %}
-
-</div>
-
 {% endblock header %}
 
-
 {% block main_container %}
-
-<div class="grid-tabs">
-    <div class="tab tab-playlists">
-        <aside class="sidebar sidebar-playlists">
+    <main class="grid-tabs">
+        <div class="tab tab-playlists">
             {% block aside_bar %}{% endblock aside_bar %}
-
-        </aside>
-        <div class="playlist-current">
             {% block main_bar %}{% endblock main_bar %}
+        </div>
+    </main>
+{% endblock main_container %}
 
-            {% endblock main_container %}
-
-            {% block footer %}
-            <!--<div class="panel panel-default">-->
-            <!--<div class="panel-body">-->
-            <!--<p>Copyright &copy; MadCram Ltd. 2016</p>-->
-            <!--</div>-->
-            <!--</div>-->
-            {% endblock footer %}
+{% block footer %}
+<!--<div class="panel panel-default">-->
+<!--<div class="panel-body">-->
+<!--<p>Copyright &copy; MadCram Ltd. 2016</p>-->
+<!--</div>-->
+<!--</div>-->
+{% endblock footer %}
