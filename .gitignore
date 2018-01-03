@@ -3,6 +3,7 @@
 confidencialy/*
 
 env3/
+venv/
 .idea/*
 **/__pycache__/*
 
