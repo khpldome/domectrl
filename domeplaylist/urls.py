@@ -23,6 +23,7 @@ urlpatterns = [
 
     url(r'^dashboard/$', views.DashboardView.as_view(), name='dashboard'),
 
+    url(r'^new-playlist/$', views.NewPlayListView.as_view(), name='new_playlist'),
 
     url(r'^playlist/(?P<playlist_id>\d+)/', include(playlist_urls)),
 

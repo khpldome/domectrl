@@ -52,30 +52,24 @@ class DashboardView(LoginRequiredMixin, ListView):
         return context
 
 
+class NewPlayListView(LoginRequiredMixin, CreateView):
+    template_name = 'domeplaylist/new_playlist.html'
+    form_class = PlayListForm
 
+    # add the request to the kwargs
+    def get_form_kwargs(self):
+        kwargs = super(NewPlayListView, self).get_form_kwargs()
+        # kwargs['request'] = self.request
+        return kwargs
 
+    def get_success_url(self):
+        return reverse_lazy('choose_page_type',
+                            kwargs={'module_id': self.object.id})
 
-# class StoreView(StorePermissionMixin, ListView):
-class SetView(ListView):
-    model = PlayList
-    template_name = 'domeplaylist/playlist_set.html'
-    context_object_name = "play_list"
-    paginate_by = 48
-
-    def get_queryset(self):
-        res_qs = PlayList.objects.all()
-        return res_qs
-
-    def get_context_data(self, **kwargs):
-        context = super(SetView, self).get_context_data(**kwargs)
-        # parent_ids = [x['module__parent'] for x in UserModule.objects.filter(user=self.request.user.id).values('module__parent').distinct()]
-        # for obj in context['study_list']:
-        #     obj.purchased_flag = obj.parent_id in parent_ids
-
-        context.update({
-            # 'form': StoreSearchForm(),
-        })
-        return context
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user.id
+        form.instance.edit_version = True
+        return super(NewPlayListView, self).form_valid(form)
 
 
 class PlayListEditView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
