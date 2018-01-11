@@ -1,0 +1,25 @@
+{% extends "inner_layout.html" %}
+{% load staticfiles %}
+
+{% block title %} New Playlist {% endblock title %}
+
+{#{% block css %}#}
+{#    {{ block.super }}#}
+{#    <link rel="stylesheet" href="{% static 'lib/jasny-bootstrap/css/jasny-bootstrap.min.css' %}">#}
+{#{% endblock css %}#}
+
+{% block main_container %}
+    <div class="w-block-wide">
+        {% include "domeplaylist/form_playlist.html" %}
+    </div>
+{% endblock main_container %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'lib/ckeditor/ckeditor.js' %}"></script>
+    <script src="{% static 'lib/jasny-bootstrap/js/jasny-bootstrap.min.js' %}"></script>
+    <script>
+{#        ...#}
+
+    </script>
+{% endblock js %}

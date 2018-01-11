@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
-import datetime
-import json
-import re
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.core.mail import send_mail
@@ -10,72 +7,64 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import View, TemplateView, ListView, FormView, CreateView, UpdateView, DeleteView
-from random import shuffle
 
 from django.views.generic.edit import FormMixin
 
-try:
-    from google.appengine.api import mail
-except ImportError:
-    pass
+# try:
+#     from google.appengine.api import mail
+# except ImportError:
+#     pass
 
-# from madquiz.forms import StudyModuleForm, ChoosePageTypeForm, PageEditForm, AnswerForm, AnswerInlineFormSet, TextAnswerForm, VideoPageEditForm, MonetizeForm
 from domeplaylist.forms import PlayListForm, PlayItemForm, PlayItemInlineFormSet
-
-# from madquiz.models import StudyModule, PT_SLUG_DICT, PT_VAL_DICT, ModulePage, Answer, ShareToken, Payout, UserModule
 from domeplaylist.models import PlayList, PlayItem
-
 from domeplaylist.mixins import ModulePermissionMixin, AjaxHandlerMixin
 # from madcram.settings import ADMIN_EMAIL, APP_EMAIL
-# from django.core.mail import EmailMessage
-# from django.contrib import messages
 
 from django.conf import settings
 
 
 class DashboardView(LoginRequiredMixin, ListView):
     template_name = 'domeplaylist/dashboard.html'
-    context_object_name = "playlist"
+    context_object_name = "playlists"
 
     def get(self, request, *args, **kwargs):
         return super(DashboardView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
-        res_qs = PlayList.objects.all()
+        # res_qs = PlayList.objects.all()
+        res_qs = PlayList.objects.filter(user=self.request.user,).order_by('-pk')
         return res_qs
 
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
 
-        playitem_qs = PlayItem.objects.all()
-        context['playitem_qs'] = playitem_qs
+        # playitem_qs = PlayItem.objects.all()
+        # context['playitem_qs'] = playitem_qs
+        # context['playitem_qs'] = PlayItem.objects.filter(playlist_id=self.playlist.id)
+        playlist_first = PlayList.objects.filter(user=self.request.user,).order_by('-pk').first()
+        context['playitem_qs'] = PlayItem.objects.filter(playlist_id=playlist_first)
+
         return context
 
 
+class NewPlayListView(LoginRequiredMixin, CreateView):
+    template_name = 'domeplaylist/new_playlist.html'
+    form_class = PlayListForm
 
+    # add the request to the kwargs
+    def get_form_kwargs(self):
+        kwargs = super(NewPlayListView, self).get_form_kwargs()
+        # kwargs['request'] = self.request
+        return kwargs
 
+    def get_success_url(self):
+        # return reverse_lazy('choose_page_type', kwargs={'module_id': self.object.id})
+        return reverse_lazy('edit_playlist', kwargs={'playlist_id': self.object.id})
 
-# class StoreView(StorePermissionMixin, ListView):
-class SetView(ListView):
-    model = PlayList
-    template_name = 'domeplaylist/playlist_set.html'
-    context_object_name = "play_list"
-    paginate_by = 48
-
-    def get_queryset(self):
-        res_qs = PlayList.objects.all()
-        return res_qs
-
-    def get_context_data(self, **kwargs):
-        context = super(SetView, self).get_context_data(**kwargs)
-        # parent_ids = [x['module__parent'] for x in UserModule.objects.filter(user=self.request.user.id).values('module__parent').distinct()]
-        # for obj in context['study_list']:
-        #     obj.purchased_flag = obj.parent_id in parent_ids
-
-        context.update({
-            # 'form': StoreSearchForm(),
-        })
-        return context
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user.id
+        form.instance.edit_version = True
+        return super(NewPlayListView, self).form_valid(form)
 
 
 class PlayListEditView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
