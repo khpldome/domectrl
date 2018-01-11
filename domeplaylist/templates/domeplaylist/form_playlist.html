@@ -15,10 +15,10 @@
                 {#        {{ form.name }}#}
                 <div class="flex-row">
                     {{ form.title }}
-                    <button class="butt js--triggerAnimation" onclick="responsiveVoice.speak($('#id_name').val(), 'US English Male');"
-                            type="button" value="Play">
-                        <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>
-                    </button>
+{#                    <button class="butt js--triggerAnimation" onclick="responsiveVoice.speak($('#id_name').val(), 'US English Male');"#}
+{#                            type="button" value="Play">#}
+{#                        <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>#}
+{#                    </button>#}
                 </div>
             </div>
 
@@ -42,6 +42,7 @@
 {#                {{ form.isbn }}#}
 {#            </div>#}
 
+
             <div class="align-right">
                 {% if submit_btn_name %}
                     <button type="submit" class="btn btn-info" name="btn_create_save_changes">{{ submit_btn_name }}</button>
@@ -50,25 +51,26 @@
                 {% endif %}
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="fileinput mt15 {% if form.instance.image %} fileinput-exists {% else %} fileinput-new {% endif %}"
-                 data-provides="fileinput">
-                <div class="fileinput-preview-wrapper">
-                    <p>Click to upload an image.<br><br>Images will be displayed 150px by 120px.</p>
-                    <div class="fileinput-preview thumbnail" data-trigger="fileinput">
-                        {% if form.instance.image %}
-                            <img id="initial-img" src="{{ form.instance.image.url }}"
-                                 alt="" style="vertical-align: middle;">
-                        {% endif %}
-                    </div>
-                </div>
-                <div>
-                <span class="btn btn-default btn-file" style="display:none">
-                    {{ form.image }}
-                </span>
-                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
-                </div>
-            </div>
-        </div>
+
+{#        <div class="col-md-4">#}
+{#            <div class="fileinput mt15 {% if form.instance.image %} fileinput-exists {% else %} fileinput-new {% endif %}"#}
+{#                 data-provides="fileinput">#}
+{#                <div class="fileinput-preview-wrapper">#}
+{#                    <p>Click to upload an image.<br><br>Images will be displayed 150px by 120px.</p>#}
+{#                    <div class="fileinput-preview thumbnail" data-trigger="fileinput">#}
+{#                        {% if form.instance.image %}#}
+{#                            <img id="initial-img" src="{{ form.instance.image.url }}"#}
+{#                                 alt="" style="vertical-align: middle;">#}
+{#                        {% endif %}#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div>#}
+{#                <span class="btn btn-default btn-file" style="display:none">#}
+{#                    {{ form.image }}#}
+{#                </span>#}
+{#                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
     </div>
 </form>

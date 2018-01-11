@@ -3,16 +3,10 @@
 
 {% block title %} New Playlist {% endblock title %}
 
-{% block css %}
+{#{% block css %}#}
 {#    {{ block.super }}#}
 {#    <link rel="stylesheet" href="{% static 'lib/jasny-bootstrap/css/jasny-bootstrap.min.css' %}">#}
-{% endblock css %}
-
-{% block mc_header_left %} New Playlist {% endblock mc_header_left %}
-
-{% block mc_header_right %}
-    <a href="{% url 'dashboard' %}" class="btn btn-default">Cancel</a>
-{% endblock mc_header_right %}
+{#{% endblock css %}#}
 
 {% block main_container %}
     <div class="w-block-wide">
@@ -20,22 +14,12 @@
     </div>
 {% endblock main_container %}
 
-{#{% block js %}#}
-{#    {{ block.super }}#}
-{#    <script src="{% static 'lib/ckeditor/ckeditor.js' %}"></script>#}
-{#    <script src="{% static 'lib/jasny-bootstrap/js/jasny-bootstrap.min.js' %}"></script>#}
-{#    <script>#}
-        {# TODO : extract js to js file #}
-{#        $(document).ready(function () {#}
-{#            CKEDITOR.replace('id_description',#}
-{#                    {#}
-{#                        extraPlugins: 'responsivevoice',#}
-{#                        toolbar: [#}
-{#                            ['Bold', 'Italic', 'Underline', 'Strikethrough', 'Subscript', 'Superscript',#}
-{#                                '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', '-', 'About', '-',],#}
-{#                            ['ResponsiveVoice']#}
-{#                        ]#}
-{#                    });#}
-{#        });#}
-{#    </script>#}
-{#{% endblock js %}#}
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'lib/ckeditor/ckeditor.js' %}"></script>
+    <script src="{% static 'lib/jasny-bootstrap/js/jasny-bootstrap.min.js' %}"></script>
+    <script>
+{#        ...#}
+
+    </script>
+{% endblock js %}
