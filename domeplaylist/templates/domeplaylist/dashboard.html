@@ -4,7 +4,8 @@
 
 
 {% block aside_bar %}
-    <aside class="sidebar sidebar-playlists">
+
+    <aside class="sidebar sidebar-playlists" data-playlist-count='{{ playlist_count }}'>
         <div class="sidebar-playlists-new">
             <a href="#" class="sidebar-playlists-new-button">
                 <a href="{% url 'new_playlist' %}" class="btn btn-default"><span>Новый плейлист</span></a>
@@ -18,7 +19,6 @@
 {#                        {{ playlist.title }}#}
                         <span>{{ playlist.title }}</span>
                     </p>
-                    <a class="btn btn-default grey" href="{% url 'edit_playlist' playlist_id=playlist.id %}">Edit</a>
                 </div>
 
             {% endfor %}
@@ -29,15 +29,19 @@
 
 
 {% block main_bar %}
-    <div class="playlist-current">
+    <div class="playlist-current" data-playitem-count='{{ playitem_count }}'>
         <div class="playlist-title">
             <h2>Имя активного плейлиста</h2>
-            <a href="#" title="Добавить видео" class="playlist-video-add icon icon-add-video">
-            </a>
-            <a href="#expand" title="Развернуть" class="playlist-expand icon icon-expand pressed">
-            </a>
-            <a href="#collapse" title="Свернуть" class="playlist-collapse icon icon-collapse">
-            </a>
+            <a href="{% url 'edit_playlist' playlist_id=2 %}" title="Добавить видео" class="playlist-video-add icon icon-add-video"></a>
+{#            <a class="btn btn-default grey" href="{% url 'edit_playlist' playlist_id=playlist.id %}">Edit</a>#}
+{#            <a class="btn btn-default grey" href="{% url 'edit_playlist' playlist_id=2 %}">Edit</a>#}
+
+
+            <a href="#expand" title="Развернуть" class="playlist-expand icon icon-expand pressed"></a>
+
+            <a href="#collapse" title="Свернуть" class="playlist-collapse icon icon-collapse"></a>
+
+
         </div>
         <div class="playlist-player">
             <div class="playlist-player-play">

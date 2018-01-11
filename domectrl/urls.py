@@ -17,9 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import include, url
 
+from filebrowser.sites import site
 import dome
 
+
 urlpatterns = [
+
+    url(r'^admin/filebrowser/', include(site.urls)),
+
     url(r'^admin/', admin.site.urls),
 
     url(r'^account/', include('domeuser.urls')),

@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'domeuser',
     'domeplaylist',
 
+    'filebrowser',
+
 ]
 
 MIDDLEWARE = [
