@@ -20,6 +20,4 @@ urlpatterns = [
 
     url(r'^base/(?P<base_action>\w+)/$', views.BaseView.as_view(), name='base'),
 
-    url(r'^dashboard/$', views2.DashboardView.as_view(), name='dashboard'),
-
 ]
