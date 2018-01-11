@@ -30,7 +30,18 @@ jQuery(document).ready(function($) {
         $(this).parent().parent().remove();
     });
 
-    $('.playlist-items-container').css('grid-template-rows', 'repeat(' + playlistItemsQty + ', 120px)');
+    // $('.playlist-items-container').css('grid-template-rows', 'repeat(' + playlistItemsQty + ', 120px)');
+
+
+    var playitemCount = $('.playlist-current').data("playitemCount");
+    var playlistCount = $('.sidebar-playlists').data("playlistCount");
+    console.log('playitemCount:'+playitemCount);
+    console.log('playlistCount:'+playlistCount);
+    $('.playlist-items-container').css('grid-template-rows', 'repeat('+playitemCount+', 120px)');
+    $('.sidebar-playlists').css('grid-template-rows', '68px repeat('+playlistCount+', 50px)');
+
+
+
 
     // $('.link-playlists').click(function() {
     //     $('.tab-more').css('display', 'none');

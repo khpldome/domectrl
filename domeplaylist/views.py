@@ -38,11 +38,13 @@ class DashboardView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
 
-        # playitem_qs = PlayItem.objects.all()
-        # context['playitem_qs'] = playitem_qs
+        playitem_qs = PlayItem.objects.all()
+        context['playitem_qs'] = playitem_qs
         # context['playitem_qs'] = PlayItem.objects.filter(playlist_id=self.playlist.id)
-        playlist_first = PlayList.objects.filter(user=self.request.user,).order_by('-pk').first()
-        context['playitem_qs'] = PlayItem.objects.filter(playlist_id=playlist_first)
+        # playlist_first = PlayList.objects.filter(user=self.request.user,).order_by('-pk').first()
+        # context['playitem_qs'] = PlayItem.objects.filter(playlist_id=playlist_first)
+        context['playlist_count'] = PlayList.objects.all().count()
+        context['playitem_count'] = PlayItem.objects.all().count()
 
         return context
 
