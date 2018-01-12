@@ -14,16 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 
+from filebrowser.sites import site
 from django.contrib import admin
 from django.conf.urls import include, url
-
-from filebrowser.sites import site
-import dome
 
 
 urlpatterns = [
 
-    url(r'^admin/filebrowser/', include(site.urls)),
+    # url(r'^admin/filebrowser/', include(site.urls)),
+    # url(r'^grappelli/', include('grappelli.urls')),
 
     url(r'^admin/', admin.site.urls),
 
@@ -33,5 +32,8 @@ urlpatterns = [
 
     url(r'^domeplaylist/', include('domeplaylist.urls')),
 
+    url(r'^picker/', include('filemanager.urls', namespace='filemanager')),
+
 ]
+
 

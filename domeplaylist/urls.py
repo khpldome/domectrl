@@ -5,6 +5,7 @@ from django.conf.urls import url, include
 
 from . import views
 
+import filemanager
 
 playlist_urls = [
 
@@ -20,6 +21,8 @@ playlist_urls = [
 
 
 urlpatterns = [
+
+
 
     url(r'^playlist/(?P<playlist_id>\d+)/', include(playlist_urls)),
 

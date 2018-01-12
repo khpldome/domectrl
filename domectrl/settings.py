@@ -32,7 +32,7 @@ SECRET_KEY = 'e=%ca7=6mhc^z@&l1=p+mv$k!-@y8mi#h%d17d@vie@(hv*93_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', conf.ALLOWED_IP]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', conf.ALLOWED_IP, '3191925d.ngrok.io']
 # ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -52,9 +52,14 @@ INSTALLED_APPS = [
     # 'dome',
     'domeuser',
     'domeplaylist',
+    # 'grappelli',
+    # 'filebrowser',
 
-    'filebrowser',
+    # 'easy_thumbnails',
+    # 'filer',
+    # 'mptt',
 
+    'filemanager',
 ]
 
 MIDDLEWARE = [
@@ -73,14 +78,19 @@ ROOT_URLCONF = 'domectrl.urls'
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# STATIC_ROOT = ''
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = (os.path.join('static'), )
 
 
-MEDIA_ROOT = ''
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# STATICFILES_DIRS = (
+#   os.path.join(BASE_DIR, 'static/'),
+# )
+# STATICFILES_DIRS = os.path.join(BASE_DIR, 'static')
+
+MEDIA_ROOT = os.path.join('D:\\', '')
+print('MEDIA_ROOT=', MEDIA_ROOT)
 MEDIA_URL = '/media/'
-
 
 
 TEMPLATES = [
@@ -158,4 +168,17 @@ USE_TZ = True
 # STATIC_URL = '/static/'
 
 
+# FILEBROWSER_DIRECTORY = ''
+# DIRECTORY = ''
+
+#
+# THUMBNAIL_HIGH_RESOLUTION = True
+#
+# THUMBNAIL_PROCESSORS = (
+#     'easy_thumbnails.processors.colorspace',
+#     'easy_thumbnails.processors.autocrop',
+#     #'easy_thumbnails.processors.scale_and_crop',
+#     'filer.thumbnail_processors.scale_and_crop_with_subject_location',
+#     'easy_thumbnails.processors.filters',
+# )
 
