@@ -169,23 +169,20 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-
-# STATIC_URL = '/static/'
 
 
-# FILEBROWSER_DIRECTORY = ''
-# DIRECTORY = ''
+# //////////////////////////////////////////////////////////////////////////////
+# ///////////////////////// local_settings /////////////////////////////////////
+# //////////////////////////////////////////////////////////////////////////////
 
-#
-# THUMBNAIL_HIGH_RESOLUTION = True
-#
-# THUMBNAIL_PROCESSORS = (
-#     'easy_thumbnails.processors.colorspace',
-#     'easy_thumbnails.processors.autocrop',
-#     #'easy_thumbnails.processors.scale_and_crop',
-#     'filer.thumbnail_processors.scale_and_crop_with_subject_location',
-#     'easy_thumbnails.processors.filters',
-# )
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+
+DATETIME_FORMAT = 'Y-m-d H:i'
+DATETIME_INPUT_FORMATS ='%Y-%m-%d %H:%M:%S'     # '2006-10-25 14:30:59'
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
 
