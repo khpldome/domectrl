@@ -5,6 +5,8 @@ from . import views
 from . import views2
 
 
+app_name = "dome"
+
 urlpatterns = [
 
     url(r'^$', views.index, name='index'),

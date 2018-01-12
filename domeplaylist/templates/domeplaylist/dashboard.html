@@ -8,7 +8,7 @@
     <aside class="sidebar sidebar-playlists" data-playlist-count='{{ playlist_count }}'>
         <div class="sidebar-playlists-new">
             <a href="#" class="sidebar-playlists-new-button">
-                <a href="{% url 'new_playlist' %}" class="btn btn-default"><span>Новый плейлист</span></a>
+                <a href="{% url 'domeplaylist:new_playlist' %}" class="btn btn-default"><span>Новый плейлист</span></a>
             </a>
         </div>
         {#==================================================================#}
@@ -32,7 +32,7 @@
     <div class="playlist-current" data-playitem-count='{{ playitem_count }}'>
         <div class="playlist-title">
             <h2>Имя активного плейлиста</h2>
-            <a href="{% url 'edit_playlist' playlist_id=2 %}" title="Добавить видео" class="playlist-video-add icon icon-add-video"></a>
+            <a href="{% url 'domeplaylist:edit_playlist' playlist_id=2 %}" title="Добавить видео" class="playlist-video-add icon icon-add-video"></a>
 {#            <a class="btn btn-default grey" href="{% url 'edit_playlist' playlist_id=playlist.id %}">Edit</a>#}
 {#            <a class="btn btn-default grey" href="{% url 'edit_playlist' playlist_id=2 %}">Edit</a>#}
 

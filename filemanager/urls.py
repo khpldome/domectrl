@@ -4,6 +4,9 @@ from django.views.decorators.csrf import csrf_exempt
 from filemanager.views import BrowserView, DetailView, UploadView, UploadFileView, DirectoryCreateView
 
 
+app_name = "filemanager"
+
+
 urlpatterns = [
     url(r'^$', BrowserView.as_view(), name='browser'),
     url(r'^detail/$', DetailView.as_view(), name='detail'),

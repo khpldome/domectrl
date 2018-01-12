@@ -1,6 +1,6 @@
 from __future__ import print_function
 from __future__ import print_function
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponse
 
 from domeplaylist.models import PlayList, PlayItem

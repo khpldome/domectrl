@@ -7,7 +7,7 @@ import re
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.core.mail import send_mail
-from django.core.urlresolvers import reverse_lazy, reverse
+from django.urls import reverse_lazy, reverse
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import View, TemplateView, ListView, FormView, CreateView, UpdateView, DeleteView

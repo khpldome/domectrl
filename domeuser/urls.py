@@ -4,6 +4,8 @@ from django.contrib.auth.views import password_reset_done, password_reset_comple
 from domeuser.forms import PassResetRequestForm
 from domeuser import views
 
+app_name = "domeuser"
+
 urlpatterns = [
     url(r'^$', views.AccountView.as_view(), name='account'),
     url(r'^sign-in/$', views.SignInView.as_view(), name='sign_in'),

@@ -37,10 +37,10 @@
         <span class="icon icon-log"></span>
         <div class="account-detail" style="display:none">
             {% if user.is_authenticated %}
-                <li><a href="{% url 'account' %}" class="navbar-link">My Account</a></li>
-                <li><a href="{% url 'sign_out' %}" class="navbar-link">Sign Out</a></li>
+                <li><a href="{% url 'domeuser:account' %}" class="navbar-link">My Account</a></li>
+                <li><a href="{% url 'domeuser:sign_out' %}" class="navbar-link">Sign Out</a></li>
             {% else %}
-                <li><a href="{% url 'sign_in' %}" class="navbar-link">Login</a></li>
+                <li><a href="{% url 'domeuser:sign_in' %}" class="navbar-link">Login</a></li>
             {% endif %}
         </div>
     </div>
