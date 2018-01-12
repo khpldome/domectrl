@@ -61,7 +61,7 @@ class Filemanager(object):
             'filepath': self.path,
             'filename': filename,
             'filesize': sizeof_fmt(STORAGE.size(self.location)),
-            'filedate': STORAGE.modified_time(self.location),
+            'filedate': STORAGE.get_modified_time(self.location),
             'fileurl': self.url,
         }
 
@@ -75,7 +75,7 @@ class Filemanager(object):
                 'filepath': os.path.join(self.path, name),
                 'filetype': filetype,
                 'filename': name,
-                'filedate': STORAGE.modified_time(os.path.join(self.path, name)),
+                'filedate': STORAGE.get_modified_time(os.path.join(self.path, name)),
                 'filesize': sizeof_fmt(STORAGE.size(os.path.join(self.path, name))),
             }
 
