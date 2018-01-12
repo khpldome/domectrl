@@ -61,7 +61,7 @@ class NewPlayListView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         # return reverse_lazy('choose_page_type', kwargs={'module_id': self.object.id})
-        return reverse_lazy('edit_playlist', kwargs={'playlist_id': self.object.id})
+        return reverse_lazy('domeplaylist:edit_playlist', kwargs={'playlist_id': self.object.id})
 
     def form_valid(self, form):
         form.instance.user_id = self.request.user.id
@@ -88,7 +88,7 @@ class PlayListEditView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
 
-        path = reverse_lazy('edit_playlist', kwargs={'playlist_id': self.object.id})
+        path = reverse_lazy('domeplaylist:edit_playlist', kwargs={'playlist_id': self.object.id})
         if self.request.path != path:
             return HttpResponseRedirect(path)
         else:
@@ -112,7 +112,7 @@ class PlayListEditView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
 
     def get_success_url(self):
         playlist_id = self.myplaylist.id
-        return reverse_lazy('edit_playlist', kwargs={'playlist_id': playlist_id})
+        return reverse_lazy('domeplaylist:edit_playlist', kwargs={'playlist_id': playlist_id})
 
 
 class NoAccessView(TemplateView):
