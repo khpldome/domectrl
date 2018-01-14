@@ -72,6 +72,7 @@ class Filemanager(object):
 
         def _helper(name, filetype):
             return {
+                'directory': self.path,
                 'filepath': os.path.join(self.path, name),
                 'filetype': filetype,
                 'filename': name,

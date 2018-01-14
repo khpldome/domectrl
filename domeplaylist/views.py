@@ -70,7 +70,6 @@ class NewPlayListView(LoginRequiredMixin, CreateView):
 
 
 class PlayListEditView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
-# class PlayListEditView(LoginRequiredMixin, UpdateView):
     template_name = 'domeplaylist/edit_playlist.html'
     queryset = PlayList.objects
 

@@ -10,8 +10,8 @@
 {% block mc_header_right %}{% endblock mc_header_right %}
 
 {% block css %}
-    {{ block.super }}
-    <link rel="stylesheet" href="{% static 'lib/jasny-bootstrap/css/jasny-bootstrap.min.css' %}">
+{#    {{ block.super }}#}
+{#    <link rel="stylesheet" href="{% static 'lib/jasny-bootstrap/css/jasny-bootstrap.min.css' %}">#}
 {% endblock css %}
 
 {% block mc_body %}
@@ -34,13 +34,7 @@
         <div class="marg-tb">
 
             {% if object.frozen_at %}
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        This module was frozen. To continue editing, create a new copy of the module on the tab "Settings"
-                    </div>
-                </div>
             {% else %}
-
                 <div>
 {#                    <a href="{% url 'choose_page_type' module_id=object.id %}" class="btn btn-info marg-b">Add New Page</a>#}
                 </div>
@@ -110,8 +104,8 @@
 {% endblock mc_body %}
 
 {% block js %}
-    <script src="{% static 'lib/Sortable.min.js' %}"></script>
-    <script src="{% static 'lib/ckeditor/ckeditor.js' %}"></script>
-    <script src="{% static 'lib/jasny-bootstrap/js/jasny-bootstrap.min.js' %}"></script>
+{#    <script src="{% static 'lib/Sortable.min.js' %}"></script>#}
+{#    <script src="{% static 'lib/ckeditor/ckeditor.js' %}"></script>#}
+{#    <script src="{% static 'lib/jasny-bootstrap/js/jasny-bootstrap.min.js' %}"></script>#}
 {#    <script src="{% static 'madquiz/js/module_edit.js' %}"></script>#}
 {% endblock js %}

@@ -6,8 +6,10 @@ from django.shortcuts import HttpResponse
 from django.http import HttpResponseBadRequest
 from django.urls import reverse_lazy
 
+from domeplaylist.models import PlayItem
 from filemanager.forms import DirectoryCreateForm
 from filemanager.core import Filemanager
+from django.conf import settings
 
 
 class FilemanagerMixin(object):
@@ -64,6 +66,35 @@ class DetailView(FilemanagerMixin, TemplateView):
         return context
 
 
+class AddView(FilemanagerMixin, TemplateView):
+    template_name = 'filemanager/browser/filemanager_list.html'
+
+    def get(self, request, *args, **kwargs):
+
+        if 'filepath' in request.GET:
+            # filepath = request.GET['filepath']
+            full_path = settings.MEDIA_ROOT + request.GET['filepath']
+            print(full_path.replace('/', '\\'))
+            pi = PlayItem(playlist_id=1, title='added++++', text=full_path)
+            pi.save()
+        else:
+            filepath = False
+
+        return super(AddView, self).get(request, *args, **kwargs)
+
+    def dispatch(self, request, *args, **kwargs):
+        self.popup = self.request.GET.get('popup', 0) == '1'
+        return super(AddView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(AddView, self).get_context_data(**kwargs)
+
+        context['popup'] = self.popup
+        context['files'] = self.fm.directory_list()
+
+        return context
+
+
 class UploadView(FilemanagerMixin, TemplateView):
     template_name = 'filemanager/filemanager_upload.html'
     extra_breadcrumbs = [{
@@ -78,7 +109,7 @@ class UploadFileView(FilemanagerMixin, View):
             return HttpResponseBadRequest("Just a single file please.")
 
         # TODO: get filepath and validate characters in name, validate mime type and extension
-        filename = self.fm.upload_file(filedata = request.FILES['files[]'])
+        filename = self.fm.upload_file(filedata=request.FILES['files[]'])
 
         return HttpResponse(json.dumps({
             'files': [{'name': filename}],
