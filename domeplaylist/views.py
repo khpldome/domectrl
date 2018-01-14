@@ -21,6 +21,9 @@ from domeplaylist.mixins import ModulePermissionMixin, AjaxHandlerMixin
 # from madcram.settings import ADMIN_EMAIL, APP_EMAIL
 
 from django.conf import settings
+import domectrl.config_fds as conf
+
+import requests
 
 
 class DashboardView(LoginRequiredMixin, ListView):
@@ -69,7 +72,7 @@ class NewPlayListView(LoginRequiredMixin, CreateView):
         return super(NewPlayListView, self).form_valid(form)
 
 
-class PlayListEditView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
+class PlayItemAddView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
     template_name = 'domeplaylist/edit_playlist.html'
     queryset = PlayList.objects
 
@@ -77,7 +80,7 @@ class PlayListEditView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
 
     # add the request to the kwargs
     def get_form_kwargs(self):
-        kwargs = super(PlayListEditView, self).get_form_kwargs()
+        kwargs = super(PlayItemAddView, self).get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
 
@@ -91,17 +94,17 @@ class PlayListEditView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
         if self.request.path != path:
             return HttpResponseRedirect(path)
         else:
-            return super(PlayListEditView, self).get(request, *args, **kwargs)
+            return super(PlayItemAddView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         self.object = self.myplaylist
         # TODO : check if we edit latest version
         # if not raise Exception()
 
-        return super(PlayListEditView, self).post(request, *args, **kwargs)
+        return super(PlayItemAddView, self).post(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(PlayListEditView, self).get_context_data(**kwargs)
+        context = super(PlayItemAddView, self).get_context_data(**kwargs)
         context['pages'] = PlayItem.objects.filter(playlist_id=self.myplaylist.id)
         return context
 
@@ -112,6 +115,49 @@ class PlayListEditView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
     def get_success_url(self):
         playlist_id = self.myplaylist.id
         return reverse_lazy('domeplaylist:edit_playlist', kwargs={'playlist_id': playlist_id})
+
+
+class PlayItemPlayView(LoginRequiredMixin, ListView):
+
+    template_name = 'domeplaylist/dashboard.html'
+    context_object_name = "playlists"
+
+    def get(self, request, *args, **kwargs):
+
+        # http://192.168.10.106:8080/requests/status.xml?command=in_enqueue&input=f:\Video\Saw\Gattaca\Gattaca.avi
+        # 127.0.0.1:8080/requests/status.xml?command=in_enqueue&input=C:\Users\Public\Videos\Sample Videos\Wildlife.wmv
+
+        instance = PlayItem.objects.filter(id=12).first()
+
+        t3 = instance.text.replace(' ', '%20')
+        print('http://'+conf.ALLOWED_IP, ':8080/requests/status.xml?command=in_enqueue&input=', t3)
+        # r = requests.get('http://'+conf.ALLOWED_IP+':8080/requests/status.xml?command=in_enqueue&input='+t3, auth=('', '63933'))
+        r = requests.get('http://'+conf.ALLOWED_IP+':8080/requests/status.xml?command=in_play&input='+t3, auth=('', '63933'))
+        print(r)
+
+        return super(PlayItemPlayView, self).get(request, *args, **kwargs)
+
+    def get_queryset(self):
+        # res_qs = PlayList.objects.all()
+        res_qs = PlayList.objects.filter(user=self.request.user,).order_by('-pk')
+        return res_qs
+
+    def get_context_data(self, **kwargs):
+        context = super(PlayItemPlayView, self).get_context_data(**kwargs)
+
+        playitem_qs = PlayItem.objects.all()
+        context['playitem_qs'] = playitem_qs
+        # context['playitem_qs'] = PlayItem.objects.filter(playlist_id=self.playlist.id)
+        # playlist_first = PlayList.objects.filter(user=self.request.user,).order_by('-pk').first()
+        # context['playitem_qs'] = PlayItem.objects.filter(playlist_id=playlist_first)
+        context['playlist_count'] = PlayList.objects.all().count()
+        context['playitem_count'] = PlayItem.objects.all().count()
+
+        return context
+
+
+    def get_success_url(self):
+        return reverse_lazy('dashboard')
 
 
 class NoAccessView(TemplateView):
@@ -279,14 +325,14 @@ class EditPlayItemFormView(GenericPageFormView, UpdateView):
         return super(EditPlayItemFormView, self).post(request, *args, **kwargs)
 
 
-# class DeletePlayItemView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
-class DeletePlayItemView(LoginRequiredMixin, DeleteView):
-    def get_object(self, queryset=None):
-        return self.mypage
+class DeletePlayItemView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
+# class DeletePlayItemView(LoginRequiredMixin, DeleteView):
+
+    def get_object(self):
+        return self.myplayitem
 
     def get_success_url(self):
-        return reverse_lazy('edit_playlist',
-                            kwargs={'playlist_id': self.myplaylist.id})
+        return reverse_lazy('dashboard')
 
     def delete(self, request, *args, **kwargs):
         """
@@ -296,8 +342,5 @@ class DeletePlayItemView(LoginRequiredMixin, DeleteView):
         self.object = self.get_object()
         success_url = self.get_success_url()
         self.object.delete()
-
-        self.mymodule.published_at = None
-        self.mymodule.save(force_update=True)
 
         return HttpResponseRedirect(success_url)

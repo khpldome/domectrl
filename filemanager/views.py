@@ -75,7 +75,7 @@ class AddView(FilemanagerMixin, TemplateView):
             # filepath = request.GET['filepath']
             full_path = settings.MEDIA_ROOT + request.GET['filepath']
             print(full_path.replace('/', '\\'))
-            pi = PlayItem(playlist_id=1, title='added++++', text=full_path)
+            pi = PlayItem(playlist_id=1, title='added++++', text=full_path.replace('/', '\\')   )
             pi.save()
         else:
             filepath = False

@@ -35,7 +35,6 @@
 {#            <a href="{% url 'domeplaylist:edit_playlist' playlist_id=2 %}" title="Добавить видео" class="playlist-video-add icon icon-add-video"></a>#}
             <a href="{% url 'filemanager:add'%}" title="Добавить видео" class="playlist-video-add icon icon-add-video"></a>
 
-
             <a href="#expand" title="Развернуть" class="playlist-expand icon icon-expand pressed"></a>
 
             <a href="#collapse" title="Свернуть" class="playlist-collapse icon icon-collapse"></a>
@@ -44,7 +43,8 @@
         </div>
         <div class="playlist-player">
             <div class="playlist-player-play">
-                <span class="icon-player-play">Play</span>
+{#                <span href="{% url 'domeplaylist:play_playitem' playlist_id=2 playitem_id=2 %}" class="icon-player-play">Play</span>#}
+                 <a href="{% url 'domeplaylist:play_playitem' playlist_id=1 playitem_id=1 %}" title="Play" class="icon-player-play">Play</a>
             </div>
             <div class="playlist-player-stop">
                 <span class="icon-player-stop">Stop</span>
@@ -107,7 +107,8 @@
                         </div>
                     </div>
                     <div class="playlist-item-trash">
-                        <span class="icon-trash"></span>
+{#                        <span class="icon-trash"></span>#}
+                        <a href="{% url 'domeplaylist:delete_playitem' playlist_id=1 playitem_id=item.id %}" title="Удалить видео" class="icon-trash"></a>
                     </div>
                 </div>
             {% endfor %}
