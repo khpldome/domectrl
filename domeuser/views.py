@@ -28,11 +28,11 @@ email_validator = EmailValidator()
 class SignInView(FormView):
     template_name = 'domeuser/sign_in.html'
     form_class = SignInForm
-    success_url = reverse_lazy('dashboard')
+    success_url = reverse_lazy('domeplaylist:dashboard')
 
     def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
-            return HttpResponseRedirect(reverse_lazy('dashboard'))
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse_lazy('domeplaylist:dashboard'))
         else:
             return super(SignInView, self).get(request, *args, **kwargs)
 
@@ -43,7 +43,7 @@ class SignInView(FormView):
 
 def reg_sign_in(request):
     template_name = 'domeuser/reg_sign_in.html'
-    success_url = reverse_lazy('dashboard')
+    success_url = reverse_lazy('domeplaylist:dashboard')
 
     reg_form = RegForm
     sign_in_form = SignInForm
@@ -69,7 +69,7 @@ def reg_sign_in(request):
         'sign_in_form': sign_in_form,
     }
 
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return HttpResponseRedirect(success_url)
     else:
         return TemplateResponse(request, template_name, context)
@@ -86,11 +86,11 @@ class SignOutView(RedirectView):
 class RegistrationView(FormView):
     template_name = 'domeuser/reg.html'
     form_class = RegForm
-    success_url = reverse_lazy('dashboard')
+    success_url = reverse_lazy('domeplaylist:dashboard')
 
     def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
-            return HttpResponseRedirect(reverse_lazy('dashboard'))
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse_lazy('domeplaylist:dashboard'))
         else:
             return super(RegistrationView, self).get(request, *args, **kwargs)
 
@@ -137,7 +137,7 @@ def password_reset_confirm(request, uidb64=None, token=None,
                                     password=form.cleaned_data['new_password1'])
                 if user and user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect(reverse_lazy('dashboard'))
+                    return HttpResponseRedirect(reverse_lazy('domeplaylist:dashboard'))
                 else:
                     return HttpResponseRedirect(reverse_lazy('sign_in'))
         else:
@@ -146,7 +146,7 @@ def password_reset_confirm(request, uidb64=None, token=None,
         validlink = False
         form = None
         title = 'Password reset unsuccessful'
-    context = {'form': form, 'title': title, 'validlink': validlink,}
+    context = {'form': form, 'title': title, 'validlink': validlink, }
 
     if extra_context is not None:
         context.update(extra_context)
@@ -168,7 +168,7 @@ def password_reset(request, is_admin_site=False,
                    html_email_template_name=None,
                    extra_email_context=None):
     if post_reset_redirect is None:
-        post_reset_redirect = reverse('password_reset_done')
+        post_reset_redirect = reverse('domeuser:password_reset_done')
     else:
         post_reset_redirect = resolve_url(post_reset_redirect)
     if request.method == "POST":

@@ -15,11 +15,11 @@
                 <div class="form-group">
                     {{ form.password.errors }}
                     {{ form.password.label_tag }}
-                    <a href="{% url 'password_reset' %}" class="pull-right" tabindex="5">Forgot Password?</a>
+                    <a href="{% url 'domeuser:password_reset' %}" class="pull-right" tabindex="5">Forgot Password?</a>
                     {{ form.password }}
                 </div>
                 <div class="align-right">
-                    <a href="{% url 'registration' %}" class="btn btn-default" tabindex="4">Create Account</a>
+                    <a href="{% url 'domeuser:registration' %}" class="btn btn-default" tabindex="4">Create Account</a>
                     <button type="submit" class="btn btn-info" tabindex="3">Sign In</button>
                 </div>
             </form>
