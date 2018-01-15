@@ -21,7 +21,7 @@ import domectrl.config_fds as conf
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+print('BASE_DIR=', BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -75,10 +75,16 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'domectrl.urls'
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
-# STATICFILES_DIRS = (os.path.join('static'), )
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = ''
+# print('STATIC_ROOT=', STATIC_ROOT)
 
+STATIC_URL = '/static/'
+# STATICFILES_DIRS = (os.path.join('assets'), )
+# STATICFILES_DIRS = (os.path.join('static'), )
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 MEDIA_ROOT = os.path.join('C:\\', '')
 print('MEDIA_ROOT=', MEDIA_ROOT)
