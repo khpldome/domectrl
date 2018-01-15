@@ -26,29 +26,19 @@ import domectrl.config_fds as conf
 import requests
 
 
-class DashboardView(LoginRequiredMixin, ListView):
-    template_name = 'domeplaylist/dashboard.html'
-    context_object_name = "playlists"
-
-    def get(self, request, *args, **kwargs):
-        return super(DashboardView, self).get(request, *args, **kwargs)
+class UserPlaylistsView(LoginRequiredMixin, ListView):
+    template_name = 'domeplaylist/user_playlists.html'
+    context_object_name = "playlists_qs"
+    pl_qs = None
 
     def get_queryset(self):
-        # res_qs = PlayList.objects.all()
-        res_qs = PlayList.objects.filter(user=self.request.user,).order_by('-pk')
-        return res_qs
+        self.pl_qs = PlayList.objects.filter(user=self.request.user,).order_by('pk')
+        return self.pl_qs
 
     def get_context_data(self, **kwargs):
-        context = super(DashboardView, self).get_context_data(**kwargs)
-
-        playitem_qs = PlayItem.objects.all()
-        context['playitem_qs'] = playitem_qs
-        # context['playitem_qs'] = PlayItem.objects.filter(playlist_id=self.playlist.id)
-        # playlist_first = PlayList.objects.filter(user=self.request.user,).order_by('-pk').first()
-        # context['playitem_qs'] = PlayItem.objects.filter(playlist_id=playlist_first)
-        context['playlist_count'] = PlayList.objects.all().count()
-        context['playitem_count'] = PlayItem.objects.all().count()
-
+        context = super(UserPlaylistsView, self).get_context_data(**kwargs)
+        context['playlist_count'] = self.pl_qs.count()
+        context['playitem_count'] = 0
         return context
 
 
@@ -364,6 +354,7 @@ class DeletePlayItemView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
         return self.myplayitem
 
     def post(self, request, *args, **kwargs):
+        print('post=', self.myplayitem)
         return super(DeletePlayItemView, self).post(request, *args, **kwargs)
 
     def get_success_url(self):

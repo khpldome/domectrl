@@ -75,25 +75,22 @@ class ModulePermissionMixin(object):
     * Checks whether the user is the author of the module and whether the page is
       belong to the module, if not redirects to 'no access' view.
     * Sets 'mymodule', 'mypage' properties to the view.
-    * Allows permission for paypal payment
     """
+    myplaylist = None
+    myplayitem = None
 
     def dispatch(self, request, *args, **kwargs):
         print("module permission")
 
         if 'playlist_id' in kwargs:
             try:
-                playlist = PlayList.objects.get(pk=kwargs['playlist_id'])
-                self.myplaylist = playlist
-
+                self.myplaylist = PlayList.objects.get(pk=kwargs['playlist_id'])
             except PlayList.DoesNotExist:
                 return HttpResponseRedirect(reverse_lazy('no_access'))
 
         if 'playitem_id' in kwargs:
             try:
-                playitem = PlayItem.objects.get(pk=kwargs['playitem_id'])
-                self.myplayitem = playitem
-
+                self.myplayitem = PlayItem.objects.get(pk=kwargs['playitem_id'])
             except PlayItem.DoesNotExist:
                 return HttpResponseRedirect(reverse_lazy('no_access'))
 

@@ -28,11 +28,11 @@ email_validator = EmailValidator()
 class SignInView(FormView):
     template_name = 'domeuser/sign_in.html'
     form_class = SignInForm
-    success_url = reverse_lazy('domeplaylist:dashboard')
+    success_url = reverse_lazy('domeplaylist:user-playlists')
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return HttpResponseRedirect(reverse_lazy('domeplaylist:dashboard'))
+            return HttpResponseRedirect(reverse_lazy('domeplaylist:user-playlists'))
         else:
             return super(SignInView, self).get(request, *args, **kwargs)
 
@@ -43,7 +43,7 @@ class SignInView(FormView):
 
 def reg_sign_in(request):
     template_name = 'domeuser/reg_sign_in.html'
-    success_url = reverse_lazy('domeplaylist:dashboard')
+    success_url = reverse_lazy('domeplaylist:user-playlists')
 
     reg_form = RegForm
     sign_in_form = SignInForm
@@ -86,11 +86,11 @@ class SignOutView(RedirectView):
 class RegistrationView(FormView):
     template_name = 'domeuser/reg.html'
     form_class = RegForm
-    success_url = reverse_lazy('domeplaylist:dashboard')
+    success_url = reverse_lazy('domeplaylist:user-playlists')
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return HttpResponseRedirect(reverse_lazy('domeplaylist:dashboard'))
+            return HttpResponseRedirect(reverse_lazy('domeplaylist:user-playlists'))
         else:
             return super(RegistrationView, self).get(request, *args, **kwargs)
 
@@ -137,7 +137,7 @@ def password_reset_confirm(request, uidb64=None, token=None,
                                     password=form.cleaned_data['new_password1'])
                 if user and user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect(reverse_lazy('domeplaylist:dashboard'))
+                    return HttpResponseRedirect(reverse_lazy('domeplaylist:user-playlists'))
                 else:
                     return HttpResponseRedirect(reverse_lazy('sign_in'))
         else:
