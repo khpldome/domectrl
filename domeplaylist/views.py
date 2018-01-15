@@ -73,6 +73,7 @@ class NewPlayListView(LoginRequiredMixin, CreateView):
 
 
 class PlayItemAddView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
+
     template_name = 'domeplaylist/edit_playlist.html'
     queryset = PlayList.objects
 
@@ -328,7 +329,11 @@ class EditPlayItemFormView(GenericPageFormView, UpdateView):
 class DeletePlayItemView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
 # class DeletePlayItemView(LoginRequiredMixin, DeleteView):
 
+    model = PlayItem
+    template_name = 'domeplaylist/dashboard.html'
+
     def get_object(self):
+        print('get_object=', self.myplayitem)
         return self.myplayitem
 
     def get_success_url(self):
@@ -339,6 +344,7 @@ class DeletePlayItemView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
         Calls the delete() method on the fetched object and then
         redirects to the success URL.
         """
+        print(self.myplayitem)
         self.object = self.get_object()
         success_url = self.get_success_url()
         self.object.delete()
