@@ -118,6 +118,33 @@ class PlayItemAddView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
         return reverse_lazy('domeplaylist:edit_playlist', kwargs={'playlist_id': playlist_id})
 
 
+class TrackListView(LoginRequiredMixin, ListView):
+    template_name = 'domeplaylist/track_list.html'
+    context_object_name = "tracklist"
+    tracklist_qs = None
+    # playlist_current = None
+
+    def get(self, request, *args, **kwargs):
+        return super(TrackListView, self).get(request, *args, **kwargs)
+
+    def get_queryset(self, **kwargs):
+        # ToDo Add check if exists
+        playlist_id = self.kwargs['playlist_id']
+        self.tracklist_qs = PlayItem.objects.filter(playlist__user=self.request.user, playlist_id=playlist_id).order_by('-pk')
+        return self.tracklist_qs
+
+    def get_context_data(self, **kwargs):
+        context = super(TrackListView, self).get_context_data(**kwargs)
+
+        playlists_qs = PlayList.objects.filter(user=self.request.user)
+        context['playlists_qs'] = playlists_qs
+        context['playlist_active'] = self.kwargs['playlist_id']
+        context['playlist_count'] = PlayList.objects.all().count()
+        context['playitem_count'] = self.tracklist_qs.count()
+
+        return context
+
+
 class PlayItemPlayView(LoginRequiredMixin, ListView):
 
     template_name = 'domeplaylist/dashboard.html'
@@ -332,9 +359,12 @@ class DeletePlayItemView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
     model = PlayItem
     template_name = 'domeplaylist/dashboard.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         print('get_object=', self.myplayitem)
         return self.myplayitem
+
+    def post(self, request, *args, **kwargs):
+        return super(DeletePlayItemView, self).post(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse_lazy('dashboard')

@@ -12,12 +12,14 @@
             </a>
         </div>
         {#==================================================================#}
-        {% if object_list %}
-            {% for playlist in playlists %}
+        {% if playlists_qs %}
+            {% for playlist in playlists_qs %}
                 <div class="playlists-item playlists-item-1">
                     <p title="ID: {{ playlist.id }}, ver: {{ playlist.title }}">
 {#                        {{ playlist.title }}#}
-                        <span>{{ playlist.title }}</span>
+{#                        <span>{{ playlist.title }}</span>#}
+                        <a href="{% url 'domeplaylist:track-list' playlist_id=playlist.id %}" class="btn btn-default"><span>{{ playlist.title }}</span></a>
+
                     </p>
                 </div>
 
@@ -78,7 +80,7 @@
             </div>
         </div>
         <div class="playlist-items-container">
-            {% for item in playitem_qs %}
+            {% for item in tracklist %}
                 <div class="playlist-item">
                     <div class="playlist-item-move">
                         <span class="icon-move"></span>

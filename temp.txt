@@ -11,6 +11,8 @@ khpldome@gmail.com
  https://3191925d.ngrok.io -> localhost:8008
 
 
+reverse_lazy('edit_module', kwargs={'module_id': module_id})
+return reverse_lazy('edit_module', kwargs={'module_id': self.kwargs['module_id']})
 
 
 
