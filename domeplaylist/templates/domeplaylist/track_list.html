@@ -34,8 +34,10 @@
     <div class="playlist-current" data-playitem-count='{{ playitem_count }}'>
         <div class="playlist-title">
             <h2>Имя активного плейлиста</h2>
-{#            <a href="{% url 'domeplaylist:edit_playlist' playlist_id=2 %}" title="Добавить видео" class="playlist-video-add icon icon-add-video"></a>#}
-            <a href="{% url 'filemanager:add'%}" title="Добавить видео" class="playlist-video-add icon icon-add-video"></a>
+{#            {{ playlist_id_active }}#}
+{#            <a href="{% url 'domeplaylist:track-new' playlist_id=playlist_id_active %}" title="Добавить видео" class="playlist-video-add icon icon-add-video"></a>#}
+{#            <a href="{% url 'filemanager:add'%}" title="Добавить видео" class="playlist-video-add icon icon-add-video"></a>#}
+            <a href="{% url 'filemanager:track-add' playlist_id_active=playlist_id_active %}" title="Добавить видео" class="playlist-video-add icon icon-add-video"></a>
 
             <a href="#expand" title="Развернуть" class="playlist-expand icon icon-expand pressed"></a>
 

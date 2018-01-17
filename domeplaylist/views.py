@@ -62,7 +62,7 @@ class NewPlayListView(LoginRequiredMixin, CreateView):
         return super(NewPlayListView, self).form_valid(form)
 
 
-class PlayItemAddView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
+class TrackAddView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
 
     template_name = 'domeplaylist/edit_playlist.html'
     queryset = PlayList.objects
@@ -71,7 +71,7 @@ class PlayItemAddView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
 
     # add the request to the kwargs
     def get_form_kwargs(self):
-        kwargs = super(PlayItemAddView, self).get_form_kwargs()
+        kwargs = super(TrackAddView, self).get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
 
@@ -85,23 +85,19 @@ class PlayItemAddView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
         if self.request.path != path:
             return HttpResponseRedirect(path)
         else:
-            return super(PlayItemAddView, self).get(request, *args, **kwargs)
+            return super(TrackAddView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         self.object = self.myplaylist
         # TODO : check if we edit latest version
         # if not raise Exception()
 
-        return super(PlayItemAddView, self).post(request, *args, **kwargs)
+        return super(TrackAddView, self).post(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(PlayItemAddView, self).get_context_data(**kwargs)
+        context = super(TrackAddView, self).get_context_data(**kwargs)
         context['pages'] = PlayItem.objects.filter(playlist_id=self.myplaylist.id)
         return context
-
-    def get_valid_pages_count(self):
-        valid_pages_count = PlayItem.objects.filter(playlist_id=self.myplaylist.id).count()
-        return valid_pages_count
 
     def get_success_url(self):
         playlist_id = self.myplaylist.id
@@ -128,7 +124,7 @@ class TrackListView(LoginRequiredMixin, ListView):
 
         playlists_qs = PlayList.objects.filter(user=self.request.user)
         context['playlists_qs'] = playlists_qs
-        context['playlist_active'] = self.kwargs['playlist_id']
+        context['playlist_id_active'] = self.kwargs['playlist_id']
         context['playlist_count'] = PlayList.objects.all().count()
         context['playitem_count'] = self.tracklist_qs.count()
 

@@ -47,7 +47,8 @@
                         <td></td>
                     {% else %}
 {#                        <td><a href="{% url 'filemanager:add' %}?path={{ file.directory }}">{% trans "Add" %}</a>#}
-                        <td><a href="{% url 'filemanager:add' %}?path={{ file.directory }}&amp;filepath={{ file.filepath }}">{% trans "Add" %}</a>
+{#                        {{ playlist_id_active }}#}
+                        <td><a href="{% url 'filemanager:track-select' playlist_id_active=playlist_id_active %}?path={{ file.directory }}&amp;filepath={{ file.filepath }}">{% trans "Select" %}</a>
                         </td>
                     {% endif %}
                 {% endif %}

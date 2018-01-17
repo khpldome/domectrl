@@ -55,6 +55,23 @@ class BrowserView(FilemanagerMixin, TemplateView):
         return context
 
 
+class TrackAddView(FilemanagerMixin, TemplateView):
+    template_name = 'filemanager/browser/filemanager_list.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.popup = self.request.GET.get('popup', 0) == '1'
+        return super(TrackAddView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(TrackAddView, self).get_context_data(**kwargs)
+
+        context['popup'] = self.popup
+        context['files'] = self.fm.directory_list()
+        context['playlist_id_active'] = self.kwargs['playlist_id_active']
+
+        return context
+
+
 class DetailView(FilemanagerMixin, TemplateView):
     template_name = 'filemanager/browser/filemanager_detail.html'
 
@@ -66,28 +83,33 @@ class DetailView(FilemanagerMixin, TemplateView):
         return context
 
 
-class AddView(FilemanagerMixin, TemplateView):
+class TrackSelectView(FilemanagerMixin, TemplateView):
     template_name = 'filemanager/browser/filemanager_list.html'
 
     def get(self, request, *args, **kwargs):
+
+        print('qwerqe=', self.kwargs['playlist_id_active'])
 
         if 'filepath' in request.GET:
             # filepath = request.GET['filepath']
             full_path = settings.MEDIA_ROOT + request.GET['filepath']
             print(full_path.replace('/', '\\'))
-            pi = PlayItem(playlist_id=1, title='added++++', text=full_path.replace('/', '\\')   )
+            pi = PlayItem(
+                # playlist__user=self.request.user,
+                playlist_id=self.kwargs['playlist_id_active'],
+                title='addesdfsd++++', text=full_path.replace('/', '\\'))
             pi.save()
         else:
             filepath = False
 
-        return super(AddView, self).get(request, *args, **kwargs)
+        return super(TrackSelectView, self).get(request, *args, **kwargs)
 
     def dispatch(self, request, *args, **kwargs):
         self.popup = self.request.GET.get('popup', 0) == '1'
-        return super(AddView, self).dispatch(request, *args, **kwargs)
+        return super(TrackSelectView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(AddView, self).get_context_data(**kwargs)
+        context = super(TrackSelectView, self).get_context_data(**kwargs)
 
         context['popup'] = self.popup
         context['files'] = self.fm.directory_list()

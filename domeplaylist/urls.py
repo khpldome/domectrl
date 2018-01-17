@@ -13,13 +13,13 @@ app_name = "domeplaylist"
 
 track_urls = [
 
-    # ToDo track-list track-new track-delete track-play
+    # ToDo track-list track-add track-delete track-play
 
     # http://127.0.0.1:8000/domeplaylist/playlist/1/tracklist/
     url(r'^tracklist/$', views.TrackListView.as_view(), name='track-list'),
 
-
-    url(r'^add/$', views.PlayItemAddView.as_view(), name='add_item'),
+    # http://127.0.0.1:8000/domeplaylist/playlist/1/track-add/
+    url(r'^track-add/$', views.TrackAddView.as_view(), name='track-add'),
     # url(r'^del/$', views.PlayItemAddView.as_view(), name='delete_item'),
 
     url(r'^new-playitem/$', views.NewPlayItemFormView.as_view(), name='new_playitem'),
@@ -31,6 +31,9 @@ track_urls = [
     # url(r'^picker/', include('filemanager.urls', namespace="filemanager")),
     # url(r'^picker/', filemanager.urls),
 ]
+
+
+
 
 
 urlpatterns = [
