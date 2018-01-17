@@ -10,7 +10,6 @@ class PlayList(models.Model):
         (2, 'Космос'),
         (3, 'Романтика'),
     )
-    # summaryfactor = models.ForeignKey(SummaryFactor, related_name="related_mzodiac", on_delete=models.CASCADE, blank=True, null=True)
 
     user = models.ForeignKey('domeuser.User', default=None, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)

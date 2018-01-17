@@ -35,7 +35,7 @@ class IndexView(View):
         if request.user.is_authenticated():
             return HttpResponseRedirect(reverse_lazy('dashboard'))
         else:
-            return HttpResponseRedirect(reverse_lazy('sign_in'))
+            return HttpResponseRedirect(reverse_lazy('domeuser:sign_in'))
 
 
 class DashboardView(LoginRequiredMixin, ListView):

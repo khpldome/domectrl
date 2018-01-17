@@ -47,7 +47,7 @@ class UserAdmin(admin.ModelAdmin):
         'date_joined',
         'last_login',
     )
-    exclude = ('password',)
+    # exclude = ('password',)
     actions = [push_to_mailchimp]
 
 

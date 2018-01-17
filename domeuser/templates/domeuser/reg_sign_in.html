@@ -40,7 +40,7 @@
                         <div class="form-group">
                             {{ sign_in_form.password.errors }}
                             {{ sign_in_form.password.label_tag }}
-                            <a href="{% url 'password_reset' %}" class="pull-right" tabindex="5">Forgot Password?</a>
+                            <a href="{% url 'domeuser:password_reset' %}" class="pull-right" tabindex="5">Forgot Password?</a>
                             {{ sign_in_form.password }}
                         </div>
                         <div class="align-right">

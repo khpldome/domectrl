@@ -76,7 +76,7 @@ def reg_sign_in(request):
 
 
 class SignOutView(RedirectView):
-    url = reverse_lazy('sign_in')
+    url = reverse_lazy('domeuser:sign_in')
 
     def get(self, request, *args, **kwargs):
         logout(request)
@@ -139,7 +139,7 @@ def password_reset_confirm(request, uidb64=None, token=None,
                     login(request, user)
                     return HttpResponseRedirect(reverse_lazy('domeplaylist:user-playlists'))
                 else:
-                    return HttpResponseRedirect(reverse_lazy('sign_in'))
+                    return HttpResponseRedirect(reverse_lazy('domeuser:sign_in'))
         else:
             form = set_password_form(user)
     else:
