@@ -22,6 +22,11 @@ jQuery(document).ready(function($) {
         console.log('active');
     });
 
+    $('.playlists-item').click(function(){
+        $('.playlists-item').removeClass('active');
+        $(this).addClass('active');
+        console.log('active');
+    });
     $('.icon-trash').click(function() {
         $(this).parent().parent().remove();
     });
