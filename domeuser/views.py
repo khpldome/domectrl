@@ -28,11 +28,13 @@ email_validator = EmailValidator()
 class SignInView(FormView):
     template_name = 'domeuser/sign_in.html'
     form_class = SignInForm
-    success_url = reverse_lazy('domeplaylist:user-playlists')
+    success_url = reverse_lazy('domeplaylist:track-list', kwargs={'playlist_id': -1})
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return HttpResponseRedirect(reverse_lazy('domeplaylist:user-playlists'))
+            # return HttpResponseRedirect(reverse_lazy('domeplaylist:user-playlists'))
+            return HttpResponseRedirect(reverse_lazy('domeplaylist:track-list', kwargs={'playlist_id': -1}))
+
         else:
             return super(SignInView, self).get(request, *args, **kwargs)
 
@@ -43,7 +45,7 @@ class SignInView(FormView):
 
 def reg_sign_in(request):
     template_name = 'domeuser/reg_sign_in.html'
-    success_url = reverse_lazy('domeplaylist:user-playlists')
+    success_url = reverse_lazy('domeplaylist:track-list', kwargs={'playlist_id': -1})
 
     reg_form = RegForm
     sign_in_form = SignInForm
@@ -90,7 +92,7 @@ class RegistrationView(FormView):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return HttpResponseRedirect(reverse_lazy('domeplaylist:user-playlists'))
+            return HttpResponseRedirect(reverse_lazy('domeplaylist:track-list', kwargs={'playlist_id': -1}))
         else:
             return super(RegistrationView, self).get(request, *args, **kwargs)
 
@@ -137,7 +139,7 @@ def password_reset_confirm(request, uidb64=None, token=None,
                                     password=form.cleaned_data['new_password1'])
                 if user and user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect(reverse_lazy('domeplaylist:user-playlists'))
+                    return HttpResponseRedirect(reverse_lazy('domeplaylist:track-list', kwargs={'playlist_id': -1}))
                 else:
                     return HttpResponseRedirect(reverse_lazy('domeuser:sign_in'))
         else:

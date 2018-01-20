@@ -14,6 +14,6 @@ urlpatterns = [
     url(r'^upload/file/$', csrf_exempt(UploadFileView.as_view()), name='upload-file'),
     url(r'^create/directory/$', DirectoryCreateView.as_view(), name='create-directory'),
 
-    url(r'^track-add/(?P<playlist_id_active>\d+)/$', TrackAddView.as_view(), name='track-add'),
-    url(r'^track-select/(?P<playlist_id_active>\d+)/$', TrackSelectView.as_view(), name='track-select'),
+    url(r'^track-add/(?P<playlist_id_active>-?\d+)/$', TrackAddView.as_view(), name='track-add'),
+    url(r'^track-select/(?P<playlist_id_active>-?\d+)/$', TrackSelectView.as_view(), name='track-select'),
 ]

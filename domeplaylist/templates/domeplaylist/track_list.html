@@ -9,7 +9,7 @@
     <aside class="sidebar sidebar-playlists" data-playlist-count='{{ playlist_count }}'>
         <div class="sidebar-playlists-new">
 {#            <a href="#" class="sidebar-playlists-new-button">#}
-                <a href="{% url 'domeplaylist:new-playlist' %}" class="sidebar-playlists-new-button"><span>Новый плейлист</span></a>
+                <a href="{% url 'domeplaylist:new-playlist' %}" class="sidebar-playlists-new-button"><span>Новый плейлист {{ playlist_id_active }}</span></a>
 {#            </a>#}
         </div>
         {#==================================================================#}
@@ -80,7 +80,7 @@
             </div>
         </div>
         <div class="playlist-items-container">
-            {% for track in tracklist %}
+            {% for track in tracklist_qs %}
                 <div class="playlist-item">
                     <div class="playlist-item-move">
                         <span class="icon-move"></span>

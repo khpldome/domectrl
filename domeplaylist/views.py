@@ -27,18 +27,20 @@ import requests
 
 
 class UserPlaylistsView(LoginRequiredMixin, ListView):
-    template_name = 'domeplaylist/user_playlists.html'
+    template_name = 'domeplaylist/track_list.html'
     context_object_name = "playlists_qs"
-    pl_qs = None
+    playlists_qs = None
 
     def get_queryset(self):
-        self.pl_qs = PlayList.objects.filter(user=self.request.user,).order_by('pk')
-        return self.pl_qs
+        self.playlists_qs = PlayList.objects.filter(user=self.request.user, ).order_by('pk')
+        return self.playlists_qs
 
     def get_context_data(self, **kwargs):
         context = super(UserPlaylistsView, self).get_context_data(**kwargs)
-        context['playlist_count'] = self.pl_qs.count()
-        context['playitem_count'] = 0
+        first_playlist = self.playlists_qs.first()
+        context['tracklist_qs'] = Track.objects.filter(playlist__user=self.request.user, playlist_id=first_playlist.id).order_by('pk')
+        context['playlist_count'] = self.playlists_qs.count()
+        context['track_count'] = 0
         return context
 
 
@@ -106,9 +108,11 @@ class TrackAddView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
 
 class TrackListView(LoginRequiredMixin, ListView):
     template_name = 'domeplaylist/track_list.html'
-    context_object_name = "tracklist"
+    context_object_name = "tracklist_qs"
     tracklist_qs = None
+    playlist_qs = None
     # playlist_current = None
+    active_playlist = None
 
     def get(self, request, *args, **kwargs):
         return super(TrackListView, self).get(request, *args, **kwargs)
@@ -116,17 +120,28 @@ class TrackListView(LoginRequiredMixin, ListView):
     def get_queryset(self, **kwargs):
         # ToDo Add check if exists
         playlist_id = self.kwargs['playlist_id']
-        self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user, playlist_id=playlist_id).order_by('-pk')
+
+        self.playlist_qs = PlayList.objects.filter(user=self.request.user)
+
+        if playlist_id == '-1':
+
+            first_playlist = self.playlist_qs.order_by('pk').first()
+            self.active_playlist = first_playlist.id
+            self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user,
+                                                     playlist_id=first_playlist).order_by('-pk')
+        else:
+            self.active_playlist = playlist_id
+            self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user,
+                                                     playlist_id=playlist_id).order_by('-pk')
         return self.tracklist_qs
 
     def get_context_data(self, **kwargs):
         context = super(TrackListView, self).get_context_data(**kwargs)
 
-        playlists_qs = PlayList.objects.filter(user=self.request.user)
-        context['playlists_qs'] = playlists_qs
-        context['playlist_id_active'] = self.kwargs['playlist_id']
-        context['playlist_count'] = PlayList.objects.all().count()
-        context['playitem_count'] = self.tracklist_qs.count()
+        context['playlists_qs'] = self.playlist_qs
+        context['playlist_id_active'] = str(self.active_playlist)
+        context['playlist_count'] = self.playlist_qs.count()
+        context['track_count'] = self.tracklist_qs.count()
 
         return context
 
