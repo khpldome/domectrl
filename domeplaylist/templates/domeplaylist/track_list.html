@@ -14,12 +14,10 @@
         {#==================================================================#}
         {% if playlists_qs %}
             {% for playlist in playlists_qs %}
-                <div class="playlists-item playlists-item-1" title="ID: {{ playlist.id }}, ver: {{ playlist.title }}">
-{#                    <p title="ID: {{ playlist.id }}, ver: {{ playlist.title }}">#}
-{#                        {{ playlist.title }}#}
-{#                        <span>{{ playlist.title }}</span>#}
-                            <a href="{% url 'domeplaylist:track-list' playlist_id=playlist.id %}" class="playlists-item-link"><span>{{ playlist.title }}</span></a>
-{#                    </p>#}
+                <div class="playlists-item playlists-item-1 {% if playlist.id|stringformat:"i" == playlist_id_active %}active{% else %}{% endif %}"
+                     title="ID: {{ playlist.id }}, ver: {{ playlist.title }}">
+                    <a href="{% url 'domeplaylist:track-list' playlist_id=playlist.id %}"
+                       class="playlists-item-link"><span>{{ playlist.title }}</span></a>
                 </div>
 
             {% endfor %}
