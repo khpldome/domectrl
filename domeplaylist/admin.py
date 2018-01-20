@@ -6,12 +6,11 @@ from django.contrib import admin
 
 
 # Register your models here.
-from domeplaylist import models
-from domeplaylist.models import PlayList
+from domeplaylist.models import PlayList, Track
 
 
-class PlayItemInline(admin.TabularInline):
-    model = models.Track
+class TrackInline(admin.TabularInline):
+    model = Track
     extra = 1
 
 
@@ -22,7 +21,7 @@ class PlayListAdmin(admin.ModelAdmin):
         'theme',
     )
 
-    inlines = (PlayItemInline,)
+    inlines = (TrackInline,)
 
 
 admin.site.register(PlayList, PlayListAdmin)

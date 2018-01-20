@@ -88,9 +88,9 @@ class ModulePermissionMixin(object):
             except PlayList.DoesNotExist:
                 return HttpResponseRedirect(reverse_lazy('no_access'))
 
-        if 'playitem_id' in kwargs:
+        if 'track_id' in kwargs:
             try:
-                self.myTrack = Track.objects.get(pk=kwargs['playitem_id'])
+                self.myTrack = Track.objects.get(pk=kwargs['track_id'])
             except Track.DoesNotExist:
                 return HttpResponseRedirect(reverse_lazy('no_access'))
 

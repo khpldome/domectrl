@@ -29,9 +29,6 @@ urlpatterns = [
 
     url(r'^playlist/(?P<playlist_id>-?\d+)/', include(track_urls)),
 
-    # http://127.0.0.1:8000/domeplaylist/user-playlists/
-    url(r'^user-playlists/$', views.UserPlaylistsView.as_view(), name='user-playlists'),
-
     # http://127.0.0.1:8000/domeplaylist/new-playlist/
     url(r'^new-playlist/$', views.NewPlayListView.as_view(), name='new-playlist'),
 

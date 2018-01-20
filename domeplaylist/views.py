@@ -26,24 +26,6 @@ import domectrl.config_fds as conf
 import requests
 
 
-class UserPlaylistsView(LoginRequiredMixin, ListView):
-    template_name = 'domeplaylist/track_list.html'
-    context_object_name = "playlists_qs"
-    playlists_qs = None
-
-    def get_queryset(self):
-        self.playlists_qs = PlayList.objects.filter(user=self.request.user, ).order_by('pk')
-        return self.playlists_qs
-
-    def get_context_data(self, **kwargs):
-        context = super(UserPlaylistsView, self).get_context_data(**kwargs)
-        first_playlist = self.playlists_qs.first()
-        context['tracklist_qs'] = Track.objects.filter(playlist__user=self.request.user, playlist_id=first_playlist.id).order_by('pk')
-        context['playlist_count'] = self.playlists_qs.count()
-        context['track_count'] = 0
-        return context
-
-
 class NewPlayListView(LoginRequiredMixin, CreateView):
     template_name = 'domeplaylist/new_playlist.html'
     form_class = PlayListForm
@@ -358,14 +340,14 @@ class TrackDeleteView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
 # class DeletePlayItemView(LoginRequiredMixin, DeleteView):
 
     model = Track
-    template_name = 'domeplaylist/dashboard.html'
+    template_name = 'domeplaylist/no_access.html'
 
     def get_object(self, **kwargs):
-        print('get_object=', self.myTrack)
+        print('myTrack=', self.myTrack)
         return self.myTrack
 
     def get_success_url(self):
-        return reverse_lazy('dashboard')
+        return reverse_lazy('domeplaylist:track-list', kwargs={'playlist_id': self.kwargs['playlist_id']})
 
     def delete(self, request, *args, **kwargs):
         """
@@ -375,6 +357,6 @@ class TrackDeleteView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
         print(self.myTrack)
         self.object = self.get_object()
         success_url = self.get_success_url()
-        self.object.delete()
 
+        self.object.delete()
         return HttpResponseRedirect(success_url)
