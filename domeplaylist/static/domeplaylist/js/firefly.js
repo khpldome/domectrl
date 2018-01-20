@@ -4,6 +4,7 @@ jQuery(document).ready(function($) {
         $('.playlist-items-container').removeClass('expanded');
         $('.playlist-items-container').addClass('collapsed');
         $('.playlist-expand-button-bg').removeClass('pressed');
+        var playitemCount = $('.playlist-current').data("playitemCount");
         $(this).next('.playlist-collapse-button-bg').addClass('pressed');
         console.log('collapse');
     });
@@ -37,6 +38,10 @@ jQuery(document).ready(function($) {
     console.log('playlistCount:'+playlistCount);
     $('.playlist-items-container').css('grid-template-rows', 'repeat('+playitemCount+', 120px)');
     $('.sidebar-playlists').css('grid-template-rows', '68px repeat('+playlistCount+', 50px)');
+
+    // $('.icon-log').click(function(){
+    //     $('.account-detail').
+    // });
 
 
 
