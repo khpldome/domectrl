@@ -76,21 +76,21 @@ class ModulePermissionMixin(object):
       belong to the module, if not redirects to 'no access' view.
     * Sets 'mymodule', 'mypage' properties to the view.
     """
-    myplaylist = None
-    myplayitem = None
+    myPlaylist = None
+    myTrack = None
 
     def dispatch(self, request, *args, **kwargs):
         print("module permission")
 
         if 'playlist_id' in kwargs:
             try:
-                self.myplaylist = PlayList.objects.get(pk=kwargs['playlist_id'])
+                self.myPlaylist = PlayList.objects.get(pk=kwargs['playlist_id'])
             except PlayList.DoesNotExist:
                 return HttpResponseRedirect(reverse_lazy('no_access'))
 
         if 'playitem_id' in kwargs:
             try:
-                self.myplayitem = Track.objects.get(pk=kwargs['playitem_id'])
+                self.myTrack = Track.objects.get(pk=kwargs['playitem_id'])
             except Track.DoesNotExist:
                 return HttpResponseRedirect(reverse_lazy('no_access'))
 

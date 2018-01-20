@@ -76,7 +76,7 @@ class TrackAddView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
         return kwargs
 
     def get_object(self, **kwargs):
-        return self.myplaylist
+        return self.myPlaylist
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -88,7 +88,7 @@ class TrackAddView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
             return super(TrackAddView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        self.object = self.myplaylist
+        self.object = self.myPlaylist
         # TODO : check if we edit latest version
         # if not raise Exception()
 
@@ -96,11 +96,11 @@ class TrackAddView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(TrackAddView, self).get_context_data(**kwargs)
-        context['pages'] = Track.objects.filter(playlist_id=self.myplaylist.id)
+        context['pages'] = Track.objects.filter(playlist_id=self.myPlaylist.id)
         return context
 
     def get_success_url(self):
-        playlist_id = self.myplaylist.id
+        playlist_id = self.myPlaylist.id
         return reverse_lazy('domeplaylist:edit_playlist', kwargs={'playlist_id': playlist_id})
 
 
@@ -131,7 +131,7 @@ class TrackListView(LoginRequiredMixin, ListView):
         return context
 
 
-class PlayItemPlayView(LoginRequiredMixin, ListView):
+class TrackPlayView(LoginRequiredMixin, ListView):
 
     template_name = 'domeplaylist/dashboard.html'
     context_object_name = "playlists"
@@ -149,7 +149,7 @@ class PlayItemPlayView(LoginRequiredMixin, ListView):
         r = requests.get('http://'+conf.ALLOWED_IP+':8080/requests/status.xml?command=in_play&input='+t3, auth=('', '63933'))
         print(r)
 
-        return super(PlayItemPlayView, self).get(request, *args, **kwargs)
+        return super(TrackPlayView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
         # res_qs = PlayList.objects.all()
@@ -157,7 +157,7 @@ class PlayItemPlayView(LoginRequiredMixin, ListView):
         return res_qs
 
     def get_context_data(self, **kwargs):
-        context = super(PlayItemPlayView, self).get_context_data(**kwargs)
+        context = super(TrackPlayView, self).get_context_data(**kwargs)
 
         playitem_qs = Track.objects.all()
         context['playitem_qs'] = playitem_qs
@@ -346,12 +346,8 @@ class TrackDeleteView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
     template_name = 'domeplaylist/dashboard.html'
 
     def get_object(self, **kwargs):
-        print('get_object=', self.myplayitem)
-        return self.myplayitem
-
-    def post(self, request, *args, **kwargs):
-        print('post=', self.myplayitem)
-        return super(TrackDeleteView, self).post(request, *args, **kwargs)
+        print('get_object=', self.myTrack)
+        return self.myTrack
 
     def get_success_url(self):
         return reverse_lazy('dashboard')
@@ -361,7 +357,7 @@ class TrackDeleteView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
         Calls the delete() method on the fetched object and then
         redirects to the success URL.
         """
-        print(self.myplayitem)
+        print(self.myTrack)
         self.object = self.get_object()
         success_url = self.get_success_url()
         self.object.delete()

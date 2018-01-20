@@ -29,7 +29,7 @@
 
 
 {% block main_bar %}
-    <div class="playlist-current" data-playitem-count='{{ playitem_count }}'>
+    <div class="playlist-current" data-playitem-count='{{ track_count }}'>
         <div class="playlist-title">
             <h2>Имя активного плейлиста</h2>
 {#            {{ playlist_id_active }}#}
@@ -46,7 +46,7 @@
         <div class="playlist-player">
             <div class="playlist-player-play">
 {#                <span href="{% url 'domeplaylist:play_playitem' playlist_id=2 playitem_id=2 %}" class="icon-player-play">Play</span>#}
-                 <a href="{% url 'domeplaylist:play_playitem' playlist_id=1 playitem_id=1 %}" title="Play" class="icon-player-play">Play</a>
+                 <a href="{% url 'domeplaylist:track-play' playlist_id=1 track_id=1 %}" title="Play" class="icon-player-play">Play</a>
             </div>
             <div class="playlist-player-stop">
                 <span class="icon-player-stop">Stop</span>
@@ -80,7 +80,7 @@
             </div>
         </div>
         <div class="playlist-items-container">
-            {% for item in tracklist %}
+            {% for track in tracklist %}
                 <div class="playlist-item">
                     <div class="playlist-item-move">
                         <span class="icon-move"></span>
@@ -94,8 +94,8 @@
                         </div>
                     </div>
                     <div class="playlist-item-title">
-                        <h3>{{ item.title }}</h3>
-                        <h2>{{ item.text }}</h2>
+                        <h3>{{ track.title }}</h3>
+                        <h2>{{ track.text }}</h2>
                     </div>
                     <div class="playlist-item-info">
                         <div class="playlist-item-info-time">
@@ -110,7 +110,7 @@
                     </div>
                     <div class="playlist-item-trash">
 {#                        <span class="icon-trash"></span>#}
-                        <a href="{% url 'domeplaylist:track-delete' playlist_id=playlist_id_active playitem_id=item.id %}" title="Удалить видео" class="icon-trash"></a>
+                        <a href="{% url 'domeplaylist:track-delete' playlist_id=playlist_id_active track_id=track.id %}" title="Удалить видео" class="icon-trash"></a>
                     </div>
                 </div>
             {% endfor %}

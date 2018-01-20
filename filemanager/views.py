@@ -1,7 +1,7 @@
 import json
 
 from django.views.generic import TemplateView, FormView
-from django.views.generic.base import View
+from django.views.generic.base import View, RedirectView
 from django.shortcuts import HttpResponse
 from django.http import HttpResponseBadRequest
 from django.urls import reverse_lazy
@@ -83,15 +83,14 @@ class DetailView(FilemanagerMixin, TemplateView):
         return context
 
 
-class TrackSelectView(FilemanagerMixin, TemplateView):
-    template_name = 'filemanager/browser/filemanager_list.html'
+class TrackSelectView(FilemanagerMixin, RedirectView):
+    # template_name = 'filemanager/browser/filemanager_list.html'
 
     def get(self, request, *args, **kwargs):
 
-        print('qwerqe=', self.kwargs['playlist_id_active'])
+        # print('qwerqe=', self.kwargs['playlist_id_active'])
 
         if 'filepath' in request.GET:
-            # filepath = request.GET['filepath']
             full_path = settings.MEDIA_ROOT + request.GET['filepath']
             print(full_path.replace('/', '\\'))
             pi = Track(
@@ -103,6 +102,9 @@ class TrackSelectView(FilemanagerMixin, TemplateView):
             filepath = False
 
         return super(TrackSelectView, self).get(request, *args, **kwargs)
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse_lazy('domeplaylist:track-list', kwargs={'playlist_id': self.kwargs['playlist_id_active']})
 
     def dispatch(self, request, *args, **kwargs):
         self.popup = self.request.GET.get('popup', 0) == '1'

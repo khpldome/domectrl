@@ -24,8 +24,8 @@ track_urls = [
 
     # url(r'^new-playitem/$', views.NewPlayItemFormView.as_view(), name='new_playitem'),
 
-    url(r'^playitem/(?P<playitem_id>\d+)/delete/$', views.TrackDeleteView.as_view(), name='track-delete'),
-    url(r'^playitem/(?P<playitem_id>\d+)/play/$', views.PlayItemPlayView.as_view(), name='track-play'),
+    url(r'^track/(?P<track_id>\d+)/delete/$', views.TrackDeleteView.as_view(), name='track-delete'),
+    url(r'^track/(?P<track_id>\d+)/play/$', views.TrackPlayView.as_view(), name='track-play'),
 
     # url(r'^picker/', include('filemanager.urls', namespace="filemanager")),
     # url(r'^picker/', filemanager.urls),

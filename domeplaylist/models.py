@@ -21,11 +21,11 @@ class PlayList(models.Model):
 
 class Track(models.Model):
 
-    playlist = models.ForeignKey(PlayList, related_name="related_plitem", on_delete=models.CASCADE, blank=True, null=True)
+    playlist = models.ForeignKey(PlayList, related_name="related_track", on_delete=models.CASCADE, blank=True, null=True)
 
     title = models.CharField(max_length=250)
     text = models.TextField()
-    image = models.FileField(upload_to='media/playitem_imgs/%Y/%m/%d/', blank=True, null=True)
+    image = models.FileField(upload_to='media/track_imgs/%Y/%m/%d/', blank=True, null=True)
 
     def __str__(self):
-        return "[{}] PlayItem: {}".format(self.id, self.title)
+        return "[{}] Track: {}".format(self.id, self.title)
