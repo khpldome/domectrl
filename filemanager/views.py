@@ -6,7 +6,7 @@ from django.shortcuts import HttpResponse
 from django.http import HttpResponseBadRequest
 from django.urls import reverse_lazy
 
-from domeplaylist.models import PlayItem
+from domeplaylist.models import Track
 from filemanager.forms import DirectoryCreateForm
 from filemanager.core import Filemanager
 from django.conf import settings
@@ -94,7 +94,7 @@ class TrackSelectView(FilemanagerMixin, TemplateView):
             # filepath = request.GET['filepath']
             full_path = settings.MEDIA_ROOT + request.GET['filepath']
             print(full_path.replace('/', '\\'))
-            pi = PlayItem(
+            pi = Track(
                 # playlist__user=self.request.user,
                 playlist_id=self.kwargs['playlist_id_active'],
                 title='addesdfsd++++', text=full_path.replace('/', '\\'))

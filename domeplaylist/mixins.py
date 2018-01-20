@@ -3,7 +3,7 @@ from __future__ import print_function
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponse
 
-from domeplaylist.models import PlayList, PlayItem
+from domeplaylist.models import PlayList, Track
 
 # class ModulePermissionMixin(object):
 #     """
@@ -90,8 +90,8 @@ class ModulePermissionMixin(object):
 
         if 'playitem_id' in kwargs:
             try:
-                self.myplayitem = PlayItem.objects.get(pk=kwargs['playitem_id'])
-            except PlayItem.DoesNotExist:
+                self.myplayitem = Track.objects.get(pk=kwargs['playitem_id'])
+            except Track.DoesNotExist:
                 return HttpResponseRedirect(reverse_lazy('no_access'))
 
         return super(ModulePermissionMixin, self).dispatch(request, *args, **kwargs)

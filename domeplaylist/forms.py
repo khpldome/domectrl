@@ -2,7 +2,7 @@ from django import forms
 from django.forms import BaseInlineFormSet
 
 # from madquiz.models import StudyModule, ModulePage, PAGE_TYPE_CHOICES, Answer, VIDEO_TYPE_CHOICES
-from domeplaylist.models import PlayList, PlayItem
+from domeplaylist.models import PlayList, Track
 
 
 # class StudyModuleForm(forms.ModelForm):
@@ -207,7 +207,7 @@ class PlayListForm(forms.ModelForm):
 
 class PlayItemForm(forms.ModelForm):
     class Meta:
-        model = PlayItem
+        model = Track
         fields = ('id', 'title', 'text')
 
     def __init__(self, *args, **kwargs):

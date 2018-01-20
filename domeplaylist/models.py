@@ -19,7 +19,7 @@ class PlayList(models.Model):
         return "id:{} {} of {}".format(self.id, self.theme, self.title)
 
 
-class PlayItem(models.Model):
+class Track(models.Model):
 
     playlist = models.ForeignKey(PlayList, related_name="related_plitem", on_delete=models.CASCADE, blank=True, null=True)
 

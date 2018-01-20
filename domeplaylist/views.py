@@ -16,7 +16,7 @@ from django.views.generic.edit import FormMixin
 #     pass
 
 from domeplaylist.forms import PlayListForm, PlayItemForm, PlayItemInlineFormSet
-from domeplaylist.models import PlayList, PlayItem
+from domeplaylist.models import PlayList, Track
 from domeplaylist.mixins import ModulePermissionMixin, AjaxHandlerMixin
 # from madcram.settings import ADMIN_EMAIL, APP_EMAIL
 
@@ -96,7 +96,7 @@ class TrackAddView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(TrackAddView, self).get_context_data(**kwargs)
-        context['pages'] = PlayItem.objects.filter(playlist_id=self.myplaylist.id)
+        context['pages'] = Track.objects.filter(playlist_id=self.myplaylist.id)
         return context
 
     def get_success_url(self):
@@ -116,7 +116,7 @@ class TrackListView(LoginRequiredMixin, ListView):
     def get_queryset(self, **kwargs):
         # ToDo Add check if exists
         playlist_id = self.kwargs['playlist_id']
-        self.tracklist_qs = PlayItem.objects.filter(playlist__user=self.request.user, playlist_id=playlist_id).order_by('-pk')
+        self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user, playlist_id=playlist_id).order_by('-pk')
         return self.tracklist_qs
 
     def get_context_data(self, **kwargs):
@@ -141,7 +141,7 @@ class PlayItemPlayView(LoginRequiredMixin, ListView):
         # http://192.168.10.106:8080/requests/status.xml?command=in_enqueue&input=f:\Video\Saw\Gattaca\Gattaca.avi
         # 127.0.0.1:8080/requests/status.xml?command=in_enqueue&input=C:\Users\Public\Videos\Sample Videos\Wildlife.wmv
 
-        instance = PlayItem.objects.filter(id=12).first()
+        instance = Track.objects.filter(id=12).first()
 
         t3 = instance.text.replace(' ', '%20')
         print('http://'+conf.ALLOWED_IP, ':8080/requests/status.xml?command=in_enqueue&input=', t3)
@@ -159,13 +159,13 @@ class PlayItemPlayView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(PlayItemPlayView, self).get_context_data(**kwargs)
 
-        playitem_qs = PlayItem.objects.all()
+        playitem_qs = Track.objects.all()
         context['playitem_qs'] = playitem_qs
         # context['playitem_qs'] = PlayItem.objects.filter(playlist_id=self.playlist.id)
         # playlist_first = PlayList.objects.filter(user=self.request.user,).order_by('-pk').first()
         # context['playitem_qs'] = PlayItem.objects.filter(playlist_id=playlist_first)
         context['playlist_count'] = PlayList.objects.all().count()
-        context['playitem_count'] = PlayItem.objects.all().count()
+        context['playitem_count'] = Track.objects.all().count()
 
         return context
 
@@ -270,7 +270,7 @@ class GenericPageFormView(GenericInfoPageFormView):
                                   can_delete=True, max_num=None, formfield_callback=None,
         '''
         answer_form_set = inlineformset_factory(
-            PlayList, PlayItem, form,
+            PlayList, Track, form,
             formset=PlayItemInlineFormSet,
             extra=True,
             can_delete=True,
@@ -339,10 +339,10 @@ class EditPlayItemFormView(GenericPageFormView, UpdateView):
         return super(EditPlayItemFormView, self).post(request, *args, **kwargs)
 
 
-class DeletePlayItemView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
+class TrackDeleteView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
 # class DeletePlayItemView(LoginRequiredMixin, DeleteView):
 
-    model = PlayItem
+    model = Track
     template_name = 'domeplaylist/dashboard.html'
 
     def get_object(self, **kwargs):
@@ -351,7 +351,7 @@ class DeletePlayItemView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
 
     def post(self, request, *args, **kwargs):
         print('post=', self.myplayitem)
-        return super(DeletePlayItemView, self).post(request, *args, **kwargs)
+        return super(TrackDeleteView, self).post(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse_lazy('dashboard')

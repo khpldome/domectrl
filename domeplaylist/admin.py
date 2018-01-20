@@ -11,7 +11,7 @@ from domeplaylist.models import PlayList
 
 
 class PlayItemInline(admin.TabularInline):
-    model = models.PlayItem
+    model = models.Track
     extra = 1
 
 

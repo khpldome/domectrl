@@ -1,5 +1,6 @@
 {% extends "inner_layout.html" %}
 
+
 {% load static %}
 
 
@@ -109,7 +110,7 @@
                     </div>
                     <div class="playlist-item-trash">
 {#                        <span class="icon-trash"></span>#}
-                        <a href="{% url 'domeplaylist:delete-playitem' playlist_id=2 playitem_id=item.id %}" title="Удалить видео" class="icon-trash"></a>
+                        <a href="{% url 'domeplaylist:track-delete' playlist_id=playlist_id_active playitem_id=item.id %}" title="Удалить видео" class="icon-trash"></a>
                     </div>
                 </div>
             {% endfor %}

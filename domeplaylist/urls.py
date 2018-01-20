@@ -22,11 +22,10 @@ track_urls = [
     url(r'^track-add/$', views.TrackAddView.as_view(), name='track-add'),
     # url(r'^del/$', views.PlayItemAddView.as_view(), name='delete_item'),
 
-    url(r'^new-playitem/$', views.NewPlayItemFormView.as_view(), name='new_playitem'),
+    # url(r'^new-playitem/$', views.NewPlayItemFormView.as_view(), name='new_playitem'),
 
-    url(r'^playitem/(?P<playitem_id>\d+)/edit/$', views.EditPlayItemFormView.as_view(), name='edit_playitem'),
-    url(r'^playitem/(?P<playitem_id>\d+)/delete/$', views.DeletePlayItemView.as_view(), name='delete-playitem'),
-    url(r'^playitem/(?P<playitem_id>\d+)/play/$', views.PlayItemPlayView.as_view(), name='play_playitem'),
+    url(r'^playitem/(?P<playitem_id>\d+)/delete/$', views.TrackDeleteView.as_view(), name='track-delete'),
+    url(r'^playitem/(?P<playitem_id>\d+)/play/$', views.PlayItemPlayView.as_view(), name='track-play'),
 
     # url(r'^picker/', include('filemanager.urls', namespace="filemanager")),
     # url(r'^picker/', filemanager.urls),
