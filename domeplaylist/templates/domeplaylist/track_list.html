@@ -9,7 +9,7 @@
     <aside class="sidebar sidebar-playlists" data-playlist-count='{{ playlist_count }}'>
         <div class="sidebar-playlists-new">
             <a href="{% url 'domeplaylist:new-playlist' %}" class="sidebar-playlists-new-button">
-                <span class="icon icon-add-playlist">Новый плейлист {{ playlist_id_active }}</span>
+                <span class="icon-add-playlist">Новый плейлист {{ playlist_id_active }}</span>
             </a>
         </div>
         {#==================================================================#}
@@ -45,13 +45,13 @@
         <div class="playlist-title">
             <h2>Имя активного плейлиста</h2>
 {#            {{ playlist_id_active }}#}
-{#            <a href="{% url 'domeplaylist:track-new' playlist_id=playlist_id_active %}" title="Добавить видео" class="playlist-video-add icon icon-add-video"></a>#}
-{#            <a href="{% url 'filemanager:add'%}" title="Добавить видео" class="playlist-video-add icon icon-add-video"></a>#}
-            <a href="{% url 'filemanager:track-add' playlist_id_active=playlist_id_active %}" title="Добавить видео" class="playlist-video-add icon icon-add-video"></a>
+{#            <a href="{% url 'domeplaylist:track-new' playlist_id=playlist_id_active %}" title="Добавить видео" class="playlist-video-add icon-add-video"></a>#}
+{#            <a href="{% url 'filemanager:add'%}" title="Добавить видео" class="playlist-video-add icon-add-video"></a>#}
+            <a href="{% url 'filemanager:track-add' playlist_id_active=playlist_id_active %}" title="Добавить видео" class="playlist-video-add icon-add-video"></a>
 
-            <a href="#expand" title="Развернуть" class="playlist-expand icon icon-expand pressed"></a>
+            <a href="#expand" title="Развернуть" class="playlist-expand icon-expand pressed"></a>
 
-            <a href="#collapse" title="Свернуть" class="playlist-collapse icon icon-collapse"></a>
+            <a href="#collapse" title="Свернуть" class="playlist-collapse icon-collapse"></a>
 
 
         </div>
@@ -111,13 +111,13 @@
                     </div>
                     <div class="playlist-item-info">
                         <div class="playlist-item-info-time">
-                            <span class="icon icon-time">15:20</span>
+                            <span class="icon-time">15:20</span>
                         </div>
                         <div class="playlist-item-info-size">
-                            <span class="icon icon-size">4096x4096@23.97fps</span>
+                            <span class="icon-size">4096x4096@23.97fps</span>
                         </div>
                         <div class="playlist-item-info-bitrate">
-                            <span class="icon icon-bitrate">384 kbps</span>
+                            <span class="icon-bitrate">384 kbps</span>
                         </div>
                     </div>
                     <div class="playlist-item-trash">
@@ -168,32 +168,3 @@
         });
     </script>
 {% endblock js %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

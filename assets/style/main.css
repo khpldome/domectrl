@@ -427,10 +427,18 @@ header .account {
     grid-column: 1/2;
     grid-row: 1/2;
     z-index: 100;
+    display: flex;
+    justify-content: center;
+}
+
+.icon-play {
+    width: 40%;
+    height: 40%;
+    display: block;
 }
 
 .active .icon-play:after {
-    content: url(../img/icon-time.svg);
+    content: url(../img/icon-play.svg);
 }
 
 .playlist-item-poster{
@@ -491,6 +499,21 @@ header .account {
 
 .icon-bitrate:after {
     content: url(../img/icon-bitrate.svg);
+    padding-left: 8px;
+}
+
+.active .icon-time:after {
+    content: url(../img/icon-time-active.svg);
+    padding-left: 8px;
+}
+
+.active .icon-size:after {
+    content: url(../img/icon-size-active.svg);
+    padding-left: 8px;
+}
+
+.active .icon-bitrate:after {
+    content: url(../img/icon-bitrate-active.svg);
     padding-left: 8px;
 }
 

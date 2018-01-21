@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="25" viewBox="0 0 32 25">
+<svg xmlns="http://www.w3.org/2000/svg" width="31.219" height="24.125" viewBox="0 0 31.219 24.125">
   <metadata><?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
 <x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.6-c138 79.159824, 2016/09/14-01:09:01        ">
    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
@@ -27,5 +27,13 @@
                                                                                                     
                            
 <?xpacket end="w"?></metadata>
-<image id="Shape_704" data-name="Shape 704" width="32" height="25" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAZCAMAAABn0dyjAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABNVBMVEUqu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8qu/8AAACRGThbAAAAZXRSTlMAAVGz6FAOsg218nopESp787FZLzBVu31/uTLvHvYJD9tMm/2DyjbrZAIDQRZJOdX5iQUxQvj77b2F59ZyUvc/Zi2046T6iqlbRAxGryAGn85XK+b+w6p4rRC3tqVe8TTJc9j0GfWI9k0AAAABYktHRGYs1NklAAAACXBIWXMAAAsSAAALEgHS3X78AAAAB3RJTUUH4QwCEzEJ39TlMgAAASNJREFUKM+FkudWwkAQhScGo66iIIlYoqhgIXZQwQb2iAUb9l7u+7+CG5OcYzZruD9m7+58Z2YbESktagxBxdRWhXxpKmRqa/fySgdYZ1c8qO6eBJJejV6wFIWlMxiu60OaZOrHgGsYdCkwiCHXAKa/Zph/ABMQAQ3D6ZEoIMMPNzrWBADGmwDZXDQwMRm5yanpvOetmRwwKx5zLu67+QWn3eJSgfsEiqFLWl4BVkscSVpEZayJeW2d54zCBo+bRFuoVAVg26m/Q7s87vHpPg4Oi4HHtsGOasekn5wCZ0T18/BvuXBLXQJXzli1rxsCcXNr0t19CdkH2UvXHESnRx7L0q9ATzz1/PLKb+JNDmTe3UYVg/5R/eMT+LJTFCHt2/odfwAAC2ELPWSoZwAAAABJRU5ErkJggg=="/>
+<defs>
+    <style>
+      .cls-1 {
+        fill: #2abbff;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M6.32,0A6.256,6.256,0,0,0,0,6.171v7.665a6.436,6.436,0,0,0,6.522,6.171H19.531A5.988,5.988,0,0,0,31.2,18.293a5.863,5.863,0,0,0-4.213-5.561V6.171A6.256,6.256,0,0,0,20.671,0H6.32Zm0,2.057H20.671a4.133,4.133,0,0,1,4.213,4.114v6.315a5.907,5.907,0,0,0-5.6,5.464H6.523a4.312,4.312,0,0,1-4.416-4.114V6.171A4.133,4.133,0,0,1,6.32,2.057Zm5.686,11.225a0.725,0.725,0,0,1-1.083-.578V7.273a0.791,0.791,0,0,1,1.083-.654L16.5,9.3a0.776,0.776,0,0,1,0,1.308Zm13.23,1.582a1.041,1.041,0,0,0-1.053,1.028v1.372h-1.4a1.029,1.029,0,1,0,0,2.057h1.4v1.371a1.053,1.053,0,0,0,2.106,0V19.322h1.4a1.029,1.029,0,1,0,0-2.057h-1.4V15.893A1.041,1.041,0,0,0,25.235,14.865Z"/>
 </svg>
