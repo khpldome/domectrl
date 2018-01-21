@@ -18,12 +18,10 @@ ul {
 
 .grid {
     display: grid;
+    min-height: 100vh;
     grid-gap: 0em;
-    // grid-template-columns: 15% 1fr;
-    grid-template-rows: 60px 1fr;
-    // grid-template-areas:
-    //     "header header"
-    //     "content content";
+    grid-template-rows: 75px 1fr;
+
 }
 
 header, nav, .status, .grid-tabs, .account, .link-playlists, .link-more {
@@ -38,12 +36,14 @@ header {
     grid-template-columns: 1.1fr 1.8fr 0.5fr 4.4fr 1.1fr;
     grid-row: 1/2;
     grid-column: 1/2;
-    // grid-template-areas: "logo nav turn status account"; //238 170 119+1 (brdr) 148+1(brdr) 30+25+20+9+101+9++67+9+108+63+154+80+29+16+32
+    /* grid-template-areas: "logo nav turn status account"; 238 170 119+1 (brdr) 148+1(brdr) 30+25+20+9+101+9++67+9+108+63+154+80+29+16+32 */
     text-align: left;
+    padding-top: 15px;
 }
 
 .logo, nav, .projectors-turn, .status, .account {
     grid-row: 1/2
+    margin-top: -15px;
 }
 
 header .logo {
@@ -82,7 +82,7 @@ nav a.link-more:before {
     content: url(../img/icon-more.svg);
     display: flex;
     align-items: center;
-    height: 80%;
+    height: 100%;
     padding-left: 15px;
 }
 
@@ -90,7 +90,7 @@ nav .link-playlists span, nav .link-more span {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 80%;
+    height: 100%;
     width: 100%;
 }
 
@@ -113,15 +113,15 @@ header .projectors-turn {
 }
 
 .icon-projectors-turn-on {
-    content: url(../img/icon-projectors-turn-on.png);
-    // width: 100%;
-    // height: 100%;
+    content: url(../img/icon-projectors-turn-on.svg);
+    /* width: 100%; */
+    /* height: 100%; */
 }
 
-// .icon-projectors-turn-on:before {
-//     content: url(../img/icon-projectors-turn-on.svg);
-// }
-
+/* .icon-projectors-turn-on:before {
+    content: url(../img/icon-projectors-turn-on.svg);
+}
+ */
 header .status {
     grid-column: 4/5;
     display: grid;
@@ -204,7 +204,7 @@ header .account {
     display: grid;
     align-items: center;
     border: 2px solid rgba(255,255,255,0);
-    min-height: calc(100vh - 90px);
+    /* min-height: calc(100vh - 105px); */
     grid-row: 1/2;
     grid-column: 1/2;
     grid-template-rows: ;
@@ -221,11 +221,12 @@ header .account {
 .sidebar-playlists-new-button {
     text-decoration: none;
     color: #2abbff;
+    text-transform: capitalize;
 }
 
-.sidebar-playlists-new-button span:before {
-    content: url(../img/icon-time.svg);
-    padding-right: 5px;
+.icon-add-playlist:before {
+    content: url(../img/icon-add-playlist.svg);
+    padding-right: 10px;
 }
 
 .playlists-item {
@@ -236,7 +237,7 @@ header .account {
     height: 100%;
     display: grid;
     align-items: center;
-    color: rgb(102, 102, 102);
+    color: #666;
 }
 
 .playlists-item.active {
@@ -247,7 +248,7 @@ header .account {
     background: -ms-linear-gradient(left, rgba(51,204,255,0) 50%, rgba(51,204,255,0.6) 100%);
     background: linear-gradient(to right, rgba(51,204,255,0) 50%, rgba(51,204,255,0.6) 100%);
     border-right: 4px solid #2abbff;
-    color: rgb(255, 255, 255);
+    color: #fff;
 }
 
 .playlists-item-link {
@@ -263,7 +264,7 @@ header .account {
     border: 2px solid #2abbff;
     display: grid;
     grid-template-rows: 68px 50px 1fr;
-    min-height: calc(100vh - 90px);
+    /* min-height: calc(100vh - 105px); */
     grid-row: 1/2;
     grid-column: 2/3;
 }
@@ -305,7 +306,7 @@ header .account {
 .icon-add-video {
     display: block;
     height: 100%;
-    height: calc(100% + 2px);
+    height: calc(100% - 2px);
     background-image: url(../img/icon-add-video.svg);
     background-position: center;
     background-repeat: no-repeat;
@@ -346,7 +347,7 @@ header .account {
     grid-template-areas: "move poster title info trash";
     grid-template-columns: 0.15fr 0.15fr 1fr 0.4fr 0.15fr;
     align-items: center;
-    color: rgb(102, 102, 102);
+    color: #666;
 }
 
 .playlist-item.active {
@@ -361,8 +362,8 @@ header .account {
 }
 
 .active .icon-move {
-    content: url(../img/icon-time.svg);
-    // padding-left: 8px;
+    content: url(../img/icon-move.svg);
+    /*padding-left: 8px;*/
 }
 
 .playlist-item-poster-play {
@@ -451,8 +452,20 @@ header .account {
     text-align: center;
 }
 
-.active .icon-trash {
-    content: url(../img/icon-time.svg);
+.playlist-item-trash form input {
+    visibility: hidden;
+}
+
+.active .playlist-item-trash form input {
+    visibility: visible;
+    background-color: rgba(255,255,255,0);
+    border: none;
+    width: 100%;
+    background-image: url(../img/icon-trash.svg);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    outline: none;
+    cursor: pointer;
 }
 
 .disabled {
@@ -513,7 +526,7 @@ header .account {
     grid-column: 1/2;
     margin: 25px 0 0 25px;
     min-height: 98vh;
-    min-height: calc(100vh - 108px);
+    min-height: calc(100vh - 123px);
     list-style: none;
     line-height: 1.5em;
 }

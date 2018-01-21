@@ -8,14 +8,14 @@
 
     <aside class="sidebar sidebar-playlists" data-playlist-count='{{ playlist_count }}'>
         <div class="sidebar-playlists-new">
-{#            <a href="#" class="sidebar-playlists-new-button">#}
-                <a href="{% url 'domeplaylist:new-playlist' %}" class="sidebar-playlists-new-button"><span>Новый плейлист {{ playlist_id_active }}</span></a>
-{#            </a>#}
+            <a href="{% url 'domeplaylist:new-playlist' %}" class="sidebar-playlists-new-button">
+                <span class="icon icon-add-playlist">Новый плейлист {{ playlist_id_active }}</span>
+            </a>
         </div>
         {#==================================================================#}
         {% if playlists_qs %}
             {% for playlist in playlists_qs %}
-                <div class="playlists-item playlists-item-1 {% if playlist.id|stringformat:"i" == playlist_id_active %}active{% else %}{% endif %}"
+                <div class="playlists-item {% if playlist.id|stringformat:"i" == playlist_id_active %}active{% else %}{% endif %}"
                      title="ID: {{ playlist.id }}, ver: {{ playlist.title }}">
                     <a href="{% url 'domeplaylist:track-list' playlist_id=playlist.id %}"
                        class="playlists-item-link"><span>{{ playlist.title }}</span></a>
@@ -109,11 +109,10 @@
                         </div>
                     </div>
                     <div class="playlist-item-trash">
-{#                        <span class="icon-trash"></span>#}
-                        <a href="{% url 'domeplaylist:track-delete' playlist_id=playlist_id_active track_id=track.id %}" title="Удалить видео" class="icon-trash"></a>
-
+                        <a href="{% url 'domeplaylist:track-delete' playlist_id=playlist_id_active track_id=track.id %}"></a>
                         <form method="POST" action="{% url 'domeplaylist:track-delete' playlist_id=playlist_id_active track_id=track.id %}">
-                        {% csrf_token %}<input type="submit" value="DELETE">
+                        {% csrf_token %}
+                        <input type="submit" value="" title="Удалить видео">
                         </form>
 
                     </div>
