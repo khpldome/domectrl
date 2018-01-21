@@ -4,7 +4,7 @@ body {
 
 a {
     text-decoration: none;
-    color: #fff;
+    color: inherit;
 }
 
 a:active {
@@ -220,6 +220,7 @@ header .account {
 
 .sidebar-playlists-new-button {
     text-decoration: none;
+    color: #2abbff;
 }
 
 .sidebar-playlists-new-button span:before {
@@ -235,6 +236,7 @@ header .account {
     height: 100%;
     display: grid;
     align-items: center;
+    color: rgb(102, 102, 102);
 }
 
 .playlists-item.active {
@@ -245,6 +247,7 @@ header .account {
     background: -ms-linear-gradient(left, rgba(51,204,255,0) 50%, rgba(51,204,255,0.6) 100%);
     background: linear-gradient(to right, rgba(51,204,255,0) 50%, rgba(51,204,255,0.6) 100%);
     border-right: 4px solid #2abbff;
+    color: rgb(255, 255, 255);
 }
 
 .playlists-item-link {
@@ -343,6 +346,7 @@ header .account {
     grid-template-areas: "move poster title info trash";
     grid-template-columns: 0.15fr 0.15fr 1fr 0.4fr 0.15fr;
     align-items: center;
+    color: rgb(102, 102, 102);
 }
 
 .playlist-item.active {
