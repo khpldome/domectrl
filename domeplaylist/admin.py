@@ -17,6 +17,7 @@ class TrackInline(admin.TabularInline):
 class PlayListAdmin(admin.ModelAdmin):
     list_display = (
         'id',
+        'user',
         'title',
         'theme',
     )

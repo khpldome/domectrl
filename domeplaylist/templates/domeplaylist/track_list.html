@@ -12,6 +12,16 @@
                 <span class="icon icon-add-playlist">Новый плейлист {{ playlist_id_active }}</span>
             </a>
         </div>
+
+        <div class="playlist-item">
+{#            <a href="{% url 'domeplaylist:playlist-delete' playlist_id=playlist_id_active %}">sfrqrqrwerqwerqwers</a>#}
+            <form method="POST"
+                action="{% url 'domeplaylist:playlist-delete' playlist_id=playlist_id_active %}">
+                {% csrf_token %}
+                <input type="submit" value="" title="Удалить плейлист">
+            </form>
+        </div>
+
         {#==================================================================#}
         {% if playlists_qs %}
             {% for playlist in playlists_qs %}
@@ -46,7 +56,7 @@
         <div class="playlist-player">
             <div class="playlist-player-play">
 {#                <span href="{% url 'domeplaylist:play_playitem' playlist_id=2 playitem_id=2 %}" class="icon-player-play">Play</span>#}
-                 <a href="{% url 'domeplaylist:track-play' playlist_id=1 track_id=1 %}" title="Play" class="icon-player-play">Play</a>
+                 <a href="{% url 'domeplaylist:track-play' playlist_id=playlist_id_active track_id=10 %}" title="Play" class="icon-player-play">Play</a>
             </div>
             <div class="playlist-player-stop">
                 <span class="icon-player-stop">Stop</span>
@@ -114,8 +124,8 @@
                         {% csrf_token %}
                         <input type="submit" value="" title="Удалить видео">
                         </form>
-
                     </div>
+
                 </div>
             {% endfor %}
         </div>
