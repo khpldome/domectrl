@@ -3,17 +3,16 @@ jQuery(document).ready(function($) {
     $('.playlist-collapse').click(function() {
         $('.playlist-items-container').removeClass('expanded');
         $('.playlist-items-container').addClass('collapsed');
-        $('.playlist-expand-button-bg').removeClass('pressed');
-        var playitemCount = $('.playlist-current').data("playitemCount");
-        $(this).next('.playlist-collapse-button-bg').addClass('pressed');
+        $('.playlist-expand').removeClass('pressed');
+        $(this).addClass('pressed');
         console.log('collapse');
     });
 
     $('.playlist-expand').click(function() {
         $('.playlist-items-container').removeClass('collapsed');
         $('.playlist-items-container').addClass('expanded');
-        $('.playlist-collapse-button-bg').removeClass('pressed');
-        $(this).next('.playlist-expand-button-bg').addClass('pressed');
+        $('.playlist-collapse').removeClass('pressed');
+        $(this).addClass('pressed');
         console.log('expand');
     });
 
@@ -39,11 +38,10 @@ jQuery(document).ready(function($) {
     $('.playlist-items-container').css('grid-template-rows', 'repeat('+playitemCount+', 120px)');
     $('.sidebar-playlists').css('grid-template-rows', '68px repeat('+playlistCount+', 50px)');
 
-    // $('.icon-log').click(function(){
-    //     $('.account-detail').
+    // $('.icon-player-pause').click(function(){
+    //     $(this).removeClass('.icon-player-pause');
+    //     $(this).addClass('.icon-player-play');
     // });
-
-
 
     // $('.link-playlists').click(function() {
     //     $('.tab-more').css('display', 'none');
