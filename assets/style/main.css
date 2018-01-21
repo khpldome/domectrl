@@ -618,26 +618,20 @@ header .account {
 
 .player-volume-icon {
     content: url(../img/icon-player-volume.svg);
-    height: 45%;
-    width: 45%;
 }
 
 .icon-player-lock {
     content: url(../img/icon-player-lock.svg);
-    height: 45%;
-    width: 45%;
 }
 
 .icon-player-repeat {
     content: url(../img/icon-player-repeat.svg);
-    height: 45%;
-    width: 45%;
 }
 
 .icon-player-full {
     content: url(../img/icon-player-full.svg);
-    height: 45%;
-    width: 45%;
+    height: 55%;
+    width: 55%;
 }
 
 
