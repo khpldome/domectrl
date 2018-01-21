@@ -93,7 +93,7 @@
         </div>
         <div class="playlist-items-container">
             {% for track in tracklist_qs %}
-                <div class="playlist-item">
+                <div class="playlist-item" data-track-num={{ track.id }}>
                     <div class="playlist-item-move">
                         <span class="icon-move"></span>
                     </div>
@@ -140,9 +140,60 @@
     <script src="{% static 'domeplaylist/js/firefly.js' %}"></script>
     <script src="{% static 'domeplaylist/js/jquery.js' %}"></script>
 
-{#    <script type="text/javascript">#}
-{#        $(document).ready(function () {#}
-{##}
-{#        });#}
-{#    </script>#}
+
+{#<html>#}
+{#<body>#}
+{#<div><input id="id1" value=""></div>#}
+{#</body>#}
+{#</html>#}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.playlist-item').click(function () {
+
+                var track = $('.playlist-item.active').data("trackNum");
+
+                var str_url = $('a.icon-player-play').attr('href')
+                {#var str_re = "/domeplaylist/playlist/2/track/10/play/";#}
+                var res = str_url.split('/');
+                res[5] = track;
+                str_url = res.join('/');
+                $('a.icon-player-play').attr('href', str_url);
+            });
+
+            {#var activeTrack = 11;#}
+            {#$('#id1').val(activeTrack);#}
+
+        });
+    </script>
 {% endblock js %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -16,3 +16,4 @@ return reverse_lazy('edit_module', kwargs={'module_id': self.kwargs['module_id']
 
 
 
+WerFault.exe
