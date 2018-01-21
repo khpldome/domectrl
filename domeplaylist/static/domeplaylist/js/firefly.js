@@ -31,11 +31,11 @@ jQuery(document).ready(function($) {
         $(this).parent().parent().remove();
     });
 
-    var playitemCount = $('.playlist-current').data("playitemCount");
+    var trackCount = $('.playlist-current').data("trackCount");
     var playlistCount = $('.sidebar-playlists').data("playlistCount");
-    console.log('playitemCount:'+playitemCount);
+    console.log('trackCount:'+trackCount);
     console.log('playlistCount:'+playlistCount);
-    $('.playlist-items-container').css('grid-template-rows', 'repeat('+playitemCount+', 120px)');
+    $('.playlist-items-container').css('grid-template-rows', 'repeat('+trackCount+', 120px)');
     $('.sidebar-playlists').css('grid-template-rows', '68px repeat('+playlistCount+', 50px)');
 
     // $('.icon-player-pause').click(function(){
