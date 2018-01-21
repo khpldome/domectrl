@@ -1,7 +1,8 @@
 from django.conf.urls import url
 from django.views.decorators.csrf import csrf_exempt
 
-from filemanager.views import BrowserView, TrackAddView, DetailView,  TrackSelectView, UploadView, UploadFileView, DirectoryCreateView
+from filemanager.views import BrowserView, TrackAddView, DetailView,  TrackSelectView
+from filemanager.views import UploadView, UploadFileView, DirectoryCreateView #NavigateView
 
 
 app_name = "filemanager"
@@ -16,4 +17,5 @@ urlpatterns = [
 
     url(r'^track-add/(?P<playlist_id_active>-?\d+)/$', TrackAddView.as_view(), name='track-add'),
     url(r'^track-select/(?P<playlist_id_active>-?\d+)/$', TrackSelectView.as_view(), name='track-select'),
+    # url(r'^navigate/(?P<playlist_id_active>-?\d+)/$', NavigateView.as_view(), name='navigate'),
 ]

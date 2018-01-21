@@ -36,9 +36,11 @@ class NewPlayListView(LoginRequiredMixin, CreateView):
         # kwargs['request'] = self.request
         return kwargs
 
+    # def get_success_url(self):
+    #     # return reverse_lazy('choose_page_type', kwargs={'module_id': self.object.id})
+    #     return reverse_lazy('domeplaylist:edit_playlist', kwargs={'playlist_id': self.object.id})
     def get_success_url(self):
-        # return reverse_lazy('choose_page_type', kwargs={'module_id': self.object.id})
-        return reverse_lazy('domeplaylist:edit_playlist', kwargs={'playlist_id': self.object.id})
+        return reverse_lazy('domeplaylist:track-list', kwargs={'playlist_id': self.object.id})
 
     def form_valid(self, form):
         form.instance.user_id = self.request.user.id
@@ -135,10 +137,13 @@ class TrackPlayView(LoginRequiredMixin, ListView):
 
     def get(self, request, *args, **kwargs):
 
+        playlist_id = self.kwargs['playlist_id']
+        track_id = self.kwargs['track_id']
+
         # http://192.168.10.106:8080/requests/status.xml?command=in_enqueue&input=f:\Video\Saw\Gattaca\Gattaca.avi
         # 127.0.0.1:8080/requests/status.xml?command=in_enqueue&input=C:\Users\Public\Videos\Sample Videos\Wildlife.wmv
 
-        instance = Track.objects.filter(id=12).first()
+        instance = Track.objects.filter(id=track_id)
 
         t3 = instance.text.replace(' ', '%20')
         print('http://'+conf.ALLOWED_IP, ':8080/requests/status.xml?command=in_enqueue&input=', t3)
