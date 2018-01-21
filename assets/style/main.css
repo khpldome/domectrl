@@ -240,14 +240,43 @@ header .account {
 
 .playlists-item {
     width: 100%;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
     height: 100%;
     display: grid;
+    grid-template-columns: 30px 1fr 30px;
     align-items: center;
+    text-align: center;
     color: #666;
-    overflow: hidden;
+}
+
+.playlists-item-move {
+    grid-column: 1/2;
+    grid-row: 1/2;
+}
+
+.playlists-item-link {
+    grid-column: 2/3;
+    grid-row: 1/2;
+}
+
+.playlists-item-trash {
+    grid-column: 3/4;
+    grid-row: 1/2;
+}
+
+.playlists-item-trash form input {
+    visibility: hidden;
+}
+
+.active .playlists-item-trash form input {
+    visibility: visible;
+    background-color: rgba(255,255,255,0);
+    border: none;
+    width: 100%;
+    background-image: url(../img/icon-trash.svg);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    outline: none;
+    cursor: pointer;
 }
 
 .playlists-item.active {
@@ -266,6 +295,7 @@ header .account {
     display:flex;
     align-items: center;
     overflow: hidden;
+    justify-content: center;
 }
 
 .playlists-item-link span {

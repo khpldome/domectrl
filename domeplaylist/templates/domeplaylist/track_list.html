@@ -17,9 +17,12 @@
             {% for playlist in playlists_qs %}
                 <div class="playlists-item {% if playlist.id|stringformat:"i" == playlist_id_active %}active{% else %}{% endif %}"
                      title="ID: {{ playlist.id }}, ver: {{ playlist.title }}">
+                     <div class="playlists-item-move">
+                        <span class="icon-move"></span>
+                    </div>
                     <a href="{% url 'domeplaylist:track-list' playlist_id=playlist.id %}"
                        class="playlists-item-link"><span>{{ playlist.title }}</span></a>
-                    <div class="playlist-item">
+                    <div class="playlists-item-trash">
                         {#            <a href="{% url 'domeplaylist:playlist-delete' playlist_id=playlist_id_active %}">sfrqrqrwerqwerqwers</a>#}
                         <form method="POST"
                               action="{% url 'domeplaylist:playlist-delete' playlist_id=playlist.id %}">
