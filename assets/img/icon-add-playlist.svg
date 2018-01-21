@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="7" height="19.938" viewBox="0 0 7 19.938">
+<svg xmlns="http://www.w3.org/2000/svg" width="12.031" height="12" viewBox="0 0 12.031 12">
   <metadata><?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
 <x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.6-c138 79.159824, 2016/09/14-01:09:01        ">
    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
@@ -30,10 +30,10 @@
 <defs>
     <style>
       .cls-1 {
-        fill: #fff;
+        fill: #3cf;
         fill-rule: evenodd;
       }
     </style>
   </defs>
-  <path id="Shape_18_copy" data-name="Shape 18 copy" class="cls-1" d="M1295.65,136.339l-1.45,1.465-1.2-1.224,3.5-3.554,3.5,3.554-1.21,1.224-1.44-1.465V141h-1.7v-4.661Zm1.7,13.323,1.44-1.466,1.21,1.224-3.5,3.555-3.5-3.555,1.2-1.224,1.45,1.466V145h1.7v4.662Z" transform="translate(-1293 -133.031)"/>
+  <path class="cls-1" d="M45.241,139.757a6,6,0,1,0,0,8.485A5.964,5.964,0,0,0,45.241,139.757Zm-1.221,4.818H41.572v2.447H40.421v-2.447H37.974v-1.151h2.448v-2.447h1.151v2.447H44.02v1.151Z" transform="translate(-35 -138)"/>
 </svg>

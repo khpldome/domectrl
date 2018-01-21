@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="7" height="19.938" viewBox="0 0 7 19.938">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="99" height="140" viewBox="0 0 99 140">
   <metadata><?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
 <x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.6-c138 79.159824, 2016/09/14-01:09:01        ">
    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
@@ -30,10 +30,9 @@
 <defs>
     <style>
       .cls-1 {
-        fill: #fff;
-        fill-rule: evenodd;
+        opacity: 0.5;
       }
     </style>
   </defs>
-  <path id="Shape_18_copy" data-name="Shape 18 copy" class="cls-1" d="M1295.65,136.339l-1.45,1.465-1.2-1.224,3.5-3.554,3.5,3.554-1.21,1.224-1.44-1.465V141h-1.7v-4.661Zm1.7,13.323,1.44-1.466,1.21,1.224-3.5,3.555-3.5-3.555,1.2-1.224,1.45,1.466V145h1.7v4.662Z" transform="translate(-1293 -133.031)"/>
+  <image class="cls-1" width="99" height="140" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGMAAACMCAMAAABf9+fwAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABAlBMVEUDAwMBAQECAgIBAgICAgMDAwMDAwQEBAQEBAUEBQUFBQUFBQYGBgYGBgcHBwcICAgIBwgJCQkKCQkKCQgJCAgHBgYGBQUGBQQHBwYIBwcICAcICAkHBwgGBwcFBgYDBAQDAgMBAQIBAQEAAAACAwQDBAYDBQgGDQ8EDA8JDQ4ECgwECQsICgsHCAoGCAkHCQoKCwwDBQYCBAYCBAUBAwQDBAUGBwgFBgcEBQYEBAYBAAAAAAABAQEAAAABAQIEBAUCAwQCAwMDAwQDAwUFBQYJCg0DBAUEBQYDBAQEBAYEBQcBAgMEBgYBAQECAQICAgMBAgIICg0LDRACAgIAAAAAAACigVG/AAAAVXRSTlN9f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/gIB/f39/f39/f39/f39/f39/f39/f39/f39vdHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR2hnvECAAAAAFiS0dEIypibDoAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAHdElNRQfiARUNCwO/2oUWAAABSElEQVRo3u3ZWXOCMAAEYIJG8ILSqj3VWnvf992iKcXSy17//7dUnjs6vLBj4+7Aa75ZEiaTiWEIIUwzY8bJSpnLScuy7XyhWCqWHdedcj1veqZSrc3WqnPzCxXPW1yqO06p0SjEsa2mHDxxls2/aQ1esWKIduoxWgCDPcarh8keE2dwPmjQGG5kNOlBgwaN4Qb3QRo0aPwXIwswpCY9VgHGGsBY16QHYj4Q64r/4OQZuuwfNMbL4NqlQYMGDRo0aCQxEPfOdYCxATA2AcYWwNgGGDsAYxdg7AGMfYBxADAONelxBDCO2SOxcQIwTmkkNs4AxjnAuAAYiG+li3GpiXEFMPKaGGWAYQEMxFntGmDc0KBBgwYNGjRSNdIn2sbt3ajc+52u6jwEj0HYU09R9KxeolfVfXuPVBj0+6GvlN/7+Pz6HjHGzy8wzWMx2+vlBwAAAABJRU5ErkJggg=="/>
 </svg>
