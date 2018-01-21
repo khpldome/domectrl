@@ -72,48 +72,6 @@ class PlayListDeleteView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
         return HttpResponseRedirect(success_url)
 
 
-class TrackAddView(LoginRequiredMixin, ModulePermissionMixin, UpdateView):
-
-    template_name = 'domeplaylist/edit_playlist.html'
-    queryset = PlayList.objects
-
-    form_class = PlayListForm
-
-    # add the request to the kwargs
-    def get_form_kwargs(self):
-        kwargs = super(TrackAddView, self).get_form_kwargs()
-        kwargs['request'] = self.request
-        return kwargs
-
-    def get_object(self, **kwargs):
-        return self.myPlaylist
-
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
-
-        path = reverse_lazy('domeplaylist:edit_playlist', kwargs={'playlist_id': self.object.id})
-        if self.request.path != path:
-            return HttpResponseRedirect(path)
-        else:
-            return super(TrackAddView, self).get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.myPlaylist
-        # TODO : check if we edit latest version
-        # if not raise Exception()
-
-        return super(TrackAddView, self).post(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(TrackAddView, self).get_context_data(**kwargs)
-        context['pages'] = Track.objects.filter(playlist_id=self.myPlaylist.id)
-        return context
-
-    def get_success_url(self):
-        playlist_id = self.myPlaylist.id
-        return reverse_lazy('domeplaylist:edit_playlist', kwargs={'playlist_id': playlist_id})
-
-
 class TrackListView(LoginRequiredMixin, ListView):
     template_name = 'domeplaylist/track_list.html'
     context_object_name = "tracklist_qs"

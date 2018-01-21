@@ -18,7 +18,7 @@ track_urls = [
     # url(r'^track-list/(?P<track_id>\d+)/$', views.TrackListView.as_view(), name='track-list'),
 
     # http://127.0.0.1:8000/domeplaylist/playlist/1/track-add/
-    url(r'^track-add/$', views.TrackAddView.as_view(), name='track-add'),
+    # url(r'^track-add/$', views.TrackAddView.as_view(), name='track-add'),
 
     url(r'^track/(?P<track_id>\d+)/delete/$', views.TrackDeleteView.as_view(), name='track-delete'),
     url(r'^track/(?P<track_id>\d+)/play/$', views.TrackPlayView.as_view(), name='track-play'),
