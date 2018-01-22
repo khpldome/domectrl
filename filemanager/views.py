@@ -11,6 +11,8 @@ from filemanager.forms import DirectoryCreateForm
 from filemanager.core import Filemanager
 from django.conf import settings
 
+from django.contrib import messages
+
 
 class FilemanagerMixin(object):
     def dispatch(self, request, *args, **kwargs):
@@ -89,6 +91,7 @@ class TrackSelectView(FilemanagerMixin, RedirectView):
     def get(self, request, *args, **kwargs):
 
         # print('qwerqe=', self.kwargs['playlist_id_active'])
+        messages.add_message(request, messages.INFO, 'This shared link is broken!')
 
         if 'filepath' in request.GET:
             full_path = settings.MEDIA_ROOT + request.GET['filepath']

@@ -25,6 +25,8 @@ import domectrl.config_fds as conf
 
 import requests
 
+from django.contrib import messages
+
 
 class NewPlayListView(LoginRequiredMixin, CreateView):
     template_name = 'domeplaylist/new_playlist.html'
@@ -185,4 +187,6 @@ class TrackDeleteView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
         success_url = self.get_success_url()
 
         self.object.delete()
+        # messages.add_message(request, messages.INFO, 'fefefwef!')
+        messages.success(request, 'Track deleted successfully.')
         return HttpResponseRedirect(success_url)
