@@ -1,21 +1,21 @@
 ﻿
+**/__pycache__/*
 
-confidencialy/*
 
 env3/
 venv/
 .idea/*
-**/__pycache__/*
 
 exec/vlc-2.1.6/*
-exec/vlc/*
 exec/ImmersiveCalibrationPRO_v3.0r1/
+
+static/
 
 db.sqlite3
 
 media/playitem_imgs
 
-static/
+
 
 nfo/
 
