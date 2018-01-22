@@ -91,7 +91,6 @@ class TrackSelectView(FilemanagerMixin, RedirectView):
     def get(self, request, *args, **kwargs):
 
         # print('qwerqe=', self.kwargs['playlist_id_active'])
-        messages.add_message(request, messages.INFO, 'This shared link is broken!')
 
         if 'filepath' in request.GET:
             full_path = settings.MEDIA_ROOT + request.GET['filepath']
@@ -101,6 +100,7 @@ class TrackSelectView(FilemanagerMixin, RedirectView):
                 playlist_id=self.kwargs['playlist_id_active'],
                 title='addesdfsd++++', text=full_path.replace('/', '\\'))
             pi.save()
+            messages.add_message(request, messages.INFO, 'Track saved: ' + full_path)
         else:
             filepath = False
 
