@@ -6,23 +6,23 @@
 
 {% block aside_bar %}
 
-    <aside class="sidebar sidebar-playlists" data-playlist-count='{{ playlist_count }}'>
-        <div class="sidebar-playlists-new">
-            <a href="{% url 'domeplaylist:new-playlist' %}" class="sidebar-playlists-new-button">
+    <aside class="playlists-container grid" data-playlist-count='{{ playlist_count }}'>
+        <div class="playlist-add grid">
+            <a href="{% url 'domeplaylist:new-playlist' %}" class="playlist-add-btn">
                 <span class="icon-add-playlist">Новый плейлист {{ playlist_id_active }}</span>
             </a>
         </div>
         {#==================================================================#}
         {% if playlists_qs %}
             {% for playlist in playlists_qs %}
-                <div class="playlists-item {% if playlist.id|stringformat:"i" == playlist_id_active %}active{% else %}{% endif %}"
+                <div class="playlist grid {% if playlist.id|stringformat:"i" == playlist_id_active %}active{% else %}{% endif %}"
                      title="ID: {{ playlist.id }}, ver: {{ playlist.title }}">
-                     <div class="playlists-item-move">
+                     <div class="playlist-move">
                         <span class="icon-move"></span>
                     </div>
                     <a href="{% url 'domeplaylist:track-list' playlist_id=playlist.id %}"
-                       class="playlists-item-link"><span>{{ playlist.title }}</span></a>
-                    <div class="playlists-item-trash">
+                       class="playlist-link flex"><span>{{ playlist.title }}</span></a>
+                    <div class="playlist-trash">
                         {#            <a href="{% url 'domeplaylist:playlist-delete' playlist_id=playlist_id_active %}">sfrqrqrwerqwerqwers</a>#}
                         <form method="POST"
                               action="{% url 'domeplaylist:playlist-delete' playlist_id=playlist.id %}">
@@ -41,86 +41,73 @@
 
 
 {% block main_bar %}
-    <div class="playlist-current" data-track-count='{{ track_count }}'>
-        <div class="playlist-title">
+    <div class="playlist-current grid" data-track-count='{{ track_count }}'>
+        <div class="playlist-current-title grid">
             <h2>Имя активного плейлиста</h2>
-{#            {{ playlist_id_active }}#}
-{#            <a href="{% url 'domeplaylist:track-new' playlist_id=playlist_id_active %}" title="Добавить видео" class="playlist-video-add icon-add-video"></a>#}
-{#            <a href="{% url 'filemanager:add'%}" title="Добавить видео" class="playlist-video-add icon-add-video"></a>#}
-            <a href="{% url 'filemanager:track-add' playlist_id_active=playlist_id_active %}" title="Добавить видео" class="playlist-video-add icon-add-video"></a>
+            <a href="{% url 'filemanager:track-add' playlist_id_active=playlist_id_active %}" title="Добавить видео" class="playlist-add-track icon icon-add-track"></a>
 
-            <a href="#expand" title="Развернуть" class="playlist-expand icon-expand pressed"></a>
+            <a href="#expand" title="Развернуть" class="playlist-expand icon icon-expand pressed"></a>
 
-            <a href="#collapse" title="Свернуть" class="playlist-collapse icon-collapse"></a>
-
-
+            <a href="#collapse" title="Свернуть" class="playlist-collapse icon icon-collapse"></a>
         </div>
-        <div class="playlist-player">
-            <div class="playlist-player-play">
-{#                <span href="{% url 'domeplaylist:play_playitem' playlist_id=2 playitem_id=2 %}" class="icon-player-play">Play</span>#}
-                 <a href="{% url 'domeplaylist:track-play' playlist_id=playlist_id_active track_id=1 %}" title="Play" class="icon-player-play">Play</a>
+        <div class="player grid">
+            <div class="player-play icon icon-play-small flex">
+                 <a href="{% url 'domeplaylist:track-play' playlist_id=playlist_id_active track_id=1 %}" title="Play"></a>
             </div>
-            <div class="playlist-player-stop">
-                <span class="icon-player-stop">Stop</span>
+            <div class="player-stop icon icon-stop flex">
             </div>
-            <div class="playlist-player-current-position">
+            <div class="player-current-position flex">
                 <span>8:20</span>
             </div>
-            <div class="playlist-player-bar">
-                <span>Progress bar</span>
+            <div class="player-progress-bar flex">
+                <div class="bar-empty"></div>
+                <div class="bar-current"></div>
+                <div class="bar-marker"></div>
             </div>
-            <div class="playlist-player-duration">
+            <div class="player-duration flex">
                 <span class="player-duration">15:20</span>
             </div>
-            <div class="playlist-player-volume-icon">
-                <span class="player-volume-icon">Volume icon</span>
-            </div>
-            <div class="playlist-player-volume-bar">
+            <div class="player-volume-icon icon icon-volume flex"></div>
+            <div class="player-volume-bar flex">
                 <span class="player-volume-bar">Volume bar</span>
             </div>
-            <div class="playlist-player-volume-value">
+            <div class="player-volume-value flex">
                 <span class="player-volume-value">82%</span>
             </div>
-            <div class="playlist-player-lock">
-                <span class="icon-player-lock">Lock</span>
-            </div>
-            <div class="playlist-player-repeat">
-                <span class="icon-player-repeat">Repeat</span>
-            </div>
-            <div class="playlist-player-full">
-                <span class="icon-player-full">Full</span>
-            </div>
+            <div class="player-lock icon icon-lock flex"></div>
+            <div class="player-repeat icon icon-repeat flex"></div>
+            <div class="player-full icon icon-full flex"></div>
         </div>
-        <div class="playlist-items-container">
+        <div class="tracks-container grid">
             {% for track in tracklist_qs %}
-                <div class="playlist-item" data-track-num={{ track.id }}>
-                    <div class="playlist-item-move">
+                <div class="track grid" data-track-num={{ track.id }}>
+                    <div class="track-move">
                         <span class="icon-move"></span>
                     </div>
-                    <div class="playlist-item-poster-play">
-                        <div class="playlist-item-play">
+                    <div class="track-poster-play grid">
+                        <div class="track-play flex">
                             <span class="icon-play"></span>
                         </div>
-                        <div class="playlist-item-poster">
+                        <div class="track-poster">
                             <img>
                         </div>
                     </div>
-                    <div class="playlist-item-title">
+                    <div class="track-title">
                         <h3>{{ track.title }}</h3>
                         <h2>{{ track.text }}</h2>
                     </div>
-                    <div class="playlist-item-info">
-                        <div class="playlist-item-info-time">
+                    <div class="track-info grid">
+                        <div class="track-info-time">
                             <span class="icon-time">15:20</span>
                         </div>
-                        <div class="playlist-item-info-size">
+                        <div class="track-info-size">
                             <span class="icon-size">4096x4096@23.97fps</span>
                         </div>
-                        <div class="playlist-item-info-bitrate">
+                        <div class="track-info-bitrate">
                             <span class="icon-bitrate">384 kbps</span>
                         </div>
                     </div>
-                    <div class="playlist-item-trash">
+                    <div class="track-trash">
                         <a href="{% url 'domeplaylist:track-delete' playlist_id=playlist_id_active track_id=track.id %}"></a>
                         <form method="POST" action="{% url 'domeplaylist:track-delete' playlist_id=playlist_id_active track_id=track.id %}">
                         {% csrf_token %}
@@ -137,21 +124,21 @@
 
 
 {% block js %}
+    <script src="{% static 'domeplaylist/js/jquery-ui/jquery-ui.js' %}"></script>
     <script src="{% static 'domeplaylist/js/firefly.js' %}"></script>
-
     <script type="text/javascript">
         $(document).ready(function () {
 
-            $('.playlist-item').click(function () {
+            $('.track').click(function () {
 
-                var track = $('.playlist-item.active').data("trackNum");
+                var track = $('.track.active').data("trackNum");
 
-                var str_url = $('a.icon-player-play').attr('href')
+                var str_url = $('a.icon-play').attr('href')
                 {#var str_re = "/domeplaylist/playlist/2/track/10/play/";#}
                 var res = str_url.split('/');
                 res[5] = track;
                 str_url = res.join('/');
-                $('a.icon-player-play').attr('href', str_url);
+                $('a.icon-play').attr('href', str_url);
             });
 
             {#var activeTrack = 11;#}

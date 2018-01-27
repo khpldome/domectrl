@@ -4,47 +4,45 @@
     <div class="logo">
         <img class="logo-img" src="" alt="firefly"/>
     </div>
-    <nav>
+    <nav class="grid">
         {# <a href="#playlists" class="tab-link link-playlists tab-link-active"> #}
         {#            <a href="{% url 'domeplaylist:user-playlists' %}" class="btn btn-default"><span>PLaylists</span></a>#}
-        <a href="{% url 'domeplaylist:track-list' playlist_id=-1 %}" class="tab-link link-playlists tab-link-active">
-            <span class="link-playlists-text">Плейлисты</span>
+        <a href="{% url 'domeplaylist:track-list' playlist_id=-1 %}" class="tab-link link-playlists tab-link-active flex">
+            <span class="link-playlists-text flex">Плейлисты</span>
         </a>
         {# </a> #}
-        <a href="#more" class="tab-link link-more">
-            <span class="link-more-text">Еще</span>
+        <a href="#more" class="tab-link link-more flex">
+            <span class="link-more-text flex">Еще</span>
         </a>
     </nav>
     <div class="projectors-turn">
-        <!-- <span class="projectors-turn-on">Вкл</span> -->
-        <span class="icon icon-projectors-turn-on"><!-- Вкл --></span>
-        <!-- <span class="projectors-turn-off" style="display: none;">Выкл</span> -->
-        <span class="icon icon-projectors-turn-off" style="display: none;"><!-- Выкл --></span>
+        <span class="icon-turn-on"></span>
+        <span class="icon-turn-off" style="display: none;"></span>
     </div>
-    <div class="status">
-        <span class="icon icon-speed"></span>
+    <div class="status grid">
+        <span class="icon-speed"></span>
         <div class="status-project">
-            <span class="icon icon-status-project-on">Проекторы</span>
+            <span class="icon-status-on">Проекторы</span>
         </div>
         <div class="status-player">
-            <span class="icon icon-status-player-on">Плеер</span>
+            <span class="icon-status-on">Плеер</span>
         </div>
         <div class="status-calib disabled">
-            <span class="icon icon-status-calib-off">Калибровки</span>
+            <span class="icon-status-off">Калибровки</span>
         </div>
         <div class="status-mosaic">
-            <span class="icon icon-status-mosaic-on">Мозаика</span>
+            <span class="icon-status-on">Мозаика</span>
         </div>
     </div>
     <div class="account">
-        <div class="account-detail">
+        <div class="account-detail flex">
             {% if user.is_authenticated %}
-                <a href="{% url 'domeuser:sign_out' %}" class="navbar-link">
+                <a href="{% url 'domeuser:sign_out' %}">
                     <span class="icon icon-log"></span>
                 </a>
-                <a href="{% url 'domeuser:account' %}" class="navbar-link">My Account</a>
+                <a href="{% url 'domeuser:account' %}">My Account</a>
             {% else %}
-                <li><a href="{% url 'domeuser:sign_in' %}" class="navbar-link">Login</a></li>
+                <li><a href="{% url 'domeuser:sign_in' %}">Login</a></li>
             {% endif %}
         </div>
     </div>
@@ -52,11 +50,12 @@
 
 {% block main_container %}
     <main class="grid-tabs">
-        <div class="tab tab-playlists">
+        <div class="tab tab-playlists grid">
             {% block content %}{% endblock %}
             {% block aside_bar %}{% endblock aside_bar %}
             {% block main_bar %}{% endblock main_bar %}
         </div>
+        <div class="tab tab-more" style="display: none"></div>
     </main>
 {% endblock main_container %}
 

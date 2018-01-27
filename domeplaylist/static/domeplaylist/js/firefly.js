@@ -1,60 +1,56 @@
 jQuery(document).ready(function($) {
 
     $('.playlist-collapse').click(function() {
-        $('.playlist-items-container').removeClass('expanded');
-        $('.playlist-items-container').addClass('collapsed');
+        $('.tracks-container').removeClass('expanded');
+        $('.tracks-container').addClass('collapsed');
         $('.playlist-expand').removeClass('pressed');
         $(this).addClass('pressed');
-        console.log('collapse');
+        // console.log('collapse');
     });
 
     $('.playlist-expand').click(function() {
-        $('.playlist-items-container').removeClass('collapsed');
-        $('.playlist-items-container').addClass('expanded');
+        $('.tracks-container').removeClass('collapsed');
+        $('.tracks-container').addClass('expanded');
         $('.playlist-collapse').removeClass('pressed');
         $(this).addClass('pressed');
-        console.log('expand');
+        // console.log('expand');
     });
 
-    $('.playlist-item').click(function(){
-        $('.playlist-item').removeClass('active');
+    $('.track').click(function(){
+        $('.track').removeClass('active');
         $(this).addClass('active');
-        console.log('active');
+        // console.log('active');
     });
 
     $('.playlists-item').click(function(){
         $('.playlists-item').removeClass('active');
         $(this).addClass('active');
-        console.log('active');
+        // console.log('active');
     });
     $('.icon-trash').click(function() {
         $(this).parent().parent().remove();
     });
 
     var trackCount = $('.playlist-current').data("trackCount");
-    var playlistCount = $('.sidebar-playlists').data("playlistCount");
-    console.log('trackCount:'+trackCount);
-    console.log('playlistCount:'+playlistCount);
-    $('.playlist-items-container').css('grid-template-rows', 'repeat('+trackCount+', 120px)');
-    $('.sidebar-playlists').css('grid-template-rows', '68px repeat('+playlistCount+', 50px)');
+    var playlistCount = $('.playlists-container').data("playlistCount");
+    // console.log('trackCount:' + trackCount);
+    // console.log('playlistCount:' + playlistCount);
+    $('.track-container').css('grid-template-rows', 'repeat('+ trackCount +', 120px)');
+    $('.playlists-container').css('grid-template-rows', '68px repeat(' + playlistCount + ', 50px)');
 
-    // $('.icon-player-pause').click(function(){
-    //     $(this).removeClass('.icon-player-pause');
-    //     $(this).addClass('.icon-player-play');
-    // });
+    // var trackCurrentTime = $('.bar-marker').css('left');
+    // console.log('trackCurrentTime: ', trackCurrentTime);
+    // $('.bar-current').css('width', 'calc(' + trackCurrentTime + ' + 10px)');
 
-    // $('.link-playlists').click(function() {
-    //     $('.tab-more').css('display', 'none');
-    //     $('.tab-playlists').css('display', 'block');
-    //     $('.tab-link').removeClass('tab-link-active');
-    //     $(this).addClass('tab-link-active');
-    // });
+    $('.bar-marker').draggable({
+        axis: 'x',
+        containment: 'parent',
+        drag: function() {
+            var trackCurrentTime = $('.bar-marker').css('left');
+            $('.bar-current').css('width', 'calc(' + trackCurrentTime + ' + 10px)');
+        }
+    });
 
-    // $('.link-more').click(function() {
-    //     $('.tab-playlists').css('display', 'none');
-    //     $('.tab-more').css('display', 'block');
-    //     $('.tab-link').removeClass('tab-link-active');
-    //     $(this).addClass('tab-link-active');
-    // });
+
 
 });
