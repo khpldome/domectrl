@@ -1,0 +1,110 @@
+{
+    "streams": [
+        {
+            "index": 0,
+            "codec_name": "wmav2",
+            "codec_long_name": "Windows Media Audio 2",
+            "codec_type": "audio",
+            "codec_time_base": "1/44100",
+            "codec_tag_string": "a[1][0][0]",
+            "codec_tag": "0x0161",
+            "sample_fmt": "fltp",
+            "sample_rate": "44100",
+            "channels": 2,
+            "bits_per_sample": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 30093,
+            "duration": "30.093000",
+            "bit_rate": "192040",
+            "disposition": {
+                "default": 0,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0
+            },
+            "tags": {
+                "language": "eng"
+            }
+        },
+        {
+            "index": 1,
+            "codec_name": "vc1",
+            "codec_long_name": "SMPTE VC-1",
+            "profile": "Advanced",
+            "codec_type": "video",
+            "codec_time_base": "1001/30000",
+            "codec_tag_string": "WVC1",
+            "codec_tag": "0x31435657",
+            "width": 1280,
+            "height": 720,
+            "coded_width": 1280,
+            "coded_height": 720,
+            "has_b_frames": 1,
+            "sample_aspect_ratio": "0:1",
+            "display_aspect_ratio": "0:1",
+            "pix_fmt": "yuv420p",
+            "level": 3,
+            "chroma_location": "left",
+            "refs": 1,
+            "r_frame_rate": "30000/1001",
+            "avg_frame_rate": "30000/1001",
+            "time_base": "1/1000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 30093,
+            "duration": "30.093000",
+            "bit_rate": "5942130",
+            "disposition": {
+                "default": 0,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0
+            },
+            "tags": {
+                "language": "eng"
+            }
+        }
+    ],
+    "format": {
+        "filename": "Wildlife.wmv",
+        "nb_streams": 2,
+        "nb_programs": 0,
+        "format_name": "asf",
+        "format_long_name": "ASF (Advanced / Active Streaming Format)",
+        "start_time": "0.000000",
+        "duration": "30.093000",
+        "size": "26246026",
+        "bit_rate": "6977310",
+        "probe_score": 100,
+        "tags": {
+            "SfOriginalFPS": "299700",
+            "WMFSDKVersion": "11.0.6001.7000",
+            "WMFSDKNeeded": "0.0.0.0000",
+            "comment": "Footage: Small World Productions, Inc; Tourism New Zealand | Producer: Gary F. Spradling | Music: Steve Ball",
+            "title": "Wildlife in HD",
+            "copyright": "© 2008 Microsoft Corporation",
+            "IsVBR": "0",
+            "DeviceConformanceTemplate": "AP@L3"
+        }
+    }
+}

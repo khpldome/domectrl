@@ -101,6 +101,10 @@ class TrackListView(LoginRequiredMixin, ListView):
             self.active_playlist = playlist_id
             self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user,
                                                      playlist_id=playlist_id).order_by('-pk')
+        #
+        # for item in self.tracklist_qs:
+        #     item.update({'asdads': 'asdasdasdasdasd'},)
+
         return self.tracklist_qs
 
     def get_context_data(self, **kwargs):

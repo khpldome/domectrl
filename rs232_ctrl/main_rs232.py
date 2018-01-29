@@ -229,7 +229,12 @@ def projector_func(action):
     return ports_dict
 
 
+
+
 if __name__ == "__main__":
+
+
+    configureMosaic_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\Mosaic\configureMosaic-32bit-64bit.exe '
 
     # main_dispatcher()
     res_dict = projector_func('ON')

@@ -12,7 +12,7 @@ from filemanager.core import Filemanager
 from django.conf import settings
 
 from django.contrib import messages
-
+import utils.executor as ue
 
 class FilemanagerMixin(object):
     def dispatch(self, request, *args, **kwargs):
@@ -90,24 +90,27 @@ class TrackSelectView(FilemanagerMixin, RedirectView):
 
     def get(self, request, *args, **kwargs):
 
-        # print('qwerqe=', self.kwargs['playlist_id_active'])
-
         if 'filepath' in request.GET:
             full_path = settings.MEDIA_ROOT + request.GET['filepath']
-            print(full_path.replace('/', '\\'))
+
+            track_path = full_path.replace('/', '\\')
+            print('track_path=', track_path)
+
+            track_info_str = ue.get_track_info('"' + track_path + '"')
+
             pi = Track(
-                # playlist__user=self.request.user,
                 playlist_id=self.kwargs['playlist_id_active'],
-                title='addesdfsd++++', text=full_path.replace('/', '\\'))
+                title=track_path,
+                text=track_info_str)
             pi.save()
-            messages.add_message(request, messages.INFO, 'Track saved: ' + full_path)
+            messages.add_message(request, messages.INFO, 'Track saved: ' + track_path)
         else:
             filepath = False
 
         return super(TrackSelectView, self).get(request, *args, **kwargs)
 
     def get_redirect_url(self, *args, **kwargs):
-        return reverse_lazy('domeplaylist:track-list', kwargs={'playlist_id': self.kwargs['playlist_id_active']})
+        return reverse_lazy('domeplaylist:track-list', kwargs={'playlist_id': self.kwargs['playlist_id_active']},)
 
     def dispatch(self, request, *args, **kwargs):
         self.popup = self.request.GET.get('popup', 0) == '1'

@@ -17,3 +17,6 @@ return reverse_lazy('edit_module', kwargs={'module_id': self.kwargs['module_id']
 
 
 WerFault.exe
+
+
+ffprobe -print_format json -show_format -show_streams test.avi > 2.json
