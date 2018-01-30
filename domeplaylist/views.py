@@ -27,6 +27,8 @@ import requests
 
 from django.contrib import messages
 
+import utils.executor as ue
+
 
 class NewPlayListView(LoginRequiredMixin, CreateView):
     template_name = 'domeplaylist/new_playlist.html'
@@ -113,9 +115,17 @@ class TrackListView(LoginRequiredMixin, ListView):
         context['track_count'] = self.tracklist_qs.count()
 
         for obj in context['tracklist_qs']:
-            instanse = Track.objects.filter(id=obj.id).first()
+            instance = Track.objects.filter(id=obj.id).first()
             # print('instanse=', instanse)
             obj.purchased_flag = instanse.text
+            short_track_info_dict = ue.get_short_track_info(instanse.text)
+
+            obj.codec_name = short_track_info_dict['codec_name']
+            obj.codec_long_name = short_track_info_dict['codec_long_name']
+            obj.duration = short_track_info_dict['duration'],
+            obj.width = short_track_info_dict['width'],
+            obj.height = short_track_info_dict['height']})
+
 
         # context.update({
         #     'form': StoreSearchForm(),
