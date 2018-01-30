@@ -101,10 +101,6 @@ class TrackListView(LoginRequiredMixin, ListView):
             self.active_playlist = playlist_id
             self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user,
                                                      playlist_id=playlist_id).order_by('-pk')
-        #
-        # for item in self.tracklist_qs:
-        #     item.update({'asdads': 'asdasdasdasdasd'},)
-
         return self.tracklist_qs
 
     def get_context_data(self, **kwargs):
@@ -115,6 +111,15 @@ class TrackListView(LoginRequiredMixin, ListView):
         # context['track_id_active'] = self.kwargs['track_id']
         context['playlist_count'] = self.playlist_qs.count()
         context['track_count'] = self.tracklist_qs.count()
+
+        for obj in context['tracklist_qs']:
+            instanse = Track.objects.filter(id=obj.id).first()
+            # print('instanse=', instanse)
+            obj.purchased_flag = instanse.text
+
+        # context.update({
+        #     'form': StoreSearchForm(),
+        # })
 
         return context
 

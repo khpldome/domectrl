@@ -13,7 +13,7 @@ app_name = "domeplaylist"
 
 track_urls = [
 
-    # http://127.0.0.1:8000/domeplaylist/playlist/1/tracklist/
+    # http://127.0.0.1:8000/domeplaylist/playlist/1/track-list/
     url(r'^track-list/$', views.TrackListView.as_view(), name='track-list'),
     # url(r'^track-list/(?P<track_id>\d+)/$', views.TrackListView.as_view(), name='track-list'),
 
