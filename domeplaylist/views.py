@@ -122,9 +122,9 @@ class TrackListView(LoginRequiredMixin, ListView):
 
             obj.codec_name = short_track_info_dict['codec_name']
             obj.codec_long_name = short_track_info_dict['codec_long_name']
-            obj.duration = short_track_info_dict['duration'],
-            obj.width = short_track_info_dict['width'],
-            obj.height = short_track_info_dict['height']})
+            obj.duration = short_track_info_dict['duration']
+            obj.width = short_track_info_dict['width']
+            obj.height = short_track_info_dict['height']
 
 
         # context.update({
