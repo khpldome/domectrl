@@ -9,11 +9,9 @@ venv/
 exec/vlc-2.1.6/*
 exec/ImmersiveCalibrationPRO_v3.0r1/
 
-static/
 
 db.sqlite3
 
 media/playitem_imgs
 
-nfo/*
 
