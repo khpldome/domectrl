@@ -52,7 +52,7 @@
         </div>
         <div class="player grid">
             <div class="player-play icon icon-play-small flex">
-                 <a href="{% url 'domeplaylist:track-play' playlist_id=playlist_id_active track_id=1 %}" title="Play"></a>
+                 <a id="track-play-button" href="{% url 'domeplaylist:track-play' playlist_id=playlist_id_active track_id=1 %}" title="Play"></a>
             </div>
             <div class="player-stop icon icon-stop flex">
             </div>
@@ -131,18 +131,16 @@
             $('.track').click(function () {
 
                 var track = $('.track.active').data("trackNum");
+                {#console.log(track);#}
+                var track_play_button = $('#track-play-button');
+                var str_url = track_play_button.attr('href');
+                {#console.log(str_url);#}
 
-                var str_url = $('a.icon-play').attr('href')
-                {#var str_re = "/domeplaylist/playlist/2/track/10/play/";#}
                 var res = str_url.split('/');
                 res[5] = track;
                 str_url = res.join('/');
-                $('a.icon-play').attr('href', str_url);
+                track_play_button.attr('href', str_url);
             });
-
-            {#var activeTrack = 11;#}
-            {#$('#id1').val(activeTrack);#}
-
         });
     </script>
 {% endblock js %}

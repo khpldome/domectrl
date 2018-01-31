@@ -77,11 +77,11 @@ class PlayListDeleteView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
 
 
 class TrackListView(LoginRequiredMixin, ListView):
+
     template_name = 'domeplaylist/track_list.html'
     context_object_name = "tracklist_qs"
     tracklist_qs = None
     playlist_qs = None
-    # playlist_current = None
     active_playlist = None
 
     def get(self, request, *args, **kwargs):
@@ -138,8 +138,11 @@ class TrackListView(LoginRequiredMixin, ListView):
 
 class TrackPlayView(LoginRequiredMixin, ListView):
 
-    template_name = 'domeplaylist/dashboard.html'
-    context_object_name = "playlists"
+    template_name = 'domeplaylist/track_list.html'
+    context_object_name = "tracklist_qs"
+    tracklist_qs = None
+    playlist_qs = None
+    active_playlist = None
 
     def get(self, request, *args, **kwargs):
 
@@ -149,37 +152,61 @@ class TrackPlayView(LoginRequiredMixin, ListView):
         # http://192.168.10.106:8080/requests/status.xml?command=in_enqueue&input=f:\Video\Saw\Gattaca\Gattaca.avi
         # 127.0.0.1:8080/requests/status.xml?command=in_enqueue&input=C:\Users\Public\Videos\Sample Videos\Wildlife.wmv
 
-        instance = Track.objects.filter(id=track_id)
+        instance = Track.objects.filter(id=track_id).first()
 
-        t3 = instance.text.replace(' ', '%20')
-        print('http://'+conf.ALLOWED_IP, ':8080/requests/status.xml?command=in_enqueue&input=', t3)
+        # t3 = instance.text.replace(' ', '%20')
+        path = instance.title
+        print('http://' + conf.ALLOWED_IP, ':8080/requests/status.xml?command=in_enqueue&input=', path)
         # r = requests.get('http://'+conf.ALLOWED_IP+':8080/requests/status.xml?command=in_enqueue&input='+t3, auth=('', '63933'))
-        r = requests.get('http://'+conf.ALLOWED_IP+':8080/requests/status.xml?command=in_play&input='+t3, auth=('', '63933'))
-        print(r)
+        r = requests.get('http://' + conf.ALLOWED_IP+ ':8080/requests/status.xml?command=in_play&input=' + path, auth=('', '63933'))
+        print("responce=", r)
 
         return super(TrackPlayView, self).get(request, *args, **kwargs)
 
-    def get_queryset(self):
-        # res_qs = PlayList.objects.all()
-        res_qs = PlayList.objects.filter(user=self.request.user,).order_by('-pk')
-        return res_qs
+    def get_queryset(self, **kwargs):
+        # ToDo Add check if exists
+        playlist_id = self.kwargs['playlist_id']
+
+        self.playlist_qs = PlayList.objects.filter(user=self.request.user)
+
+        if playlist_id == '-1':
+
+            first_playlist = self.playlist_qs.order_by('pk').first()
+            self.active_playlist = first_playlist.id
+            self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user,
+                                                     playlist_id=first_playlist).order_by('-pk')
+        else:
+            self.active_playlist = playlist_id
+            self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user,
+                                                     playlist_id=playlist_id).order_by('-pk')
+        return self.tracklist_qs
 
     def get_context_data(self, **kwargs):
-        context = super(TrackPlayView, self).get_context_data(**kwargs)
+        context = super(TrackListView, self).get_context_data(**kwargs)
 
-        playitem_qs = Track.objects.all()
-        context['playitem_qs'] = playitem_qs
-        # context['playitem_qs'] = PlayItem.objects.filter(playlist_id=self.playlist.id)
-        # playlist_first = PlayList.objects.filter(user=self.request.user,).order_by('-pk').first()
-        # context['playitem_qs'] = PlayItem.objects.filter(playlist_id=playlist_first)
-        context['playlist_count'] = PlayList.objects.all().count()
-        context['playitem_count'] = Track.objects.all().count()
+        context['playlists_qs'] = self.playlist_qs
+        context['playlist_id_active'] = str(self.active_playlist)
+        # context['track_id_active'] = self.kwargs['track_id']
+        context['playlist_count'] = self.playlist_qs.count()
+        context['track_count'] = self.tracklist_qs.count()
+
+        # for obj in context['tracklist_qs']:
+        #     instance = Track.objects.filter(id=obj.id).first()
+        #     # print('instance=', instance)
+        #     short_track_info_dict = ue.get_short_track_info(instance.text)
+        #
+        #     if short_track_info_dict:
+        #         obj.codec_name = short_track_info_dict['codec_name']
+        #         obj.codec_long_name = short_track_info_dict['codec_long_name']
+        #         obj.avg_frame_rate = short_track_info_dict['avg_frame_rate']
+        #         obj.duration = short_track_info_dict['duration']
+        #         obj.width = short_track_info_dict['width']
+        #         obj.height = short_track_info_dict['height']
+        #
+        #         obj.bit_rate = short_track_info_dict['bit_rate']
+
 
         return context
-
-    def get_success_url(self):
-        return reverse_lazy('dashboard')
-
 
 class NoAccessView(TemplateView):
     template_name = 'domeplaylist/no_access.html'
