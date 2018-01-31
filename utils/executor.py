@@ -42,7 +42,15 @@ def _ffprobe_to_db(in_json):
 
 def get_short_track_info(json_str):
 
-    temp_dict = loads(json_str)
+    temp_dict = {}
+    short_track_info_dict = {}
+
+    try:
+        temp_dict = loads(json_str)
+    except:
+        print('bad json: ', json_str)
+        return {}
+
     short_track_info_dict = {}
 
     for stream in temp_dict['streams']:
