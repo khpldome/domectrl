@@ -182,7 +182,7 @@ class TrackPlayView(LoginRequiredMixin, ListView):
         return self.tracklist_qs
 
     def get_context_data(self, **kwargs):
-        context = super(TrackListView, self).get_context_data(**kwargs)
+        context = super(TrackPlayView, self).get_context_data(**kwargs)
 
         context['playlists_qs'] = self.playlist_qs
         context['playlist_id_active'] = str(self.active_playlist)
@@ -190,23 +190,23 @@ class TrackPlayView(LoginRequiredMixin, ListView):
         context['playlist_count'] = self.playlist_qs.count()
         context['track_count'] = self.tracklist_qs.count()
 
-        # for obj in context['tracklist_qs']:
-        #     instance = Track.objects.filter(id=obj.id).first()
-        #     # print('instance=', instance)
-        #     short_track_info_dict = ue.get_short_track_info(instance.text)
-        #
-        #     if short_track_info_dict:
-        #         obj.codec_name = short_track_info_dict['codec_name']
-        #         obj.codec_long_name = short_track_info_dict['codec_long_name']
-        #         obj.avg_frame_rate = short_track_info_dict['avg_frame_rate']
-        #         obj.duration = short_track_info_dict['duration']
-        #         obj.width = short_track_info_dict['width']
-        #         obj.height = short_track_info_dict['height']
-        #
-        #         obj.bit_rate = short_track_info_dict['bit_rate']
+        for obj in context['tracklist_qs']:
+            instance = Track.objects.filter(id=obj.id).first()
+            # print('instance=', instance)
+            short_track_info_dict = ue.get_short_track_info(instance.text)
 
+            if short_track_info_dict:
+                obj.codec_name = short_track_info_dict['codec_name']
+                obj.codec_long_name = short_track_info_dict['codec_long_name']
+                obj.avg_frame_rate = short_track_info_dict['avg_frame_rate']
+                obj.duration = short_track_info_dict['duration']
+                obj.width = short_track_info_dict['width']
+                obj.height = short_track_info_dict['height']
+
+                obj.bit_rate = short_track_info_dict['bit_rate']
 
         return context
+
 
 class NoAccessView(TemplateView):
     template_name = 'domeplaylist/no_access.html'
