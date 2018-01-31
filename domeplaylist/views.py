@@ -122,9 +122,12 @@ class TrackListView(LoginRequiredMixin, ListView):
             if short_track_info_dict:
                 obj.codec_name = short_track_info_dict['codec_name']
                 obj.codec_long_name = short_track_info_dict['codec_long_name']
+                obj.avg_frame_rate = short_track_info_dict['avg_frame_rate']
                 obj.duration = short_track_info_dict['duration']
                 obj.width = short_track_info_dict['width']
                 obj.height = short_track_info_dict['height']
+
+                obj.bit_rate = short_track_info_dict['bit_rate']
 
         # context.update({
         #     'form': StoreSearchForm(),

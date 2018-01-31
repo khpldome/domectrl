@@ -92,19 +92,18 @@
                             <img>
                         </div>
                     </div>
-                    <div class="track-title">
+                    <div class="track-title" title="codec_name: {{ track.codec_name }}, : {{ track.codec_long_name }}">
                         <h3>{{ track.title }}</h3>
-                        <h2>{{ track.text }}</h2>
                     </div>
                     <div class="track-info grid">
                         <div class="track-info-time">
-                            <span class="icon-time">15:20</span>
+                            <span class="icon-time">{{ track.duration }}</span>
                         </div>
                         <div class="track-info-size">
-                            <span class="icon-size">4096x4096@23.97fps</span>
+                            <span class="icon-size">{{ track.width }}*{{ track.height }}@{{ track.avg_frame_rate }}fps</span>
                         </div>
                         <div class="track-info-bitrate">
-                            <span class="icon-bitrate">384 kbps</span>
+                            <span class="icon-bitrate">{{ track.bit_rate }}</span>
                         </div>
                     </div>
                     <div class="track-trash">
