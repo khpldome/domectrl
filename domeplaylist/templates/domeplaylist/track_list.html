@@ -9,7 +9,7 @@
     <aside class="playlists-container grid" data-playlist-count='{{ playlist_count }}'>
         <div class="playlist-add grid">
             <a href="{% url 'domeplaylist:new-playlist' %}" class="playlist-add-btn">
-                <span class="icon-add-playlist">Новый плейлист {{ playlist_id_active }}</span>
+                <span class="icon-add-playlist">Новый плейлист</span>
             </a>
         </div>
         {#==================================================================#}
@@ -52,7 +52,7 @@
         </div>
         <div class="player grid">
             <div class="player-play icon icon-play-small flex">
-                 <a id="track-play-button" href="{% url 'domeplaylist:track-play' playlist_id=playlist_id_active track_id=1 %}" title="Play"></a>
+                 <a id="track-play-button" href="{% url 'domeplaylist:track-play' playlist_id=playlist_id_active track_id=-1 %}" title="Play"></a>
             </div>
             <div class="player-stop icon icon-stop flex">
             </div>
@@ -80,7 +80,9 @@
         </div>
         <div class="tracks-container grid">
             {% for track in tracklist_qs %}
-                <div class="track grid" data-track-num={{ track.id }}>
+                <div class="track grid {% if track.id|stringformat:"i" == track_id_active %}active{% else %}{% endif %}"
+                     data-track-num={{ track.id }}>
+
                     <div class="track-move">
                         <span class="icon-move"></span>
                     </div>
@@ -89,7 +91,7 @@
                             <span class="icon-play"></span>
                         </div>
                         <div class="track-poster">
-                            <img>
+                            <img title="ID: {{ track.id }}">
                         </div>
                     </div>
                     <div class="track-title" title="codec_name: {{ track.codec_name }}, : {{ track.codec_long_name }}">
@@ -100,7 +102,7 @@
                             <span class="icon-time">{{ track.duration }}</span>
                         </div>
                         <div class="track-info-size">
-                            <span class="icon-size">{{ track.width }}*{{ track.height }}@{{ track.avg_frame_rate }}fps</span>
+                            <span class="icon-size">{{ track.width }}*{{ track.height }}@{{ track.r_frame_rate }}fps</span>
                         </div>
                         <div class="track-info-bitrate">
                             <span class="icon-bitrate">{{ track.bit_rate }}</span>
@@ -108,9 +110,10 @@
                     </div>
                     <div class="track-trash">
                         <a href="{% url 'domeplaylist:track-delete' playlist_id=playlist_id_active track_id=track.id %}"></a>
-                        <form method="POST" action="{% url 'domeplaylist:track-delete' playlist_id=playlist_id_active track_id=track.id %}">
-                        {% csrf_token %}
-                        <input type="submit" value="" title="Удалить видео">
+                        <form method="POST"
+                              action="{% url 'domeplaylist:track-delete' playlist_id=playlist_id_active track_id=track.id %}">
+                            {% csrf_token %}
+                            <input type="submit" value="" title="Удалить видео">
                         </form>
                     </div>
 

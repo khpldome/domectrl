@@ -122,7 +122,7 @@ class TrackListView(LoginRequiredMixin, ListView):
             if short_track_info_dict:
                 obj.codec_name = short_track_info_dict['codec_name']
                 obj.codec_long_name = short_track_info_dict['codec_long_name']
-                obj.avg_frame_rate = short_track_info_dict['avg_frame_rate']
+                obj.r_frame_rate = short_track_info_dict['r_frame_rate']
                 obj.duration = short_track_info_dict['duration']
                 obj.width = short_track_info_dict['width']
                 obj.height = short_track_info_dict['height']
@@ -152,14 +152,17 @@ class TrackPlayView(LoginRequiredMixin, ListView):
         # http://192.168.10.106:8080/requests/status.xml?command=in_enqueue&input=f:\Video\Saw\Gattaca\Gattaca.avi
         # 127.0.0.1:8080/requests/status.xml?command=in_enqueue&input=C:\Users\Public\Videos\Sample Videos\Wildlife.wmv
 
-        instance = Track.objects.filter(id=track_id).first()
+        if track_id != "-1":
+            instance = Track.objects.filter(id=track_id).first()
 
-        # t3 = instance.text.replace(' ', '%20')
-        path = instance.title
-        print('http://' + conf.ALLOWED_IP, ':8080/requests/status.xml?command=in_enqueue&input=', path)
-        # r = requests.get('http://'+conf.ALLOWED_IP+':8080/requests/status.xml?command=in_enqueue&input='+t3, auth=('', '63933'))
-        r = requests.get('http://' + conf.ALLOWED_IP+ ':8080/requests/status.xml?command=in_play&input=' + path, auth=('', '63933'))
-        print("responce=", r)
+            # t3 = instance.text.replace(' ', '%20')
+            path = instance.title
+            print('http://' + conf.ALLOWED_IP, ':8080/requests/status.xml?command=in_enqueue&input=', path)
+            # r = requests.get('http://'+conf.ALLOWED_IP+':8080/requests/status.xml?command=in_enqueue&input='+t3, auth=('', '63933'))
+            r = requests.get('http://' + conf.ALLOWED_IP+ ':8080/requests/status.xml?command=in_play&input=' + path, auth=('', '63933'))
+            print("responce=", r)
+        else:
+            pass
 
         return super(TrackPlayView, self).get(request, *args, **kwargs)
 
@@ -186,7 +189,7 @@ class TrackPlayView(LoginRequiredMixin, ListView):
 
         context['playlists_qs'] = self.playlist_qs
         context['playlist_id_active'] = str(self.active_playlist)
-        # context['track_id_active'] = self.kwargs['track_id']
+        context['track_id_active'] = self.kwargs['track_id']
         context['playlist_count'] = self.playlist_qs.count()
         context['track_count'] = self.tracklist_qs.count()
 
@@ -198,7 +201,7 @@ class TrackPlayView(LoginRequiredMixin, ListView):
             if short_track_info_dict:
                 obj.codec_name = short_track_info_dict['codec_name']
                 obj.codec_long_name = short_track_info_dict['codec_long_name']
-                obj.avg_frame_rate = short_track_info_dict['avg_frame_rate']
+                obj.r_frame_rate = short_track_info_dict['r_frame_rate']
                 obj.duration = short_track_info_dict['duration']
                 obj.width = short_track_info_dict['width']
                 obj.height = short_track_info_dict['height']

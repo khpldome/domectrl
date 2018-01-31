@@ -66,10 +66,10 @@ def get_short_track_info(json_str):
             else:
                 codec_long_name = '-'
 
-            if 'avg_frame_rate' in stream:
-                avg_frame_rate = _normalize_fps(stream['avg_frame_rate'])
+            if 'r_frame_rate' in stream:
+                r_frame_rate = _normalize_fps(stream['r_frame_rate'])
             else:
-                avg_frame_rate = '-'
+                r_frame_rate = '-'
 
             if 'width' in stream:
                 width = stream['width']
@@ -85,7 +85,7 @@ def get_short_track_info(json_str):
             short_track_info_dict.update({
                 'codec_name': codec_name,
                 'codec_long_name': codec_long_name,
-                'avg_frame_rate': avg_frame_rate,
+                'r_frame_rate': r_frame_rate,
                 'width': width,
                 'height': height})
 
