@@ -40,7 +40,7 @@
                 <a href="{% url 'domeuser:sign_out' %}">
                     <span class="icon icon-log"></span>
                 </a>
-                <a href="{% url 'domeuser:account' %}">My Account</a>
+                <a href="{% url 'domeuser:account' %}">{{ user.email }}</a>
             {% else %}
                 <li><a href="{% url 'domeuser:sign_in' %}">Login</a></li>
             {% endif %}

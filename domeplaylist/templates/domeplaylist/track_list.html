@@ -116,7 +116,6 @@
                             <input type="submit" value="" title="Удалить видео">
                         </form>
                     </div>
-
                 </div>
             {% endfor %}
         </div>
@@ -140,7 +139,7 @@
                 {#console.log(str_url);#}
 
                 var res = str_url.split('/');
-                res[5] = track;
+                res[4] = track;
                 str_url = res.join('/');
                 track_play_button.attr('href', str_url);
             });
