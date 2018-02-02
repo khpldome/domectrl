@@ -14,9 +14,9 @@ function updateStatus() {
         // url: 'requests/status.xml',
         url: 'http://127.0.0.1:8080/requests/status.xml',
         crossDomain: true,
-            // headers: {
-            //         'Access-Control-Allow-Origin': '*'
-                // },
+            headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
             dataType: 'jsonp',
         success: function (data, status, jqXHR) {
             if (current_que == 'main') {
@@ -168,9 +168,9 @@ function sendCommand(params, append) {
             // url: 'requests/status.xml',
             url: 'http://127.0.0.1:8080/requests/status.xml',
             crossDomain: true,
-            // headers: {
-            //         'Access-Control-Allow-Origin': '*'
-                // },
+            headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
             dataType: 'jsonp',
             data: params,
             success: function (data, status, jqXHR) {
