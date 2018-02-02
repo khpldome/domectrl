@@ -56,8 +56,8 @@
             </div>
             <div class="player-stop icon icon-stop flex">
             </div>
-            <div class="player-current-position flex">
-                <span>8:20</span>
+            <div id="currentTime" class="player-current-position flex">
+{#                <span>8:20</span>#}111
             </div>
             <div class="player-progress-bar flex">
                 <div class="bar-empty"></div>
@@ -127,6 +127,11 @@
 {% block js %}
     <script src="{% static 'lib/jquery-ui/jquery-ui.js' %}"></script>
     <script src="{% static 'domeplaylist/js/firefly.js' %}"></script>
+
+    <script src="{% static 'domeplaylist/js/vlc_web/ui.js' %}"></script>
+    <script src="{% static 'domeplaylist/js/vlc_web/controlers.js' %}"></script>
+    <script src="{% static 'domeplaylist/js/vlc_web/common.js' %}"></script>
+    <script src="{% static 'domeplaylist/js/vlc_web/jquery.jstree.js' %}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -142,6 +147,8 @@
                 res[4] = track;
                 str_url = res.join('/');
                 track_play_button.attr('href', str_url);
+
+                {#updateStatus();#}
             });
         });
     </script>
