@@ -28,6 +28,8 @@ track_urls = [
 
 urlpatterns = [
 
+    url(r'^$', views.IndexView.as_view(), name='index'),
+
     url(r'^playlist/(?P<playlist_id>-?\d+)/', include(track_urls)),
     url(r'^playlist/(?P<playlist_id>-?\d+)/delete/$', views.PlayListDeleteView.as_view(), name='playlist-delete'),
 

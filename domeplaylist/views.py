@@ -30,6 +30,14 @@ from django.contrib import messages
 import utils.executor as ue
 
 
+class IndexView(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse_lazy('domeplaylist:track-list', kwargs={'playlist_id': -1}))
+        else:
+            return HttpResponseRedirect(reverse_lazy('domeuser:sign_in'))
+
+
 class NewPlayListView(LoginRequiredMixin, CreateView):
     template_name = 'domeplaylist/new_playlist.html'
     form_class = PlayListForm
