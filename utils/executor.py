@@ -7,6 +7,7 @@ import os
 import xmltodict
 import pprint
 
+import domectrl.config_fds as conf
 
 from json import loads, dumps
 
@@ -144,6 +145,71 @@ def _normalize_bit_rate(in_str):
     elif bit_rate_int < 1000000000:
         str_out = "{:.2f}".format(bit_rate_int / 1000000.0) + ' Mb/s'
     return str_out
+
+
+# Для выполнения команд VLC
+def execute_command2(str_command, timeout=0):
+
+    import ctypes
+    import subprocess
+    enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
+
+    # args = [os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\vlc-2.1.6\vlc.bat', '']
+    args = [os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.RELPATH_VLC, '']
+    process_vlc = subprocess.Popen(args, stdout=subprocess.PIPE, shell=False)
+
+    xml_out = ''
+    str_out = ''
+
+    return str_out, xml_out
+
+
+# Для выполнения команд DisplayPro
+def execute_command1(str_command, timeout=0):
+
+    import ctypes
+    import subprocess
+    enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
+
+    # args = ['c:\Program Files (x86)\Immersive Display PRO\ImmersiveDisplayPro.bat']
+    args = [conf.ABSPATH_DISPLAYPRO]
+    process_displayPro = subprocess.Popen(args, stdout=subprocess.PIPE, shell=False)
+
+    xml_out = ''
+    str_out = ''
+
+    return str_out, xml_out
+
+
+# def _execute_command(str_command, timeout=0):
+#
+#     import ctypes
+#     from subprocess import check_output
+#     import subprocess
+#
+#     enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
+#
+#     xml_out = ''
+#     str_out = ''
+#     if timeout == 0:
+#
+#         try:
+#             xml_out += check_output(str_command, shell=True).decode(enc)
+#         except subprocess.CalledProcessError as err:
+#             # print('e.output: ', e.output)
+#             xml_out += err.output.decode(enc)
+#     else:
+#         try:
+#             xml_out += check_output(str_command, shell=True, timeout=timeout).decode(enc)
+#         except subprocess.CalledProcessError as err:
+#             # print('e.output: ', e.output)
+#             xml_out += err.output.decode(enc)
+#         except subprocess.TimeoutExpired as err:
+#             str_out += "timeout n sec\n"
+#             str_out += err.output.decode(enc)
+#
+#     return str_out, xml_out
+
 
 
 if __name__ == "__main__":

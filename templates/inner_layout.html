@@ -5,13 +5,10 @@
         <img class="logo-img" src="" alt="firefly"/>
     </div>
     <nav class="grid">
-        {# <a href="#playlists" class="tab-link link-playlists tab-link-active"> #}
-        {#            <a href="{% url 'domeplaylist:user-playlists' %}" class="btn btn-default"><span>PLaylists</span></a>#}
         <a href="{% url 'domeplaylist:track-list' playlist_id=-1 %}" class="tab-link link-playlists tab-link-active flex">
             <span class="link-playlists-text flex">Плейлисты</span>
         </a>
-        {# </a> #}
-        <a href="#more" class="tab-link link-more flex">
+        <a href="{% url 'dome:index' %}" class="tab-link link-more flex">
             <span class="link-more-text flex">Еще</span>
         </a>
     </nav>
