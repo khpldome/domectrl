@@ -9,7 +9,7 @@ from controlapp import mosaic_surround as mr
 from controlapp import vlc_routine as vr
 from controlapp import displaypro_routine as dr
 from controlapp import winapi_routine as wr
-
+from controlapp import auto_manager as am
 
 
 def index(request):
@@ -130,7 +130,7 @@ class BaseView(TemplateView):
             base_action = kwargs['base_action']
             print("base_action=", base_action)
 
-            text_output = base_func(base_action)
+            text_output = am.base_func(base_action)
 
         context['data_context'] = text_output
         return context
