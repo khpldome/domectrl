@@ -16,13 +16,14 @@ track_urls = [
 
     # http://127.0.0.1:8000/domeplaylist/playlist/1/track-list/
     url(r'^track-list/$', views.TrackListView.as_view(), name='track-list'),
-    url(r'^track-list/(?P<path>.*)/$', views.TrackListViewRedirect.as_view(), name='track-list-redirect'),
+    # url(r'^track-list/(?P<path>.*)/$', views.TrackListViewRedirect.as_view(), name='track-list-redirect'),
 
     # http://127.0.0.1:8000/domeplaylist/playlist/1/track-add/
     # url(r'^track-add/$', views.TrackAddView.as_view(), name='track-add'),
 
     url(r'^track/(?P<track_id>-?\d+)/delete/$', views.TrackDeleteView.as_view(), name='track-delete'),
     url(r'^track/(?P<track_id>-?\d+)/play/$', views.TrackPlayView.as_view(), name='track-play'),
+    url(r'^track/(?P<track_id>-?\d+)/play/(?P<path>.*)/$', views.TrackListViewRedirect.as_view(), name='track-play-proxy'),
 
 ]
 

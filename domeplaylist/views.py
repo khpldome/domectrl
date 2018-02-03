@@ -29,6 +29,8 @@ from django.contrib import messages
 
 import utils.executor as ue
 
+import domectrl.config_fds as conf
+
 
 class IndexView(View):
     def get(self, request):
@@ -157,7 +159,7 @@ def myview(request, path):
     print('path=', path)
 
     extra_requests_args = {}
-    remoteurl = 'http://:63933@127.0.0.1:8080/' + path
+    remoteurl = 'http://' + conf.VLC_WEB_DOMAIN + '/' + path
     return pv.proxy_view(request, remoteurl, extra_requests_args)
 
 

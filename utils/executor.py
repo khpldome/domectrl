@@ -155,7 +155,7 @@ def execute_command2(str_command, timeout=0):
     enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
 
     # args = [os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\vlc-2.1.6\vlc.bat', '']
-    args = [os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.RELPATH_VLC, '']
+    args = [os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.VLC_RELPATH, '']
     process_vlc = subprocess.Popen(args, stdout=subprocess.PIPE, shell=False)
 
     xml_out = ''
@@ -172,7 +172,7 @@ def execute_command1(str_command, timeout=0):
     enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
 
     # args = ['c:\Program Files (x86)\Immersive Display PRO\ImmersiveDisplayPro.bat']
-    args = [conf.ABSPATH_DISPLAYPRO]
+    args = [conf.DISPLAYPRO_ABSPATH]
     process_displayPro = subprocess.Popen(args, stdout=subprocess.PIPE, shell=False)
 
     xml_out = ''
