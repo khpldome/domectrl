@@ -3,8 +3,11 @@ var current_que = 'main';
 var current_playlist_id = -1;
 var previous_playlist_id = -1;
 
-var VLC_api_url = 'http://127.0.0.1:8080/requests/status.xml';
-var VLC_api_url = '/proxy/';
+// var VLC_api_url = 'http://127.0.0.1:8080/requests/status.xml';
+// var VLC_api_url = '/proxy/http://:63933@127.0.0.1:8080/';
+
+// window.location.host = "127.0.0.1:8000/proxy/";
+// window.location.pathname = "";
 
 
 
@@ -16,12 +19,9 @@ function updateArt(url) {
 
 function updateStatus() {
 
-    // window.location.host = "127.0.0.1:8080";
-    // window.location.pathname = "";
-
     $.ajax({
-        // url: 'requests/status.xml',
-        url: VLC_api_url,
+        url: 'requests/status.xml',
+        // url: VLC_api_url,
         // crossDomain: true,
         headers: {
                     // 'Access-Control-Allow-Origin': '*'
@@ -179,8 +179,8 @@ function sendCommand(params, append) {
         // window.location.pathname = "";
 
         $.ajax({
-            // url: 'requests/status.xml',
-            url: VLC_api_url,
+            url: 'requests/status.xml',
+            // url: VLC_api_url,
             // crossDomain: true,
             headers: {
                     // 'Access-Control-Allow-Origin': '*'
