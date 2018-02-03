@@ -35,6 +35,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', conf.ALLOWED_IP, '3191925d.ngrok.io']
 # ALLOWED_HOSTS = ['*']
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -60,9 +61,14 @@ INSTALLED_APPS = [
     # 'mptt',
 
     'filemanager',
+
+    'proxy',
+
+
 ]
 
 MIDDLEWARE = [
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

@@ -144,6 +144,14 @@ class TrackListView(LoginRequiredMixin, ListView):
         return context
 
 
+def myview(request):
+    from proxy import views as pv
+
+    extra_requests_args = {}
+    remoteurl = 'http://:63933@127.0.0.1:8080/requests/status.xml'
+    return pv.proxy_view(request, remoteurl, extra_requests_args)
+
+
 class TrackPlayView(LoginRequiredMixin, ListView):
 
     template_name = 'domeplaylist/track_list.html'

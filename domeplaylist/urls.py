@@ -6,6 +6,7 @@ from django.conf.urls import url, include
 from . import views
 
 import filemanager
+from proxy import views as pv
 
 
 app_name = "domeplaylist"
@@ -38,4 +39,11 @@ urlpatterns = [
 
     url(r'^no-access/$', views.NoAccessView.as_view(), name='no_access'),
 
+    # url(r'^proxy/(?P<url>.*)$', HttpProxy.as_view(base_url='http://:63933@127.0.0.1:8080')),
+    # url(r'^proxy/(?P<url>.*)/$', pv.proxy_view),
+
+    url(r'^proxy/$', views.myview),
+
+
 ]
+

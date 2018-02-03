@@ -5,6 +5,13 @@ import win32api as w
 import win32con as c
 
 
+'''
+out_dict
+    out_code = 0
+    out_str = ""
+    ...
+'''
+
 def load_device_list():
     """loads all Monitor which are plugged into the pc
     The list is needed to use setPrimary

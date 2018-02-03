@@ -3,6 +3,11 @@ var current_que = 'main';
 var current_playlist_id = -1;
 var previous_playlist_id = -1;
 
+var VLC_api_url = 'http://127.0.0.1:8080/requests/status.xml';
+var VLC_api_url = '/proxy/';
+
+
+
 function updateArt(url) {
     $('#albumArt').fadeOut(500, function () {
         $(this).addClass('hidden').removeAttr('height').removeAttr('width').attr('src', url);
@@ -10,14 +15,19 @@ function updateArt(url) {
 }
 
 function updateStatus() {
+
+    // window.location.host = "127.0.0.1:8080";
+    // window.location.pathname = "";
+
     $.ajax({
         // url: 'requests/status.xml',
-        url: 'http://127.0.0.1:8080/requests/status.xml',
-        crossDomain: true,
-            headers: {
-                    'Access-Control-Allow-Origin': '*'
+        url: VLC_api_url,
+        // crossDomain: true,
+        headers: {
+                    // 'Access-Control-Allow-Origin': '*'
+                    // 'Authorization': 'Basic OjYzOTMz'
                 },
-            dataType: 'jsonp',
+        //     dataType: 'jsonp text xmls',
         success: function (data, status, jqXHR) {
             if (current_que == 'main') {
                 $('.dynamic').empty();
@@ -164,14 +174,19 @@ function updatePlayList(force_refresh) {
 
 function sendCommand(params, append) {
     if (current_que == 'stream') {
+
+        // window.location.host = "127.0.0.1:8080";
+        // window.location.pathname = "";
+
         $.ajax({
             // url: 'requests/status.xml',
-            url: 'http://127.0.0.1:8080/requests/status.xml',
-            crossDomain: true,
+            url: VLC_api_url,
+            // crossDomain: true,
             headers: {
-                    'Access-Control-Allow-Origin': '*'
+                    // 'Access-Control-Allow-Origin': '*'
+                    // 'Authorization': 'Basic OjYzOTMz'
                 },
-            dataType: 'jsonp',
+            // dataType: 'jsonp text xmls',
             data: params,
             success: function (data, status, jqXHR) {
                 if (append != undefined) {
@@ -183,7 +198,7 @@ function sendCommand(params, append) {
     } else {
         if (params.plreload === false) {
             $.ajax({
-                url: 'requests/status.xml',
+                url: VLC_api_url,
                 data: params,
                 success: function (data, status, jqXHR) {
                     if (append != undefined) {
@@ -193,7 +208,7 @@ function sendCommand(params, append) {
             });
         } else {
             $.ajax({
-                url: 'requests/status.xml',
+                url: VLC_api_url,
                 data: params,
                 success: function (data, status, jqXHR) {
                     if (append != undefined) {
