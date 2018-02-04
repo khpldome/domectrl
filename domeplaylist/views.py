@@ -8,20 +8,9 @@ from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import View, TemplateView, ListView, FormView, CreateView, UpdateView, DeleteView
 
-from django.views.generic.edit import FormMixin
-
-# try:
-#     from google.appengine.api import mail
-# except ImportError:
-#     pass
-
 from domeplaylist.forms import PlayListForm, PlayItemForm, PlayItemInlineFormSet
 from domeplaylist.models import PlayList, Track
 from domeplaylist.mixins import ModulePermissionMixin, AjaxHandlerMixin
-# from madcram.settings import ADMIN_EMAIL, APP_EMAIL
-
-from django.conf import settings
-import domectrl.config_fds as conf
 
 import requests
 
@@ -29,6 +18,7 @@ from django.contrib import messages
 
 import utils.executor as ue
 
+from django.conf import settings
 import domectrl.config_fds as conf
 
 

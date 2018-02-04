@@ -25,4 +25,17 @@ class PlayListAdmin(admin.ModelAdmin):
     inlines = (TrackInline,)
 
 
+class TrackAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'playlist',
+        'title',
+        'text',
+        'image',
+    )
+
+
+
+
 admin.site.register(PlayList, PlayListAdmin)
+admin.site.register(Track, TrackAdmin)
