@@ -20,6 +20,7 @@
                      <div class="playlist-move">
                         <span class="icon-move"></span>
                     </div>
+                    {# TODO: Ссылка должна возвращать не весь документ, а только часть, содержащуюся в 'tracks-container' #}
                     <a href="{% url 'domeplaylist:track-list' playlist_id=playlist.id %}"
                        class="playlist-link flex"><span>{{ playlist.title }}</span></a>
                     <div class="playlist-trash">
@@ -41,7 +42,7 @@
 
 
 {% block main_bar %}
-    <div class="playlist-current grid" data-track-count='{{ track_count }}'>
+    <div class="playlist-current grid">
         <div class="playlist-current-title grid">
             <h2>Имя активного плейлиста</h2>
             <a href="{% url 'filemanager:track-add' playlist_id_active=playlist_id_active %}" title="Добавить видео" class="playlist-add-track icon icon-add-track"></a>
