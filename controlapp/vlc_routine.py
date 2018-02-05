@@ -16,7 +16,7 @@ def vlc_func(action):
 
     global vlc_bat
 
-    str_out = ''
+    out_dict = {}
     if action == "Start":
         print("Start vlc")
 
@@ -37,18 +37,43 @@ def vlc_func(action):
 
             res_dict = ue.execute_command2(vlc_bat)
             # print(res_dict)
-            str_out += str(res_dict['code']) + ' / ' + str(res_dict['pid'])
+            str_out = str(res_dict['code']) + ' / ' + str(res_dict['pid'])
+
+            out_dict.update({'code': 0,
+                             'verbose': str_out})
         else:
-            str_out += ' запущен'
+            str_out = 'VLC is running'
+            out_dict.update({'code': 1,
+                             'verbose': str_out})
 
     if action == "Stop":
         print("Stop vlc")
+        str_out = 'Already stopped.'
         # for process in (process for process in psutil.process_iter() if process.name() == "vlc.exe"):
         for process in (process for process in psutil.process_iter() if process.name() in ['vlc.exe', 'WerFault.exe']):
             result = process.kill()
             str_out = 'Stoped ' + process.name() + ' / ' + str(process.pid)
+        #TODO
+        out_dict.update({'code': 1,
+                         'verbose': str_out})
 
-    return str_out
+    if action == "State":
+        print("State vlc")
+        str_out = ''
+        # for process in (process for process in psutil.process_iter() if process.name() == 'vlc.exe'):
+
+        for process in psutil.process_iter():
+
+            if process.name() == 'vlc.exe':
+                str_out = 'State ' + process.name() + ' is running'
+                out_dict.update({'code': 0,
+                                 'verbose': str_out})
+                break
+            else:
+                out_dict.update({'code': 1,
+                                 'verbose': 'State: not started'})
+
+    return out_dict
 
 
 if __name__ == "__main__":

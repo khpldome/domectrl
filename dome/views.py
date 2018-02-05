@@ -62,9 +62,9 @@ class VlcActionView(TemplateView):
             vlc_action = kwargs['vlc_action']
             print("vlc_action=", vlc_action)
 
-            text_output = vr.vlc_func(vlc_action)
+            res_dict = vr.vlc_func(vlc_action)
 
-        context['data_context'] = text_output
+        context['data_context'] = res_dict['verbose']
         return context
 
 

@@ -17,6 +17,8 @@ import requests
 from django.contrib import messages
 
 import utils.executor as ue
+from controlapp import vlc_routine as vr
+
 
 from django.conf import settings
 import domectrl.config_fds as conf
@@ -140,17 +142,23 @@ class TrackListViewRedirect(View):
 
     def get(self, request, **kwargs):
         pass
+
         return HttpResponseRedirect(reverse_lazy('domeplaylist:proxy', kwargs={'path': self.kwargs['path']}))
 
 
 def myview(request, path):
+
     from proxy import views as pv
 
-    print('path=', path)
+    res_dict = vr.vlc_func('State')
+    print('path=', path, res_dict['verbose'])
 
-    extra_requests_args = {}
-    remoteurl = 'http://' + conf.VLC_WEB_DOMAIN + '/' + path
-    return pv.proxy_view(request, remoteurl, extra_requests_args)
+    if res_dict['code'] == 0:
+        extra_requests_args = {}
+        remoteurl = 'http://' + conf.VLC_WEB_DOMAIN + '/' + path
+        return pv.proxy_view(request, remoteurl, extra_requests_args)
+    else:
+        return HttpResponse(status=503)
 
 
 class TrackPlayView(LoginRequiredMixin, ListView):
@@ -163,6 +171,8 @@ class TrackPlayView(LoginRequiredMixin, ListView):
 
     def get(self, request, *args, **kwargs):
 
+        import time
+
         playlist_id = self.kwargs['playlist_id']
         track_id = self.kwargs['track_id']
 
@@ -170,13 +180,18 @@ class TrackPlayView(LoginRequiredMixin, ListView):
         # 127.0.0.1:8080/requests/status.xml?command=in_enqueue&input=C:\Users\Public\Videos\Sample Videos\Wildlife.wmv
 
         if track_id != "-1":
+
+            vr.vlc_func('Start')
+
+            time.sleep(5)
+
             instance = Track.objects.filter(id=track_id).first()
 
             # t3 = instance.text.replace(' ', '%20')
             path = instance.title
             print('http://' + conf.ALLOWED_IP, ':8080/requests/status.xml?command=in_enqueue&input=', path)
             # r = requests.get('http://'+conf.ALLOWED_IP+':8080/requests/status.xml?command=in_enqueue&input='+t3, auth=('', '63933'))
-            r = requests.get('http://' + conf.ALLOWED_IP+ ':8080/requests/status.xml?command=in_play&input=' + path, auth=('', '63933'))
+            r = requests.get('http://' + conf.ALLOWED_IP + ':8080/requests/status.xml?command=in_play&input=' + path, auth=('', '63933'))
             print("responce=", r)
         else:
             pass
