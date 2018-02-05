@@ -148,20 +148,23 @@ def _normalize_bit_rate(in_str):
 
 
 # Для выполнения команд VLC
-def execute_command2(str_command, timeout=0):
+def execute_command2(str_command):
 
-    import ctypes
+    # import ctypes
     import subprocess
-    enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
+    # enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
 
-    # args = [os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\vlc-2.1.6\vlc.bat', '']
-    args = [os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.VLC_RELPATH, '']
-    process_vlc = subprocess.Popen(args, stdout=subprocess.PIPE, shell=False)
+    out_dict = {}
 
-    xml_out = ''
-    str_out = ''
+    process = subprocess.Popen(str_command, stdout=subprocess.PIPE, shell=False)
+    # print(process.pid)
 
-    return str_out, xml_out
+    res = 0
+
+    out_dict.update({'code': res,
+                     'pid': process.pid})
+
+    return out_dict
 
 
 # Для выполнения команд DisplayPro

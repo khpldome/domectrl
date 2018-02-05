@@ -20,3 +20,23 @@ WerFault.exe
 
 
 ffprobe -print_format json -show_format -show_streams test.avi > 2.json
+
+Forwarding                    http://475b32e8.ngrok.io -> localhost:8008
+Forwarding                    https://475b32e8.ngrok.io -> localhost:8008
+
+Connections                   ttl     opn     rt1     rt5     p50     p90
+                              0       0       0.00    0.00    0.00    0.00
+
+
+
+
+
+
+
+
+
+
+
+
+
+
