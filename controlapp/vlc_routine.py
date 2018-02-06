@@ -9,42 +9,49 @@ import utils.executor as ue
 import domectrl.config_fds as conf
 
 
-vlc_bat = [os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.VLC_RELPATH]
 
 
 def vlc_func(action):
 
-    global vlc_bat
-
     out_dict = {}
+    vlc_bat = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.VLC_RELPATH
+
     if action == "Start":
-        print("Start vlc")
+        print("Start vlc=", vlc_bat)
 
-        vlc_is_running = False
-        for process in psutil.process_iter():
-            if process.name() == "vlc.exe":
-                vlc_is_running = True
-                break
+        if os.path.exists(vlc_bat):
+            print("vlc_bat exists")
 
-        if vlc_is_running is False:
-            # str_param = '--intf=qt  --extraintf=http:rc --http-password=63933 --quiet --file-logging'
-            # str_param = '--intf=qt  --extraintf=http --http-password=63933 --quiet --file-logging'
-            # str_param = '--extraintf=http --http-password=63933 --quiet --qt-start-minimized'
-            # str_param = '--extraintf=http --http-password=63933 --quiet'
-            # без интерфейса https://wiki.videolan.org/VLC_command-line_help/
-            # str_param = 'vlc -Ihttp'
-            # str_param = 'vlc --intf=http'
-
-            res_dict = ue.execute_command2(vlc_bat)
-            # print(res_dict)
-            str_out = str(res_dict['code']) + ' / ' + str(res_dict['pid'])
-
-            out_dict.update({'code': 0,
-                             'verbose': str_out})
+        if not (os.path.isfile(vlc_bat) and os.path.exists(vlc_bat)):
+            print("vlc_bat err")
+            out_dict.update({'code': -1,
+                             'verbose': 'vlc_bat does not exists'})
         else:
-            str_out = 'VLC is running'
-            out_dict.update({'code': 1,
-                             'verbose': str_out})
+            vlc_is_running = False
+            for process in psutil.process_iter():
+                if process.name() == "vlc.exe":
+                    vlc_is_running = True
+                    break
+
+            if vlc_is_running is False:
+                # str_param = '--intf=qt  --extraintf=http:rc --http-password=63933 --quiet --file-logging'
+                # str_param = '--intf=qt  --extraintf=http --http-password=63933 --quiet --file-logging'
+                # str_param = '--extraintf=http --http-password=63933 --quiet --qt-start-minimized'
+                # str_param = '--extraintf=http --http-password=63933 --quiet'
+                # без интерфейса https://wiki.videolan.org/VLC_command-line_help/
+                # str_param = 'vlc -Ihttp'
+                # str_param = 'vlc --intf=http'
+
+                res_dict = ue.execute_command2(vlc_bat)
+                # print(res_dict)
+                str_out = str(res_dict['code']) + ' / ' + str(res_dict['pid'])
+
+                out_dict.update({'code': 0,
+                                 'verbose': str_out})
+            else:
+                str_out = 'VLC is running'
+                out_dict.update({'code': 1,
+                                 'verbose': str_out})
 
     if action == "Stop":
         print("Stop vlc")
