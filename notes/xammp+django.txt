@@ -9,6 +9,16 @@ LoadFile "C:/Users/Fulldome/AppData/Local/Programs/Python/Python36-32/python36.d
 LoadModule wsgi_module "C:/Users/Fulldome/AppData/Local/Programs/Python/Python36-32/lib/site-packages/mod_wsgi/server/mod_wsgi.cp36-win32.pyd"
 WSGIPythonHome "C:/Users/Fulldome/AppData/Local/Programs/Python/Python36-32"
 
+Alias /media/ d:/PROJECTS/_python/domectrl/media/
+Alias /static/ d:/PROJECTS/_python/domectrl/static/
+
+<Directory "d:/PROJECTS/_python/domectrl/media" >
+    Require all granted
+</Directory>
+
+<Directory "d:/PROJECTS/_python/domectrl/static" >
+    Require all granted
+</Directory>
 
 <Directory "d:/PROJECTS/_python/domectrl/domectrl" >
     AllowOverride None
