@@ -1,0 +1,20 @@
+
+admin
+20flint12@gmail.com     2erSorfuh4oi73
+
+
+pip freeze >> requirements.txt
+
+https://git-for-windows.github.io/
+
+Логин и пароль от почты и аккаунта на гитхабе
+khpldome@gmail.com
+8013emodlphk7102
+
+git config --global commit.gpgsign false
+
+
+khpldome@gmail.com 8013emodlphk7102
+
+
+

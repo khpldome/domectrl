@@ -1,0 +1,5 @@
+
+set "MOD_WSGI_APACHE_ROOTDIR=c:/xampp/apache"
+
+c:\Users\planetarium\AppData\Local\Programs\Python\Python36-32\Lib\site-packages\mod_wsgi\server\
+LIBEXECDIR = 'c:/xampp/apache/lib'
