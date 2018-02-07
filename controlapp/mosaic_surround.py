@@ -1,13 +1,18 @@
 
 import time
-
+import os
 import pyautogui as pag
 ###############################################################################
 pag.FAILSAFE = False  # disables the fail-safe
 ###############################################################################
 
 import domectrl.config_fds as conf
-
+import utils.executor as ue
+import xmltodict
+import qweqweq.winapi_test as wt
+import psutil
+import pprint
+from json import loads, dumps
 
 
 def to_dict(input_ordered_dict):
@@ -92,6 +97,9 @@ def mosaic_func(action):
         # str_param = 'set cols=1 rows=2 res=1280,720,60 out=0,0 out=0,1'
         str_param = 'set cols=2 rows=4 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2 out=1,3'
         # str_param = 'set rows=1 cols=7 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2'
+        output_str_xml = ue._execute_command(configureMosaic_exe + str_param)
+        str_out += output_str_xml[1]
+        xml_out = output_str_xml[0]
 
     elif action == "Stop":
         print("Stop mosaic")
@@ -104,19 +112,22 @@ def mosaic_func(action):
         str_out += str(result) + '\n'
 
         str_param = 'disable'
+        output_str_xml = ue._execute_command(configureMosaic_exe + str_param)
+        str_out += output_str_xml[0]
+        xml_out = output_str_xml[1]
 
     elif action == "Restart":
         print("Restart mosaic")
-        wt.Show()
+        # wt.Show()
         str_param = 'help'
 
     elif action == "State":
         print("State mosaic")
         str_param = 'query current'
 
-    output_str_xml = _execute_command(configureMosaic_exe + str_param)
-    str_out += output_str_xml[0]
-    xml_out = output_str_xml[1]
+        output_str_xml = ue._execute_command(configureMosaic_exe + str_param)
+        str_out += output_str_xml[1]
+        xml_out = output_str_xml[0]
 
     if action == "Restart":  # Temporary!
         print("mosaic help")
