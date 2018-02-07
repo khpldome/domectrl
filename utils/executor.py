@@ -155,20 +155,17 @@ def execute_command2(str_command):
     # enc = 'cp%d' % ctypes.windll.kernel32.GetOEMCP()
 
     out_dict = {}
-
     process = subprocess.Popen(str_command, stdout=subprocess.PIPE, shell=False)
     # print(process.pid)
 
-    res = 0
-
-    out_dict.update({'code': res,
+    out_dict.update({'code': 0,
                      'pid': process.pid})
 
     return out_dict
 
 
 # Для выполнения команд DisplayPro
-def execute_command1(str_command, timeout=0):
+def execute_command1(str_command):
 
     import ctypes
     import subprocess

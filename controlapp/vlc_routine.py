@@ -5,16 +5,14 @@ import psutil
 
 import utils.executor as ue
 
-
 import domectrl.config_fds as conf
-
-
 
 
 def vlc_func(action):
 
     out_dict = {}
     vlc_bat = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.VLC_RELPATH
+    # vlc_bat = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + VLC_BLACK
 
     if action == "Start":
         print("Start vlc=", vlc_bat)
@@ -42,7 +40,16 @@ def vlc_func(action):
                 # str_param = 'vlc -Ihttp'
                 # str_param = 'vlc --intf=http'
 
-                res_dict = ue.execute_command2(vlc_bat)
+                # res_dict = ue.execute_command2(vlc_bat)
+                res_dict = ue.execute_command2(
+                    [vlc_bat,
+                     '--extraintf=http',
+                     '--http-password=63933',
+                     '--quiet',
+                     '--fullscreen',
+                     '--file-logging',
+                     os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.VLC_BLACK])
+
                 # print(res_dict)
                 str_out = str(res_dict['code']) + ' / ' + str(res_dict['pid'])
 
