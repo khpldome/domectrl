@@ -14,7 +14,7 @@ PROJECTOR_AMOUNT = 1
 DISPLAYPRO_ABSPATH = 'c:\Program Files (x86)\ImmersiveDisplayPRO\ImmersiveDisplayPRO.exe'
 VLC_RELPATH = r'\exec\vlc-2.1.6\vlc.exe'
 VLC_BLACK = r'\exec\vlc-2.1.6\Black.jpg'
-ALLOWED_IP = '127.0.0.1'
+HOST_IP = '127.0.0.1'
 VLC_WEB_DOMAIN = ':63933@127.0.0.1:8080'
 
 # #############################################################################
@@ -26,7 +26,7 @@ if HOSTNAME == 'fds-Kharkiv':
     PROJECTOR_AMOUNT = 8
     DISPLAYPRO_ABSPATH = r'c:\Program Files (x86)\ImmersiveDisplayPRO\ImmersiveDisplayPRO.exe'
     VLC_RELPATH = r'\exec\vlc-2.1.6\vlc.exe'
-    ALLOWED_IP = '192.168.10.10'
+    HOST_IP = '192.168.10.10'
 
 elif HOSTNAME == 'fds-Kyiv':
     SERVER_NAME = HOSTNAME
@@ -34,5 +34,5 @@ elif HOSTNAME == 'fds-Kyiv':
     PROJECTOR_AMOUNT = 12
     DISPLAYPRO_ABSPATH = r'c:\Program Files (x86)\ImmersiveDisplayPRO\ImmersiveDisplayPRO.exe'
     VLC_RELPATH = r'\exec\vlc-2.1.6\vlc.exe'
-    ALLOWED_IP = '192.168.1.11'
+    HOST_IP = '192.168.1.11'
 # -----------------------------------------------------------------------------

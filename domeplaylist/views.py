@@ -189,9 +189,9 @@ class TrackPlayView(LoginRequiredMixin, ListView):
 
             # t3 = instance.text.replace(' ', '%20')
             path = instance.title
-            print('http://' + conf.ALLOWED_IP, ':8080/requests/status.xml?command=in_enqueue&input=', path)
+            print('http://' + conf.HOST_IP, ':8080/requests/status.xml?command=in_enqueue&input=', path)
             # r = requests.get('http://'+conf.ALLOWED_IP+':8080/requests/status.xml?command=in_enqueue&input='+t3, auth=('', '63933'))
-            r = requests.get('http://' + conf.ALLOWED_IP + ':8080/requests/status.xml?command=in_play&input=' + path, auth=('', '63933'))
+            r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=in_play&input=' + path, auth=('', '63933'))
             print("responce=", r)
         else:
             pass

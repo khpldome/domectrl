@@ -98,13 +98,18 @@ class DisplayproActionView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(DisplayproActionView, self).get_context_data(**kwargs)
-        text_output = ""
 
-        if 'displaypro_action' in kwargs:
-            displaypro_action = kwargs['displaypro_action']
-            print("displaypro_action=", displaypro_action)
+        action = ''
+        param = ''
+        if 'action' in kwargs:
+            action = kwargs['action']
+            print("action=", action)
 
-            text_output = dr.displaypro_func(displaypro_action)
+        if 'param' in kwargs:
+            param = kwargs['param']
+            print("param=", param)
+
+        text_output = dr.displaypro_func(action, param)
 
         context['data_context'] = text_output
         return context

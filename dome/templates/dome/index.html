@@ -18,8 +18,13 @@
             <a href="{% url 'dome:winapi' winapi_action='EnableOneProjector' %}"><span>EnableOneProjector</span></a>
             <a href="{% url 'dome:winapi' winapi_action='WinapiInfo' %}"><span>WinAPI_Info</span></a>
             <br> <br>
-            <a href="{% url 'dome:displaypro' displaypro_action='Start' %}"><span>Start_"DisplayPro"</span></a>
-            <a href="{% url 'dome:displaypro' displaypro_action='Stop' %}"><span>Stop_"DisplayPro"</span></a>
+            <a href="{% url 'dome:displaypro' action='start' %}"><span>Start_"DisplayPro"</span></a>
+            <a href="{% url 'dome:displaypro' action='stop' %}"><span>Stop_"DisplayPro"</span></a>
+            <a href="{% url 'dome:displaypro' action='setconfig' param='1' %}"><span>setconfig_1</span></a>
+            <a href="{% url 'dome:displaypro' action='setconfig' param='2' %}"><span>setconfig_2</span></a>
+            <a href="{% url 'dome:displaypro' action='setconfig' param='3' %}"><span>setconfig_3</span></a>
+            <a href="{% url 'dome:displaypro' action='setdesktopwarping' param='0' %}"><span>setdesktopwarping_0</span></a>
+            <a href="{% url 'dome:displaypro' action='setdesktopwarping' param='1' %}"><span>setdesktopwarping_1</span></a>
         </li>
     </div>
 
