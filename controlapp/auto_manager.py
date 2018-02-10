@@ -13,6 +13,7 @@ from controlapp import displaypro_routine as dr
 from controlapp import winapi_routine as wr
 
 import rs232_ctrl.main_rs232 as rs232
+import time
 
 
 def base_func(action):
@@ -29,27 +30,27 @@ def base_func(action):
 def base_func_Kharkiv(action):
 
     str_out = ''
-    if action == "Start":
+    if action == "start":
         print("Start")
 
         str_out = wr.winapi_func('EnableOneProjector')
         # ToDo Bad mode
         if str_out != "Включите проекторы":
-            str_out += '\n' + mr.mosaic_surround_func('Start')[0]
+            str_out += '\n' + mr.mosaic_surround_func('start')[0]
             # ToDo Check mosaic is ok
 
-            str_out += '\n' + dr.displaypro_func('Start')
+            str_out += '\n' + dr.displaypro_func('start')
             # time.sleep(20)
 
-            str_out += '\n' + vr.vlc_func('Start')
+            str_out += '\n' + vr.vlc_func('start')
         else:
             str_out += '\n' + 'Повторно запустите систему'
 
-    elif action == "Stop":
+    elif action == "stop":
         print("Stop system")
-        str_out += '\n' + vr.vlc_func('Stop')
-        str_out += '\n' + dr.displaypro_func('Stop')
-        str_out += '\n' + mr.mosaic_surround_func('Stop')[0]
+        str_out += '\n' + vr.vlc_func('stop')
+        str_out += '\n' + dr.displaypro_func('stop')
+        str_out += '\n' + mr.mosaic_surround_func('stop')[0]
         str_out += '\n' + wr.winapi_func('setPrimaryMonitor')
 
     else:
@@ -61,16 +62,16 @@ def base_func_Kharkiv(action):
 def base_func_Kyiv(action):
 
     str_out = ''
-    if action == "Start":
+    if action == "start":
         print("Start")
 
-        str_out += '\n Initial state= ' + mr.mosaic_surround_func('Start')[0]
+        str_out += '\n Initial state= ' + mr.mosaic_surround_func('start')[0]
 
         for i in range(10):
             state = mr.get_mosaic_surround_state()
             if state == 'True':
-                str_out += '\n' + dr.displaypro_func('Start')
-                str_out += '\n' + vr.vlc_func('Start')
+                str_out += '\n' + dr.displaypro_func('start')
+                str_out += '\n' + vr.vlc_func('start')
                 break
             elif state == 'Fail':
                 str_out += '\n' + 'Включите проекторы'
@@ -78,16 +79,16 @@ def base_func_Kyiv(action):
                 str_out += '\n' + '...5sec...'
                 time.sleep(5)
 
-        str_out += '\n Result state= ' + mr.mosaic_surround_func('State')[0]
+        str_out += '\n Result state= ' + mr.mosaic_surround_func('state')[0]
 
-    elif action == "Stop":
+    elif action == "stop":
         print("Stop system")
 
-        str_out += '\n' + vr.vlc_func('Stop')
-        str_out += '\n' + dr.displaypro_func('Stop')
-        str_out += '\n' + mr.mosaic_surround_func('Stop')[0]
+        str_out += '\n' + vr.vlc_func('stop')
+        str_out += '\n' + dr.displaypro_func('stop')
+        str_out += '\n' + mr.mosaic_surround_func('stop')[0]
         time.sleep(5)
-        str_out += '\n Result state= ' + mr.mosaic_surround_func('State')[0]
+        str_out += '\n Result state= ' + mr.mosaic_surround_func('state')[0]
 
     elif action == "Projectors_ON":
         print("projector_func('ON')")

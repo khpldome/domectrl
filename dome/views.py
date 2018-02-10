@@ -17,29 +17,23 @@ def index(request):
     return render(request, 'dome/index.html', context)
 
 
-class MosaicActionView(TemplateView):
+class MosaicSurroundActionView(TemplateView):
 
     template_name = 'dome/index.html'
 
     def get(self, request, *args, **kwargs):
         # print("get=", mosaic_action)
-        messages.error(request, 'mosaic_action=' + kwargs['mosaic_action'])
-        return super(MosaicActionView, self).get(request, *args, **kwargs)
+        messages.error(request, 'action=' + kwargs['action'])
+        return super(MosaicSurroundActionView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(MosaicActionView, self).get_context_data(**kwargs)
+        context = super(MosaicSurroundActionView, self).get_context_data(**kwargs)
         text_output = ""
-        if 'mosaic_action' in kwargs:
-            mosaic_action = kwargs['mosaic_action']
-            print("mosaic_action=", mosaic_action)
+        if 'action' in kwargs:
+            action = kwargs['action']
+            print("action=", action)
 
-            text_output = mr.mosaic_surround_func(mosaic_action)[0]
-
-        if 'vlc_action' in kwargs:
-            vlc_action = kwargs['vlc_action']
-            print("vlc_action=", vlc_action)
-
-            text_output = vlc_func(vlc_action)
+            text_output = mr.mosaic_surround_func(action)[0]
 
         context.update({
             "data_context": text_output,
@@ -56,13 +50,12 @@ class VlcActionView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(VlcActionView, self).get_context_data(**kwargs)
-        text_output = ""
 
-        if 'vlc_action' in kwargs:
-            vlc_action = kwargs['vlc_action']
-            print("vlc_action=", vlc_action)
+        if 'action' in kwargs:
+            action = kwargs['action']
+            print("action=", action)
 
-            res_dict = vr.vlc_func(vlc_action)
+            res_dict = vr.vlc_func(action)
 
         context['data_context'] = res_dict['verbose']
         return context
@@ -79,11 +72,11 @@ class WinapiActionView(TemplateView):
         context = super(WinapiActionView, self).get_context_data(**kwargs)
         text_output = ""
 
-        if 'winapi_action' in kwargs:
-            winapi_action = kwargs['winapi_action']
-            print("winapi_action=", winapi_action)
+        if 'action' in kwargs:
+            action = kwargs['action']
+            print("action=", action)
 
-            text_output = wr.winapi_func(winapi_action)
+            text_output = wr.winapi_func(action)
 
         context['data_context'] = text_output
         return context

@@ -14,6 +14,8 @@ import psutil
 import pprint
 from json import loads, dumps
 
+from controlapp import app_const as c
+
 
 def to_dict(input_ordered_dict):
     return loads(dumps(input_ordered_dict))
@@ -33,7 +35,7 @@ def mosaic_surround_func(action):
 
 def get_mosaic_surround_state():
 
-    str_out, dict_code = mosaic_func('State')
+    str_out, dict_code = mosaic_func('state')
     print("dict_code", dict_code['grids'], dict_code['rows'], dict_code['cols'])
 
     if dict_code['grids'] == 0:
@@ -91,17 +93,26 @@ def mosaic_func(action):
 
     str_param = ''
     str_out = ''
+    xml_out = ''
     dict_code = {}
-    if action == "Start":
+    if action == "start":
         print("Start mosaic")
         # str_param = 'set cols=1 rows=2 res=1280,720,60 out=0,0 out=0,1'
         str_param = 'set cols=2 rows=4 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2 out=1,3'
         # str_param = 'set rows=1 cols=7 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2'
-        output_str_xml = ue._execute_command(configureMosaic_exe + str_param)
-        str_out += output_str_xml[1]
-        xml_out = output_str_xml[0]
+        # output_dict = ue.execute_command(configureMosaic_exe + str_param)
+        # str_out += output_str_xml[1]
+        # xml_out = output_str_xml[0]
+        output_dict = ue.execute_command(configureMosaic_exe + str_param)
+        # print('output_dict=', output_dict)
+        if output_dict['code'] == c.SUCCESS:
+            print('output=', output_dict['output'])
+            xml_out = output_dict['output']
+        else:
+            print('str_err=', output_dict['str_err'])
+            xml_out = output_dict['str_err']
 
-    elif action == "Stop":
+    elif action == "stop":
         print("Stop mosaic")
 
         result = None
@@ -112,24 +123,29 @@ def mosaic_func(action):
         str_out += str(result) + '\n'
 
         str_param = 'disable'
-        output_str_xml = ue._execute_command(configureMosaic_exe + str_param)
-        str_out += output_str_xml[0]
-        xml_out = output_str_xml[1]
+        output_dict = ue.execute_command(configureMosaic_exe + str_param)
+        if output_dict['code'] == c.SUCCESS:
+            print('output=', output_dict['output'])
+            xml_out = output_dict['output']
+        else:
+            print('str_err=', output_dict['str_err'])
+            xml_out = output_dict['str_err']
 
-    elif action == "Restart":
+    elif action == "restart":
         print("Restart mosaic")
         # wt.Show()
         str_param = 'help'
 
-    elif action == "State":
+    elif action == "state":
         print("State mosaic")
         str_param = 'query current'
+        output_dict = ue.execute_command(configureMosaic_exe + str_param)
+        print('output_dict=', output_dict)
+        xml_out = output_dict['output']
 
-        output_str_xml = ue._execute_command(configureMosaic_exe + str_param)
-        str_out += output_str_xml[1]
-        xml_out = output_str_xml[0]
+    ####################################################################################################################
 
-    if action == "Restart":  # Temporary!
+    if action == "restart":  # Temporary!
         print("mosaic help")
         str_out = xml_out
 
@@ -142,19 +158,19 @@ def mosaic_func(action):
             grid_err = doc_dict['error']['#text']
             str_out += '\n' + grid_err + '\n'
             if grid_err == 'NvAPI_Mosaic_SetDisplayGrids failed: NVAPI_ERROR':
-                if action == "Start":
+                if action == "start":
                     str_out += "EnableOneProjector"
-                if action == "Stop":
+                if action == "stop":
                     str_out += "Уже мозаика разобрана"
-            if action == "Start" and grid_err == 'Output index 2 on GPU 0 is out of bounds':
+            if action == "start" and grid_err == 'Output index 2 on GPU 0 is out of bounds':
                 str_out += "Включите проекторы"
-            if action == "Stop" and grid_err == 'No connected outputs found':
+            if action == "stop" and grid_err == 'No connected outputs found':
                 str_out += "Невозможно разобрать мозаику"
         else:
             str_out += xml_out
 
             dict_code = {}
-            if action == "State":
+            if action == "state":
 
                 grids = doc_dict['query']['grids']
                 if grids is None:

@@ -150,7 +150,7 @@ def myview(request, path):
 
     from proxy import views as pv
 
-    res_dict = vr.vlc_func('State')
+    res_dict = vr.vlc_func('state')
     print('path=', path, res_dict['verbose'])
 
     if res_dict['code'] == 0:

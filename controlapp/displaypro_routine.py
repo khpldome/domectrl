@@ -13,7 +13,7 @@ pag.FAILSAFE = False  # disables the fail-safe
 ###############################################################################
 
 PROCESS_NAME = "ImmersiveDisplayPRO.exe"
-# PROCESS_NAME = "ImmersiveDisplayPro.exe"
+PROCESS_NAME = "ImmersiveDisplayPro.exe"
 
 
 def displaypro_func(action, param):
