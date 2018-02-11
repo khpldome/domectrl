@@ -12,11 +12,11 @@ from controlapp import auto_manager as am
 def vlc_func(action):
 
     out_dict = {}
-    vlc_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.VLC_EXE_RELPATH
-    # vlc_bat = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + VLC_BLACK
+    # vlc_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.VLC_EXE_RELPATH
+    vlc_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.VLC_BAT_RELPATH
 
     if action == "start":
-        print("Start vlc=", vlc_exe)
+        # print("Start vlc=", vlc_exe)
 
         if os.path.exists(vlc_exe):
             print("vlc_bat exists")
@@ -43,22 +43,24 @@ def vlc_func(action):
                 # str_param = 'vlc -Ihttp'
                 # str_param = 'vlc --intf=http'
 
-                # res_dict = ue.execute_command2(vlc_bat)
-                res_dict = ue.execute_command2(
-                    [vlc_exe,
-                     '--extraintf=http',
-                     '--http-password=63933',
-                     '--quiet',
-                     '--fullscreen',
-                     '--file-logging',
-                     # '--no-crashdump',
-                     os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.VLC_BLACK])
+                res_dict = ue.execute_command2(vlc_exe)
+                # res_dict = ue.execute_command2(
+                #     [vlc_exe,
+                #      # '--extraintf=http',
+                #      # '--http-password=63933',
+                #      # '--quiet',
+                #      # '--fullscreen',
+                #      # '--file-logging',
+                #      # '--no-crashdump',
+                #      # os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.VLC_BLACK,
+                #      ])
+
 
                 # print(res_dict)
-                str_out = str(res_dict['code']) + ' / ' + str(res_dict['pid'])
-
+                # str_out = str(res_dict['code']) + ' / ' + str(res_dict['pid'])
+                str_context = 'State: ' + str(res_dict['code']) + ' is running ' + str(res_dict['pid'])
                 out_dict.update({'code': 0,
-                                 'verbose': str_out})
+                                 'verbose': str_context})
             else:
                 str_out = 'VLC is running'
                 out_dict.update({'code': 1,
@@ -80,7 +82,7 @@ def vlc_func(action):
         str_out = ''
         # for process in (process for process in psutil.process_iter() if process.name() == 'vlc.exe'):
 
-        proc_VLC_dict = check_process_state('vlc.exe')
+        proc_VLC_dict = am.check_process_state('vlc.exe')
         if proc_VLC_dict:
             str_context = 'State: ' + proc_VLC_dict['name'] + ' is running ' + proc_VLC_dict['pid']
             out_dict.update({'code': 0,
