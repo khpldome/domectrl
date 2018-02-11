@@ -14,7 +14,7 @@ def vlc_func(action):
     vlc_bat = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.VLC_RELPATH
     # vlc_bat = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + VLC_BLACK
 
-    if action == "Start":
+    if action == "start":
         print("Start vlc=", vlc_bat)
 
         if os.path.exists(vlc_bat):
@@ -60,7 +60,7 @@ def vlc_func(action):
                 out_dict.update({'code': 1,
                                  'verbose': str_out})
 
-    if action == "Stop":
+    if action == "stop":
         print("Stop vlc")
         str_out = 'Already stopped.'
         # for process in (process for process in psutil.process_iter() if process.name() == "vlc.exe"):
@@ -71,7 +71,7 @@ def vlc_func(action):
         out_dict.update({'code': 1,
                          'verbose': str_out})
 
-    if action == "State":
+    if action == "state":
         print("State vlc")
         str_out = ''
         # for process in (process for process in psutil.process_iter() if process.name() == 'vlc.exe'):
@@ -94,5 +94,5 @@ if __name__ == "__main__":
 
     print(vlc_bat)
 
-    vlc_func('Start')
+    vlc_func('start')
     # vlc_func('Stop')

@@ -12,7 +12,11 @@ SERVER_NAME = HOSTNAME
 VIDEO_CARD_NAME = 'Empty'
 PROJECTOR_AMOUNT = 1
 # DISPLAYPRO_ABSPATH = 'c:\Program Files (x86)\ImmersiveDisplayPRO\ImmersiveDisplayPRO.exe'
+<<<<<<< HEAD
 DISPLAYPRO_ABSPATH = 'c:\Program Files (x86)\Immersive Display PRO\ImmersiveDisplayPro.bat'
+=======
+DISPLAYPRO_ABSPATH = r'c:\Program Files (x86)\Immersive Display PRO\ImmersiveDisplayPro.bat'
+>>>>>>> restore-1
 VLC_RELPATH = r'\exec\vlc-2.1.6\vlc.exe'
 VLC_BLACK = r'\exec\vlc-2.1.6\Black.jpg'
 HOST_IP = '127.0.0.1'
