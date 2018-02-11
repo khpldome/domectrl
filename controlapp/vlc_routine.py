@@ -8,6 +8,19 @@ import utils.executor as ue
 import domectrl.config_fds as conf
 from controlapp import auto_manager as am
 
+import requests
+
+
+def check_vlc_server():
+
+    try:
+        r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml',
+                         auth=('', '63933'))
+        print("responce=", r)
+        return r.status_code
+    except:
+        pass
+
 
 def vlc_func(action):
 
@@ -63,8 +76,14 @@ def vlc_func(action):
                                  'verbose': str_context})
             else:
                 str_out = 'VLC is running'
-                out_dict.update({'code': 1,
-                                 'verbose': str_out})
+                if check_vlc_server() == 200:
+                    str_out += ', VLC SERVER is running'
+                    out_dict.update({'code': 1,
+                                     'verbose': str_out})
+                else:
+                    str_out += ', VLC SERVER is not running'
+                    out_dict.update({'code': 2,
+                                     'verbose': str_out})
 
     if action == "stop":
         print("Stop vlc")
@@ -75,40 +94,44 @@ def vlc_func(action):
             str_out = 'Stoped ' + process.name() + ' / ' + str(process.pid)
         #TODO
         out_dict.update({'code': 1,
-                         'verbose': str_out})
+                         'verbose': str_out,
+                         'vlc_state': False,
+                         'vlc_server_state': False})
 
     if action == "state":
         print("State vlc")
-        str_out = ''
-        # for process in (process for process in psutil.process_iter() if process.name() == 'vlc.exe'):
 
         proc_VLC_dict = am.check_process_state('vlc.exe')
         if proc_VLC_dict:
             str_context = 'State: ' + proc_VLC_dict['name'] + ' is running ' + proc_VLC_dict['pid']
-            out_dict.update({'code': 0,
-                             'verbose': str_context})
+
+            if check_vlc_server() == 200:
+                str_context += ', VLC SERVER is running'
+                out_dict.update({'code': 0,
+                                 'verbose': str_context,
+                                 'vlc_state': True,
+                                 'vlc_server_state': True})
+            else:
+                str_context += ', VLC SERVER is not running'
+                out_dict.update({'code': 2,
+                                 'verbose': str_context,
+                                 'vlc_state': True,
+                                 'vlc_server_state': False})
         else:
             str_context = 'State: not started'
             out_dict.update({'code': 1,
-                             'verbose': str_context})
-
-        # for process in psutil.process_iter():
-        #
-        #     if process.name() == 'vlc.exe':
-        #         str_out = 'State ' + process.name() + ' is running'
-        #         out_dict.update({'code': 0,
-        #                          'verbose': str_out})
-        #         break
-        #     else:
-        #         out_dict.update({'code': 1,
-        #                          'verbose': 'State: not started'})
+                             'verbose': str_context,
+                             'vlc_state': False,
+                             'vlc_server_state': False})
 
     return out_dict
 
 
 if __name__ == "__main__":
 
-    print(vlc_bat)
-
-    vlc_func('start')
+    # print(vlc_bat)
+    #
+    # vlc_func('start')
     # vlc_func('Stop')
+
+    check_vlc_server()
