@@ -14,6 +14,28 @@ from controlapp import winapi_routine as wr
 
 import rs232_ctrl.main_rs232 as rs232
 import time
+import psutil
+
+
+##################################################################################
+def is_process_running(process_name):
+    process_is_running = False
+    for process in psutil.process_iter():
+        if process.name() == process_name:
+            process_is_running = True
+            break
+    return process_is_running
+
+
+##################################################################################
+def check_process_state(process_name):
+    process_dict = {}
+    for process in psutil.process_iter():
+        if process.name() == process_name:
+            process_dict.update({'name': process.name(),
+                                 'pid': str(process.pid())})
+            break
+    return process_dict
 
 
 def base_func(action):
