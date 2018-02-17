@@ -118,10 +118,22 @@ class AjaxHandlerMixin(object):
 
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
-            if 'action' in request.POST and hasattr(self, request.POST['action']):
-                handler = getattr(self, request.POST['action'])
-                return handler(request)
-            else:
-                return HttpResponse('Action not provided or incorrect', status=400)
+            pass
+            # if 'action' in request.POST and hasattr(self, request.POST['action']):
+            #     handler = getattr(self, request.POST['action'])
+            #     return handler(request)
+            # else:
+            #     return HttpResponse('Action not provided or incorrect', status=400)
+        else:
+            return HttpResponse('Bad request', status=400)
+
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            pass
+            # if 'action' in request.GET and hasattr(self, request.GET['action']):
+            #     handler = getattr(self, request.GET['action'])
+            #     return handler(request)
+            # else:
+            #     return HttpResponse('Action not provided or incorrect', status=400)
         else:
             return HttpResponse('Bad request', status=400)

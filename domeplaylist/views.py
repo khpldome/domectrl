@@ -13,6 +13,7 @@ from domeplaylist.models import PlayList, Track
 from domeplaylist.mixins import ModulePermissionMixin, AjaxHandlerMixin
 
 import requests
+import json
 
 from django.contrib import messages
 
@@ -289,12 +290,24 @@ class AjaxProcessStatus(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMi
             return HttpResponse('Bad request', status=400)
 
     def get(self, request, *args, **kwargs):
+
         if request.is_ajax():
-            if 'action' in request.GET and hasattr(self, request.GET['action']):
-                handler = getattr(self, request.GET['action'])
-                return handler(request)
-            else:
-                return HttpResponse('Action not provided or incorrect', status=400)
+        # if True:
+            # if 'action' in request.GET and hasattr(self, request.GET['action']):
+            #     handler = getattr(self, request.GET['action'])
+            #     return handler(request)
+            # else:
+            #     return HttpResponse('Action not provided or incorrect', status=400)
+            print('sdggsdfsd')
+            system_state_dict = {
+                'action': 'srfwefwe',
+                'vlc_proccess': 'srfafswefwe',
+                'vlc_server': 'srfafswefwe',
+            }
+            json_string = json.dumps(system_state_dict, indent=4)
+
+            return HttpResponse(json_string, content_type="application/json")
+
         else:
             return HttpResponse('Bad request', status=400)
 

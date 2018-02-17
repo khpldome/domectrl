@@ -71,11 +71,12 @@
 {% endblock footer %}
 
 {% block js %}
-<script src="{% static 'static/domectrl/js/inner_layout.js' %}"></script>
+{#    <script src="{% static 'domeplaylist/js/inner_layout.js' %}"></script>#}
+{#    <script src="{% static 'domeplaylist/js/vlc_web/ui.js' %}"></script>#}
 
     $(document).ready(function () {
 
-                updateSystemState();
-        });
+{#                updateSystemState();#}
+    });
 
 {% endblock js %}
