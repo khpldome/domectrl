@@ -22,12 +22,12 @@
             success: function (data, status, jqXHR) {
                 $('.dynamic').empty();
                 console.log(data);
-                $('#currentTime').append(data['action']);
-                console.log($('action', data).text());
+                $('#data1').append(data['action']);
+                // console.log($('action', data).text());
                 setTimeout(updateSystemState, 1000);
             },
             error: function (jqXHR, status, error) {
-                console.log('error' + JSON.stringify(jqXHR));
+                // console.log('error' + JSON.stringify(jqXHR));
                 setTimeout(updateSystemState, 2000);
             }
         });

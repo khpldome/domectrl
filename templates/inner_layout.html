@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block header %}
     <div class="logo">
         <img class="logo-img" src="" alt="firefly"/>
@@ -70,13 +72,13 @@
 <!--</div>-->
 {% endblock footer %}
 
-{% block js %}
-{#    <script src="{% static 'domeplaylist/js/inner_layout.js' %}"></script>#}
+{% block js_inner_layout %}
+    <script src="{% static 'domeplaylist/js/inner_layout.js' %}"></script>
 {#    <script src="{% static 'domeplaylist/js/vlc_web/ui.js' %}"></script>#}
 
-    $(document).ready(function () {
+{#    $(document).ready(function () {#}
 
 {#                updateSystemState();#}
-    });
+{#    });#}
 
-{% endblock js %}
+{% endblock js_inner_layout %}
