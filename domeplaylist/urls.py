@@ -45,6 +45,7 @@ urlpatterns = [
 
     url(r'^proxy/(?P<path>.*)/$', views.myview, name='proxy'),
 
+    url(r'^ajax-status/$', views.AjaxProcessStatus.as_view(), name='ajax-status'),
 
 ]
 

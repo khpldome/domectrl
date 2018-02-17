@@ -30,7 +30,6 @@ urlpatterns = [
     url(r'^dome/', include('dome.urls')),
 
     url(r'^', include('domeplaylist.urls')),
-    # url(r'^domeplaylist/', include('domeplaylist.urls')),
 
     url(r'^picker/', include('filemanager.urls', namespace='filemanager')),
 
