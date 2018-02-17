@@ -273,3 +273,28 @@ class TrackDeleteView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
         # messages.add_message(request, messages.INFO, 'fefefwef!')
         messages.success(request, 'Track deleted successfully.')
         return HttpResponseRedirect(success_url)
+
+
+class AjaxProcessStatus(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMixin, View):
+    """handles only ajax requests"""
+
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            if 'action' in request.POST and hasattr(self, request.POST['action']):
+                handler = getattr(self, request.POST['action'])
+                return handler(request)
+            else:
+                return HttpResponse('Action not provided or incorrect', status=400)
+        else:
+            return HttpResponse('Bad request', status=400)
+
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            if 'action' in request.GET and hasattr(self, request.GET['action']):
+                handler = getattr(self, request.GET['action'])
+                return handler(request)
+            else:
+                return HttpResponse('Action not provided or incorrect', status=400)
+        else:
+            return HttpResponse('Bad request', status=400)
+
