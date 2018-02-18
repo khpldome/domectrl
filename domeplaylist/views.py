@@ -19,6 +19,7 @@ from django.contrib import messages
 
 import utils.executor as ue
 from controlapp import vlc_routine as vr
+from controlapp import displaypro_routine as dr
 import time
 
 from django.conf import settings
@@ -286,24 +287,28 @@ class AjaxProcessStatus(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMi
         if request.is_ajax():
 
             ts = time.time()
-            # print('sdggsdfsd', ts)
 
             self.system_state_dict.update({
-                'timestamp_request': ts,
-                'dpro_process': True,
-                'dpro_desktop': True,
-                'dpro_window': False,
+                'request_ts': ts,
+                'mosaic_ts': False,
                 'mosaic': False,
-                'pojectors_on': None,
+                'pojectors_ts': False,
+                'pojectors': None,
             })
 
-            if 'timestamp_vlc' in self.system_state_dict:
-                dt = self.system_state_dict['timestamp_request'] - self.system_state_dict['timestamp_vlc']
-                print( dt, 'erewerwerwerwer')
+            if 'vlc_ts' in self.system_state_dict:
+                dt = self.system_state_dict['request_ts'] - self.system_state_dict['vlc_ts']
                 if dt > 20:
                     self.get_vlc_state()
             else:
                 self.get_vlc_state()
+
+            if 'dpro_ts' in self.system_state_dict:
+                dt = self.system_state_dict['request_ts'] - self.system_state_dict['dpro_ts']
+                if dt > 17:
+                    self.get_dpro_state()
+            else:
+                self.get_dpro_state()
 
             json_string = json.dumps(self.system_state_dict, indent=4)
 
@@ -317,10 +322,20 @@ class AjaxProcessStatus(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMi
         ts = time.time()
         res_dict = vr.vlc_func('state')
         self.system_state_dict.update({
-            'timestamp_vlc': ts,
-            'vlc_proccess': res_dict['vlc_state'],
-            'vlc_server': res_dict['vlc_server_state'],
+            'vlc_ts': ts,
+            'vlc_proccess': res_dict['proc_state'],
+            'vlc_server': res_dict['server_state'],
         })
         return True
 
+    def get_dpro_state(self):
+
+        res_dict = dr.displaypro_func('state')
+        self.system_state_dict.update({
+            'dpro_ts': time.time(),
+            'dpro_process': res_dict['proc_state'],
+            'dpro_desktop': res_dict['proc_state'],
+            'dpro_window': res_dict['proc_state'],
+        })
+        return True
 

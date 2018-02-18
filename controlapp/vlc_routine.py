@@ -95,8 +95,8 @@ def vlc_func(action):
         #TODO
         out_dict.update({'code': 1,
                          'verbose': str_out,
-                         'vlc_state': False,
-                         'vlc_server_state': False})
+                         'proc_state': False,
+                         'server_state': False})
 
     if action == "state":
         print("State vlc")
@@ -109,20 +109,20 @@ def vlc_func(action):
                 str_context += ', VLC SERVER is running'
                 out_dict.update({'code': 0,
                                  'verbose': str_context,
-                                 'vlc_state': True,
-                                 'vlc_server_state': True})
+                                 'proc_state': True,
+                                 'server_state': True})
             else:
                 str_context += ', VLC SERVER is not running'
                 out_dict.update({'code': 2,
                                  'verbose': str_context,
-                                 'vlc_state': True,
-                                 'vlc_server_state': False})
+                                 'proc_state': True,
+                                 'server_state': False})
         else:
             str_context = 'State: not started'
             out_dict.update({'code': 1,
                              'verbose': str_context,
-                             'vlc_state': False,
-                             'vlc_server_state': False})
+                             'proc_state': False,
+                             'server_state': False})
 
     return out_dict
 

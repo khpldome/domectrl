@@ -12,11 +12,13 @@ import pyautogui as pag
 pag.FAILSAFE = False  # disables the fail-safe
 ###############################################################################
 
+from controlapp import auto_manager as am
+
 PROCESS_NAME = "ImmersiveDisplayPRO.exe"
 PROCESS_NAME = "ImmersiveDisplayPro.exe"
 
 
-def displaypro_func(action, param):
+def displaypro_func(action, param=''):
 
     out_dict = {}
     displaypro_exe = [conf.DISPLAYPRO_ABSPATH]
@@ -52,6 +54,25 @@ def displaypro_func(action, param):
         #TODO
         out_dict.update({'code': 1,
                          'verbose': str_out})
+
+    if action == "state":
+        print("State dpro")
+
+        proc_dpro_dict = am.check_process_state(PROCESS_NAME)
+        if proc_dpro_dict:
+            str_context = 'State: ' + proc_dpro_dict['name'] + ' is running ' + proc_dpro_dict['pid']
+            out_dict.update({
+                'code': 1,
+                'verbose': str_context,
+                'proc_state': True,
+            })
+        else:
+            str_context = 'State: not started'
+            out_dict.update({
+                'code': 1,
+                'verbose': str_context,
+                'proc_state': False,
+            })
 
     if action == "setconfig":
 
