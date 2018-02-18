@@ -285,18 +285,26 @@ class AjaxProcessStatus(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMi
 
         if request.is_ajax():
 
-            self.get_vlc_state()
-
             ts = time.time()
-            print('sdggsdfsd', ts)
+            # print('sdggsdfsd', ts)
 
             self.system_state_dict.update({
+                'timestamp_request': ts,
                 'dpro_process': True,
                 'dpro_desktop': True,
                 'dpro_window': False,
                 'mosaic': False,
                 'pojectors_on': None,
             })
+
+            if 'timestamp_vlc' in self.system_state_dict:
+                dt = self.system_state_dict['timestamp_request'] - self.system_state_dict['timestamp_vlc']
+                print( dt, 'erewerwerwerwer')
+                if dt > 20:
+                    self.get_vlc_state()
+            else:
+                self.get_vlc_state()
+
             json_string = json.dumps(self.system_state_dict, indent=4)
 
             return HttpResponse(json_string, content_type="application/json")
@@ -307,10 +315,12 @@ class AjaxProcessStatus(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMi
     def get_vlc_state(self):
 
         ts = time.time()
+        res_dict = vr.vlc_func('state')
         self.system_state_dict.update({
-            'timestamp_proc': ts,
-            'timestamp_request': ts,
-            'vlc_proccess': False,
-            'vlc_server': False,
+            'timestamp_vlc': ts,
+            'vlc_proccess': res_dict['vlc_state'],
+            'vlc_server': res_dict['vlc_server_state'],
         })
         return True
+
+
