@@ -298,14 +298,14 @@ class AjaxProcessStatus(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMi
 
             if 'vlc_ts' in self.system_state_dict:
                 dt = self.system_state_dict['request_ts'] - self.system_state_dict['vlc_ts']
-                if dt > 20:
+                if dt > 5:
                     self.get_vlc_state()
             else:
                 self.get_vlc_state()
 
             if 'dpro_ts' in self.system_state_dict:
                 dt = self.system_state_dict['request_ts'] - self.system_state_dict['dpro_ts']
-                if dt > 17:
+                if dt > 3:
                     self.get_dpro_state()
             else:
                 self.get_dpro_state()
