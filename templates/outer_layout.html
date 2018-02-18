@@ -2,28 +2,8 @@
 
 {% load static %}
 
-{% block header %}
-
-
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <ul class="nav navbar-nav">
-{#                <li><a href="{% url 'store' %}" class="navbar-link">Store</a></li>#}
-                {% if user.is_authenticated %}
-                    <li><a href="{% url 'dashboard' %}" class="navbar-link">Dashboard</a></li>
-                {% endif %}
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-{#                <li><a href="#" class="navbar-link" data-toggle="modal" data-target="#feedback-modal">Feedback</a></li>#}
-                {% if user.is_authenticated %}
-                    <li><a href="{% url 'domeuser:account' %}" class="navbar-link">My Account</a></li>
-                    <li><a href="{% url 'domeuser:sign_out' %}" class="navbar-link">Sign Out</a></li>
-                {% else %}
-                    <li><a href="{{ login_url }}" class="navbar-link">Login</a></li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
-
-    <img src="{% static 'img/logo.png' %}" alt="FireFly" class="center-logo">
-{% endblock header %}
+    {% block body_container %}
+        {% block header %}<header style="display: none;"></header>{% endblock header %}
+        {% block main_container %}{% endblock main_container %}
+        {% block footer %}<footer style="display: none;"></footer>{% endblock footer %}
+    {% endblock body_container %}
