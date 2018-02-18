@@ -21,28 +21,38 @@ PROCESS_NAME = "ImmersiveDisplayPro.exe"
 def displaypro_func(action, param=''):
 
     out_dict = {}
-    displaypro_exe = [conf.DISPLAYPRO_ABSPATH]
+    displaypro_exe = conf.DISPLAYPRO_ABSPATH
 
     if action == "start":
         print("Start displaypro")
 
-        displaypro_is_running = False
-        for process in psutil.process_iter():
-            if process.name() == PROCESS_NAME:
-                displaypro_is_running = True
-                # time.sleep(2)
-                break
+        if os.path.exists(displaypro_exe):
+            print("displaypro_exe exists")
 
-        if displaypro_is_running is False:
-            res_dict = ue.execute_command2(displaypro_exe)
-            str_out = str(res_dict['code']) + ' / ' + str(res_dict['pid'])
-            # time.sleep(2)
-            out_dict.update({'code': 0,
-                             'verbose': str_out})
+        if not (os.path.isfile(displaypro_exe) and os.path.exists(displaypro_exe)):
+            out_dict.update({'code': -1,
+                             'verbose': 'displaypro_exe does not exist'})
         else:
-            str_out = 'displaypro is running'
-            out_dict.update({'code': 1,
-                             'verbose': str_out})
+
+            # displaypro_is_running = False
+            # for process in psutil.process_iter():
+            #     if process.name() == PROCESS_NAME:
+            #         displaypro_is_running = True
+            #         # time.sleep(2)
+            #         break
+
+            displaypro_is_running = am.is_process_running(PROCESS_NAME)
+
+            if displaypro_is_running is False:
+                res_dict = ue.execute_command2(displaypro_exe)
+                str_out = str(res_dict['code']) + ' / ' + str(res_dict['pid'])
+                # time.sleep(2)
+                out_dict.update({'code': 0,
+                                 'verbose': str_out})
+            else:
+                str_out = 'displaypro is running'
+                out_dict.update({'code': 1,
+                                 'verbose': str_out})
 
     if action == "stop":
         print("Stop displaypro")
