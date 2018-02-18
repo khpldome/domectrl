@@ -3,54 +3,54 @@
 {% load static %}
 
 {% block header %}
-    <div class="logo">
-        <img class="logo-img" src="" alt="firefly"/>
-    </div>
-    <nav class="grid">
-        <a href="{% url 'domeplaylist:track-list' playlist_id=-1 %}" class="tab-link link-playlists tab-link-active flex">
-            <span class="link-playlists-text flex">Плейлисты</span>
-            <div id="data1" class="dynamic">data1</div>
-            <div id="data2" class="dynamic">data2</div>
-        </a>
-        <a href="{% url 'dome:index' %}" class="tab-link link-more flex">
-            <span class="link-more-text flex">Еще</span>
-        </a>
-    </nav>
-    <div class="projectors-turn">
-        <span class="icon-turn-on"></span>
-        <span class="icon-turn-off" style="display: none;"></span>
-    </div>
-    <div class="status grid">
-        <span class="icon-speed"></span>
-        <div class="status-project">
-            <span class="icon-status-on">Проекторы</span>
+    <header class="grid">
+        <div class="logo">
+            <img class="logo-img" src="" alt="firefly"/>
         </div>
-        <div class="status-player{% if vlc_state %}{% if vlc_server_state %}{% endif %}{% else %} disabled{% endif %}">
-            <span class="icon-status-{% if vlc_state %}{% if vlc_server_state %}on{% endif %}{% else %}off{% endif %}">Плеер</span>
-{#            <span class="icon-status-on">Плеер</span>#}
-{#            {{ vlc_state }}#}
-{#            {{ vlc_server_state }}#}
+        <nav class="grid">
+            <a href="{% url 'domeplaylist:track-list' playlist_id=-1 %}" class="tab-link link-playlists tab-link-active flex">
+                <span class="link-playlists-text flex">Плейлисты</span>
+            </a>
+            <a href="{% url 'dome:index' %}" class="tab-link link-more flex">
+                <span class="link-more-text flex">Еще</span>
+            </a>
+        </nav>
+        <div class="projectors-turn">
+            <span class="icon-turn-on"></span>
+            <span class="icon-turn-off" style="display: none;"></span>
+        </div>
+        <div class="status grid">
+            <span class="icon-speed"></span>
+            <div class="status-project">
+                <span class="icon-status-on">Проекторы</span>
+            </div>
+            <div class="status-player{% if vlc_state %}{% if vlc_server_state %}{% endif %}{% else %} disabled{% endif %}">
+                <span class="icon-status-{% if vlc_state %}{% if vlc_server_state %}on{% endif %}{% else %}off{% endif %}">Плеер</span>
+    {#            <span class="icon-status-on">Плеер</span>#}
+    {#            {{ vlc_state }}#}
+    {#            {{ vlc_server_state }}#}
 
+            </div>
+            <div class="status-calib disabled">
+                <span class="icon-status-off">Калибровки</span>
+            </div>
+            <div class="status-mosaic">
+                <span class="icon-status-on">Мозаика</span>
+            </div>
         </div>
-        <div class="status-calib disabled">
-            <span class="icon-status-off">Калибровки</span>
+        <div class="account">
+            <div class="account-detail flex">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'domeuser:sign_out' %}">
+                        <span class="icon icon-log"></span>
+                    </a>
+                    <a href="{% url 'domeuser:account' %}">{{ user.email }}</a>
+                {% else %}
+                    <li><a href="{% url 'domeuser:sign_in' %}">Login</a></li>
+                {% endif %}
+            </div>
         </div>
-        <div class="status-mosaic">
-            <span class="icon-status-on">Мозаика</span>
-        </div>
-    </div>
-    <div class="account">
-        <div class="account-detail flex">
-            {% if user.is_authenticated %}
-                <a href="{% url 'domeuser:sign_out' %}">
-                    <span class="icon icon-log"></span>
-                </a>
-                <a href="{% url 'domeuser:account' %}">{{ user.email }}</a>
-            {% else %}
-                <li><a href="{% url 'domeuser:sign_in' %}">Login</a></li>
-            {% endif %}
-        </div>
-    </div>
+    </header>
 {% endblock header %}
 
 {% block main_container %}

@@ -686,3 +686,96 @@ nav .link-more {
     width: 100%;
     height: 100%;
 }
+
+.sign_in {
+    min-height: 100vh;
+    width: 45%;
+    margin: 0 auto;
+    background-color: rgb(31, 33, 39);
+}
+
+.sign_in:after {
+    content: '';
+    background: url(../img/logo.svg);
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    opacity: 0.2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: 15px 15px;
+    background-attachment: fixed;
+}
+
+.sign_in-container {
+    padding-top: 30px;
+    justify-content: center;
+    grid-template-rows: 60px 60px 1fr;
+    grid-template-columns: 70%;
+}
+
+.sign_in-container > * {
+    height: 100%;
+    width:  100%;
+}
+
+.sign_in-header {
+    align-items: center;
+    justify-content: center;
+}
+
+.sign_in-header h1 {
+    font-size: 2.5em;
+    margin: 0.2em;
+}
+
+form {
+    font-size: 1.2em;
+}
+
+.form-group {
+    width: 75%;
+    margin: 0 auto;
+}
+
+.form-group > * {
+    display: block;
+    padding: 0.2em;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.form-group label {
+    padding: 0.3em 0;
+}
+
+.form-small_text {
+    font-size: 0.8em;
+    padding: 0.4em 0;
+}
+
+a.form-small_text:hover {
+    color: #2abbff;
+}
+
+.form-button {
+    font-size: 1.2em;
+    text-align: center;
+    padding: 0.2em;
+    border: 2px solid #256E93;
+    margin-bottom: 0.6em;
+    background: #256E93;
+    outline: none;
+}
+
+.form-button:first-child {
+    margin-top: 0.2em;
+}
+
+a.form-button:hover {
+    background: #2abbff;
+    color: #fff;
+
+}

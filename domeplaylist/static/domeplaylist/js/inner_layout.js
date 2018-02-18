@@ -1,40 +1,37 @@
-// $(document).ready(function () {
 
-// jQuery(document).ready(function($) {
     var moduleAPIUrl = window.location.host + '/ajax-status/state.json';
 
     console.log(moduleAPIUrl);
 
     $(function updateSystemState() {
 
-        // console.log('ajax');
         $.ajax({
-            // url: moduleAPIUrl,
             url: '/ajax-status/state.json',
 
-            headers: {
-                // 'Access-Control-Allow-Origin': '*'
-                // 'Authorization': 'Basic OjYzOTMz'
-            },
-
-            // dataType: 'json',
-
             success: function (data, status, jqXHR) {
-                $('.dynamic').empty();
                 console.log(data);
-                $('#data1').append(data['action']);
-                // console.log($('action', data).text());
+                $('.dynamic').empty();
+                $('#vlc_ts').append(data['vlc_ts']);
+                $('#vlc_proccess').append(data['vlc_proccess']);
+                $('#vlc_server').append(data['vlc_server']);
+                $('#request_ts').append(data['request_ts']);
+                $('#dpro_ts').append(data['dpro_ts']);
+                $('#dpro_process').append(data['dpro_process']);
+                $('#dpro_desktop').append(data['dpro_desktop']);
+                $('#dpro_window').append(data['dpro_window']);
+                $('#mosaic_ts').append(data['mosaic_ts']);
+                $('#mosaic').append(data['mosaic']);
+                $('#pojectors_ts').append(data['pojectors_ts']);
+                $('#pojectors').append(data['pojectors']);
                 setTimeout(updateSystemState, 1000);
             },
             error: function (jqXHR, status, error) {
                 // console.log('error' + JSON.stringify(jqXHR));
-                setTimeout(updateSystemState, 2000);
+                setTimeout(updateSystemState, 1000);
             }
         });
-        // }
-
     });
-// });
+
 
 
 

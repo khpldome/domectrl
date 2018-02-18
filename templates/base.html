@@ -1,84 +1,75 @@
 <!DOCTYPE html>
 
 {% load static %}
+
 <html lang="en">
 
-<head>
-    <!--<meta charset="UTF-8">-->
-{#    <!--<title>{% block title %}FireFly{% endblock title %}</title>-->#}
-{#    <!--<link rel="stylesheet" href="{% static 'lib/bootstrap-3.3.6/css/bootstrap.min.css' %}">-->#}
-    {% block css %} {% endblock css %}
-{#    <!--<link rel="stylesheet" href="{% static 'css/style.css' %}">-->#}
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>FireFly</title>
+        <link rel="stylesheet" href="{% static 'style/normalize.css' %}">
+        <link rel="stylesheet" href="{% static 'style/main.css' %}">
+        <link rel="stylesheet" href="{% static 'style/modal.css' %}">
+    </head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>FireFly</title>
+    <body>
 
-    <link rel="stylesheet" href="{% static 'style/normalize.css' %}">
-    <link rel="stylesheet" href="{% static 'style/main.css' %}">
-    <link rel="stylesheet" href="{% static 'style/modal.css' %}">
-</head>
-
-<body>
-
-
-<script src="{% static 'lib/jquery-1.12.1.min.js' %}"></script>
-<!--<script src="{% static 'lib/bootstrap-3.3.6/js/bootstrap.min.js' %}"></script>-->
-
-
-<div class="body-conatiner grid">
-    <header class="grid">{% block header %}{% endblock header %}</header>
-    {% block main_container %}{% endblock main_container %}
-    <footer class="grid">{% block footer %}{% endblock footer %}</footer>
-</div>
-
-
-{% if messages %}
-
-<!-- Trigger/Open The Modal -->
-<!--<button id="myBtn">Open Modal</button>-->
-
-<!-- The Modal -->
-<div id="myModal" class="modal">
-
-    <!-- Modal content -->
-    <div class="modal-content">
-        <div class="modal-header">
-            <span class="close">&times;</span>
-            <h2>Modal Header</h2>
+        <script src="{% static 'lib/jquery-1.12.1.min.js' %}"></script>
+    {% block body_container %}
+        <div class="body-conatiner grid">
+            {% block header %}{% endblock header %}
+            {% block main_container %}{% endblock main_container %}
+            {% block footer %}<footer class="grid"></footer>{% endblock footer %}
         </div>
-        <div class="modal-body">
-            <ul class="messages">
-                {% for message in messages %}
-                <li>
-                <!--{% if message.tags %}class="{{ message.tags }}"{% endif %}>-->
-                {{ message }}
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="modal-footer">
-            <h3>Modal Footer</h3>
-        </div>
-    </div>
-</div>
-
-<script src="{% static 'domeplaylist/js/modal.js' %}"></script>
-
-{% endif %}
-
-
-{% if not debug %}{% endif %}
-
-
-<script type="text/javascript">
-
-</script>
-
-{% block js_inner_layout %}{% endblock js_inner_layout %}
-
-{% block js %}{% endblock js %}
+    {% endblock body_container %}
+        {% if messages %}
+            <!-- Trigger/Open The Modal -->
+            <!--<button id="myBtn">Open Modal</button>-->
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close">&times;</span>
+                        <h2>Modal Header</h2>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="messages">
+                            {% for message in messages %}
+                            <li>
+                            <!--{% if message.tags %}class="{{ message.tags }}"{% endif %}>-->
+                            {{ message }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <h3>Modal Footer</h3>
+                    </div>
+                </div>
+            </div>
+            <script src="{% static 'domeplaylist/js/modal.js' %}"></script>
+        {% endif %}
 
 
-</body>
+        {% if not debug %}
+            {#  #}
+        {% endif %}
+
+
+        <script type="text/javascript">
+            {#  #}
+        </script>
+
+        {% block js_inner_layout %}
+            {#  #}
+        {% endblock js_inner_layout %}
+
+        {% block js %}
+            {#  #}
+        {% endblock js %}
+
+
+    </body>
 </html>
