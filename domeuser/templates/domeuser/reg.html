@@ -1,22 +1,33 @@
 {% extends "outer_layout.html" %}
 
 {% block main_container %}
-    <div class="panel panel-default w-block">
-        <div class="panel-heading">Create Account</div>
-        <div class="panel-body">
-            <form action="{{ app_path }}" method="post" id="reg-form">{% csrf_token %}
-                {% for field in form %}
+    <main class="account_form create">
+        <div class="container grid">
+            <div>
+                <img src="/static/img/logo.svg" width="100%" height="100%" alt="firefly">
+            </div>
+            <div class="header flex">
+                <h1>Create Account</h1>
+            </div>
+            <div class="form_container">
+                <form action="{{ app_path }}" method="post" id="reg-form">{% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field.errors }}
+                            {{ field }}
+                        </div>
+                    {% endfor %}
                     <div class="form-group">
-                        {{ field.errors }}
-                        {{ field.label_tag }}
-                        {{ field }}
+                        <a href="#" onclick="document.getElementById('reg-form').submit()" class="form-button" tabindex="3">
+                            <span>Create Account</span>
+                        </a>
+                        <a class="form-button" href="{% url 'domeuser:sign_in' %}">
+                            <span>Sign In</span>
+                        </a>
                     </div>
-                {% endfor %}
-                <div class="align-right">
-                    <a class="btn btn-default" href="{% url 'domeuser:sign_in' %}">Sign In</a>
-                    <button type="submit" class="btn btn-info">Create Account</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
+    </main>
 {% endblock main_container %}

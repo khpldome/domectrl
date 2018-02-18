@@ -1,27 +1,27 @@
 {% extends "outer_layout.html" %}
 {% block main_container %}
-    <main class="sign_in">
-        <div class="sign_in-container grid">
-            <div class="sign_in-logo">
+    <main class="account_form sign_in">
+        <div class="container grid">
+            <div class="logo">
                 <img src="/static/img/logo.svg" width="100%" height="100%" alt="firefly">
             </div>
-            <div class="sign_in-header flex">
+            <div class="header flex">
                 <h1>Sign In</h1>
             </div>
-            <div class="sign_in-form_container">
+            <div class="form_container">
                 <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
                     {% for error in form.non_field_errors %}
                         <p class="form-error-list">{{ error }}</p>
                     {% endfor %}
                     <div class="form-group">
-                        {{ form.username.errors }}
                         {{ form.username.label_tag }}
                         {{ form.username }}
+                        {{ form.username.errors }}
                     </div>
                     <div class="form-group">
-                        {{ form.password.errors }}
                         {{ form.password.label_tag }}
                         {{ form.password }}
+                        {{ form.password.errors }}
                         <a href="{% url 'domeuser:password_reset' %}" class="form-small_text" tabindex="5">
                             <span>Forgot Your Password?</span>
                         </a>

@@ -33,6 +33,17 @@
     });
 
 
+jQuery(document).ready(function($) {
 
+    $('.account_tab-link a').click(function(e) {
+        e.preventDefault();
+        var divId = $(this).attr('href');
+        console.log('divId: ' + divId);
+        $('.account_tab-link').removeClass('active');
+        $(this).parent().addClass('active');
+        $('.account-tab').removeClass('active');
+        $(divId).addClass('active');
 
+    });
 
+});
