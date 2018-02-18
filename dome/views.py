@@ -60,8 +60,8 @@ class VlcActionView(TemplateView):
         context['data_context'] = res_dict['verbose']
         if 'proc_state' in res_dict:
             context['vlc_state'] = res_dict['proc_state']
-        if 'proc_state' in res_dict:
-            context['vlc_server_state'] = res_dict['c']
+        if 'server_state' in res_dict:
+            context['vlc_server_state'] = res_dict['server_state']
         return context
 
 
