@@ -19,7 +19,7 @@ from django.contrib import messages
 
 import utils.executor as ue
 from controlapp import vlc_routine as vr
-
+import time
 
 from django.conf import settings
 import domectrl.config_fds as conf
@@ -139,29 +139,6 @@ class TrackListView(LoginRequiredMixin, ListView):
         return context
 
 
-class TrackListViewRedirect(View):
-
-    def get(self, request, **kwargs):
-        pass
-
-        return HttpResponseRedirect(reverse_lazy('domeplaylist:proxy', kwargs={'path': self.kwargs['path']}))
-
-
-def myview(request, path):
-
-    from proxy import views as pv
-
-    res_dict = vr.vlc_func('state')
-    print('path=', path, res_dict['verbose'])
-
-    if res_dict['code'] == 0:
-        extra_requests_args = {}
-        remoteurl = 'http://' + conf.VLC_WEB_DOMAIN + '/' + path
-        return pv.proxy_view(request, remoteurl, extra_requests_args)
-    else:
-        return HttpResponse(status=503)
-
-
 class TrackPlayView(LoginRequiredMixin, ListView):
 
     template_name = 'domeplaylist/track_list.html'
@@ -276,38 +253,74 @@ class TrackDeleteView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
         return HttpResponseRedirect(success_url)
 
 
+class TrackListViewRedirect(View):
+
+    def get(self, request, **kwargs):
+        pass
+
+        return HttpResponseRedirect(reverse_lazy('domeplaylist:proxy', kwargs={'path': self.kwargs['path']}))
+
+
+def proxyView(request, path):
+
+    from proxy import views as pv
+
+    res_dict = vr.vlc_func('state')
+    print('path=', path, res_dict['verbose'])
+
+    if res_dict['code'] == 0:
+        extra_requests_args = {}
+        remoteurl = 'http://' + conf.VLC_WEB_DOMAIN + '/' + path
+        return pv.proxy_view(request, remoteurl, extra_requests_args)
+    else:
+        return HttpResponse(status=503)
+
+
 class AjaxProcessStatus(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMixin, View):
     """handles only ajax requests"""
 
-    def post(self, request, *args, **kwargs):
-        if request.is_ajax():
-            if 'action' in request.POST and hasattr(self, request.POST['action']):
-                handler = getattr(self, request.POST['action'])
-                return handler(request)
-            else:
-                return HttpResponse('Action not provided or incorrect', status=400)
-        else:
-            return HttpResponse('Bad request', status=400)
+    system_state_dict = {}
 
     def get(self, request, *args, **kwargs):
 
         if request.is_ajax():
-        # if True:
-            # if 'action' in request.GET and hasattr(self, request.GET['action']):
-            #     handler = getattr(self, request.GET['action'])
-            #     return handler(request)
-            # else:
-            #     return HttpResponse('Action not provided or incorrect', status=400)
-            print('sdggsdfsd')
-            system_state_dict = {
-                'action': 'srfwefwe',
-                'vlc_proccess': 'srfafswefwe',
-                'vlc_server': 'srfafswefwe',
-            }
-            json_string = json.dumps(system_state_dict, indent=4)
+
+            ts = time.time()
+            # print('sdggsdfsd', ts)
+
+            self.system_state_dict.update({
+                'timestamp_request': ts,
+                'dpro_process': True,
+                'dpro_desktop': True,
+                'dpro_window': False,
+                'mosaic': False,
+                'pojectors_on': None,
+            })
+
+            if 'timestamp_vlc' in self.system_state_dict:
+                dt = self.system_state_dict['timestamp_request'] - self.system_state_dict['timestamp_vlc']
+                print( dt, 'erewerwerwerwer')
+                if dt > 20:
+                    self.get_vlc_state()
+            else:
+                self.get_vlc_state()
+
+            json_string = json.dumps(self.system_state_dict, indent=4)
 
             return HttpResponse(json_string, content_type="application/json")
 
         else:
             return HttpResponse('Bad request', status=400)
+
+    def get_vlc_state(self):
+
+        ts = time.time()
+        res_dict = vr.vlc_func('state')
+        self.system_state_dict.update({
+            'timestamp_vlc': ts,
+            'vlc_proccess': res_dict['vlc_state'],
+            'vlc_server': res_dict['vlc_server_state'],
+        })
+        return True
+
 

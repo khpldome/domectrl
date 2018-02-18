@@ -40,10 +40,7 @@ urlpatterns = [
 
     url(r'^no-access/$', views.NoAccessView.as_view(), name='no_access'),
 
-    # url(r'^proxy/(?P<url>.*)$', HttpProxy.as_view(base_url='http://:63933@127.0.0.1:8080')),
-    # url(r'^proxy/(?P<url>.*)/$', pv.proxy_view),
-
-    url(r'^proxy/(?P<path>.*)/$', views.myview, name='proxy'),
+     url(r'^proxy/(?P<path>.*)/$', views.proxyView, name='proxy'),
 
     url(r'^ajax-status/state.json$', views.AjaxProcessStatus.as_view(), name='ajax-status'),
 
