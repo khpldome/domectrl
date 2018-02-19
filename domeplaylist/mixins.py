@@ -80,7 +80,7 @@ class ModulePermissionMixin(object):
     myTrack = None
 
     def dispatch(self, request, *args, **kwargs):
-        print("module permission")
+        # print("module permission")
 
         if 'playlist_id' in kwargs:
             try:
