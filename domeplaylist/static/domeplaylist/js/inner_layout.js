@@ -61,7 +61,7 @@
                         status_calib.className = "status-calib disabled"
                     }
 
-                    if(mosaic_proc){
+                    if(mosaic){
                         mosaic_state.className = "icon-status-on"
                         status_mosaic.className = "status-mosaic"
                     }
