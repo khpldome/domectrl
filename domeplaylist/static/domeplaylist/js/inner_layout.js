@@ -1,6 +1,6 @@
 
     var moduleAPIUrl = window.location.host + '/ajax-status/state.json';
-    var vlc_proc = false;
+    // var vlc_proc = false;
 
     console.log(moduleAPIUrl);
 
@@ -16,12 +16,10 @@
                     $('.dynamic_state').empty();
                     $('#request_ts').append(data['request_ts']);
                     $('#vlc_ts').append(data['vlc_ts']);
-                    // $('#vlc_proc').append(data['vlc_proc'].toString());
                     $('#vlc_proc').append(data['vlc_proc']);
-                    // $('#vlc_server').append(data['vlc_server'].toString());
                     $('#vlc_server').append(data['vlc_server']);
                     // $('#dpro_ts').append(data['dpro_ts']);
-                    // $('#dpro_proc').append(data['dpro_proc'].toString());
+                    $('#dpro_proc').append(data['dpro_proc']);
                     // $('#dpro_desktop').append(data['dpro_desktop'].toString());
                     // $('#dpro_window').append(data['dpro_window'].toString());
                     // $('#mosaic_ts').append(data['mosaic_ts']);
@@ -29,7 +27,33 @@
                     // $('#pojectors_ts').append(data['pojectors_ts']);
                     // $('#pojectors').append(String(data['pojectors']));
 
-                    vlc_proc = data['vlc_proc'];
+                    var vlc_proc = data['vlc_proc'];
+                    var vlc_server = data['vlc_server'];
+                    var dpro_proc = data['dpro_proc'];
+
+                    var icon_status = document.getElementById("icon-status");
+                    var status_player = document.getElementById("status-player");
+                    var dpro_state = document.getElementById("dpro-state");
+                    var status_calib = document.getElementById("status-calib");
+
+                    if(vlc_proc){
+                        icon_status.className = "icon-status-on"
+                        if(vlc_server) {status_player.className = "status-player"}
+                        else{status_player.className = "status-player unknown"}
+                    }
+                    else{
+                        icon_status.className = "icon-status-off"
+                        status_player.className = "status-player disabled"
+                    }
+
+                    if(dpro_proc){
+                        dpro_state.className = "icon-status-on"
+                        status_calib.className = "status-calib"
+                    }
+                    else{
+                        dpro_state.className = "icon-status-off"
+                        status_calib.className = "status-calib disabled"
+                    }
 
                     setTimeout(updateSystemState, 1000);
                 },

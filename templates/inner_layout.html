@@ -21,36 +21,21 @@
         </div>
         <div class="status grid">
             <span class="icon-speed"></span>
-            <div class="status-project">
-                <span class="icon-status-on">Проекторы</span>
+            <div class="status-project disabled">
+                <span class="icon-status-off">Проекторы</span>
             </div>
-{#            {% if vlc_proc %}#}
-{#                {% if vlc_server %}#}
-{#                    <div class="status-player">#}
-{#                        <span class="icon-status-on">Плеер</span>#}
-{#                    </div>#}
-{#                {% else %}#}
-{#                    <div class="status-player unknown">#}
-{#                        <span class="icon-status-off">Плеер</span>#}
-{#                    </div>#}
-{#                {% endif %}#}
-{#            {% else %}#}
-{#                <div class="status-player disabled">#}
-{#                {{ vlc_proc }}#}
-{#                    <span class="icon-status-off">Плеер</span>#}
-{#                </div>#}
-{#            {% endif %}#}
-            <div class="status-player{% if vlc_proc %}{% if vlc_server %}{% endif %}{% else %} disabled{% endif %}">
-                <span class="icon-status-{% if vlc_proc %}{% if vlc_server %}on{% endif %}{% else %}off{% endif %}">Плеер</span>
+                <div id="status-player" class="status-player disabled">
+                    <span id="icon-status" class="icon-status-off">Плеер</span>
+                </div>
+{#            <div class="status-player{% if vlc_proc %}{% if vlc_server %}{% endif %}{% else %} disabled{% endif %}">#}
+{#                <span class="icon-status-{% if vlc_proc %}{% if vlc_server %}on{% endif %}{% else %}off{% endif %}">Плеер</span>#}
     {#            <span class="icon-status-on">Плеер</span>#}
-                {{ vlc_proc }}
-                {{ vlc_server }}
+{#            </div>#}
+            <div id="status-calib" class="status-calib disabled">
+                <span id="dpro-state" class="icon-status-off">Калибровки</span>
             </div>
-            <div class="status-calib disabled">
-                <span class="icon-status-off">Калибровки</span>
-            </div>
-            <div class="status-mosaic">
-                <span class="icon-status-on">Мозаика</span>
+            <div class="status-mosaic disabled">
+                <span class="icon-status-off">Мозаика</span>
             </div>
         </div>
         <div class="account">
@@ -91,9 +76,9 @@
     <script src="{% static 'domeplaylist/js/inner_layout.js' %}"></script>
 {#    <script src="{% static 'domeplaylist/js/vlc_web/ui.js' %}"></script>#}
 
-{#    $(document).ready(function () {#}
-
-{#                updateSystemState();#}
-{#    });#}
+{#    <script type="text/javascript">#}
+{#        $(document).ready(function () {#}
+{#        });#}
+{#    </script>#}
 
 {% endblock js_inner_layout %}
