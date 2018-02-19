@@ -22,19 +22,25 @@
                     $('#dpro_proc').append(data['dpro_proc']);
                     // $('#dpro_desktop').append(data['dpro_desktop'].toString());
                     // $('#dpro_window').append(data['dpro_window'].toString());
-                    // $('#mosaic_ts').append(data['mosaic_ts']);
-                    // $('#mosaic').append(data['mosaic'].toString());
+                    $('#mosaic_ts').append(data['mosaic_ts']);
+                    $('#mosaic').append(data['mosaic']);
                     // $('#pojectors_ts').append(data['pojectors_ts']);
                     // $('#pojectors').append(String(data['pojectors']));
 
                     var vlc_proc = data['vlc_proc'];
                     var vlc_server = data['vlc_server'];
                     var dpro_proc = data['dpro_proc'];
+                    var mosaic = data['mosaic'];
 
                     var icon_status = document.getElementById("icon-status");
                     var status_player = document.getElementById("status-player");
+
                     var dpro_state = document.getElementById("dpro-state");
                     var status_calib = document.getElementById("status-calib");
+
+                    var mosaic_state = document.getElementById("mosaic-state");
+                    var status_mosaic = document.getElementById("status-mosaic");
+
 
                     if(vlc_proc){
                         icon_status.className = "icon-status-on"
@@ -53,6 +59,15 @@
                     else{
                         dpro_state.className = "icon-status-off"
                         status_calib.className = "status-calib disabled"
+                    }
+
+                    if(mosaic_proc){
+                        mosaic_state.className = "icon-status-on"
+                        status_mosaic.className = "status-mosaic"
+                    }
+                    else{
+                        mosaic_state.className = "icon-status-off"
+                        status_mosaic.className = "status-mosaic disabled"
                     }
 
                     setTimeout(updateSystemState, 1000);
