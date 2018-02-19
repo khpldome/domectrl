@@ -20,6 +20,7 @@ from django.contrib import messages
 import utils.executor as ue
 from controlapp import vlc_routine as vr
 from controlapp import displaypro_routine as dr
+from controlapp import mosaic_surround as ms
 import time
 
 from django.conf import settings
@@ -300,6 +301,8 @@ class AjaxProcessStatus(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMi
 
             pm.update_dpro_state()
 
+            pm.update_mosaic_state()
+
             pm_dict = pm.get_process_monitor_dict()
             # print('pm_dict=', pm_dict)
 
@@ -323,6 +326,9 @@ class ProcessMonitor:
     dpro_proc = False
     dpro_desktop = False
     dpro_window = False
+
+    mosaic_ts = 0
+    mosaic = False
 
     def __init__(self, ts, info=''):
         self.request_ts = ts
@@ -388,6 +394,30 @@ class ProcessMonitor:
             return True
 
     # ---------------------------------------------
+    def get_mosaic_state(self):
+        self.mosaic_ts = time.time()
+
+        res_dict = dr.displaypro_func('state')
+        # res_str = ms.get_mosaic_surround_state()
+
+        self.mosaic = res_str
+
+    def update_mosaic_state(self):
+        dt = self.request_ts - self.mosaic_ts
+        if dt > 8:
+            print('$' * 80, dt, ' mosaic ', time.time())
+            self.get_mosaic_state()
+            return True
+        return False
+
+    def is_mosaic_active(self):
+        dt = self.request_ts - self.mosaic_ts
+        if dt > 10:
+            return False
+        else:
+            return True
+
+    # ---------------------------------------------
     def get_process_monitor_dict(self):
         self.process_monitor_dict.update({
             'vlc_ts': self.vlc_ts,
@@ -398,6 +428,9 @@ class ProcessMonitor:
             'dpro_proc': self.dpro_proc,
             'dpro_desktop': self.dpro_desktop,
             'dpro_window': self.dpro_window,
+
+            'mosaic_ts': self.mosaic_ts,
+            'mosaic': self.mosaic,
 
         })
         return self.process_monitor_dict
