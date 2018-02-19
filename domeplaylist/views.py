@@ -26,6 +26,9 @@ from django.conf import settings
 import domectrl.config_fds as conf
 
 
+
+
+
 class IndexView(View):
     def get(self, request):
         if request.user.is_authenticated:
@@ -280,53 +283,68 @@ def proxyView(request, path):
 class AjaxProcessStatus(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMixin, View):
     """handles only ajax requests"""
 
+    global pm
     system_state_dict = {}
 
     def get(self, request, *args, **kwargs):
 
         if request.is_ajax():
+        # if True:
 
             ts = time.time()
 
-            self.system_state_dict.update({
-                'request_ts': ts,
-                'mosaic_ts': False,
-                'mosaic': False,
-                'pojectors_ts': False,
-                'pojectors': None,
-            })
+            # self.system_state_dict.update({
+            #     'request_ts': ts,
+            #     'mosaic_ts': False,
+            #     'mosaic': False,
+            #     'pojectors_ts': False,
+            #     'pojectors': None,
+            # })
 
-            if 'vlc_ts' in self.system_state_dict:
-                dt = self.system_state_dict['request_ts'] - self.system_state_dict['vlc_ts']
+            # if 'vlc_ts' in self.system_state_dict:
+            #     dt = self.system_state_dict['request_ts'] - self.system_state_dict['vlc_ts']
+            #     if dt > 5:
+            #         self.get_vlc_state()
+            # else:
+            #     self.get_vlc_state()
+
+            pm.update_request_ts(ts)
+
+            pm_dict = pm.get_process_monitor_dict()
+            print('pm_dict=', pm_dict)
+
+            if 'vlc_ts' in pm_dict:
+                dt = pm_dict['request_ts'] - pm_dict['vlc_ts']
                 if dt > 5:
-                    self.get_vlc_state()
+                    pm.get_vlc_state()
             else:
-                self.get_vlc_state()
+                pm.get_vlc_state()
 
-            if 'dpro_ts' in self.system_state_dict:
-                dt = self.system_state_dict['request_ts'] - self.system_state_dict['dpro_ts']
-                if dt > 3:
-                    self.get_dpro_state()
-            else:
-                self.get_dpro_state()
+            # if 'dpro_ts' in self.system_state_dict:
+            #     dt = self.system_state_dict['request_ts'] - self.system_state_dict['dpro_ts']
+            #     if dt > 3:
+            #         self.get_dpro_state()
+            # else:
+            #     self.get_dpro_state()
 
-            json_string = json.dumps(self.system_state_dict, indent=4)
+            # json_string = json.dumps(self.system_state_dict, indent=4)
+            json_string = json.dumps(pm_dict, indent=4)
 
             return HttpResponse(json_string, content_type="application/json")
 
         else:
             return HttpResponse('Bad request', status=400)
 
-    def get_vlc_state(self):
-
-        ts = time.time()
-        res_dict = vr.vlc_func('state')
-        self.system_state_dict.update({
-            'vlc_ts': ts,
-            'vlc_proc': res_dict['proc_state'],
-            'vlc_server': res_dict['server_state'],
-        })
-        return True
+    # def get_vlc_state(self):
+    #
+    #     ts = time.time()
+    #     res_dict = vr.vlc_func('state')
+    #     self.system_state_dict.update({
+    #         'vlc_ts': ts,
+    #         'vlc_proc': res_dict['proc_state'],
+    #         'vlc_server': res_dict['server_state'],
+    #     })
+    #     return True
 
     def get_dpro_state(self):
 
@@ -338,4 +356,83 @@ class AjaxProcessStatus(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMi
             'dpro_window': res_dict['proc_state'],
         })
         return True
+
+
+class ProcessMonitor:
+
+    x = 0
+    process_monitor_dict = {}
+
+    vlc_ts = 0
+    vlc_proc = False
+    vlc_server = False
+
+    dpro_ts = 0
+    dpro_proc = False
+    dpro_desktop = False
+    dpro_window = False
+
+    def __init__(self, ts, info=''):
+        self.request_ts = ts
+        self.info = info
+
+    @staticmethod
+    def say_hi_static():
+        pass
+
+    def get_vlc_state(self):
+        ts = time.time()
+        res_dict = vr.vlc_func('state')
+        # self.system_state_dict.update({
+        #     'vlc_ts': ts,
+        #     'vlc_proc': res_dict['proc_state'],
+        #     'vlc_server': res_dict['server_state'],
+        # })
+        self.vlc_ts = ts
+        self.vlc_proc = res_dict['proc_state']
+        self.vlc_server = res_dict['server_state']
+
+        return True
+
+    def update_request_ts(self, ts):
+        self.process_monitor_dict.update({
+            'request_ts': ts,
+        })
+
+    def get_process_monitor_dict(self):
+        self.process_monitor_dict.update({
+            'vlc_ts': self.vlc_ts,
+            'vlc_proc': self.vlc_proc,
+            'vlc_server': self.vlc_server,
+        })
+        return self.process_monitor_dict
+
+    def __repr__(self):
+        return self.process_monitor_dict
+
+    def __str__(self):
+        return str(self.process_monitor_dict)
+
+
+pm = ProcessMonitor(ts=time.time())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
