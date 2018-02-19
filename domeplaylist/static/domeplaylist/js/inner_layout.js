@@ -12,11 +12,11 @@
                 console.log(data);
                 $('.dynamic_state').empty();
                 $('#vlc_ts').append(data['vlc_ts']);
-                $('#vlc_proccess').append(data['vlc_proccess'].toString());
+                $('#vlc_proc').append(data['vlc_proc'].toString());
                 $('#vlc_server').append(data['vlc_server'].toString());
                 $('#request_ts').append(data['request_ts']);
                 $('#dpro_ts').append(data['dpro_ts']);
-                $('#dpro_process').append(data['dpro_process'].toString());
+                $('#dpro_proc').append(data['dpro_proc'].toString());
                 $('#dpro_desktop').append(data['dpro_desktop'].toString());
                 $('#dpro_window').append(data['dpro_window'].toString());
                 $('#mosaic_ts').append(data['mosaic_ts']);

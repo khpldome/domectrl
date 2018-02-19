@@ -323,7 +323,7 @@ class AjaxProcessStatus(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMi
         res_dict = vr.vlc_func('state')
         self.system_state_dict.update({
             'vlc_ts': ts,
-            'vlc_proccess': res_dict['proc_state'],
+            'vlc_proc': res_dict['proc_state'],
             'vlc_server': res_dict['server_state'],
         })
         return True
@@ -333,7 +333,7 @@ class AjaxProcessStatus(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMi
         res_dict = dr.displaypro_func('state')
         self.system_state_dict.update({
             'dpro_ts': time.time(),
-            'dpro_process': res_dict['proc_state'],
+            'dpro_proc': res_dict['proc_state'],
             'dpro_desktop': res_dict['proc_state'],
             'dpro_window': res_dict['proc_state'],
         })

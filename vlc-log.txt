@@ -38,3 +38,5 @@ main: Запуск vlc с интерфейсом по умолчанию. Исп
 main: Запуск vlc с интерфейсом по умолчанию. Используйте 'cvlc' для запуска vlc без интерфейса.
 ﻿-- logger module started --
 ﻿-- logger module started --
+﻿-- logger module started --
+main: Запуск vlc с интерфейсом по умолчанию. Используйте 'cvlc' для запуска vlc без интерфейса.

@@ -24,13 +24,28 @@
             <div class="status-project">
                 <span class="icon-status-on">Проекторы</span>
             </div>
-            <div class="status-player{% if vlc_state %}{% if vlc_server_state %}{% endif %}{% else %} disabled{% endif %}">
-                <span class="icon-status-{% if vlc_state %}{% if vlc_server_state %}on{% endif %}{% else %}off{% endif %}">Плеер</span>
+            {% if vlc_proc %}
+                {% if vlc_server %}
+                    <div class="status-player">
+                        <span class="icon-status-on">Плеер</span>
+                    </div>
+                {% else %}
+                    <div class="status-player unknown">
+                        <span class="icon-status-off">Плеер</span>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="status-player disabled">
+                {{ vlc_proc }}
+                    <span class="icon-status-off">Плеер</span>
+                </div>
+            {% endif %}
+{#            <div class="status-player{% if vlc_proc %}{% if vlc_server %}{% endif %}{% else %} disabled{% endif %}">#}
+{#                <span class="icon-status-{% if vlc_proc %}{% if vlc_server %}on{% endif %}{% else %}off{% endif %}">Плеер</span>#}
     {#            <span class="icon-status-on">Плеер</span>#}
     {#            {{ vlc_state }}#}
     {#            {{ vlc_server_state }}#}
-
-            </div>
+{#            </div>#}
             <div class="status-calib disabled">
                 <span class="icon-status-off">Калибровки</span>
             </div>
