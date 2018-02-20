@@ -33,22 +33,6 @@ def mosaic_surround_func(action):
     return out_dict
 
 
-# def get_mosaic_surround_state():
-#
-#     # str_out, dict_code = mosaic_func('state')
-#     # print("dict_code", dict_code['grids'], dict_code['rows'], dict_code['cols'])
-#     #
-#     # if dict_code['grids'] == 0:
-#     #     return 'Fail'
-#     # else:
-#     #     if dict_code['rows'] == 1 and dict_code['cols'] == 1:
-#     #         return 'False'
-#     #     else:
-#     #         return 'True'
-#     out_dict = mosaic_func('state')
-#     return out_dict['verbose']
-
-
 def surround_func(action):
 
     str_out = ''
@@ -117,14 +101,6 @@ def mosaic_func(action):
     elif action == "stop":
         print("Stop mosaic")
 
-        # result = None
-        # for process in (process for process in psutil.process_iter() if process.name() == "chrome.exe"):
-        #     result = process.kill()
-        #
-        #
-        # str_out += 'Stoped chrome.exe\n'
-        # str_out += str(result) + '\n'
-
         out_dict = am.kill_processes(["chrome.exe", ])
         str_out += out_dict['str_out']
 
@@ -141,7 +117,7 @@ def mosaic_func(action):
 
     elif action == "restart":
         print("Restart mosaic")
-        # wt.Show()
+
         str_param = 'help'
 
     elif action == "state":
@@ -188,10 +164,9 @@ def parse_mosaic_xml(in_dict):
                     str_context += "EnableOneProjector"
                 if action == "stop":
                     str_context += "Уже мозаика разобрана"
-            # if action == "start" and grid_err == 'Output index 1 on GPU 0 is out of bounds':
 
-            if action == "start" and grid_err in ['Output index 1 on GPU 0 is out of bounds',
-                                                  'Output index 2 on GPU 0 is out of bounds', ]:
+            # if action == "start" and grid_err == 'Output index 1 on GPU 0 is out of bounds':
+            if action == "start" and 'Output index' in grid_err and 'is out of bounds' in grid_err:
                 str_context += "Включите проекторы"
             if action == "stop" and grid_err == 'No connected outputs found':
                 str_context += "Невозможно разобрать мозаику"
@@ -199,17 +174,15 @@ def parse_mosaic_xml(in_dict):
         else:
             str_context += xml_out
 
-            dict_code = {}
             if action == "state":
                 grids = doc_dict['query']['grids']
                 if grids is None:
-                    str_context += "Projectors disabled"
-                    # dict_code.update({'grids': 0})
-                    code = -1
-                    str_context += 'Fail'
+                    str_context += "\nProjectors disabled (видеовыходы не активны) "
+                    code = -2
+                    str_context += '\nFail'
                 else:
-                    rows = 0
-                    cols = 0
+                    rows = ''
+                    cols = ''
                     if isinstance(doc_dict['query']['grids']['grid'], list):
                         rows = doc_dict['query']['grids']['grid'][0]['@rows']
                         cols = doc_dict['query']['grids']['grid'][0]['@columns']
@@ -217,28 +190,18 @@ def parse_mosaic_xml(in_dict):
                         rows = doc_dict['query']['grids']['grid']['@rows']
                         cols = doc_dict['query']['grids']['grid']['@columns']
 
-                    # dict_code.update({'grids': grids})
-                    # dict_code.update({'rows': int(rows), 'cols': int(cols)})
-
-                    #**********************************************
-                    # str_out, dict_code = mosaic_func('state')
-                    # print("dict_code", dict_code['grids'], dict_code['rows'], dict_code['cols'])
-
-                    if rows == 1 and cols == 1:
-                        # return 'False'
-                        code = -2
-                        str_context += 'False'
+                    if rows == '1' and cols == '1':
+                        code = -1
+                        str_context += '\nFalse'
                     else:
-                        # return 'True'
                         code = 0
-                        str_context += 'True'
+                        str_context += '\nTrue'
 
     out_dict.update({'code': code,
                      'verbose': str_context,
                      'proc_state': True,
                      'server_state': False})
 
-    # return str_out, dict_code
     return out_dict
 
 

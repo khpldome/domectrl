@@ -373,7 +373,6 @@ class ProcessMonitor:
         self.dpro_ts = time.time()
 
         res_dict = dr.displaypro_func('state')
-
         self.dpro_proc = res_dict['proc_state']
         self.dpro_desktop = res_dict['proc_state']
         self.dpro_window = res_dict['proc_state']
@@ -397,10 +396,8 @@ class ProcessMonitor:
     def get_mosaic_state(self):
         self.mosaic_ts = time.time()
 
-        res_dict = vr.vlc_func('state')
-        # res_str = ms.get_mosaic_surround_state()
-
-        self.mosaic = res_dict['proc_state']
+        res_dict = ms.mosaic_func('state')
+        self.mosaic = res_dict['code']
 
     def update_mosaic_state(self):
         dt = self.request_ts - self.mosaic_ts
