@@ -12,7 +12,7 @@
             success:
                 function (data, status, jqXHR)
                 {
-                    console.log(data);
+                    // console.log(data);
                     $('.dynamic_state').empty();
                     $('#request_ts').append(data['request_ts']);
                     $('#vlc_ts').append(data['vlc_ts']);
@@ -60,12 +60,28 @@
                     }
 
                     var status_mosaic = $('.mosaic');
-                    if(mosaic){
-                        status_mosaic.removeClass('disabled');
+                    switch (mosaic) {
+                        case 0:
+                            status_player.removeClass('disabled');
+                            break;
+                        case -1:
+                            status_mosaic.not('.disabled').addClass('disabled');
+                            status_mosaic.removeClass('unknown');
+                            break;
+                        case -2:
+                            status_mosaic.addClass('unknown');
+                            break;
+                        default:
+                            break;
                     }
-                    else{
-                        status_mosaic.not('disabled').addClass('disabled')
-                    }
+
+                    // var status_mosaic = $('.mosaic');
+                    // if(mosaic ){
+                    //     status_mosaic.removeClass('disabled');
+                    // }
+                    // else{
+                    //     status_mosaic.not('disabled').addClass('disabled')
+                    // }
 
                     setTimeout(updateSystemState, 1000);
                 },
