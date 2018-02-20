@@ -59,7 +59,7 @@
                         status_calib.not('disabled').addClass('disabled')
                     }
 
-                    var status_mosaic = $('.mosaic');
+                    var status_mosaic = $('.status-mosaic');
                     switch (mosaic) {
                         case 0:
                             status_mosaic.removeClass('disabled');
