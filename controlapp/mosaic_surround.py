@@ -15,6 +15,7 @@ import pprint
 from json import loads, dumps
 
 from controlapp import app_const as c
+from controlapp import auto_manager as am
 
 
 def to_dict(input_ordered_dict):
@@ -23,28 +24,13 @@ def to_dict(input_ordered_dict):
 
 def mosaic_surround_func(action):
 
-    str_out = ''
-    dict_code = {}
+    out_dict = {}
     if conf.VIDEO_CARD_NAME == 'NVS 810':
-        str_out, dict_code = mosaic_func(action)
+        out_dict = mosaic_func(action)
     elif conf.VIDEO_CARD_NAME == 'GTX 1070':
-        str_out, dict_code = surround_func(action)
+        out_dict = surround_func(action)
 
-    return str_out, dict_code
-
-
-def get_mosaic_surround_state():
-
-    str_out, dict_code = mosaic_func('state')
-    print("dict_code", dict_code['grids'], dict_code['rows'], dict_code['cols'])
-
-    if dict_code['grids'] == 0:
-        return 'Fail'
-    else:
-        if dict_code['rows'] == 1 and dict_code['cols'] == 1:
-            return 'False'
-        else:
-            return 'True'
+    return out_dict
 
 
 def surround_func(action):
@@ -53,7 +39,8 @@ def surround_func(action):
     dict_code = {}
 
     # str_out, dict_code = mosaic_func('State')
-    state = get_mosaic_surround_state()
+    # state = get_mosaic_surround_state()
+    state = mosaic_func('state')['verbose']
     str_out += state
     print("Start surround", state)
 
@@ -91,18 +78,15 @@ def mosaic_func(action):
 
     configureMosaic_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\Mosaic\configureMosaic-32bit-64bit.exe '
 
-    str_param = ''
+    code = None
     str_out = ''
     xml_out = ''
-    dict_code = {}
+
+    out_dict = {}
+
     if action == "start":
         print("Start mosaic")
-        # str_param = 'set cols=1 rows=2 res=1280,720,60 out=0,0 out=0,1'
         str_param = 'set cols=2 rows=4 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2 out=1,3'
-        # str_param = 'set rows=1 cols=7 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2'
-        # output_dict = ue.execute_command(configureMosaic_exe + str_param)
-        # str_out += output_str_xml[1]
-        # xml_out = output_str_xml[0]
         output_dict = ue.execute_command(configureMosaic_exe + str_param)
         # print('output_dict=', output_dict)
         if output_dict['code'] == c.SUCCESS:
@@ -112,15 +96,13 @@ def mosaic_func(action):
             print('str_err=', output_dict['str_err'])
             xml_out = output_dict['str_err']
 
+        code = output_dict['code']
+
     elif action == "stop":
         print("Stop mosaic")
 
-        result = None
-        for process in (process for process in psutil.process_iter() if process.name() == "chrome.exe"):
-            result = process.kill()
-
-        str_out += 'Stoped chrome.exe\n'
-        str_out += str(result) + '\n'
+        out_dict = am.kill_processes(["chrome.exe", ])
+        str_out += out_dict['str_out']
 
         str_param = 'disable'
         output_dict = ue.execute_command(configureMosaic_exe + str_param)
@@ -131,9 +113,11 @@ def mosaic_func(action):
             print('str_err=', output_dict['str_err'])
             xml_out = output_dict['str_err']
 
+        code = output_dict['code']
+
     elif action == "restart":
         print("Restart mosaic")
-        # wt.Show()
+
         str_param = 'help'
 
     elif action == "state":
@@ -143,11 +127,29 @@ def mosaic_func(action):
         print('output_dict=', output_dict)
         xml_out = output_dict['output']
 
-    ####################################################################################################################
+        code = output_dict['code']
+
+    out_dict.update({'code': code,
+                     'str_out': str_out,
+                     'xml_out': xml_out,
+                     'action': action,
+                     })
+
+    return parse_mosaic_xml(out_dict)
+
+
+####################################################################################################################
+def parse_mosaic_xml(in_dict):
+
+    out_dict = {}
+    code = None
+    str_context = ''
+    action = in_dict['action']
+    xml_out = in_dict['xml_out']
 
     if action == "restart":  # Temporary!
         print("mosaic help")
-        str_out = xml_out
+        str_context = xml_out
 
     else:
         odered_dict = xmltodict.parse(xml_out)  # Parse the read document string
@@ -156,27 +158,31 @@ def mosaic_func(action):
 
         if 'error' in doc_dict:
             grid_err = doc_dict['error']['#text']
-            str_out += '\n' + grid_err + '\n'
+            str_context += '\n' + grid_err + '\n'
             if grid_err == 'NvAPI_Mosaic_SetDisplayGrids failed: NVAPI_ERROR':
                 if action == "start":
-                    str_out += "EnableOneProjector"
+                    str_context += "EnableOneProjector"
                 if action == "stop":
-                    str_out += "Уже мозаика разобрана"
-            if action == "start" and grid_err == 'Output index 2 on GPU 0 is out of bounds':
-                str_out += "Включите проекторы"
+                    str_context += "Уже мозаика разобрана"
+
+            # if action == "start" and grid_err == 'Output index 1 on GPU 0 is out of bounds':
+            if action == "start" and 'Output index' in grid_err and 'is out of bounds' in grid_err:
+                str_context += "Включите проекторы"
             if action == "stop" and grid_err == 'No connected outputs found':
-                str_out += "Невозможно разобрать мозаику"
+                str_context += "Невозможно разобрать мозаику"
+            code = -1
         else:
-            str_out += xml_out
+            str_context += xml_out
 
-            dict_code = {}
             if action == "state":
-
                 grids = doc_dict['query']['grids']
                 if grids is None:
-                    str_out += "Projectors disabled"
-                    dict_code.update({'grids': 0})
+                    str_context += "\nProjectors disabled (видеовыходы не активны) "
+                    code = -2
+                    str_context += '\nFail'
                 else:
+                    rows = ''
+                    cols = ''
                     if isinstance(doc_dict['query']['grids']['grid'], list):
                         rows = doc_dict['query']['grids']['grid'][0]['@rows']
                         cols = doc_dict['query']['grids']['grid'][0]['@columns']
@@ -184,16 +190,18 @@ def mosaic_func(action):
                         rows = doc_dict['query']['grids']['grid']['@rows']
                         cols = doc_dict['query']['grids']['grid']['@columns']
 
-                    dict_code.update({'grids': 1})
-                    dict_code.update({'rows': int(rows), 'cols': int(cols)})
+                    if rows == '1' and cols == '1':
+                        code = -1
+                        str_context += '\nFalse'
+                    else:
+                        code = 0
+                        str_context += '\nTrue'
 
-                    # if rows == "1" and cols == "8":
-                    #     str_out += "Mosaic enabled"
-                    #     dict_code = "Mosaic enabled"
-                    # elif rows == "1" and cols == "1":
-                    #     str_out += "Mosaic disabled"
-                    #     dict_code = "Mosaic enabled"
+    out_dict.update({'code': code,
+                     'verbose': str_context,
+                     'proc_state': True,
+                     'server_state': False})
 
-    return str_out, dict_code
+    return out_dict
 
 

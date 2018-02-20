@@ -157,7 +157,7 @@ def _normalize_duration(in_str):
 
 
 def _normalize_bit_rate(in_str):
-
+    str_out = ''
     bit_rate_int = int(in_str)
     if bit_rate_int < 1000:
         str_out = str(bit_rate_int) + ' b/s'
