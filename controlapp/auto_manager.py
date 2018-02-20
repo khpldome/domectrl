@@ -38,6 +38,20 @@ def check_process_state(process_name):
     return process_dict
 
 
+##################################################################################
+def kill_processes(process_list):
+    process_dict = {}
+
+    str_out = ''
+    for process in psutil.process_iter():
+        if process.name() in process_list:
+            str_out += '\nKilled ' + process.name() + ' pid: ' + str(process.pid)
+            process.kill()
+
+    process_dict.update({'str_out': str_out})
+    return process_dict
+
+
 def base_func(action):
     str_out = ''
 
@@ -90,7 +104,11 @@ def base_func_Kyiv(action):
         str_out += '\n Initial state= ' + mr.mosaic_surround_func('start')[0]
 
         for i in range(10):
-            state = mr.get_mosaic_surround_state()
+            # state = mr.get_mosaic_surround_state()
+            # out_dict = mr.mosaic_func('state')
+            # state = out_dict['verbose']
+            state = mr.mosaic_func('state')['verbose']
+
             if state == 'True':
                 str_out += '\n' + dr.displaypro_func('start')
                 str_out += '\n' + vr.vlc_func('start')
@@ -128,8 +146,10 @@ def base_func_Kyiv(action):
     return str_out
 
 
+if __name__ == "__main__":
 
-
-
+    # res_dict = kill_processes(['chrome.exe', 'ImmersiveDisplayPro.exe', 'vlc.exe'])
+    res_dict = kill_processes(['chrome.exe'])
+    print(res_dict)
 
 

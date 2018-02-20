@@ -33,10 +33,10 @@ class MosaicSurroundActionView(TemplateView):
             action = kwargs['action']
             print("action=", action)
 
-            text_output = mr.mosaic_surround_func(action)[0]
+            str_context = mr.mosaic_surround_func(action)['verbose']
 
         context.update({
-            "data_context": text_output,
+            "data_context": str_context,
         })
         return context
 
