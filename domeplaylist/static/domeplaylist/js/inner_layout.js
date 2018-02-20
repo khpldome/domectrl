@@ -62,14 +62,15 @@
                     var status_mosaic = $('.mosaic');
                     switch (mosaic) {
                         case 0:
-                            status_player.removeClass('disabled');
+                            status_mosaic.removeClass('disabled');
                             break;
                         case -1:
                             status_mosaic.not('.disabled').addClass('disabled');
                             status_mosaic.removeClass('unknown');
                             break;
                         case -2:
-                            status_mosaic.addClass('unknown');
+                            status_mosaic.not('.unknown').addClass('unknown');
+                            status_mosaic.removeClass('disabled');
                             break;
                         default:
                             break;
