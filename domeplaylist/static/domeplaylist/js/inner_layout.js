@@ -40,42 +40,31 @@
                     var mosaic_state = document.getElementById("mosaic-state");
                     var status_mosaic = document.getElementById("status-mosaic");
                     
-                    var sPlayer = $('.status-player');
+                    var status_player = $('.status-player');
                     if (vlc_proc) {
-                        sPlayer.removeClass('disabled');
+                        status_player.removeClass('disabled');
                         if (!vlc_server) {
-                            sPlayer.addClass('unknown');
+                            status_player.addClass('unknown');
                         }
                     } else {
-                        sPlayer.not('.disabled').addClass('disabled');
+                        status_player.not('.disabled').addClass('disabled');
+                        status_player.removeClass('unknown');
                     }
 
-                    // if(vlc_proc){
-                    //     icon_status.className = "icon-status-on"
-                    //     if(vlc_server) {status_player.className = "status-player"}
-                    //     else{status_player.className = "status-player unknown"}
-                    // }
-                    // else{
-                    //     icon_status.className = "icon-status-off";
-                    //     status_player.className = "status-player disabled"
-                    // }
-
+                    var status_calib = $('.status-calib');
                     if(dpro_proc){
-                        dpro_state.className = "icon-status-on";
-                        status_calib.className = "status-calib"
+                        status_calib.removeClass('disabled');
                     }
                     else{
-                        dpro_state.className = "icon-status-off";
-                        status_calib.className = "status-calib disabled"
+                        status_calib.not('disabled').addClass('disabled')
                     }
 
+                    var status_mosaic = $('.mosaic');
                     if(mosaic){
-                        mosaic_state.className = "icon-status-on";
-                        status_mosaic.className = "status-mosaic"
+                        status_mosaic.removeClass('disabled');
                     }
                     else{
-                        mosaic_state.className = "icon-status-off";
-                        status_mosaic.className = "status-mosaic disabled"
+                        status_mosaic.not('disabled').addClass('disabled')
                     }
 
                     setTimeout(updateSystemState, 1000);
