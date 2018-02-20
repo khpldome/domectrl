@@ -1,9 +1,13 @@
-
-    <form action="" id="study-module-form" method="post" enctype="multipart/form-data" onsubmit="return pageFormSubmit()">
-    {% csrf_token %}
-
-    <div class="row">
-        <div class="col-md-8">
+<div class="container grid">
+    <div class="logo">
+        <img src="/static/img/logo.svg" width="100%" height="100%" alt="firefly">
+    </div>
+    <div class="header flex">
+        <h1>Create New Playlist</h1>
+    </div>
+    <div class="form_container">
+        <form action="" id="study-module-form" method="post" enctype="multipart/form-data" onsubmit="return pageFormSubmit()">
+            {% csrf_token %}
             <div class="form-errors">
                 {% for error in form.non_field_errors %}
                     <p class="form-error-list">{{ error }}</p>
@@ -12,65 +16,22 @@
             <div class="form-group">
                 {{ form.name.errors }}
                 {{ form.name.label_tag }}
-                {#        {{ form.name }}#}
-                <div class="flex-row">
-                    {{ form.title }}
-{#                    <button class="butt js--triggerAnimation" onclick="responsiveVoice.speak($('#id_name').val(), 'US English Male');"#}
-{#                            type="button" value="Play">#}
-{#                        <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>#}
-{#                    </button>#}
-                </div>
+                {{ form.title }}
             </div>
-
-            <div class="form-group flex text-img-block">
-                <div class="ckeditor-wraper">
-                    {{ form.theme.errors }}
-                    {{ form.theme.label_tag }}
-                    {{ form.theme }}
-                </div>
+            <div class="form-group">
+                {{ form.theme.errors }}
+                {{ form.theme.label_tag }}
+                {{ form.theme }}
             </div>
-
-{#            <div class="form-group">#}
-{#                {{ form.category.errors }}#}
-{#                {{ form.category.label_tag }}#}
-{#                {{ form.category }}#}
-{#            </div>#}
-{##}
-{#            <div class="form-group">#}
-{#                {{ form.isbn.errors }}#}
-{#                {{ form.isbn.label_tag }}#}
-{#                {{ form.isbn }}#}
-{#            </div>#}
-
-
-            <div class="align-right">
+            <div class="form-group">
                 {% if submit_btn_name %}
                     <button type="submit" class="btn btn-info" name="btn_create_save_changes">{{ submit_btn_name }}</button>
                 {% else %}
-                    <button type="submit" class="btn btn-info" name="btn_create_save_changes">Create</button>
+                    <a href="#" onclick="document.getElementById('study-module-form').submit()" class="form-button" tabindex="3">
+                        <span>Create</span>
+                    </a>
                 {% endif %}
             </div>
-        </div>
-
-{#        <div class="col-md-4">#}
-{#            <div class="fileinput mt15 {% if form.instance.image %} fileinput-exists {% else %} fileinput-new {% endif %}"#}
-{#                 data-provides="fileinput">#}
-{#                <div class="fileinput-preview-wrapper">#}
-{#                    <p>Click to upload an image.<br><br>Images will be displayed 150px by 120px.</p>#}
-{#                    <div class="fileinput-preview thumbnail" data-trigger="fileinput">#}
-{#                        {% if form.instance.image %}#}
-{#                            <img id="initial-img" src="{{ form.instance.image.url }}"#}
-{#                                 alt="" style="vertical-align: middle;">#}
-{#                        {% endif %}#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div>#}
-{#                <span class="btn btn-default btn-file" style="display:none">#}
-{#                    {{ form.image }}#}
-{#                </span>#}
-{#                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
+        </form>
     </div>
-</form>
+</div>

@@ -31,42 +31,50 @@
                     var vlc_server = data['vlc_server'];
                     var dpro_proc = data['dpro_proc'];
                     var mosaic = data['mosaic'];
-
-                    var icon_status = document.getElementById("icon-status");
-                    var status_player = document.getElementById("status-player");
+                    // var icon_status = document.getElementById("icon-status");
+                    // var status_player = document.getElementById("status-player");
 
                     var dpro_state = document.getElementById("dpro-state");
                     var status_calib = document.getElementById("status-calib");
-
+                    // $('.status-calib').addClass('disabled')
                     var mosaic_state = document.getElementById("mosaic-state");
                     var status_mosaic = document.getElementById("status-mosaic");
-
-
-                    if(vlc_proc){
-                        icon_status.className = "icon-status-on"
-                        if(vlc_server) {status_player.className = "status-player"}
-                        else{status_player.className = "status-player unknown"}
+                    
+                    var sPlayer = $('.status-player');
+                    if (vlc_proc) {
+                        sPlayer.removeClass('disabled');
+                        if (!vlc_server) {
+                            sPlayer.addClass('unknown');
+                        }
+                    } else {
+                        sPlayer.not('.disabled').addClass('disabled');
                     }
-                    else{
-                        icon_status.className = "icon-status-off"
-                        status_player.className = "status-player disabled"
-                    }
+
+                    // if(vlc_proc){
+                    //     icon_status.className = "icon-status-on"
+                    //     if(vlc_server) {status_player.className = "status-player"}
+                    //     else{status_player.className = "status-player unknown"}
+                    // }
+                    // else{
+                    //     icon_status.className = "icon-status-off";
+                    //     status_player.className = "status-player disabled"
+                    // }
 
                     if(dpro_proc){
-                        dpro_state.className = "icon-status-on"
+                        dpro_state.className = "icon-status-on";
                         status_calib.className = "status-calib"
                     }
                     else{
-                        dpro_state.className = "icon-status-off"
+                        dpro_state.className = "icon-status-off";
                         status_calib.className = "status-calib disabled"
                     }
 
                     if(mosaic){
-                        mosaic_state.className = "icon-status-on"
+                        mosaic_state.className = "icon-status-on";
                         status_mosaic.className = "status-mosaic"
                     }
                     else{
-                        mosaic_state.className = "icon-status-off"
+                        mosaic_state.className = "icon-status-off";
                         status_mosaic.className = "status-mosaic disabled"
                     }
 

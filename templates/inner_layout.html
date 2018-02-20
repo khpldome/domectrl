@@ -23,28 +23,36 @@
             <span class="icon-speed"></span>
             <div class="status-project disabled">
                 <span class="icon-status-off">Проекторы</span>
+                <span class="icon-status-on">Проекторы</span>
+                <span class="icon-status-wtf">Проекторы</span>
             </div>
                 <div id="status-player" class="status-player disabled">
                     <span id="icon-status" class="icon-status-off">Плеер</span>
+                    <span id="icon-status" class="icon-status-on">Плеер</span>
+                    <span id="icon-status" class="icon-status-wtf">Плеер</span>
                 </div>
 {#            <div class="status-player{% if vlc_proc %}{% if vlc_server %}{% endif %}{% else %} disabled{% endif %}">#}
 {#                <span class="icon-status-{% if vlc_proc %}{% if vlc_server %}on{% endif %}{% else %}off{% endif %}">Плеер</span>#}
     {#            <span class="icon-status-on">Плеер</span>#}
 {#            </div>#}
             <div id="status-calib" class="status-calib disabled">
-                <span id="dpro-state" class="icon-status-off">Калибровки</span>
+                <span class="icon-status-off">Калибровки</span>
+                <span class="icon-status-on">Калибровки</span>
+                <span class="icon-status-wtf">Калибровки</span>
             </div>
             <div id="status-mosaic" class="status-mosaic disabled">
                 <span id="mosaic-state" class="icon-status-off">Мозаика</span>
+                <span id="mosaic-state" class="icon-status-on">Мозаика</span>
+                <span id="mosaic-state" class="icon-status-wtf">Мозаика</span>
             </div>
         </div>
         <div class="account">
             <div class="account-detail flex">
                 {% if user.is_authenticated %}
+                    <a href="{% url 'domeuser:account' %}">{{ user.email }}</a>
                     <a href="{% url 'domeuser:sign_out' %}">
                         <span class="icon icon-log"></span>
                     </a>
-                    <a href="{% url 'domeuser:account' %}">{{ user.email }}</a>
                 {% else %}
                     <li><a href="{% url 'domeuser:sign_in' %}">Login</a></li>
                 {% endif %}
