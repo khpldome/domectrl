@@ -108,7 +108,7 @@ def mosaic_func(action):
 
         out_dict = am.kill_processes(["chrome.exe", ])
         str_out += out_dict['str_out']
-        out_dict = am.kill_processes(["vlc.exe", ])
+        out_dict = am.kill_processes(["vlc.exe", dr.PROCESS_NAME])
         str_out += out_dict['str_out']
 
         str_param = 'disable'
