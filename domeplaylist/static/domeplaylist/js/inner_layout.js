@@ -45,6 +45,7 @@
                     var status_player = $('.status-player');
                     if (vlc_proc) {
                         status_player.removeClass('disabled');
+                        status_player.removeClass('unknown');
                         if (!vlc_server) {
                             status_player.addClass('unknown');
                         }
@@ -56,6 +57,8 @@
                     var status_calib = $('.status-calib');
                     if(dpro_proc){
                         status_calib.removeClass('disabled');
+                        status_calib.removeClass('unknown');
+
                         if (dpro_collision < 0) {
                             status_calib.addClass('unknown');
                         }
