@@ -9,8 +9,6 @@ pag.FAILSAFE = False  # disables the fail-safe
 import domectrl.config_fds as conf
 import utils.executor as ue
 import xmltodict
-import qweqweq.winapi_test as wt
-import psutil
 import pprint
 from json import loads, dumps
 
