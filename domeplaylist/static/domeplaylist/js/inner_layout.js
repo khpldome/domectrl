@@ -18,10 +18,11 @@
                     $('#vlc_ts').append(data['vlc_ts']);
                     $('#vlc_proc').append(data['vlc_proc']);
                     $('#vlc_server').append(data['vlc_server']);
-                    // $('#dpro_ts').append(data['dpro_ts']);
+                    $('#dpro_ts').append(data['dpro_ts']);
                     $('#dpro_proc').append(data['dpro_proc']);
                     // $('#dpro_desktop').append(data['dpro_desktop'].toString());
                     // $('#dpro_window').append(data['dpro_window'].toString());
+                    $('#dpro_collision').append(data['dpro_collision']);
                     $('#mosaic_ts').append(data['mosaic_ts']);
                     $('#mosaic').append(data['mosaic']);
                     // $('#pojectors_ts').append(data['pojectors_ts']);
@@ -29,6 +30,7 @@
 
                     var vlc_proc = data['vlc_proc'];
                     var vlc_server = data['vlc_server'];
+                    var dpro_collision = data['dpro_collision'];
                     var dpro_proc = data['dpro_proc'];
                     var mosaic = data['mosaic'];
                     // var icon_status = document.getElementById("icon-status");
@@ -54,9 +56,13 @@
                     var status_calib = $('.status-calib');
                     if(dpro_proc){
                         status_calib.removeClass('disabled');
+                        if (!dpro_collision) {
+                            status_calib.addClass('unknown');
+                        }
                     }
                     else{
                         status_calib.not('disabled').addClass('disabled')
+                        status_calib.removeClass('unknown');
                     }
 
                     var status_mosaic = $('.status-mosaic');
@@ -69,7 +75,7 @@
                             status_mosaic.removeClass('unknown');
                             break;
                         case -2:
-                            status_mosaic.not('.unknown').addClass('unknown');
+                            status_mosaic.addClass('unknown');
                             status_mosaic.removeClass('disabled');
                             break;
                         default:
