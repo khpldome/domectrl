@@ -28,8 +28,6 @@ import domectrl.config_fds as conf
 
 
 
-
-
 class IndexView(View):
     def get(self, request):
         if request.user.is_authenticated:
@@ -272,13 +270,13 @@ def proxyView(request, path):
 
     global pm
 
-    pm.update_request_ts()
+    # pm.update_request_ts()
     pm.update_vlc_state()
 
     if pm.is_vlc_active() is True:
         extra_requests_args = {}
-        remoteurl = 'http://' + conf.VLC_WEB_DOMAIN + '/' + path
-        return pv.proxy_view(request, remoteurl, extra_requests_args)
+        vlc_server_url = 'http://' + conf.VLC_WEB_DOMAIN + '/' + path
+        return pv.proxy_view(request, vlc_server_url, extra_requests_args)
     else:
         return HttpResponse(status=503)
 
@@ -292,9 +290,8 @@ class AjaxProcessStatus(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMi
     def get(self, request, *args, **kwargs):
 
         if request.is_ajax():
-        # if True:
 
-            pm.update_request_ts()
+            # pm.update_request_ts()
 
             pm.update_vlc_state()
 
@@ -302,10 +299,7 @@ class AjaxProcessStatus(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMi
 
             pm.update_mosaic_state()
 
-            pm_dict = pm.get_process_monitor_dict()
-            # print('pm_dict=', pm_dict)
-
-            json_string = json.dumps(pm_dict, indent=4)
+            json_string = pm.get_process_monitor_json()
 
             return HttpResponse(json_string, content_type="application/json")
 
@@ -354,6 +348,7 @@ class ProcessMonitor:
         self.vlc_server = res_dict['server_state']
 
     def update_vlc_state(self):
+        self.request_ts = time.time()
         dt = self.request_ts - self.vlc_ts
         if dt > 5:
             # print('$' * 80, dt, ' vlc ', time.time())
@@ -383,6 +378,7 @@ class ProcessMonitor:
             self.dpro_collision = 0
 
     def update_dpro_state(self):
+        # self.request_ts = time.time()
         dt = self.request_ts - self.dpro_ts
         if dt > 7:
             # print('$' * 80, dt, ' dpro ', time.time())
@@ -404,6 +400,7 @@ class ProcessMonitor:
         self.mosaic = res_dict['code']
 
     def update_mosaic_state(self):
+        # self.request_ts = time.time()
         dt = self.request_ts - self.mosaic_ts
         if dt > 8:
             # print('$' * 80, dt, ' mosaic ', time.time())
@@ -419,7 +416,7 @@ class ProcessMonitor:
     #         return True
 
     # ---------------------------------------------
-    def get_process_monitor_dict(self):
+    def get_process_monitor_json(self):
         self.process_monitor_dict.update({
 
             'request_ts': self.request_ts,
@@ -437,7 +434,7 @@ class ProcessMonitor:
             'mosaic_ts': self.mosaic_ts,
             'mosaic': self.mosaic,
         })
-        return self.process_monitor_dict
+        return json.dumps(self.process_monitor_dict, indent=4)
 
     def __repr__(self):
         return self.process_monitor_dict

@@ -14,6 +14,7 @@ from json import loads, dumps
 
 from controlapp import app_const as c
 from controlapp import auto_manager as am
+from controlapp import displaypro_routine as dr
 
 
 def to_dict(input_ordered_dict):
@@ -84,6 +85,12 @@ def mosaic_func(action):
 
     if action == "start":
         print("Start mosaic")
+
+        out_dict = am.kill_processes(["chrome.exe", ])
+        str_out += out_dict['str_out']
+        out_dict = am.kill_processes(["vlc.exe", dr.PROCESS_NAME])
+        str_out += out_dict['str_out']
+
         str_param = 'set cols=2 rows=4 res=1280,768,60 out=0,0 out=0,1 out=0,2 out=0,3 out=1,0 out=1,1 out=1,2 out=1,3'
         output_dict = ue.execute_command(configureMosaic_exe + str_param)
         # print('output_dict=', output_dict)
@@ -100,6 +107,8 @@ def mosaic_func(action):
         print("Stop mosaic")
 
         out_dict = am.kill_processes(["chrome.exe", ])
+        str_out += out_dict['str_out']
+        out_dict = am.kill_processes(["vlc.exe", ])
         str_out += out_dict['str_out']
 
         str_param = 'disable'
