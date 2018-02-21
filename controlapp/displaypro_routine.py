@@ -48,7 +48,8 @@ def displaypro_func(action, param=''):
                 str_out = str(res_dict['code']) + ' / ' + str(res_dict['pid'])
                 # time.sleep(2)
                 out_dict.update({'code': 0,
-                                 'verbose': str_out})
+                                 'verbose': str_out,
+                                 })
             else:
                 str_out = 'displaypro is running'
                 out_dict.update({'code': 1,
@@ -75,6 +76,7 @@ def displaypro_func(action, param=''):
                 'code': 1,
                 'verbose': str_context,
                 'proc_state': True,
+                'created_at': proc_dpro_dict['created_at']
             })
         else:
             str_context = 'State: not started'

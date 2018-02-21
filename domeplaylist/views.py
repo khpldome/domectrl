@@ -277,6 +277,7 @@ def proxyView(request, path):
 
     if pm.is_vlc_active() is True:
 
+        print('pm.is_vlc_active() is True')
         extra_requests_args = {}
         remoteurl = 'http://' + conf.VLC_WEB_DOMAIN + '/' + path
         return pv.proxy_view(request, remoteurl, extra_requests_args)
@@ -319,13 +320,16 @@ class ProcessMonitor:
     process_monitor_dict = {}
 
     vlc_ts = 0
+    vlc_created_at = 0
     vlc_proc = False
     vlc_server = False
 
     dpro_ts = 0
+    dpro_created_at = 0
     dpro_proc = False
     dpro_desktop = False
     dpro_window = False
+    dpro_collision = 0
 
     mosaic_ts = 0
     mosaic = False
@@ -350,6 +354,8 @@ class ProcessMonitor:
         self.vlc_ts = time.time()
 
         res_dict = vr.vlc_func('state')
+        if 'created_at' in res_dict:
+            self.vlc_created_at = res_dict['created_at']
         self.vlc_proc = res_dict['proc_state']
         self.vlc_server = res_dict['server_state']
 
@@ -362,11 +368,10 @@ class ProcessMonitor:
         return False
 
     def is_vlc_active(self):
-        dt = self.request_ts - self.vlc_ts
-        if dt > 10:
-            return False
-        else:
+        if self.vlc_proc and self.vlc_server:
             return True
+        else:
+            return False
 
     # ---------------------------------------------
     def get_dpro_state(self):
@@ -374,8 +379,11 @@ class ProcessMonitor:
 
         res_dict = dr.displaypro_func('state')
         self.dpro_proc = res_dict['proc_state']
+        if 'created_at' in res_dict:
+            self.dpro_created_at = res_dict['created_at']
         self.dpro_desktop = res_dict['proc_state']
         self.dpro_window = res_dict['proc_state']
+        self.dpro_collision = self.vlc_created_at - self.dpro_created_at
 
     def update_dpro_state(self):
         dt = self.request_ts - self.dpro_ts
@@ -386,11 +394,10 @@ class ProcessMonitor:
         return False
 
     def is_dpro_active(self):
-        dt = self.request_ts - self.dpro_ts
-        if dt > 10:
-            return False
-        else:
+        if self.dpro_proc:
             return True
+        else:
+            return False
 
     # ---------------------------------------------
     def get_mosaic_state(self):
@@ -407,12 +414,12 @@ class ProcessMonitor:
             return True
         return False
 
-    def is_mosaic_active(self):
-        dt = self.request_ts - self.mosaic_ts
-        if dt > 10:
-            return False
-        else:
-            return True
+    # def is_mosaic_active(self):
+    #     dt = self.request_ts - self.mosaic_ts
+    #     if dt > 10:
+    #         return False
+    #     else:
+    #         return True
 
     # ---------------------------------------------
     def get_process_monitor_dict(self):
@@ -425,10 +432,10 @@ class ProcessMonitor:
             'dpro_proc': self.dpro_proc,
             'dpro_desktop': self.dpro_desktop,
             'dpro_window': self.dpro_window,
+            'dpro_collision': self.dpro_collision,
 
             'mosaic_ts': self.mosaic_ts,
             'mosaic': self.mosaic,
-
         })
         return self.process_monitor_dict
 

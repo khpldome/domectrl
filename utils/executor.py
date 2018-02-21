@@ -10,8 +10,9 @@ import pprint
 import domectrl.config_fds as conf
 from controlapp import app_const as c
 
-
 from json import loads, dumps
+
+import psutil
 
 
 def execute_command(str_command):
@@ -41,17 +42,19 @@ def execute_command(str_command):
     return output_dict
 
 
-# Для выполнения команд VLC
 def execute_command2(str_command):
 
     import subprocess
 
     out_dict = {}
-    process = subprocess.Popen(str_command, stdout=subprocess.PIPE, shell=False)
-    # print(process.pid)
+    # process = subprocess.Popen(str_command, stdout=subprocess.PIPE, shell=False)
+    process = psutil.Popen(str_command, stdout=subprocess.PIPE, shell=False)
+    print(process)
 
     out_dict.update({'code': 0,
-                     'pid': process.pid})
+                     'pid': process.pid,
+                     'created_at': process.create_time(),
+                     })
 
     return out_dict
 
