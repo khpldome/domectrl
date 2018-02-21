@@ -56,7 +56,7 @@
                     var status_calib = $('.status-calib');
                     if(dpro_proc){
                         status_calib.removeClass('disabled');
-                        if (!dpro_collision) {
+                        if (dpro_collision < 0) {
                             status_calib.addClass('unknown');
                         }
                     }
