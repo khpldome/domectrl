@@ -276,8 +276,6 @@ def proxyView(request, path):
     pm.update_vlc_state()
 
     if pm.is_vlc_active() is True:
-
-        print('pm.is_vlc_active() is True')
         extra_requests_args = {}
         remoteurl = 'http://' + conf.VLC_WEB_DOMAIN + '/' + path
         return pv.proxy_view(request, remoteurl, extra_requests_args)
@@ -345,10 +343,6 @@ class ProcessMonitor:
     def update_request_ts(self):
         self.request_ts = time.time()
 
-        self.process_monitor_dict.update({
-            'request_ts': self.request_ts,
-        })
-
     # ---------------------------------------------
     def get_vlc_state(self):
         self.vlc_ts = time.time()
@@ -362,7 +356,7 @@ class ProcessMonitor:
     def update_vlc_state(self):
         dt = self.request_ts - self.vlc_ts
         if dt > 5:
-            print('$' * 80, dt, ' vlc ', time.time())
+            # print('$' * 80, dt, ' vlc ', time.time())
             self.get_vlc_state()
             return True
         return False
@@ -383,12 +377,15 @@ class ProcessMonitor:
             self.dpro_created_at = res_dict['created_at']
         self.dpro_desktop = res_dict['proc_state']
         self.dpro_window = res_dict['proc_state']
-        self.dpro_collision = self.vlc_created_at - self.dpro_created_at
+        if self.dpro_proc and self.vlc_proc:
+            self.dpro_collision = int(self.vlc_created_at - self.dpro_created_at)
+        else:
+            self.dpro_collision = 0
 
     def update_dpro_state(self):
         dt = self.request_ts - self.dpro_ts
         if dt > 7:
-            print('$' * 80, dt, ' dpro ', time.time())
+            # print('$' * 80, dt, ' dpro ', time.time())
             self.get_dpro_state()
             return True
         return False
@@ -409,7 +406,7 @@ class ProcessMonitor:
     def update_mosaic_state(self):
         dt = self.request_ts - self.mosaic_ts
         if dt > 8:
-            print('$' * 80, dt, ' mosaic ', time.time())
+            # print('$' * 80, dt, ' mosaic ', time.time())
             self.get_mosaic_state()
             return True
         return False
@@ -424,6 +421,9 @@ class ProcessMonitor:
     # ---------------------------------------------
     def get_process_monitor_dict(self):
         self.process_monitor_dict.update({
+
+            'request_ts': self.request_ts,
+
             'vlc_ts': self.vlc_ts,
             'vlc_proc': self.vlc_proc,
             'vlc_server': self.vlc_server,
