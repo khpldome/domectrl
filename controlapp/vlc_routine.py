@@ -39,22 +39,10 @@ def vlc_func(action):
             out_dict.update({'code': -1,
                              'verbose': 'vlc_bat does not exists'})
         else:
-            # vlc_is_running = False
-            # for process in psutil.process_iter():
-            #     if process.name() == "vlc.exe":
-            #         vlc_is_running = True
-            #         break
 
             vlc_is_running = am.is_process_running('vlc.exe')
 
             if vlc_is_running is False:
-                # str_param = '--intf=qt  --extraintf=http:rc --http-password=63933 --quiet --file-logging'
-                # str_param = '--intf=qt  --extraintf=http --http-password=63933 --quiet --file-logging'
-                # str_param = '--extraintf=http --http-password=63933 --quiet --qt-start-minimized'
-                # str_param = '--extraintf=http --http-password=63933 --quiet'
-                # без интерфейса https://wiki.videolan.org/VLC_command-line_help/
-                # str_param = 'vlc -Ihttp'
-                # str_param = 'vlc --intf=http'
 
                 res_dict = ue.execute_command2(vlc_exe)
                 # res_dict = ue.execute_command2(
@@ -67,13 +55,13 @@ def vlc_func(action):
                 #      # '--no-crashdump',
                 #      # os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.VLC_BLACK,
                 #      ])
-
-
                 # print(res_dict)
-                # str_out = str(res_dict['code']) + ' / ' + str(res_dict['pid'])
+
                 str_context = 'State: ' + str(res_dict['code']) + ' is running ' + str(res_dict['pid'])
                 out_dict.update({'code': 0,
-                                 'verbose': str_context})
+                                 'verbose': str_context,
+                                 'created_at': res_dict['created_at'],
+                                 })
             else:
                 str_out = 'VLC is running'
                 if check_vlc_server() == 200:
@@ -117,12 +105,16 @@ def vlc_func(action):
                                  'verbose': str_context,
                                  'proc_state': True,
                                  'server_state': False})
+            out_dict.update({'created_at': proc_VLC_dict['created_at'], })
         else:
             str_context = 'State: not started'
             out_dict.update({'code': 1,
                              'verbose': str_context,
                              'proc_state': False,
                              'server_state': False})
+
+    if action == "restart":
+        print("Restart vlc")
 
     return out_dict
 

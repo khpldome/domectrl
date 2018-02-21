@@ -138,7 +138,7 @@ function updateStatus() {
             $('#preamp_txt').empty().append(Math.round($('preamp', data).text() * 100) / 100 + 'dB');
         },
         error: function (jqXHR, status, error) {
-            setTimeout(updateStatus, 500);
+            setTimeout(updateStatus, 5000);
         }
     });
 }

@@ -250,7 +250,6 @@ def winApiInfo():
     return str_out
 
 
-
 if __name__ == "__main__":
     # print(w.EnumDisplaySettingsEx())
 

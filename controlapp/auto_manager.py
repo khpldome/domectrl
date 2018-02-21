@@ -33,7 +33,9 @@ def check_process_state(process_name):
     for process in psutil.process_iter():
         if process.name() == process_name:
             process_dict.update({'name': process.name(),
-                                 'pid': str(process.pid)})
+                                 'pid': str(process.pid),
+                                 'created_at': process.create_time(),
+                                 })
             break
     return process_dict
 
