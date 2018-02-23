@@ -138,9 +138,12 @@ def get_track_info(track_path):
     # track_path = r'"c:\Users\Public\Videos\Sample Videos\Wildlife.wmv"'
 
     arg = ffprobe_exe + ffprobe_arg + track_path
-    res1, res2 = _execute_command(arg)
-    track_info_str = _ffprobe_to_db(res1)
-    print('track_info_str=', track_info_str)
+    output_dict = execute_command(arg)
+    if output_dict['code'] == c.SUCCESS:
+        track_info_str = _ffprobe_to_db(output_dict['output'])
+        print('track_info_str=', track_info_str)
+    else:
+        track_info_str = 'Not video file'
     return track_info_str
 
 

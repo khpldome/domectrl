@@ -99,45 +99,54 @@ class TrackListView(LoginRequiredMixin, ListView):
 
         self.playlist_qs = PlayList.objects.filter(user=self.request.user).order_by('order')
 
-        if playlist_id == '-1':
+        if self.playlist_qs:
 
-            first_playlist = self.playlist_qs.order_by('pk').first()
-            self.active_playlist = first_playlist.id
-            self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user,
-                                                     playlist_id=first_playlist).order_by('order')
+            if playlist_id == '-1':
+
+                first_playlist = self.playlist_qs.order_by('order').first()
+                self.active_playlist = first_playlist.id
+                self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user,
+                                                            playlist_id=first_playlist).order_by('order')
+            else:
+                self.active_playlist = playlist_id
+                self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user,
+                                                             playlist_id=playlist_id).order_by('order')
+            return self.tracklist_qs
         else:
-            self.active_playlist = playlist_id
-            self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user,
-                                                     playlist_id=playlist_id).order_by('order')
-        return self.tracklist_qs
+            HttpResponse("application/json")
 
     def get_context_data(self, **kwargs):
         context = super(TrackListView, self).get_context_data(**kwargs)
 
         context['playlists_qs'] = self.playlist_qs
-        context['playlist_id_active'] = str(self.active_playlist)
-        # context['track_id_active'] = self.kwargs['track_id']
-        context['playlist_count'] = self.playlist_qs.count()
-        context['track_count'] = self.tracklist_qs.count()
+        if self.playlist_qs:
+            context['playlist_id_active'] = str(self.active_playlist)
+            context['playlist_count'] = self.playlist_qs.count()
+        else:
+            context['playlist_id_active'] = str(0)
+            context['playlist_count'] = 0
+        if self.tracklist_qs:
+            # context['track_id_active'] = self.kwargs['track_id']
+            context['track_count'] = self.tracklist_qs.count()
+        else:
+            context['track_id_active'] = 0
+            context['track_count'] = 0
 
-        for obj in context['tracklist_qs']:
-            instance = Track.objects.filter(id=obj.id).first()
-            # print('instance=', instance)
-            short_track_info_dict = ue.get_short_track_info(instance.text)
+        if self.tracklist_qs:
+            for obj in context['tracklist_qs']:
+                instance = Track.objects.filter(id=obj.id).first()
+                # print('instance=', instance)
+                short_track_info_dict = ue.get_short_track_info(instance.text)
 
-            if short_track_info_dict:
-                obj.codec_name = short_track_info_dict['codec_name']
-                obj.codec_long_name = short_track_info_dict['codec_long_name']
-                obj.r_frame_rate = short_track_info_dict['r_frame_rate']
-                obj.duration = short_track_info_dict['duration']
-                obj.width = short_track_info_dict['width']
-                obj.height = short_track_info_dict['height']
+                if short_track_info_dict:
+                    obj.codec_name = short_track_info_dict['codec_name']
+                    obj.codec_long_name = short_track_info_dict['codec_long_name']
+                    obj.r_frame_rate = short_track_info_dict['r_frame_rate']
+                    obj.duration = short_track_info_dict['duration']
+                    obj.width = short_track_info_dict['width']
+                    obj.height = short_track_info_dict['height']
 
-                obj.bit_rate = short_track_info_dict['bit_rate']
-
-        # context.update({
-        #     'form': StoreSearchForm(),
-        # })
+                    obj.bit_rate = short_track_info_dict['bit_rate']
 
         return context
 
