@@ -104,11 +104,11 @@ class TrackListView(LoginRequiredMixin, ListView):
             first_playlist = self.playlist_qs.order_by('pk').first()
             self.active_playlist = first_playlist.id
             self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user,
-                                                     playlist_id=first_playlist).order_by('-pk')
+                                                     playlist_id=first_playlist).order_by('order')
         else:
             self.active_playlist = playlist_id
             self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user,
-                                                     playlist_id=playlist_id).order_by('-pk')
+                                                     playlist_id=playlist_id).order_by('order')
         return self.tracklist_qs
 
     def get_context_data(self, **kwargs):
@@ -446,22 +446,28 @@ class ProcessMonitor:
 pm = ProcessMonitor(ts=time.time())
 
 
+class AjaxOrder(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMixin, View):
+    """handles only ajax requests"""
 
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            if 'action' in request.POST and hasattr(self, request.POST['action']):
+                handler = getattr(self, request.POST['action'])
+                return handler(request)
+            else:
+                return HttpResponse('Action not provided or incorrect', status=400)
+        else:
+            return HttpResponse('Bad request', status=400)
 
+    def change_track_order(self, request):
+        order_dict = json.loads(request.POST['order'])
+        print(order_dict)
+        tracks = Track.objects.filter(
+            id__in=order_dict.keys()
+        ).only('id', 'order')
+        for track in tracks:
+            if track.order != order_dict[str(track.id)]:
+                track.order = order_dict[str(track.id)]
+                track.save()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return HttpResponse(status=204)

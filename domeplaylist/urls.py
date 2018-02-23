@@ -44,6 +44,7 @@ urlpatterns = [
 
     # http://127.0.0.1:8000/ajax-status/state.json
     url(r'^ajax-status/state.json$', views.AjaxProcessStatus.as_view(), name='ajax-status'),
+    url(r'^ajax-order/$', views.AjaxOrder.as_view()),
 
 ]
 

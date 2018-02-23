@@ -47,24 +47,37 @@ jQuery(document).ready(function($) {
     //     $(".tracks-container").load(target); //подгружаем содержимое в элемент с классом 'tracks-container'
     // });
 
-        var origin = 'sortable';
-        $(".tracks-container").droppable({
-            drop: function (event, ui) {
-                if (origin === 'draggable') {
-                    console.log(ui.draggable);
-                    origin = 'sortable';
-                }
+    var origin = 'sortable';
+    $(".tracks-container").droppable({
+        drop: function (event, ui) {
+            if (origin === 'draggable') {
+                console.log(ui.draggable);
+                origin = 'sortable';
             }
-        }).sortable({
-            revert: true,
-            handle: ".track-move",
-            axis: "y",
-            helper: "clone",
-            forceHelperSize: true,
-            opacity: 1,
-            placeholder: "sortable-placeholder",
-            forcePlaceholderSize: true
-        });
+        }
+    }).sortable({
+        revert: true,
+        handle: ".track-move",
+        axis: "y",
+        helper: "clone",
+        forceHelperSize: true,
+        opacity: 1,
+        placeholder: "sortable-placeholder",
+        forcePlaceholderSize: true,
+        update: function (event, ui) {
+            console.log('drop')
+
+            var trackOrder = {};
+            var $trackList = $('#track-list');
+            if ($trackList.length) {
+                $trackList.find('.track').each(function (i, item) {
+                    trackOrder[$(item).data('trackNum')] = i + 1;
+                });
+            }
+            console.log(trackOrder);
+            saveTrackOrder(trackOrder);
+        }
+    });
 
         $(".playlists-container").droppable({
             drop: function (event, ui) {
@@ -81,7 +94,62 @@ jQuery(document).ready(function($) {
             forceHelperSize: true,
             opacity: 1,
             placeholder: "sortable-placeholder",
-            forcePlaceholderSize: true
+            forcePlaceholderSize: true,
+            update: function (event, ui) {
+            console.log('drop playlist')
+
+            var trackOrder = {};
+            var $trackList = $('#track-list');
+            if ($trackList.length) {
+                $trackList.find('.track').each(function (i, item) {
+                    trackOrder[$(item).data('trackNum')] = i + 1;
+                });
+            }
+            console.log(trackOrder);
+            saveTrackOrder(trackOrder);
         });
 
 });
+
+    function savePlaylistOrder(data) {
+        $.ajax({
+            method: 'post',
+            url: '/ajax-order/',
+            headers: {'X-CSRFToken': getCookie('csrftoken')},
+            data: {
+                order: JSON.stringify(data),
+                action: 'change_track_order'
+            }
+        }).done(function (response) {
+            // console.log('order saved');
+        }).fail(function (response) {
+            // console.log('save order failed');
+        });
+    }
+
+    function saveTrackOrder(data) {
+        $.ajax({
+            method: 'post',
+            url: '/ajax-order/',
+            headers: {'X-CSRFToken': getCookie('csrftoken')},
+            data: {
+                order: JSON.stringify(data),
+                action: 'change_track_order'
+            }
+        }).done(function (response) {
+            // console.log('order saved');
+        }).fail(function (response) {
+            // console.log('save order failed');
+        });
+    }
+
+    function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+    return "";
+}

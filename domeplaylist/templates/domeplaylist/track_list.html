@@ -94,9 +94,9 @@
             <div class="player-repeat icon icon-repeat flex"></div>
             <div class="player-full icon icon-full flex"></div>
         </div>
-        <div class="tracks-container grid">
+        <div id="track-list" class="tracks-container grid">
             {% for track in tracklist_qs %}
-                <div class="track grid {% if track.id|stringformat:"i" == track_id_active %}active{% else %}{% endif %}"
+                <div id="track-item" class="track grid {% if track.id|stringformat:"i" == track_id_active %}active{% else %}{% endif %}"
                      data-track-num={{ track.id }}>
 
                     <div class="track-move">
