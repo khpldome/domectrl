@@ -13,6 +13,7 @@ class PlayList(models.Model):
 
     user = models.ForeignKey('domeuser.User', default=None, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
+    order = models.IntegerField(default=1)
     theme = models.PositiveSmallIntegerField(blank=False, null=False, choices=THEME)
 
     def __str__(self):

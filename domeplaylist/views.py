@@ -97,7 +97,7 @@ class TrackListView(LoginRequiredMixin, ListView):
         # ToDo Add check if exists
         playlist_id = self.kwargs['playlist_id']
 
-        self.playlist_qs = PlayList.objects.filter(user=self.request.user)
+        self.playlist_qs = PlayList.objects.filter(user=self.request.user).order_by('order')
 
         if playlist_id == '-1':
 
@@ -458,6 +458,19 @@ class AjaxOrder(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMixin, Vie
                 return HttpResponse('Action not provided or incorrect', status=400)
         else:
             return HttpResponse('Bad request', status=400)
+
+    def change_playlist_order(self, request):
+        order_dict = json.loads(request.POST['order'])
+        print(order_dict)
+        playlists = PlayList.objects.filter(
+            id__in=order_dict.keys()
+        ).only('id', 'order')
+        for playlist in playlists:
+            if playlist.order != order_dict[str(playlist.id)]:
+                playlist.order = order_dict[str(playlist.id)]
+                playlist.save()
+
+        return HttpResponse(status=204)
 
     def change_track_order(self, request):
         order_dict = json.loads(request.POST['order'])

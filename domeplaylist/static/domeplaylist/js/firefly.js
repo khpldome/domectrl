@@ -65,7 +65,7 @@ jQuery(document).ready(function($) {
         placeholder: "sortable-placeholder",
         forcePlaceholderSize: true,
         update: function (event, ui) {
-            console.log('drop')
+            console.log('drop');
 
             var trackOrder = {};
             var $trackList = $('#track-list');
@@ -79,35 +79,36 @@ jQuery(document).ready(function($) {
         }
     });
 
-        $(".playlists-container").droppable({
-            drop: function (event, ui) {
-                if (origin === 'draggable') {
-                    console.log(ui.draggable);
-                    origin = 'sortable';
-                }
+    $(".playlists-container").droppable({
+        drop: function (event, ui) {
+            if (origin === 'draggable') {
+                console.log(ui.draggable);
+                origin = 'sortable';
             }
-        }).sortable({
-            revert: true,
-            handle: ".playlist-move",
-            axis: "y",
-            helper: "clone",
-            forceHelperSize: true,
-            opacity: 1,
-            placeholder: "sortable-placeholder",
-            forcePlaceholderSize: true,
-            update: function (event, ui) {
-            console.log('drop playlist')
+        }
+    }).sortable({
+        revert: true,
+        handle: ".playlist-move",
+        axis: "y",
+        helper: "clone",
+        forceHelperSize: true,
+        opacity: 1,
+        placeholder: "sortable-placeholder",
+        forcePlaceholderSize: true,
+        update: function (event, ui) {
+            console.log('drop playlist');
 
-            var trackOrder = {};
-            var $trackList = $('#track-list');
-            if ($trackList.length) {
-                $trackList.find('.track').each(function (i, item) {
-                    trackOrder[$(item).data('trackNum')] = i + 1;
+            var playlistOrder = {};
+            var plList = $('#play-list');
+            if (plList.length) {
+                plList.find('.playlist').each(function (i, item) {
+                    playlistOrder[$(item).data('playlistNum')] = i + 1;
                 });
             }
-            console.log(trackOrder);
-            saveTrackOrder(trackOrder);
-        });
+            console.log(playlistOrder);
+            savePlaylistOrder(playlistOrder);
+        }
+    });
 
 });
 
@@ -118,7 +119,7 @@ jQuery(document).ready(function($) {
             headers: {'X-CSRFToken': getCookie('csrftoken')},
             data: {
                 order: JSON.stringify(data),
-                action: 'change_track_order'
+                action: 'change_playlist_order'
             }
         }).done(function (response) {
             // console.log('order saved');
