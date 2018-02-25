@@ -18,4 +18,20 @@ sys.path.append('d:/PROJECTS/_python/domectrl/domectrl')
 # os.environ.setdefault("DJANGO_SETTINGS_MODULE", "domectrl.settings")
 os.environ["DJANGO_SETTINGS_MODULE"] = "domectrl.settings"
 
+# os.environ["wsgi.multiprocess"] = 'true'
+# os.environ["wsgi.multithread"] = 'true'
+
+
 application = get_wsgi_application()
+
+
+import pprint
+
+
+pprint.pprint(dict(os.environ.items()))
+
+
+# import django.core.wsgi as wsg
+#
+# wsg.multithread
+

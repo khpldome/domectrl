@@ -160,7 +160,7 @@ def mosaic_func(action):
         print("State mosaic")
         str_param = 'query current'
         output_dict = ue.execute_command(configureMosaic_exe + str_param)
-        print('output_dict=', output_dict)
+        # print('output_dict=', output_dict)
         xml_out = output_dict['output']
 
         code = output_dict['code']
