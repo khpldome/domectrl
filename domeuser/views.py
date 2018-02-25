@@ -32,7 +32,6 @@ class SignInView(FormView):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            # return HttpResponseRedirect(reverse_lazy('domeplaylist:user-playlists'))
             return HttpResponseRedirect(reverse_lazy('domeplaylist:track-list', kwargs={'playlist_id': -1}))
 
         else:
@@ -88,7 +87,7 @@ class SignOutView(RedirectView):
 class RegistrationView(FormView):
     template_name = 'domeuser/reg.html'
     form_class = RegForm
-    success_url = reverse_lazy('domeplaylist:user-playlists')
+    success_url = reverse_lazy('domeplaylist:track-list', kwargs={'playlist_id': -1})
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
