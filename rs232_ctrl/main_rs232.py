@@ -17,7 +17,7 @@ import glob
 
 
 # Define an output queue
-output = mp.Queue()
+# output = mp.Queue()
 
 
 def get_serial_ports():
@@ -166,73 +166,77 @@ def projector_func(action):
         ports_dict = get_serial_ports()
         print(ports_dict)
 
-    for i in range(10):
+    if action != 'STATE':
+        for i in range(10):
 
-        set_pause = False
-        state = ''
-        for port_name in ports_dict.keys():
-            state = ports_dict[port_name]
-            if (action == 'ON' and state == '*POW=ON#') or (action == 'OFF' and state == '*POW=OFF#'):
-                # ports_dict[port_name] = state
-                pass
-            else:
-                ser = open_serial(port_name)
-                if ser is not None:
-
-                    res = get_usart_data(ser, '?')
-                    if res is None:
-                        # close_serial(ser)
-                        print("@@@SDFS",)
-                        # ports_dict.pop(port_name, None)
-                        # ports_dict.pop(port_name, None)
-                    else:
-                        ports_dict[port_name] = res
-
-                        print(i, "? state: ", port_name, state)
-
-                        if action == 'ON':
-                            if state == '*POW=ON#':
-                                pass
-                            elif state == '*POW=OFF#' or state == '':
-                                res = get_usart_data(ser, action)
-                                ports_dict[port_name] = res
-                                set_pause = True
-                            else:
-                                set_pause = True
-
-                        elif action == 'OFF':
-                            if state == '*POW=OFF#':
-                                pass
-                            elif state == '*POW=ON#' or state == '':
-                                res = get_usart_data(ser, action)
-                                ports_dict[port_name] = res
-                                set_pause = True
-                            else:
-                                set_pause = True
-                else:
-                    print('Can not open ', port_name)
-
-                close_serial(ser)
-
-                print("  > cmd:", action, port_name, state)
-
-        if set_pause is True:
             set_pause = False
+            state = ''
+            for port_name in ports_dict.keys():
+                state = ports_dict[port_name]
+                if (action == 'ON' and state == '*POW=ON#') or (action == 'OFF' and state == '*POW=OFF#'):
+                    # ports_dict[port_name] = state
+                    pass
+                else:
+                    ser = open_serial(port_name)
+                    if ser is not None:
 
-            if action == 'ON':
-                print('  ...5s...')
-                time.sleep(5)
-            elif action == 'OFF':
-                print('  ...30s...')
-                time.sleep(30)
+                        res = get_usart_data(ser, '?')
+                        if res is None:
+                            # close_serial(ser)
+                            print("@@@SDFS",)
+                            # ports_dict.pop(port_name, None)
+                            # ports_dict.pop(port_name, None)
+                        else:
+                            ports_dict[port_name] = res
 
-    return ports_dict
+                            print(i, "? state: ", port_name, state)
 
+                            if action == 'ON':
+                                if state == '*POW=ON#':
+                                    pass
+                                elif state == '*POW=OFF#' or state == '':
+                                    res = get_usart_data(ser, action)
+                                    ports_dict[port_name] = res
+                                    set_pause = True
+                                else:
+                                    set_pause = True
 
+                            elif action == 'OFF':
+                                if state == '*POW=OFF#':
+                                    pass
+                                elif state == '*POW=ON#' or state == '':
+                                    res = get_usart_data(ser, action)
+                                    ports_dict[port_name] = res
+                                    set_pause = True
+                                else:
+                                    set_pause = True
+                    else:
+                        print('Can not open ', port_name)
+
+                    close_serial(ser)
+
+                    print("  > cmd:", action, port_name, state)
+
+            if set_pause is True:
+                set_pause = False
+
+                if action == 'ON':
+                    print('  ...5s...')
+                    time.sleep(5)
+                elif action == 'OFF':
+                    print('  ...30s...')
+                    time.sleep(30)
+
+    count_on = 0
+    for item in ports_dict.keys():
+
+        if '*POW=ON#' in  ports_dict[item]:
+            count_on += 1
+
+    return ports_dict, count_on
 
 
 if __name__ == "__main__":
-
 
     configureMosaic_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\Mosaic\configureMosaic-32bit-64bit.exe '
 

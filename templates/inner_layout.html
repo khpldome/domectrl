@@ -16,12 +16,22 @@
             </a>
         </nav>
         <div class="projectors-turn">
-            <span class="icon-turn-on"></span>
-            <span class="icon-turn-off" style="display: none;"></span>
+            <div class="projectors-turn-off">
+                <a href="{% url 'dome:projectors' action='start' %}">
+{#                 <a href="#">#}
+                    <span class="icon-turn-off"></span>
+                </a>
+            </div>
+            <div class="projectors-turn-on hidden">
+                <a href="{% url 'dome:projectors' action='stop' %}">
+{#                <a href="#">#}
+                    <span class="icon-turn-on"></span>
+                </a>
+            </div>
         </div>
         <div class="status grid">
             <span class="icon-speed"></span>
-            <div class="status-project disabled">
+            <div class="status-projectors disabled">
                 <span class="icon-status-off">Проекторы</span>
                 <span class="icon-status-on">Проекторы</span>
                 <span class="icon-status-wtf">Проекторы</span>

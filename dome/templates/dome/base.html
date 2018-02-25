@@ -2,22 +2,10 @@
 
 {% load staticfiles %}
 
-
 {% block main_container %}
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-
-    <div class="col-sm-2 btn-group">
-        <a href="{% url 'dome:base' base_action='Projectors_ON' %}"
-           class="flrow-a-btn wide grey"><span>Switch projectors ON</span></a>
-    </div>
-
-    <div class="col-sm-2 btn-group">
-        <a href="{% url 'dome:base' base_action='Projectors_OFF' %}" class="flrow-a-btn wide grey"><span>Switch projectors OFF</span></a>
-    </div>
-
+{#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"#}
+{#          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">#}
 
     <div class="col-sm-2 btn-group">
         <a href="{% url 'dome:base' base_action='Start' %}" class="flrow-a-btn wide grey"><span>Start system</span></a>

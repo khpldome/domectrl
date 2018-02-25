@@ -26,13 +26,14 @@
                     $('#mosaic_ts').append(data['mosaic_ts']);
                     $('#mosaic').append(data['mosaic']);
                     // $('#pojectors_ts').append(data['pojectors_ts']);
-                    // $('#pojectors').append(String(data['pojectors']));
+                    $('#pojectors').append(String(data['pojectors']));
 
                     var vlc_proc = data['vlc_proc'];
                     var vlc_server = data['vlc_server'];
                     var dpro_collision = data['dpro_collision'];
                     var dpro_proc = data['dpro_proc'];
                     var mosaic = data['mosaic'];
+                    var projectors = data['projectors'];
                     // var icon_status = document.getElementById("icon-status");
                     // var status_player = document.getElementById("status-player");
 
@@ -72,9 +73,10 @@
                     switch (mosaic) {
                         case 0:
                             status_mosaic.removeClass('disabled');
+                            status_mosaic.removeClass('unknown');
                             break;
                         case -1:
-                            status_mosaic.not('.disabled').addClass('disabled');
+                            status_mosaic.addClass('disabled');
                             status_mosaic.removeClass('unknown');
                             break;
                         case -2:
@@ -85,13 +87,17 @@
                             break;
                     }
 
-                    // var status_mosaic = $('.mosaic');
-                    // if(mosaic ){
-                    //     status_mosaic.removeClass('disabled');
-                    // }
-                    // else{
-                    //     status_mosaic.not('disabled').addClass('disabled')
-                    // }
+                    var status_projectors = $('.status-projectors');
+                    if(projectors ){
+                        status_projectors.removeClass('disabled');
+                        $('.projectors-turn-off').addClass("hidden");
+                        $('.projectors-turn-on').removeClass('hidden');
+                    }
+                    else{
+                        status_projectors.addClass('disabled');
+                        $('.projectors-turn-on').addClass("hidden");
+                        $('.projectors-turn-off').removeClass('hidden');
+                    }
 
                     setTimeout(updateSystemState, 1000);
                 },

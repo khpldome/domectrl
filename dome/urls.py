@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^winapi/(?P<action>\w+)/$', views.WinapiActionView.as_view(), name='winapi'),
     url(r'^displaypro/(?P<action>\w+)/$', views.DisplayproActionView.as_view(), name='displaypro'),
     url(r'^displaypro/(?P<action>\w+)/(?P<param>\w+)/$', views.DisplayproActionView.as_view(), name='displaypro'),
+    url(r'^projectors/(?P<action>\w+)/$', views.ProjectorsActionView.as_view(), name='projectors'),
 
     url(r'^base/(?P<base_action>\w+)/$', views.BaseView.as_view(), name='base'),
 

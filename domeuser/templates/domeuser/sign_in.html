@@ -1,4 +1,5 @@
 {% extends "outer_layout.html" %}
+
 {% block main_container %}
     <main class="account_form sign_in">
         <div class="container grid">
@@ -6,7 +7,7 @@
                 <img src="/static/img/logo.svg" width="100%" height="100%" alt="firefly">
             </div>
             <div class="header flex">
-                <h1>Sign In</h1>
+{#                <h1>Sign In</h1>#}
             </div>
             <div class="form_container">
                 <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
@@ -14,24 +15,26 @@
                         <p class="form-error-list">{{ error }}</p>
                     {% endfor %}
                     <div class="form-group">
-                        {{ form.username.label_tag }}
+{#                        {{ form.username.label_tag }}#}
+                        <label>Email:</label>
                         {{ form.username }}
                         {{ form.username.errors }}
                     </div>
                     <div class="form-group">
-                        {{ form.password.label_tag }}
+{#                        {{ form.password.label_tag }}#}
+                        <label>Пароль:</label>
                         {{ form.password }}
                         {{ form.password.errors }}
-                        <a href="{% url 'domeuser:password_reset' %}" class="form-small_text" tabindex="5">
-                            <span>Forgot Your Password?</span>
-                        </a>
+{#                        <a href="{% url 'domeuser:password_reset' %}" class="form-small_text" tabindex="5">#}
+{#                            <span>Forgot Your Password?</span>#}
+{#                        </a>#}
                     </div>
                     <div class="form-group">
                         <a href="#" onclick="document.getElementById('login-form').submit()" class="form-button" tabindex="3">
-                            <span>Sign In</span>
+                            <span>Войти</span>
                         </a>
                         <a href="{% url 'domeuser:registration' %}" class="form-button" tabindex="4">
-                            <span>Create Account</span>
+                            <span>Создать</span>
                         </a>
                         <noscript>
                             <input type="submit" value="Sign In" />

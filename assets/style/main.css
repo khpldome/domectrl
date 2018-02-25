@@ -113,6 +113,10 @@ nav.main_tabs .link-more {
     grid-column: 3/4;
 }
 
+.icon-turn-off {
+    content: url('../img/icon-turn-off.svg');
+}
+
 .icon-turn-on {
     content: url('../img/icon-turn-on.svg');
 }
@@ -142,7 +146,7 @@ nav.main_tabs .link-more {
     content: url('../img/icon-status-wtf.svg');
 }
 
-.icon-speed, .status-project, .status-player, .status-calib, .status-mosaic, {
+.icon-speed, .status-projectors, .status-player, .status-calib, .status-mosaic {
     grid-row: 1/2;
 }
 
@@ -150,7 +154,7 @@ nav.main_tabs .link-more {
     grid-column: 1/2;
 }
 
-.status-project {
+.status-projectors {
     grid-column: 2/3;
 }
 
@@ -875,4 +879,8 @@ grid-row: 2/3;
 
 .account_form.user-account .form-group > input {
     font-size: 1.2em;
+}
+
+.hidden {
+    display: none;
 }

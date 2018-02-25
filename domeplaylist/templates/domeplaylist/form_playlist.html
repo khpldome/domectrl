@@ -3,7 +3,7 @@
         <img src="/static/img/logo.svg" width="100%" height="100%" alt="firefly">
     </div>
     <div class="header flex">
-        <h1>Create New Playlist</h1>
+        <h1>Новый плейлист</h1>
     </div>
     <div class="form_container">
         <form action="" id="study-module-form" method="post" enctype="multipart/form-data" onsubmit="return pageFormSubmit()">
@@ -18,17 +18,17 @@
                 {{ form.name.label_tag }}
                 {{ form.title }}
             </div>
-            <div class="form-group">
-                {{ form.theme.errors }}
-                {{ form.theme.label_tag }}
-                {{ form.theme }}
-            </div>
+{#            <div class="form-group">#}
+{#                {{ form.theme.errors }}#}
+{#                {{ form.theme.label_tag }}#}
+{#                {{ form.theme }}#}
+{#            </div>#}
             <div class="form-group">
                 {% if submit_btn_name %}
                     <button type="submit" class="btn btn-info" name="btn_create_save_changes">{{ submit_btn_name }}</button>
                 {% else %}
                     <a href="#" onclick="document.getElementById('study-module-form').submit()" class="form-button" tabindex="3">
-                        <span>Create</span>
+                        <span>Создать</span>
                     </a>
                 {% endif %}
             </div>

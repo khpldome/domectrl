@@ -21,6 +21,7 @@ import utils.executor as ue
 from controlapp import vlc_routine as vr
 from controlapp import displaypro_routine as dr
 from controlapp import mosaic_surround as ms
+from controlapp import projectors_routine as pr
 import time
 
 from django.conf import settings
@@ -308,6 +309,8 @@ class AjaxProcessStatus(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMi
 
             pm.update_mosaic_state()
 
+            pm.update_prjectors_state()
+
             json_string = pm.get_process_monitor_json()
 
             return HttpResponse(json_string, content_type="application/json")
@@ -334,6 +337,9 @@ class ProcessMonitor:
 
     mosaic_ts = 0
     mosaic = False
+
+    projectors_ts = 0
+    projectors = False
 
     def __init__(self, ts, info=''):
         self.request_ts = ts
@@ -425,6 +431,30 @@ class ProcessMonitor:
     #         return True
 
     # ---------------------------------------------
+    def get_prjectors_state(self):
+        self.projectors_ts = time.time()
+
+        res_dict = pr.projectors_func('state')
+        if res_dict['count_on'] == conf.POJECTORS_NUMS:
+            self.projectors = True
+        else:
+            self.projectors = False
+
+    def update_prjectors_state(self):
+        # self.request_ts = time.time()
+        dt = self.request_ts - self.projectors_ts
+        if dt > 39:
+            self.get_prjectors_state()
+            return True
+        return False
+
+    def is_prjectors_active(self):
+        if self.projectors:
+            return True
+        else:
+            return False
+
+    # ---------------------------------------------
     def get_process_monitor_json(self):
         self.process_monitor_dict.update({
 
@@ -442,6 +472,8 @@ class ProcessMonitor:
 
             'mosaic_ts': self.mosaic_ts,
             'mosaic': self.mosaic,
+
+            'projectors': self.projectors,
         })
         return json.dumps(self.process_monitor_dict, indent=4)
 

@@ -52,7 +52,6 @@ class User(AbstractBaseUser):
     def __str__(self):
         return "ID: {}. first_name: {}. email: {}".format(self.id, self.first_name, self.email)
 
-
     class Meta:
         verbose_name = 'user'
         verbose_name_plural = 'users'

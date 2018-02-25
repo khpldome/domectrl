@@ -10,6 +10,7 @@ from controlapp import vlc_routine as vr
 from controlapp import displaypro_routine as dr
 from controlapp import winapi_routine as wr
 from controlapp import auto_manager as am
+from controlapp import projectors_routine as pr
 
 
 def index(request):
@@ -109,6 +110,27 @@ class DisplayproActionView(TemplateView):
         text_output = dr.displaypro_func(action, param)
 
         context['data_context'] = text_output
+        return context
+
+
+class ProjectorsActionView(TemplateView):
+
+    template_name = 'dome/index.html'
+
+    def get(self, request, *args, **kwargs):
+        return super(ProjectorsActionView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectorsActionView, self).get_context_data(**kwargs)
+
+        action = ''
+        if 'action' in kwargs:
+            action = kwargs['action']
+            print("action=", action)
+
+        out_dict = pr.projectors_func(action)
+
+        context['data_context'] = out_dict['verbose']
         return context
 
 
