@@ -34,17 +34,19 @@ def mosaic_surround_func(action):
 
 def surround_func(action):
 
-    str_out = ''
-    dict_code = {}
+    out_dict = {}
 
-    # str_out, dict_code = mosaic_func('State')
-    # state = get_mosaic_surround_state()
-    state = mosaic_func('state')['verbose']
-    str_out += state
-    print("Start surround", state)
+    code = mosaic_func('state')['code']
+    print(" mosaic_func('state')['code']", code)
 
-    if action == "Start":
-        if state == 'False':
+    if action == "start":
+        if code == c.MOSAIC_FALSE:
+
+            out_dict = am.kill_processes(["chrome.exe", ])
+            str_out = out_dict['str_out']
+            out_dict = am.kill_processes(["vlc.exe", dr.PROCESS_NAME])
+            str_out += out_dict['str_out']
+
             pag.keyDown('ctrl')
             pag.keyDown('shift')
             pag.keyDown('alt')
@@ -55,8 +57,20 @@ def surround_func(action):
             pag.keyUp('shift')
             pag.keyUp('ctrl')
 
-    elif action == "Stop":
-        if state == 'True':
+            out_dict.update({'code': c.SUCCESS,
+                             'verbose': str_out + "\n\nsent Surround start",
+                             })
+        elif code == c.MOSAIC_TRUE:
+            out_dict.update({'code': c.ERROR,
+                             'verbose': mosaic_func('state')['verbose'] + "\n\nSurround already started",
+                             })
+        elif code == c.MOSAIC_FAIL:
+            out_dict.update({'code': c.ERROR,
+                             'verbose': mosaic_func('state')['verbose'],
+                             })
+
+    elif action == "stop":
+        if code == c.MOSAIC_TRUE:
             pag.keyDown('ctrl')
             pag.keyDown('shift')
             pag.keyDown('alt')
@@ -67,10 +81,25 @@ def surround_func(action):
             pag.keyUp('shift')
             pag.keyUp('ctrl')
 
-    elif action == "State":
+            out_dict.update({'code': c.SUCCESS,
+                             'verbose': "sent Surround stop",
+                             })
+        else:
+            out_dict.update({'code': c.ERROR,
+                             'verbose': "Surround already stop",
+                             })
+
+    elif action == "state":
         print("State mosaic")
 
-    return str_out, dict_code
+        out_dict = mosaic_func('state')
+
+    # out_dict.update({'code': code,
+    #                  'verbose': str_context,
+    #                  'proc_state': True,
+    #                  'server_state': False})
+
+    return out_dict
 
 
 def mosaic_func(action):
@@ -185,7 +214,7 @@ def parse_mosaic_xml(in_dict):
                 grids = doc_dict['query']['grids']
                 if grids is None:
                     str_context += "\nProjectors disabled (видеовыходы не активны) "
-                    code = -2
+                    code = c.MOSAIC_FAIL
                     str_context += '\nFail'
                 else:
                     rows = ''
@@ -198,16 +227,17 @@ def parse_mosaic_xml(in_dict):
                         cols = doc_dict['query']['grids']['grid']['@columns']
 
                     if rows == '1' and cols == '1':
-                        code = -1
+                        code = c.MOSAIC_FALSE
                         str_context += '\nFalse'
                     else:
-                        code = 0
+                        code = c.MOSAIC_TRUE
                         str_context += '\nTrue'
 
     out_dict.update({'code': code,
                      'verbose': str_context,
-                     'proc_state': True,
-                     'server_state': False})
+                     # 'proc_state': True,
+                     # 'server_state': False,
+                     })
 
     return out_dict
 

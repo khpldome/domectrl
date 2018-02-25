@@ -37,5 +37,5 @@ elif HOSTNAME == 'fds-Kyiv':
     PROJECTOR_AMOUNT = 12
     # DISPLAYPRO_ABSPATH = r'c:\Program Files (x86)\ImmersiveDisplayPRO\ImmersiveDisplayPRO.exe'
     VLC_EXE_RELPATH = r'\exec\vlc-2.1.6\vlc.exe'
-    HOST_IP = '192.168.1.11'
+    HOST_IP = '192.168.1.128'
 # -----------------------------------------------------------------------------
