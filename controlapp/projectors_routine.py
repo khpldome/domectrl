@@ -33,23 +33,25 @@ def projectors_func(action):
 
     out_dict = {}
     obj = ' '
+    res_dict = {}
+    count_on = 0
 
     if action == "start":
         print("projector_start")
-        # res_dict, count_on = rs232.projector_func('ON')
+        res_dict, count_on = rs232.projector_func('ON')
 
-        for i in range(5):
-            p = Process(target=worker, args=(i, 'cmd', queue))
-            p.start()
-            # p.join()
+        # for i in range(5):
+        #     p = Process(target=worker, args=(i, 'cmd', queue))
+        #     p.start()
+        #     # p.join()
 
     elif action == "stop":
         print("projector_stop")
-        # res_dict, count_on = rs232.projector_func('OFF')
+        res_dict, count_on = rs232.projector_func('OFF')
 
     elif action == "state":
         print("projector_state")
-        # res_dict, count_on = rs232.projector_func('STATE')
+        res_dict, count_on = rs232.projector_func('STATE')
 
         while True:
             if queue.empty():
@@ -58,12 +60,11 @@ def projectors_func(action):
             obj += str(queue.get()) + ' '
         print('obj=', obj)
 
-
-    # str_out = '\n' + str(res_dict) + ' len= ' + str(len(res_dict)) + ' count_on= ' + str(count_on)
+    str_out = '\n' + str(res_dict) + ' len= ' + str(len(res_dict)) + ' count_on= ' + str(count_on)
 
     out_dict.update({'code': c.SUCCESS,
-                     'verbose': str(obj),
-                     'count_on': 11,
+                     'verbose': str_out,
+                     'count_on': count_on,
                      })
 
     return out_dict

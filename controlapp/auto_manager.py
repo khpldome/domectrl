@@ -132,16 +132,6 @@ def base_func_Kyiv(action):
         time.sleep(5)
         str_out += '\n Result state= ' + mr.mosaic_surround_func('state')[0]
 
-    elif action == "Projectors_ON":
-        print("projector_func('ON')")
-        res_dict = rs232.projector_func('ON')
-        str_out += '\n' + str(res_dict) + ' len= ' + str(len(res_dict))
-
-    elif action == "Projectors_OFF":
-        print("projector_func('OFF')")
-        res_dict = rs232.projector_func('OFF')
-        str_out += '\n' + str(res_dict) + ' len= ' + str(len(res_dict))
-
     else:
         str_out = "Base: Unknown command"
 
