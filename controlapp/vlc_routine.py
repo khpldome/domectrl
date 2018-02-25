@@ -75,7 +75,7 @@ def vlc_func(action):
 
     if action == "stop":
         print("Stop vlc")
-        str_out = 'Already stopped.'
+        str_out = 'VLC: already stopped.'
         # for process in (process for process in psutil.process_iter() if process.name() == "vlc.exe"):
         for process in (process for process in psutil.process_iter() if process.name() in ['vlc.exe', 'WerFault.exe']):
             result = process.kill()

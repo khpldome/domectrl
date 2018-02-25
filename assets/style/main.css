@@ -114,11 +114,11 @@ nav.main_tabs .link-more {
 }
 
 .icon-turn-off {
-    content: url('../img/icon-turn-off.svg');
+    content: url('../img/icon-turn-on.svg');
 }
 
 .icon-turn-on {
-    content: url('../img/icon-turn-on.svg');
+    content: url('../img/icon-turn-off.svg');
 }
 
 .status {

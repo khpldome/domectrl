@@ -92,7 +92,7 @@ def surround_func(action):
                              })
         else:
             out_dict.update({'code': c.ERROR,
-                             'verbose': "Surround already stopped",
+                             'verbose': "Surround: already stopped.",
                              })
 
     elif action == "state":

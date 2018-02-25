@@ -57,7 +57,7 @@ def displaypro_func(action, param=''):
 
     if action == "stop":
         print("Stop displaypro")
-        str_out = 'Already stopped.'
+        str_out = 'DisplaeyPRO: already stopped.'
 
         for process in (process for process in psutil.process_iter() if process.name() == PROCESS_NAME):
             result = process.kill()

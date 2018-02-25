@@ -6,31 +6,31 @@
 
     <div class="playlist grid" role="group" aria-label="...">
         <li>
-            <a href="{% url 'dome:mosaic-surround' action='start' %}"><span>mosaic_start</span></a>
-            <a href="{% url 'dome:mosaic-surround' action='stop' %}"><span>mosaic_stop</span></a>
-            <a href="{% url 'dome:mosaic-surround' action='restart' %}"><span>mosaic_restart</span></a>
-            <a href="{% url 'dome:mosaic-surround' action='state' %}"><span>mosaic_state</span></a>
-            <br> <br>
-            <a href="{% url 'dome:vlc' action='start' %}"><span>start_vlc</span></a>
-            <a href="{% url 'dome:vlc' action='stop' %}"><span>stop_vlc</span></a>
-            <a href="{% url 'dome:vlc' action='state' %}"><span>state_vlc</span></a>
-            <br> <br>
-            <a href="{% url 'dome:winapi' action='setPrimaryMonitor' %}"><span>setPrimaryMonitor</span></a>
-            <a href="{% url 'dome:winapi' action='EnableOneProjector' %}"><span>EnableOneProjector</span></a>
-            <a href="{% url 'dome:winapi' action='WinapiInfo' %}"><span>WinAPI_Info</span></a>
-            <br> <br>
-            <a href="{% url 'dome:displaypro' action='start' %}"><span>start_DisplayPro</span></a>
-            <a href="{% url 'dome:displaypro' action='stop' %}"><span>stop_DisplayPro</span></a>
-            <a href="{% url 'dome:displaypro' action='setconfig' param='1' %}"><span>setconfig_1</span></a>
-            <a href="{% url 'dome:displaypro' action='setconfig' param='2' %}"><span>setconfig_2</span></a>
-            <a href="{% url 'dome:displaypro' action='setconfig' param='3' %}"><span>setconfig_3</span></a>
-            <a href="{% url 'dome:displaypro' action='setdesktopwarping' param='0' %}"><span>setdesktopwarping_0</span></a>
-            <a href="{% url 'dome:displaypro' action='setdesktopwarping' param='1' %}"><span>setdesktopwarping_1</span></a>
-            <br> <br>
             <a href="{% url 'dome:projectors' action='start' %}"><span>Projectors_start</span></a>
             <a href="{% url 'dome:projectors' action='stop' %}"><span>Projectors_stop</span></a>
             <a href="{% url 'dome:projectors' action='state' %}"><span>Projectors_state</span></a>
             <br> <br>
+            <a href="{% url 'dome:mosaic-surround' action='start' %}"><span>mosaic_start</span></a>
+            <a href="{% url 'dome:mosaic-surround' action='stop' %}"><span>mosaic_stop</span></a>
+{#            <a href="{% url 'dome:mosaic-surround' action='restart' %}"><span>mosaic_restart</span></a>#}
+            <a href="{% url 'dome:mosaic-surround' action='state' %}"><span>mosaic_state</span></a>
+            <br> <br>
+            <a href="{% url 'dome:displaypro' action='start' %}"><span>start_DisplayPro</span></a>
+            <a href="{% url 'dome:displaypro' action='stop' %}"><span>stop_DisplayPro</span></a>
+{#            <a href="{% url 'dome:displaypro' action='setconfig' param='1' %}"><span>setconfig_1</span></a>#}
+{#            <a href="{% url 'dome:displaypro' action='setconfig' param='2' %}"><span>setconfig_2</span></a>#}
+{#            <a href="{% url 'dome:displaypro' action='setconfig' param='3' %}"><span>setconfig_3</span></a>#}
+{#            <a href="{% url 'dome:displaypro' action='setdesktopwarping' param='0' %}"><span>setdesktopwarping_0</span></a>#}
+{#            <a href="{% url 'dome:displaypro' action='setdesktopwarping' param='1' %}"><span>setdesktopwarping_1</span></a>#}
+            <br> <br>
+            <a href="{% url 'dome:vlc' action='start' %}"><span>start_vlc</span></a>
+            <a href="{% url 'dome:vlc' action='stop' %}"><span>stop_vlc</span></a>
+            <a href="{% url 'dome:vlc' action='state' %}"><span>state_vlc</span></a>
+{#            <br> <br>#}
+{#            <a href="{% url 'dome:winapi' action='setPrimaryMonitor' %}"><span>setPrimaryMonitor</span></a>#}
+{#            <a href="{% url 'dome:winapi' action='EnableOneProjector' %}"><span>EnableOneProjector</span></a>#}
+{#            <a href="{% url 'dome:winapi' action='WinapiInfo' %}"><span>WinAPI_Info</span></a>#}
+{#            <br> <br>#}
         </li>
     </div>
 

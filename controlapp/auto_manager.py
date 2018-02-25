@@ -115,6 +115,7 @@ def base_func_Kyiv(action):
 
             if code == c.MOSAIC_TRUE:
                 str_out += '\n\n' + dr.displaypro_func('start')['verbose']
+                time.sleep(1)
                 str_out += '\n\n' + vr.vlc_func('start')['verbose']
                 break
             elif code == c.MOSAIC_FAIL:
@@ -123,16 +124,16 @@ def base_func_Kyiv(action):
                 str_out += '\n\n' + '...5sec...'
                 time.sleep(5)
 
-        str_out += '\n\n\n Result state= ' + mr.mosaic_surround_func('state')['verbose']
+        str_out += '\n\n' + mr.mosaic_surround_func('state')['verbose']
 
     elif action == "stop":
         print("Stop system")
 
-        str_out = '\n' + vr.vlc_func('stop')['verbose']
-        str_out += '\n' + dr.displaypro_func('stop')['verbose']
-        str_out += '\n' + mr.mosaic_surround_func('stop')['verbose']
-        time.sleep(5)
-        str_out += '\n Result state= ' + mr.mosaic_surround_func('state')['verbose']
+        str_out = '\n\n' + vr.vlc_func('stop')['verbose']
+        str_out += '\n\n' + dr.displaypro_func('stop')['verbose']
+        str_out += '\n\n' + mr.mosaic_surround_func('stop')['verbose']
+        # time.sleep(5)
+        # str_out += '\n\n' + mr.mosaic_surround_func('state')['verbose']
 
     else:
         str_out = "Base: Unknown command"
