@@ -17,4 +17,4 @@ git config --global commit.gpgsign false
 khpldome@gmail.com 8013emodlphk7102
 
 
-
+git reset db.sqlite3
