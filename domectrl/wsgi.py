@@ -25,13 +25,6 @@ os.environ["DJANGO_SETTINGS_MODULE"] = "domectrl.settings"
 application = get_wsgi_application()
 
 
-import pprint
-
-
-pprint.pprint(dict(os.environ.items()))
-
-
-# import django.core.wsgi as wsg
-#
-# wsg.multithread
+# import pprint
+# pprint.pprint(dict(os.environ.items()))
 

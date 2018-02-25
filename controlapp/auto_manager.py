@@ -11,8 +11,8 @@ from controlapp import mosaic_surround as mr
 from controlapp import vlc_routine as vr
 from controlapp import displaypro_routine as dr
 from controlapp import winapi_routine as wr
+from controlapp import app_const as c
 
-import rs232_ctrl.main_rs232 as rs232
 import time
 import psutil
 
@@ -100,42 +100,49 @@ def base_func_Kharkiv(action):
 def base_func_Kyiv(action):
 
     str_out = ''
+    out_dict = {}
+
     if action == "start":
         print("Start")
 
-        str_out += '\n Initial state= ' + mr.mosaic_surround_func('start')[0]
+        str_out += mr.mosaic_surround_func('start')['verbose']
 
         for i in range(10):
             # state = mr.get_mosaic_surround_state()
             # out_dict = mr.mosaic_func('state')
             # state = out_dict['verbose']
-            state = mr.mosaic_func('state')['verbose']
+            code = mr.mosaic_func('state')['code']
 
-            if state == 'True':
-                str_out += '\n' + dr.displaypro_func('start')
-                str_out += '\n' + vr.vlc_func('start')
+            if code == c.MOSAIC_TRUE:
+                str_out += '\n\n' + dr.displaypro_func('start')['verbose']
+                str_out += '\n\n' + vr.vlc_func('start')['verbose']
                 break
-            elif state == 'Fail':
-                str_out += '\n' + 'Включите проекторы'
-            elif state == 'False':
-                str_out += '\n' + '...5sec...'
+            elif code == c.MOSAIC_FAIL:
+                str_out += '\n\n' + 'Включите проекторы'
+            elif code == c.MOSAIC_FALSE:
+                str_out += '\n\n' + '...5sec...'
                 time.sleep(5)
 
-        str_out += '\n Result state= ' + mr.mosaic_surround_func('state')[0]
+        str_out += '\n\n\n Result state= ' + mr.mosaic_surround_func('state')['verbose']
 
     elif action == "stop":
         print("Stop system")
 
-        str_out += '\n' + vr.vlc_func('stop')
-        str_out += '\n' + dr.displaypro_func('stop')
-        str_out += '\n' + mr.mosaic_surround_func('stop')[0]
+        str_out = '\n' + vr.vlc_func('stop')['verbose']
+        str_out += '\n' + dr.displaypro_func('stop')['verbose']
+        str_out += '\n' + mr.mosaic_surround_func('stop')['verbose']
         time.sleep(5)
-        str_out += '\n Result state= ' + mr.mosaic_surround_func('state')[0]
+        str_out += '\n Result state= ' + mr.mosaic_surround_func('state')['verbose']
 
     else:
         str_out = "Base: Unknown command"
 
-    return str_out
+    out_dict.update({'code': c.SUCCESS,
+                     'verbose': str_out,
+                     })
+
+    return out_dict
+
 
 
 if __name__ == "__main__":

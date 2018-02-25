@@ -71,6 +71,12 @@ def surround_func(action):
 
     elif action == "stop":
         if code == c.MOSAIC_TRUE:
+
+            out_dict = am.kill_processes(["chrome.exe", ])
+            str_out = out_dict['str_out']
+            out_dict = am.kill_processes(["vlc.exe", dr.PROCESS_NAME])
+            str_out += out_dict['str_out']
+
             pag.keyDown('ctrl')
             pag.keyDown('shift')
             pag.keyDown('alt')
@@ -86,7 +92,7 @@ def surround_func(action):
                              })
         else:
             out_dict.update({'code': c.ERROR,
-                             'verbose': "Surround already stop",
+                             'verbose': "Surround already stopped",
                              })
 
     elif action == "state":

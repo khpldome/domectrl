@@ -15,12 +15,12 @@ from controlapp import projectors_routine as pr
 
 def index(request):
     context = {'latest_question_list': 22}
-    return render(request, 'dome/index.html', context)
+    return render(request, 'dome/additional.html', context)
 
 
 class MosaicSurroundActionView(TemplateView):
 
-    template_name = 'dome/index.html'
+    template_name = 'dome/additional.html'
 
     def get(self, request, *args, **kwargs):
         # print("get=", mosaic_action)
@@ -44,7 +44,7 @@ class MosaicSurroundActionView(TemplateView):
 
 class VlcActionView(TemplateView):
 
-    template_name = 'dome/index.html'
+    template_name = 'dome/additional.html'
 
     def get(self, request, *args, **kwargs):
         return super(VlcActionView, self).get(request, *args, **kwargs)
@@ -68,7 +68,7 @@ class VlcActionView(TemplateView):
 
 class WinapiActionView(TemplateView):
 
-    template_name = 'dome/index.html'
+    template_name = 'dome/additional.html'
 
     def get(self, request, *args, **kwargs):
         return super(WinapiActionView, self).get(request, *args, **kwargs)
@@ -89,7 +89,7 @@ class WinapiActionView(TemplateView):
 
 class DisplayproActionView(TemplateView):
 
-    template_name = 'dome/index.html'
+    template_name = 'dome/additional.html'
 
     def get(self, request, *args, **kwargs):
         return super(DisplayproActionView, self).get(request, *args, **kwargs)
@@ -115,7 +115,7 @@ class DisplayproActionView(TemplateView):
 
 class ProjectorsActionView(TemplateView):
 
-    template_name = 'dome/index.html'
+    template_name = 'dome/additional.html'
 
     def get(self, request, *args, **kwargs):
         return super(ProjectorsActionView, self).get(request, *args, **kwargs)
@@ -128,35 +128,29 @@ class ProjectorsActionView(TemplateView):
             action = kwargs['action']
             print("action=", action)
 
-        out_dict = pr.projectors_func(action)
+            out_dict = pr.projectors_func(action)
 
         context['data_context'] = out_dict['verbose']
         return context
 
 
-def base_index(request):
-    context = {'latest_question_list': 22}
-    return render(request, 'dome/base.html', context)
-
-
 class BaseView(TemplateView):
 
-    template_name = 'dome/base.html'
+    template_name = 'dome/additional.html'
 
     def get(self, request, *args, **kwargs):
         return super(BaseView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(BaseView, self).get_context_data(**kwargs)
-        text_output = ""
 
-        if 'base_action' in kwargs:
-            base_action = kwargs['base_action']
-            print("base_action=", base_action)
+        if 'action' in kwargs:
+            action = kwargs['action']
+            print("action=", action)
 
-            text_output = am.base_func(base_action)
+            out_dict = am.base_func(action)
+            context['data_context'] = out_dict['verbose']
 
-        context['data_context'] = text_output
         return context
 
 
