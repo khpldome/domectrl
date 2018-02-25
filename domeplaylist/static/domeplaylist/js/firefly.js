@@ -19,6 +19,16 @@ jQuery(document).ready(function($) {
         $('.player').css({'grid-column': '1/6', 'grid-row': '2/3'});
     });
 
+    $('.projectors-turn-off a').click(function(){
+        $(this).parent().addClass("hidden")
+        $('.projectors-turn-on').removeClass('hidden');
+    });
+
+    $('.projectors-turn-on a').click(function(){
+        $(this).parent().addClass("hidden")
+        $('.projectors-turn-off').removeClass('hidden');
+    });
+
     $('.playlists-item').click(function(){
         $('.playlists-item').removeClass('active');
         $(this).addClass('active');

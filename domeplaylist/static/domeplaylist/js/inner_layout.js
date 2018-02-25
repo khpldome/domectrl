@@ -88,11 +88,15 @@
                     }
 
                     var status_projectors = $('.status-projectors');
-                    if(status_projectors ){
+                    if(projectors ){
                         status_projectors.removeClass('disabled');
+                        $('.projectors-turn-off').addClass("hidden");
+                        $('.projectors-turn-on').removeClass('hidden');
                     }
                     else{
-                        status_projectors.addClass('disabled')
+                        status_projectors.addClass('disabled');
+                        $('.projectors-turn-on').addClass("hidden");
+                        $('.projectors-turn-off').removeClass('hidden');
                     }
 
                     setTimeout(updateSystemState, 1000);
