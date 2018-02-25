@@ -19,6 +19,7 @@ VLC_BAT_RELPATH = r'\exec\vlc-2.1.6\vlc.bat'
 VLC_BLACK = r'\exec\vlc-2.1.6\Black.jpg'
 HOST_IP = '127.0.0.1'
 VLC_WEB_DOMAIN = ':63933@127.0.0.1:8080'
+POJECTORS_NUMS = 8
 
 # #############################################################################
 # ######################## Custom settings ####################################
@@ -30,6 +31,7 @@ if HOSTNAME == 'fds-Kharkiv':
     # DISPLAYPRO_ABSPATH = r'c:\Program Files (x86)\ImmersiveDisplayPRO\ImmersiveDisplayPRO.exe'
     VLC_EXE_RELPATH = r'\exec\vlc-2.1.6\vlc.exe'
     HOST_IP = '192.168.10.10'
+    POJECTORS_NUMS = 8
 
 elif HOSTNAME == 'fds-Kyiv':
     SERVER_NAME = HOSTNAME
@@ -38,4 +40,5 @@ elif HOSTNAME == 'fds-Kyiv':
     # DISPLAYPRO_ABSPATH = r'c:\Program Files (x86)\ImmersiveDisplayPRO\ImmersiveDisplayPRO.exe'
     VLC_EXE_RELPATH = r'\exec\vlc-2.1.6\vlc.exe'
     HOST_IP = '192.168.1.128'
+    POJECTORS_NUMS = 12
 # -----------------------------------------------------------------------------
