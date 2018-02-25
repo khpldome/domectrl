@@ -18,3 +18,6 @@ khpldome@gmail.com 8013emodlphk7102
 
 
 git reset db.sqlite3
+git rm --cached db.sqlite3
+
+
