@@ -142,7 +142,7 @@ nav.main_tabs .link-more {
     content: url('../img/icon-status-wtf.svg');
 }
 
-.icon-speed, .status-project, .status-player, .status-calib, .status-mosaic, {
+.icon-speed, .status-projectors, .status-player, .status-calib, .status-mosaic {
     grid-row: 1/2;
 }
 
@@ -150,7 +150,7 @@ nav.main_tabs .link-more {
     grid-column: 1/2;
 }
 
-.status-project {
+.status-projectors {
     grid-column: 2/3;
 }
 
