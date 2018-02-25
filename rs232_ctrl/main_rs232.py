@@ -166,6 +166,9 @@ def projector_func(action):
         ports_dict = get_serial_ports()
         print(ports_dict)
 
+    if action == 'STATE':
+        return ports_dict
+
     for i in range(10):
 
         set_pause = False

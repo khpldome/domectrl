@@ -124,14 +124,9 @@ class ProjectorsActionView(TemplateView):
         context = super(ProjectorsActionView, self).get_context_data(**kwargs)
 
         action = ''
-        param = ''
         if 'action' in kwargs:
             action = kwargs['action']
             print("action=", action)
-
-        if 'param' in kwargs:
-            param = kwargs['param']
-            print("param=", param)
 
         out_dict = pr.projectors_func(action)
 

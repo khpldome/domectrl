@@ -8,16 +8,16 @@ def projectors_func(action):
 
     out_dict = {}
 
-    if action == "switch_on":
-        print("projector_func('ON')")
+    if action == "start":
+        print("projector_start")
         res_dict = rs232.projector_func('ON')
         str_out = '\n' + str(res_dict) + ' len= ' + str(len(res_dict))
 
         out_dict.update({'code': c.SUCCESS,
                          'verbose': str_out})
 
-    elif action == "switch_off":
-        print("projector_func('OFF')")
+    elif action == "stop":
+        print("projector_stop")
         res_dict = rs232.projector_func('OFF')
         str_out = '\n' + str(res_dict) + ' len= ' + str(len(res_dict))
 
@@ -25,8 +25,11 @@ def projectors_func(action):
                          'verbose': str_out})
 
     elif action == "state":
-        print("projector_func('state')")
-        str_out = 'Not emplemented yet.'
+        print("projector_state")
+
+        res_dict = rs232.projector_func('STATE')
+        str_out = '\n' + str(res_dict) + ' len= ' + str(len(res_dict))
+
         out_dict.update({'code': c.SUCCESS,
                          'verbose': str_out})
 

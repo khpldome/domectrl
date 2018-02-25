@@ -27,8 +27,9 @@
             <a href="{% url 'dome:displaypro' action='setdesktopwarping' param='0' %}"><span>setdesktopwarping_0</span></a>
             <a href="{% url 'dome:displaypro' action='setdesktopwarping' param='1' %}"><span>setdesktopwarping_1</span></a>
             <br> <br>
-            <a href="{% url 'dome:projectors' action='switch_on' param='0' %}"><span>Switch projectors ON</span></a>
-            <a href="{% url 'dome:projectors' action='switch_off' param='0' %}"><span>Switch projectors OFF</span></a>
+            <a href="{% url 'dome:projectors' action='start' %}"><span>Projectors_start</span></a>
+            <a href="{% url 'dome:projectors' action='stop' %}"><span>Projectors_stop</span></a>
+            <a href="{% url 'dome:projectors' action='state' %}"><span>Projectors_state</span></a>
             <br> <br>
         </li>
     </div>
