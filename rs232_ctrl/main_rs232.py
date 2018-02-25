@@ -17,7 +17,7 @@ import glob
 
 
 # Define an output queue
-output = mp.Queue()
+# output = mp.Queue()
 
 
 def get_serial_ports():
@@ -229,10 +229,7 @@ def projector_func(action):
     return ports_dict
 
 
-
-
 if __name__ == "__main__":
-
 
     configureMosaic_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + r'\exec\Mosaic\configureMosaic-32bit-64bit.exe '
 

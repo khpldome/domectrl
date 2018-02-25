@@ -62,8 +62,8 @@ class PlayListForm(forms.ModelForm):
         self.fields['title'].widget.attrs.update({'required': True})
 
         self.fields['theme'].label = 'Module Description (Required)'
-        self.fields['theme'].required = True
-        self.fields['theme'].widget.attrs.update({'required': True})
+        self.fields['theme'].required = False
+        self.fields['theme'].widget.attrs.update({'required': False})
         #
         # self.fields['category'].label = 'Category (Optional)'
         # self.fields['category'].required = False

@@ -7,7 +7,7 @@
                 <img src="/static/img/logo.svg" width="100%" height="100%" alt="firefly">
             </div>
             <div class="header flex">
-                <h1>Create Account</h1>
+                <h1>Учётная запись</h1>
             </div>
             <div class="form_container">
                 <form action="{{ app_path }}" method="post" id="reg-form">{% csrf_token %}
@@ -20,10 +20,10 @@
                     {% endfor %}
                     <div class="form-group">
                         <a href="#" onclick="document.getElementById('reg-form').submit()" class="form-button" tabindex="3">
-                            <span>Create Account</span>
+                            <span>Создать</span>
                         </a>
                         <a class="form-button" href="{% url 'domeuser:sign_in' %}">
-                            <span>Sign In</span>
+                            <span>Войти</span>
                         </a>
                     </div>
                 </form>

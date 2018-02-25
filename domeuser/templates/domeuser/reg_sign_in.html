@@ -17,7 +17,7 @@
                             </div>
                         {% endfor %}
                         <div class="align-right">
-                            <button type="submit" class="btn btn-info">Create Account</button>
+                            <button type="submit" class="btn btn-info">Создать</button>
                         </div>
                     </form>
                 </div>
@@ -26,7 +26,7 @@
 
         <div class="col-md-5">
             <div class="panel panel-default w-block">
-                <div class="panel-heading">Sign In</div>
+                <div class="panel-heading">Войти</div>
                 <div class="panel-body">
                     <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
                         <input type="hidden" name="form_name" value="SignInForm"/>
@@ -35,11 +35,14 @@
                         {% endfor %}
                         <div class="form-group">
                             {{ sign_in_form.username.errors }}
-                            {{ sign_in_form.username.label_tag }} {{ sign_in_form.username }}
+{#                            {{ sign_in_form.username.label_tag }}#}
+                            <label>Имя пользователя</label>
+                            {{ sign_in_form.username }}
                         </div>
                         <div class="form-group">
                             {{ sign_in_form.password.errors }}
-                            {{ sign_in_form.password.label_tag }}
+{#                            {{ sign_in_form.password.label_tag }}#}
+                            <label>Пароль</label>
                             <a href="{% url 'domeuser:password_reset' %}" class="pull-right" tabindex="5">Forgot Password?</a>
                             {{ sign_in_form.password }}
                         </div>
