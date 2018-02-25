@@ -10,33 +10,22 @@ def projectors_func(action):
 
     if action == "start":
         print("projector_start")
-        res_dict = rs232.projector_func('ON')
-        str_out = '\n' + str(res_dict) + ' len= ' + str(len(res_dict))
-
-        out_dict.update({'code': c.SUCCESS,
-                         'verbose': str_out})
+        res_dict, count_on = rs232.projector_func('ON')
 
     elif action == "stop":
         print("projector_stop")
-        res_dict = rs232.projector_func('OFF')
-        str_out = '\n' + str(res_dict) + ' len= ' + str(len(res_dict))
-
-        out_dict.update({'code': c.SUCCESS,
-                         'verbose': str_out})
+        res_dict, count_on = rs232.projector_func('OFF')
 
     elif action == "state":
         print("projector_state")
+        res_dict, count_on = rs232.projector_func('STATE')
 
-        res_dict = rs232.projector_func('STATE')
-        str_out = '\n' + str(res_dict) + ' len= ' + str(len(res_dict))
+    str_out = '\n' + str(res_dict) + ' len= ' + str(len(res_dict)) + ' count_on= ' + str(count_on)
 
-        out_dict.update({'code': c.SUCCESS,
-                         'verbose': str_out})
-
-    else:
-        str_out = "Base: Unknown command"
-        out_dict.update({'code': c.ERROR,
-                         'verbose': str_out})
+    out_dict.update({'code': c.SUCCESS,
+                     'verbose': str_out,
+                     'count_on': count_on,
+                     })
 
     return out_dict
 
