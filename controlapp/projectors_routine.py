@@ -10,7 +10,7 @@ import random
 
 
 import mod_wsgi
-
+import domectrl.config_fds as conf
 # print(mod_wsgi.multithread)
 
 
@@ -38,27 +38,30 @@ def projectors_func(action):
 
     if action == "start":
         print("projector_start")
-        res_dict, count_on = rs232.projector_func('ON')
+        if conf.HOSTNAME == 'fds-Kyiv':
+            res_dict, count_on = rs232.projector_func('ON')
 
-        # for i in range(5):
-        #     p = Process(target=worker, args=(i, 'cmd', queue))
-        #     p.start()
-        #     # p.join()
+            # for i in range(5):
+            #     p = Process(target=worker, args=(i, 'cmd', queue))
+            #     p.start()
+            #     # p.join()
 
     elif action == "stop":
         print("projector_stop")
-        res_dict, count_on = rs232.projector_func('OFF')
+        if conf.HOSTNAME == 'fds-Kyiv':
+            res_dict, count_on = rs232.projector_func('OFF')
 
     elif action == "state":
         print("projector_state")
-        res_dict, count_on = rs232.projector_func('STATE')
+        if conf.HOSTNAME == 'fds-Kyiv':
+            res_dict, count_on = rs232.projector_func('STATE')
 
-        while True:
-            if queue.empty():
-                break
+            while True:
+                if queue.empty():
+                    break
 
-            obj += str(queue.get()) + ' '
-        print('obj=', obj)
+                obj += str(queue.get()) + ' '
+            print('obj=', obj)
 
     str_out = '\n' + str(res_dict) + ' len= ' + str(len(res_dict)) + ' count_on= ' + str(count_on)
 
