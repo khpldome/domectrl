@@ -9,9 +9,7 @@ import time
 import random
 
 
-import mod_wsgi
 import domectrl.config_fds as conf
-# print(mod_wsgi.multithread)
 
 
 queue = Queue()

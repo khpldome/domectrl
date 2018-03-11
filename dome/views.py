@@ -11,6 +11,7 @@ from controlapp import displaypro_routine as dr
 from controlapp import winapi_routine as wr
 from controlapp import auto_manager as am
 from controlapp import projectors_routine as pr
+from controlapp import fds_routine as fr
 
 
 def index(request):
@@ -130,7 +131,28 @@ class ProjectorsActionView(TemplateView):
 
             out_dict = pr.projectors_func(action)
 
-        context['data_context'] = out_dict['verbose']
+            context['data_context'] = out_dict['verbose']
+        return context
+
+
+class FdsActionView(TemplateView):
+
+    template_name = 'dome/additional.html'
+
+    def get(self, request, *args, **kwargs):
+        return super(FdsActionView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(FdsActionView, self).get_context_data(**kwargs)
+
+        action = ''
+        if 'action' in kwargs:
+            action = kwargs['action']
+            print("action=", action)
+
+            out_dict = fr.fds_func(action)
+
+            context['data_context'] = out_dict['verbose']
         return context
 
 

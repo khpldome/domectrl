@@ -35,7 +35,9 @@
             {% else %}
 
             {% endif %}
-
+            <a href="{% url 'dome:fds' action='shutdown' %}"><span>shutdown_fds</span></a>
+            <a href="{% url 'dome:fds' action='restart' %}"><span>restart_fds</span></a>
+            <a href="{% url 'dome:fds' action='state' %}"><span>state_fds</span></a>
         </li>
     </div>
 

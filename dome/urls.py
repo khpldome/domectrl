@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^displaypro/(?P<action>\w+)/$', views.DisplayproActionView.as_view(), name='displaypro'),
     url(r'^displaypro/(?P<action>\w+)/(?P<param>\w+)/$', views.DisplayproActionView.as_view(), name='displaypro'),
     url(r'^projectors/(?P<action>\w+)/$', views.ProjectorsActionView.as_view(), name='projectors'),
+    url(r'^fds/(?P<action>\w+)/$', views.FdsActionView.as_view(), name='fds'),
 
     url(r'^base/(?P<action>\w+)/$', views.BaseView.as_view(), name='base'),
 
