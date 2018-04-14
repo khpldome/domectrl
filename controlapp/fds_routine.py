@@ -39,7 +39,14 @@ def fds_func(action):
     if action == "state":
         print("memory state")
 
+        import psutil
+        m_d = psutil.virtual_memory()
+        c_d = psutil.cpu_percent()
+
         str_context = 'memory State...'
+        str_context += '\n\n' + str(m_d)
+        str_context += '\nCPU: ' + str(c_d) + '%'
+
         out_dict.update({'code': 1,
                          'verbose': str_context,
                          })
