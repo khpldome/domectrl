@@ -24,6 +24,8 @@ def check_vlc_server():
 
 def vlc_func(action):
 
+    import time
+
     out_dict = {}
     # vlc_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.VLC_EXE_RELPATH
     vlc_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.VLC_BAT_RELPATH
@@ -45,6 +47,9 @@ def vlc_func(action):
             if vlc_is_running is False:
 
                 res_dict = ue.execute_command2(vlc_exe)
+
+                time.sleep(5)
+
                 # res_dict = ue.execute_command2(
                 #     [vlc_exe,
                 #      # '--extraintf=http',

@@ -162,8 +162,6 @@ class TrackPlayView(LoginRequiredMixin, ListView):
 
     def get(self, request, *args, **kwargs):
 
-        import time
-
         playlist_id = self.kwargs['playlist_id']
         track_id = self.kwargs['track_id']
 
@@ -172,18 +170,31 @@ class TrackPlayView(LoginRequiredMixin, ListView):
 
         if track_id != "-1":
 
-            vr.vlc_func('Start')
+            vr.vlc_func('start')
 
-            time.sleep(5)
+            if 'action' in kwargs:
+                action = kwargs['action']
+                print("+++++action=", action)
 
             instance = Track.objects.filter(id=track_id).first()
 
             # t3 = instance.text.replace(' ', '%20')
             path = instance.title
             print('http://' + conf.HOST_IP, ':8080/requests/status.xml?command=in_enqueue&input=', path)
-            # r = requests.get('http://'+conf.ALLOWED_IP+':8080/requests/status.xml?command=in_enqueue&input='+t3, auth=('', '63933'))
-            r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=in_play&input=' + path, auth=('', '63933'))
-            print("responce=", r)
+
+            if action == 'play':
+                # r = requests.get('http://'+conf.ALLOWED_IP+':8080/requests/status.xml?command=in_enqueue&input='+t3, auth=('', '63933'))
+                r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=in_play&input=' + path, auth=('', '63933'))
+                print("responce=", r)
+
+            elif action == 'stop':
+                r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=pl_stop', auth=('', '63933'))
+                print("responce=", r)
+
+            elif action == 'fullscreen':
+                r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=fullscreen', auth=('', '63933'))
+                print("responce=", r)
+
         else:
             pass
 
@@ -295,7 +306,7 @@ class AjaxProcessStatus(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMi
     """handles only ajax requests"""
 
     global pm
-    system_state_dict = {}
+    # system_state_dict = {}
 
     def get(self, request, *args, **kwargs):
 

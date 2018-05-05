@@ -73,10 +73,13 @@
         <div class="player grid">
             <div class="player-play icon icon-play-small flex">
                 <a id="track-play-button"
-                   href="{% url 'domeplaylist:track-play' playlist_id=playlist_id_active track_id=-1 %}"
-                   title="Plays"></a>
+                   href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='play' %}"
+                   title="Play"></a>
             </div>
             <div class="player-stop icon icon-stop flex">
+                <a id="track-stop-button"
+                   href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='stop' %}"
+                   title="Stop"></a>
             </div>
             <div id="currentTime" class="player-current-position flex dynamic">
                 {#                <span>8:20</span>#}00:00:00
@@ -98,7 +101,11 @@
             </div>
             <div class="player-lock icon icon-lock flex"></div>
             <div class="player-repeat icon icon-repeat flex"></div>
-            <div class="player-full icon icon-full flex"></div>
+            <div class="player-full icon icon-full flex">
+                 <a id="track-fullscreen-button"
+                   href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='fullscreen' %}"
+                   title="Fullscreen"></a>
+            </div>
         </div>
         <div id="track-list" class="tracks-container grid">
             {% if tracklist_qs %}
@@ -166,6 +173,7 @@
 
                 var track = $('.track.active').data("trackNum");
                 {#console.log(track);#}
+
                 var track_play_button = $('#track-play-button');
                 var str_url = track_play_button.attr('href');
                 {#console.log(str_url);#}
@@ -174,6 +182,23 @@
                 res[4] = track;
                 str_url = res.join('/');
                 track_play_button.attr('href', str_url);
+
+
+                var track_stop_button = $('#track-stop-button');
+                var str_url = track_stop_button.attr('href');
+                var res = str_url.split('/');
+                res[4] = track;
+                str_url = res.join('/');
+                track_stop_button.attr('href', str_url);
+
+
+                var track_fullscreen_button = $('#track-fullscreen-button');
+                var str_url = track_fullscreen_button.attr('href');
+                var res = str_url.split('/');
+                res[4] = track;
+                str_url = res.join('/');
+                track_fullscreen_button.attr('href', str_url);
+
             });
         });
     </script>
