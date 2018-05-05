@@ -201,22 +201,42 @@ class TrackPlayView(LoginRequiredMixin, ListView):
         return super(TrackPlayView, self).get(request, *args, **kwargs)
 
     def get_queryset(self, **kwargs):
-        # ToDo Add check if exists
+
+        # playlist_id = self.kwargs['playlist_id']
+        #
+        # self.playlist_qs = PlayList.objects.filter(user=self.request.user)
+        #
+        # if playlist_id == '-1':
+        #
+        #     first_playlist = self.playlist_qs.order_by('pk').first()
+        #     self.active_playlist = first_playlist.id
+        #     self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user,
+        #                                              playlist_id=first_playlist).order_by('-pk')
+        # else:
+        #     self.active_playlist = playlist_id
+        #     self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user,
+        #                                              playlist_id=playlist_id).order_by('-pk')
+        # return self.tracklist_qs
+
         playlist_id = self.kwargs['playlist_id']
 
-        self.playlist_qs = PlayList.objects.filter(user=self.request.user)
+        self.playlist_qs = PlayList.objects.filter(user=self.request.user).order_by('order')
 
-        if playlist_id == '-1':
+        if self.playlist_qs:
 
-            first_playlist = self.playlist_qs.order_by('pk').first()
-            self.active_playlist = first_playlist.id
-            self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user,
-                                                     playlist_id=first_playlist).order_by('-pk')
+            if playlist_id == '-1':
+
+                first_playlist = self.playlist_qs.order_by('order').first()
+                self.active_playlist = first_playlist.id
+                self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user,
+                                                         playlist_id=first_playlist).order_by('order')
+            else:
+                self.active_playlist = playlist_id
+                self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user,
+                                                         playlist_id=playlist_id).order_by('order')
+            return self.tracklist_qs
         else:
-            self.active_playlist = playlist_id
-            self.tracklist_qs = Track.objects.filter(playlist__user=self.request.user,
-                                                     playlist_id=playlist_id).order_by('-pk')
-        return self.tracklist_qs
+            HttpResponse("application/json")
 
     def get_context_data(self, **kwargs):
         context = super(TrackPlayView, self).get_context_data(**kwargs)
