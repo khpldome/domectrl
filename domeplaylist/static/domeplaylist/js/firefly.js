@@ -19,6 +19,12 @@ jQuery(document).ready(function($) {
         $('.player').css({'grid-column': '1/6', 'grid-row': '2/3'});
     });
 
+    $(window).load(function () {
+    // $(document).ready(function () {
+        $('.track active').insertAfter($(this).find('.track-trash'));
+        $('.player').css({'grid-column': '1/6', 'grid-row': '2/3'});
+    });
+
     $('.projectors-turn-off a').click(function(){
         $(this).parent().addClass("hidden")
         $('.projectors-turn-on').removeClass('hidden');
