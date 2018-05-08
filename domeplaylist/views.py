@@ -152,7 +152,7 @@ class TrackListView(LoginRequiredMixin, ListView):
         return context
 
 
-class TrackPlayView(LoginRequiredMixin, ListView):
+class TrackActionView(LoginRequiredMixin, ListView):
 
     template_name = 'domeplaylist/track_list.html'
     context_object_name = "tracklist_qs"
@@ -198,7 +198,7 @@ class TrackPlayView(LoginRequiredMixin, ListView):
         else:
             pass
 
-        return super(TrackPlayView, self).get(request, *args, **kwargs)
+        return super(TrackActionView, self).get(request, *args, **kwargs)
 
     def get_queryset(self, **kwargs):
 
@@ -239,7 +239,7 @@ class TrackPlayView(LoginRequiredMixin, ListView):
             HttpResponse("application/json")
 
     def get_context_data(self, **kwargs):
-        context = super(TrackPlayView, self).get_context_data(**kwargs)
+        context = super(TrackActionView, self).get_context_data(**kwargs)
 
         context['playlists_qs'] = self.playlist_qs
         context['playlist_id_active'] = str(self.active_playlist)

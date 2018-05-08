@@ -24,7 +24,7 @@ track_urls = [
     url(r'^track/(?P<track_id>-?\d+)/delete/$', views.TrackDeleteView.as_view(), name='track-delete'),
     # url(r'^track/(?P<track_id>-?\d+)/play/$', views.TrackPlayView.as_view(), name='track-play'),
 
-    url(r'^track/(?P<track_id>-?\d+)/(?P<action>\w+)/$', views.TrackPlayView.as_view(), name='track-action'),
+    url(r'^track/(?P<track_id>-?\d+)/(?P<action>\w+)/$', views.TrackActionView.as_view(), name='track-action'),
     # url(r'^vlc/(?P<action>\w+)/$', views.VlcActionView.as_view(), name='vlc'),
 
     url(r'^track/(?P<track_id>-?\d+)/play/(?P<path>.*)/$', views.TrackListViewRedirect.as_view(), name='track-play-proxy'),
