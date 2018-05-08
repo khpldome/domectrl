@@ -189,7 +189,12 @@ def parse_mosaic_xml(in_dict):
     action = in_dict['action']
     xml_out = in_dict['xml_out']
 
-    if action == "restart":  # Temporary!
+    if 'ERROR: NvAPI_SYS_GetDriverAndBranchVersion failed with status -2' in xml_out:
+        print("not NvApi driver")
+        code = c.ERROR
+        str_context += '\nnot NvApi driver'
+
+    elif action == "restart":  # Temporary!
         print("mosaic help")
         str_context = xml_out
 
