@@ -176,6 +176,10 @@ class TrackActionView(LoginRequiredMixin, ListView):
                 action = kwargs['action']
                 print("+++++action=", action)
 
+            if 'val' in kwargs:
+                val = kwargs['val']
+                print("+++++val=", val)
+
             instance = Track.objects.filter(id=track_id).first()
 
             # t3 = instance.text.replace(' ', '%20')
@@ -195,6 +199,9 @@ class TrackActionView(LoginRequiredMixin, ListView):
                 r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=fullscreen', auth=('', '63933'))
                 print("responce=", r)
 
+            elif action == 'seek':
+                r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=seek&val=' + val, auth=('', '63933'))
+                print("responce=", r)
         else:
             pass
 
