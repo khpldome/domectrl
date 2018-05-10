@@ -12,18 +12,19 @@ jQuery(document).ready(function($) {
         $(this).addClass('pressed');
     });
 
-    $('.track').click(function(){
+    $('.track').click(function() {
         $('.track').removeClass('active');
         $(this).addClass('active');
         $('.player').insertAfter($(this).find('.track-trash'));
         $('.player').css({'grid-column': '1/6', 'grid-row': '2/3'});
     });
-
-    $(window).load(function () {
-    // $(document).ready(function () {
-        $('.track active').insertAfter($(this).find('.track-trash'));
-        $('.player').css({'grid-column': '1/6', 'grid-row': '2/3'});
-    });
+    // console.log($('.track.active').length);
+    if ($(".track.active").length) {
+        $(window).load(function () {
+            $('.player').insertAfter( $(".track.active").find('.track-trash'));
+            $('.player').css({'grid-column': '1/6', 'grid-row': '2/3'});
+        });
+    }
 
     $('.projectors-turn-off a').click(function(){
         $(this).parent().addClass("hidden")
