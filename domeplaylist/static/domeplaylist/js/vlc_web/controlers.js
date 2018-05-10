@@ -221,6 +221,7 @@ function sendCommand(params, append) {
 }
 
 function browse(dir) {
+    // console.log("browse>>");
     dir = dir == undefined ? 'file://~' : dir;
     $.ajax({
         url: 'requests/browse.xml',
