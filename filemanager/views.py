@@ -14,6 +14,7 @@ from django.conf import settings
 from django.contrib import messages
 import utils.executor as ue
 
+
 class FilemanagerMixin(object):
     def dispatch(self, request, *args, **kwargs):
         params = dict(request.GET)
@@ -53,6 +54,7 @@ class BrowserView(FilemanagerMixin, TemplateView):
 
         context['popup'] = self.popup
         context['files'] = self.fm.directory_list()
+        context['playlist_id_active'] = self.kwargs['playlist_id_active']
 
         return context
 
