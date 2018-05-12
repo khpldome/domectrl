@@ -180,8 +180,6 @@ function sendCommand(params, append) {
 
         $.ajax({
             url: 'requests/status.xml',
-            // url: VLC_api_url,
-            // crossDomain: true,
             headers: {
                     // 'Access-Control-Allow-Origin': '*'
                     // 'Authorization': 'Basic OjYzOTMz'
@@ -198,7 +196,7 @@ function sendCommand(params, append) {
     } else {
         if (params.plreload === false) {
             $.ajax({
-                url: VLC_api_url,
+                url: 'requests/status.xml',
                 data: params,
                 success: function (data, status, jqXHR) {
                     if (append != undefined) {
@@ -208,9 +206,9 @@ function sendCommand(params, append) {
             });
         } else {
             $.ajax({
-                // url: VLC_api_url,
                 url: 'requests/status.xml',
                 data: params,
+                // cache: false,
                 success: function (data, status, jqXHR) {
                     if (append != undefined) {
                         eval(append);

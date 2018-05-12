@@ -191,17 +191,17 @@ class TrackActionView(LoginRequiredMixin, ListView):
                 r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=in_play&input=' + path, auth=('', '63933'))
                 print("responce=", r)
 
-            elif action == 'stop':
-                r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=pl_stop', auth=('', '63933'))
-                print("responce=", r)
+            # elif action == 'stop':
+            #     r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=pl_stop', auth=('', '63933'))
+            #     print("responce=", r)
 
             elif action == 'fullscreen':
                 r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=fullscreen', auth=('', '63933'))
                 print("responce=", r)
 
-            elif action == 'seek':
-                r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=seek&val=' + val, auth=('', '63933'))
-                print("responce=", r)
+            # elif action == 'seek':
+            #     r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=seek&val=' + val, auth=('', '63933'))
+            #     print("responce=", r)
         else:
             pass
 
@@ -255,6 +255,9 @@ class TrackActionView(LoginRequiredMixin, ListView):
 
         return context
 
+    def get_success_url(self):
+        return reverse_lazy('domeplaylist:track-list')
+
 
 class NoAccessView(TemplateView):
     template_name = 'domeplaylist/no_access.html'
@@ -291,9 +294,20 @@ class TrackDeleteView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
 class TrackActionRedirect(View):
 
     def get(self, request, **kwargs):
-        pass
 
-        return HttpResponseRedirect(reverse_lazy('domeplaylist:proxy', kwargs={'path': self.kwargs['path']}))
+        pass
+        path = self.kwargs['path']
+        print('&' * 100, str(self.request.GET))
+
+        if 'command' in self.request.GET:
+            path += '?command=' + self.request.GET['command']
+
+        if 'val' in self.request.GET:
+            path += '&val=' + self.request.GET['val']
+
+        print('+' * 100, path)
+
+        return HttpResponseRedirect(reverse_lazy('domeplaylist:proxy', kwargs={'path': path}))
 
 
 def proxyView(request, path):
@@ -304,16 +318,36 @@ def proxyView(request, path):
 
     # pm.update_request_ts()
     pm.update_vlc_state()
-    print('!'*100)
+    print('!'*100, path)
     if pm.is_vlc_active() is True:
 
         vlc_server_url = 'http://' + conf.VLC_WEB_DOMAIN + '/' + path
-        # print(">>> " + vlc_server_url)
+        print(">>> " + vlc_server_url)
 
         extra_requests_args = {}
         return pv.proxy_view(request, vlc_server_url, extra_requests_args)
     else:
         return HttpResponse(status=503)
+
+
+# def proxyView(request, path):
+#
+#     from proxy import views as pv
+#
+#     global pm
+#
+#     # pm.update_request_ts()
+#     pm.update_vlc_state()
+#     print('!'*100, path)
+#     if pm.is_vlc_active() is True:
+#
+#         vlc_server_url = 'http://' + conf.VLC_WEB_DOMAIN + '/' + path
+#         print(">>> " + vlc_server_url)
+#
+#         extra_requests_args = {}
+#         return pv.proxy_view(request, vlc_server_url, extra_requests_args)
+#     else:
+#         return HttpResponse(status=503)
 
 
 class AjaxProcessStatus(LoginRequiredMixin, ModulePermissionMixin, AjaxHandlerMixin, View):

@@ -77,7 +77,7 @@
                    title="Play"></a>
             </div>
             <div class="player-stop icon icon-stop flex">
-                <a id="track-stop-button"
+                <a id="buttonStop"
                    href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='stop' %}"
                    title="Stop"></a>
             </div>
@@ -241,7 +241,7 @@
                 track_play_button.attr('href', str_url);
 
 
-                var track_stop_button = $('#track-stop-button');
+                var track_stop_button = $('#buttonStop');
                 var str_url = track_stop_button.attr('href');
                 var res = str_url.split('/');
                 res[4] = track;

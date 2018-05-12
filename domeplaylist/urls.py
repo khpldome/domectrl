@@ -16,7 +16,7 @@ track_urls = [
 
     # http://127.0.0.1:8000/domeplaylist/playlist/1/track-list/
     url(r'^track-list/$', views.TrackListView.as_view(), name='track-list'),
-    url(r'^track-list/(?P<path>.*)/$', views.TrackActionRedirect.as_view()),
+    url(r'^track-list/(?P<path>.*)$', views.TrackActionRedirect.as_view()),
 
     # http://127.0.0.1:8000/domeplaylist/playlist/1/track-add/
     # url(r'^track-add/$', views.TrackAddView.as_view(), name='track-add'),
@@ -25,7 +25,7 @@ track_urls = [
     # url(r'^track/(?P<track_id>-?\d+)/play/$', views.TrackPlayView.as_view(), name='track-play'),
 
     url(r'^track/(?P<track_id>-?\d+)/(?P<action>\w+)/$', views.TrackActionView.as_view(), name='track-action'),
-    url(r'^track/(?P<track_id>-?\d+)/(?P<action>\w+)/(?P<path>.*)/$', views.TrackActionRedirect.as_view()),
+    url(r'^track/(?P<track_id>-?\d+)/(?P<action>\w+)/(?P<path>.*)$', views.TrackActionRedirect.as_view()),
 
 ]
 
@@ -42,7 +42,7 @@ urlpatterns = [
 
     url(r'^no-access/$', views.NoAccessView.as_view(), name='no_access'),
 
-    url(r'^proxy/(?P<path>.*)/$', views.proxyView, name='proxy'),
+    url(r'^proxy/(?P<path>.*)$', views.proxyView, name='proxy'),
 
     # http://127.0.0.1:8000/ajax-status/state.json
     url(r'^ajax-status/state.json$', views.AjaxProcessStatus.as_view(), name='ajax-status'),
