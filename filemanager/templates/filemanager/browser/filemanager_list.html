@@ -41,15 +41,16 @@
                 <td>{{ file.filesize }}</td>
                 <td>{{ file.filedate }}</td>
                 {% if not popup %}
-                    <td><a href="{% url 'filemanager:detail' %}?path={{ file.filepath }}">{% trans "Details" %}</a>
+                    <td><a href="{% url 'filemanager:detail' playlist_id_active=playlist_id_active %}?path={{ file.filepath }}">{% trans "Details" %}</a>
                     </td>
                     {% if file.filetype == "Directory" %}
                         <td></td>
                     {% else %}
-                        {#                        <td><a href="{% url 'filemanager:add' %}?path={{ file.directory }}">{% trans "Add" %}</a>#}
-                        {#                        {{ playlist_id_active }}#}
+                        {#{{ playlist_id_active }}#}
                         <td>
-                            <a href="{% url 'filemanager:track-select' playlist_id_active=playlist_id_active %}?path={{ file.directory }}&amp;filepath={{ file.filepath }}">{% trans "Select" %}</a>
+                            <a href="{% url 'filemanager:track-select' playlist_id_active=playlist_id_active %}?path={{ file.directory }}&amp;filepath={{ file.filepath }}">
+                                {% trans "Select" %}
+                            </a>
                         </td>
                     {% endif %}
                 {% endif %}
@@ -63,12 +64,12 @@
         {% endfor %}
         </tbody>
     </table>
-    <div>
-        <a href="{% url 'filemanager:create-directory' %}?path={{ path }}{% if popup %}&amp;popup=1{% endif %}"
-           class="btn btn-default">{% trans "Create directory" %}</a>
-        <a href="{% url 'filemanager:upload' %}?path={{ path }}{% if popup %}&amp;popup=1{% endif %}"
-           class="btn btn-default">{% trans "Upload" %}</a>
-    </div>
+    {#    <div>#}
+    {#        <a href="{% url 'filemanager:create-directory' %}?path={{ path }}{% if popup %}&amp;popup=1{% endif %}"#}
+    {#           class="btn btn-default">{% trans "Create directory" %}</a>#}
+    {#        <a href="{% url 'filemanager:upload' %}?path={{ path }}{% if popup %}&amp;popup=1{% endif %}"#}
+    {#           class="btn btn-default">{% trans "Upload" %}</a>#}
+    {#    </div>#}
 
     {% if popup %}
         <script src="{% static "js/filemanager.js" %}"></script>

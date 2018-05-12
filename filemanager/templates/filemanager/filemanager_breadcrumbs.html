@@ -4,8 +4,7 @@
             {% if forloop.last %}
                 {{ breadcrumb.label }}
             {% else %}
-                <a href="{% url 'filemanager:browser' playlist_id_active=playlist_id_active %}?path=
-                        {{ breadcrumb.path }}{% if popup %}&amp;popup=1{% endif %}">{{ breadcrumb.label }}</a>
+                <a href="{% url 'filemanager:browser' playlist_id_active=playlist_id_active %}?path={{ breadcrumb.path }}{% if popup %}&amp;popup=1{% endif %}">{{ breadcrumb.label }}</a>
             {% endif %}
         </li>
     {% endfor %}
