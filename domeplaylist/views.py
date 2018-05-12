@@ -288,7 +288,7 @@ class TrackDeleteView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
         return HttpResponseRedirect(success_url)
 
 
-class TrackListViewRedirect(View):
+class TrackActionRedirect(View):
 
     def get(self, request, **kwargs):
         pass
@@ -304,10 +304,13 @@ def proxyView(request, path):
 
     # pm.update_request_ts()
     pm.update_vlc_state()
-
+    print('!'*100)
     if pm.is_vlc_active() is True:
-        extra_requests_args = {}
+
         vlc_server_url = 'http://' + conf.VLC_WEB_DOMAIN + '/' + path
+        # print(">>> " + vlc_server_url)
+
+        extra_requests_args = {}
         return pv.proxy_view(request, vlc_server_url, extra_requests_args)
     else:
         return HttpResponse(status=503)

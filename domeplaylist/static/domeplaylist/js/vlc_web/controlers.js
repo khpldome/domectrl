@@ -208,7 +208,8 @@ function sendCommand(params, append) {
             });
         } else {
             $.ajax({
-                url: VLC_api_url,
+                // url: VLC_api_url,
+                url: 'requests/status.xml',
                 data: params,
                 success: function (data, status, jqXHR) {
                     if (append != undefined) {
