@@ -6,6 +6,39 @@ jQuery(document).ready(function($) {
         $(this).addClass('pressed');
     });
 
+        var browse_target       =   'default';
+        $(function(){
+            $('#window_browse').dialog({
+                autoOpen: false,
+                width: 50,
+                height: 650,
+                modal: true,
+                resizable: false,
+                buttons: {
+                    "Открыть":function(){
+                        $('li.ui-selected','#browse_elements').each(function(){
+                            $(this).dblclick();
+                        });
+                    },
+                    "Enqueue": function() {
+                        $('li.ui-selected','#browse_elements').each(function(){
+                            var path    =   this.getAttribute('opendir') ? this.getAttribute('opendir') : this.getAttribute('openfile');
+                            switch(browse_target){
+                                default:
+                                    sendCommand('command=in_enqueue&input='+encodeURI(path));
+                                    setTimeout(function(){updatePlayList(true);},1000);
+                                    break;
+                            }
+                        });
+                        $(this).dialog("close");
+                    },
+                    "Отмена" : function(){
+                        $(this).dialog("close")
+                    }
+                }
+            });
+        });
+
     $('.playlist-expand').click(function() {
         $('.tracks-container').removeClass('collapsed');
         $('.playlist-collapse').removeClass('pressed');
@@ -47,15 +80,6 @@ jQuery(document).ready(function($) {
 
     var playlistCount = $('.playlists-container').data("playlistCount");
     $('.playlists-container').css('grid-template-rows', '68px repeat(' + playlistCount + ', 50px)');
-
-    $('.bar-marker').draggable({
-        axis: 'x',
-        containment: 'parent',
-        drag: function() {
-            var trackCurrentTime = $('.bar-marker').css('left');
-            $('.bar-current').css('width', 'calc(' + trackCurrentTime + ' + 10px)');
-        }
-    });
 
 // Загузка плейлиста без перезагузки всей страницы
     //  $(".playlist-link").click(function(e){

@@ -400,6 +400,10 @@ nav.main_tabs .link-more {
     box-sizing: border-box;
 }
 
+.track:last-child {
+    border-bottom: none;
+}
+
 .track.active {
     background: rgba(255,255,255,0.1);
     color: #fff;
@@ -581,7 +585,7 @@ nav.main_tabs .link-more {
     background-color: #f7b445;
 }
 
-.player>div a {
+.player>div a:not(.bar-marker) {
     width: 100%;
     height: 100%;
 }
@@ -606,6 +610,7 @@ nav.main_tabs .link-more {
     grid-column: 4/5;
     position: relative;
     margin: 0 10px;
+    padding: 0 5px;
 }
 
 .player-duration {
@@ -687,21 +692,32 @@ nav.main_tabs .link-more {
     background: #1782b4;
 }
 
-.bar-current {
-    width: 0;
-    background: #fff;
-}
-
 .bar-marker {
     width: 20px;
     position: absolute;
-    left: 0;
     height: 20px;
     background: #26a9e7;
     border: 4px solid #fff;
     border-radius: 100%;
     box-sizing: border-box;
     cursor: pointer;
+    z-index: 1;
+    top: -6.5px;
+    margin-left: -10px;
+}
+
+.volume-bar-marker {
+    width: 20px;
+    position: absolute;
+    height: 20px;
+    background: #26a9e7;
+    border: 4px solid #fff;
+    border-radius: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+    z-index: 1;
+    top: -6.5px;
+    margin-left: -10px;
 }
 
 .ui-sortable-placeholder {
@@ -884,3 +900,28 @@ grid-row: 2/3;
 .hidden {
     display: none;
 }
+
+#seekContainer, #volumesliderzone {
+    width: 100%;
+}
+
+.ui-slider {
+    position: relative;
+    text-align: left;
+}
+
+.ui-slider .ui-slider-range {
+    position: absolute;
+    border: 0;
+    background-position: 0 0;
+}
+
+.ui-slider-horizontal .ui-slider-range-min {
+    height: 6px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 2px;
+    background-color: #fff
+}
+
