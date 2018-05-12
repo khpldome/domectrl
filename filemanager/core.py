@@ -5,7 +5,7 @@ from django.core.files.base import ContentFile
 
 from filemanager import signals
 from filemanager.settings import DIRECTORY, STORAGE
-from filemanager.utils import sizeof_fmt
+from filemanager.utils import sizeof_fmt, file_ext
 
 
 class Filemanager(object):
@@ -78,6 +78,7 @@ class Filemanager(object):
                 'filename': name,
                 'filedate': STORAGE.get_modified_time(os.path.join(self.path, name)),
                 'filesize': sizeof_fmt(STORAGE.size(os.path.join(self.path, name))),
+                'validext': file_ext(name),
             }
 
         for directoryname in directories:

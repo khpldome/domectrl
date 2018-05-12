@@ -127,57 +127,41 @@ class TrackSelectView(FilemanagerMixin, RedirectView):
         return context
 
 
-# class NavigateView(FilemanagerMixin, TemplateView):
-#     template_name = 'filemanager/browser/navigate_list.html'
+# class UploadView(FilemanagerMixin, TemplateView):
+#     template_name = 'filemanager/filemanager_upload.html'
+#     extra_breadcrumbs = [{
+#         'path': '#',
+#         'label': 'Upload'
+#     }]
+
+
+# class UploadFileView(FilemanagerMixin, View):
+#     def post(self, request, *args, **kwargs):
+#         if len(request.FILES) != 1:
+#             return HttpResponseBadRequest("Just a single file please.")
 #
-#     def dispatch(self, request, *args, **kwargs):
-#         self.popup = self.request.GET.get('popup', 0) == '1'
-#         return super(BrowserView, self).dispatch(request, *args, **kwargs)
+#         # TODO: get filepath and validate characters in name, validate mime type and extension
+#         filename = self.fm.upload_file(filedata=request.FILES['files[]'])
 #
-#     def get_context_data(self, **kwargs):
-#         context = super(BrowserView, self).get_context_data(**kwargs)
+#         return HttpResponse(json.dumps({
+#             'files': [{'name': filename}],
+#         }))
+
+
+# class DirectoryCreateView(FilemanagerMixin, FormView):
+#     template_name = 'filemanager/filemanager_create_directory.html'
+#     form_class = DirectoryCreateForm
+#     extra_breadcrumbs = [{
+#         'path': '#',
+#         'label': 'Create directory'
+#     }]
 #
-#         context['popup'] = self.popup
-#         context['files'] = self.fm.directory_list()
+#     def get_success_url(self):
+#         url = '%s?path=%s' % (reverse_lazy('filemanager:browser'), self.fm.path)
+#         if hasattr(self, 'popup') and self.popup:
+#             url += '&popup=1'
+#         return url
 #
-#         return context
-
-
-class UploadView(FilemanagerMixin, TemplateView):
-    template_name = 'filemanager/filemanager_upload.html'
-    extra_breadcrumbs = [{
-        'path': '#',
-        'label': 'Upload'
-    }]
-
-
-class UploadFileView(FilemanagerMixin, View):
-    def post(self, request, *args, **kwargs):
-        if len(request.FILES) != 1:
-            return HttpResponseBadRequest("Just a single file please.")
-
-        # TODO: get filepath and validate characters in name, validate mime type and extension
-        filename = self.fm.upload_file(filedata=request.FILES['files[]'])
-
-        return HttpResponse(json.dumps({
-            'files': [{'name': filename}],
-        }))
-
-
-class DirectoryCreateView(FilemanagerMixin, FormView):
-    template_name = 'filemanager/filemanager_create_directory.html'
-    form_class = DirectoryCreateForm
-    extra_breadcrumbs = [{
-        'path': '#',
-        'label': 'Create directory'
-    }]
-
-    def get_success_url(self):
-        url = '%s?path=%s' % (reverse_lazy('filemanager:browser'), self.fm.path)
-        if hasattr(self, 'popup') and self.popup:
-            url += '&popup=1'
-        return url
-
-    def form_valid(self, form):
-        self.fm.create_directory(form.cleaned_data.get('directory_name'))
-        return super(DirectoryCreateView, self).form_valid(form)
+#     def form_valid(self, form):
+#         self.fm.create_directory(form.cleaned_data.get('directory_name'))
+#         return super(DirectoryCreateView, self).form_valid(form)

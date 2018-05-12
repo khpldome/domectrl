@@ -6,54 +6,73 @@
     {% include "filemanager/filemanager_breadcrumbs.html" %}
 
     <table class="table">
-        <thead>
-        <tr>
-            {% if popup %}
-                <th>{% trans "Select" %}</th>{% endif %}
-            <th>{% trans "Type" %}</th>
-            <th>{% trans "Name" %}</th>
-            <th>{% trans "Size" %}</th>
-            <th>{% trans "Date" %}</th>
-            {% if not popup %}
-                <th>{% trans "Actions" %}</th>
-                <th>{% trans "Add to playlist" %}</th>
-            {% endif %}
-        </tr>
-        </thead>
+{#        <thead>#}
+{#        <tr>#}
+{#            {% if popup %}#}
+{#                <th>{% trans "Select" %}</th>{% endif %}#}
+{#            <th>{% trans "Type" %}</th>#}
+{#            <th>{% trans "Name" %}</th>#}
+{#            <th>{% trans "Size" %}</th>#}
+{#            <th>{% trans "Date" %}</th>#}
+{#            {% if not popup %}#}
+{#                <th>{% trans "Add to playlist" %}</th>#}
+{#            {% endif %}#}
+{#        </tr>#}
+{#        </thead>#}
         <tbody>
         {% for file in files %}
             <tr>
-                {% if popup %}
-                    {% if file.filetype == "Directory" %}
-                        <td></td>
-                    {% else %}
-                        <td><a href="javascript: Filemanager.select('{{ file.filepath }}');">{% trans "Select" %}</a>
-                        </td>
-                    {% endif %}
-                {% endif %}
-                <td>{{ file.filetype }}</td>
+{#                {% if popup %}#}
+{#                    {% if file.filetype == "Directory" %}#}
+{#                        <td></td>#}
+{#                    {% else %}#}
+{#                        <td>#}
+{#                            <a href="javascript: Filemanager.select('{{ file.filepath }}');">#}
+{#                                {% trans "Select" %}#}
+{#                            </a>#}
+{#                        </td>#}
+{#                    {% endif %}#}
+{#                {% endif %}#}
+                <td>
+                    {{ file.filetype }}{% if file.validext %}*{% endif %}
+                </td>
                 {% if file.filetype == "Directory" %}
-                    <td><a href="?path={{ file.filepath }}{% if popup %}&amp;popup=1{% endif %}">{{ file.filename }}</a>
+                    <td>
+                        <a href="?path={{ file.filepath }}{% if popup %}&amp;popup=1{% endif %}">
+                            {{ file.filename }}
+                        </a>
                     </td>
                 {% else %}
-                    <td>{{ file.filename }}</td>
-                {% endif %}
-                <td>{{ file.filesize }}</td>
-                <td>{{ file.filedate }}</td>
-                {% if not popup %}
-                    <td><a href="{% url 'filemanager:detail' playlist_id_active=playlist_id_active %}?path={{ file.filepath }}">{% trans "Details" %}</a>
-                    </td>
-                    {% if file.filetype == "Directory" %}
-                        <td></td>
-                    {% else %}
-                        {#{{ playlist_id_active }}#}
-                        <td>
+                    <td>
+                        {% if file.validext %}
                             <a href="{% url 'filemanager:track-select' playlist_id_active=playlist_id_active %}?path={{ file.directory }}&amp;filepath={{ file.filepath }}">
-                                {% trans "Select" %}
+                                {{ file.filename }}
                             </a>
-                        </td>
-                    {% endif %}
+                        {% else %}
+                            {{ file.filename }}
+                        {% endif %}
+
+                    </td>
                 {% endif %}
+                <td>
+                    {{ file.filesize }}
+                </td>
+                {#<td>{{ file.filedate }}</td>#}
+{#                {% if not popup %}#}
+{#                    <td>#}
+{#                        <a href="{% url 'filemanager:detail' playlist_id_active=playlist_id_active %}?path={{ file.filepath }}">{% trans "Details" %}</a>#}
+{#                    </td>#}
+{#                    {% if file.filetype == "Directory" %}#}
+{#                        <td></td>#}
+{#                    {% else %}#}
+                        {#{{ playlist_id_active }}#}
+{#                        <td>#}
+{#                            <a href="{% url 'filemanager:track-select' playlist_id_active=playlist_id_active %}?path={{ file.directory }}&amp;filepath={{ file.filepath }}">#}
+{#                                {% trans "Select" %}#}
+{#                            </a>#}
+{#                        </td>#}
+{#                    {% endif %}#}
+{#                {% endif %}#}
             </tr>
         {% empty %}
             <tr>

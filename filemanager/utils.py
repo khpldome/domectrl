@@ -1,3 +1,6 @@
+
+import os
+
 def sizeof_fmt(num):
     """
     Format file sizes for a humans beings.
@@ -8,3 +11,17 @@ def sizeof_fmt(num):
             return "%3.1f %s" % (num, x)
         num /= 1024.0
     return "%3.1f %s" % (num, 'TB')
+
+
+def file_ext(file_name):
+    """
+    Get only file extention with '.'
+    """
+    name, extension = os.path.splitext(file_name)
+
+    if extension in ['.avi', '.mp4', '.wmv']:
+        valid_ext = True
+    else:
+        valid_ext = False
+
+    return valid_ext
