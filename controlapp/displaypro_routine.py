@@ -14,8 +14,8 @@ pag.FAILSAFE = False  # disables the fail-safe
 
 from controlapp import auto_manager as am
 
-# PROCESS_NAME = "ImmersiveDisplayPRO.exe"
-PROCESS_NAME = "ImmersiveDisplayPro.exe"
+PROCESS_NAME = "ImmersiveDisplayPRO.exe"
+# PROCESS_NAME = "ImmersiveDisplayPro.exe"
 
 
 def displaypro_func(action, param=''):

@@ -19,7 +19,7 @@ def file_ext(file_name):
     """
     name, extension = os.path.splitext(file_name)
 
-    if extension in ['.avi', '.mp4', '.wmv']:
+    if extension in ['.avi', '.mp4', '.wmv', '.mov', '.mkv', '.flv']:
         valid_ext = True
     else:
         valid_ext = False
