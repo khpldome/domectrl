@@ -216,7 +216,7 @@ nav.main_tabs .link-more {
 
 .playlists-container {
     margin: 25px 0 0 25px;
-    border: 2px solid rgba(255,255,255,0);
+    border-top: 2px solid rgba(255,255,255,0);
     grid-row: 1/2;
     grid-column: 1/2;
 
@@ -282,8 +282,9 @@ nav.main_tabs .link-more {
 .playlist.active {
     background: rgba(51,204,255,0);
     background: linear-gradient(to right, rgba(51,204,255,0) 50%, rgba(51,204,255,0.6) 100%);
-    border-right: 4px solid #2abbff;
+    border-right: 5px solid #2abbff;
     color: #fff;
+    box-sizing: border-box;
 }
 
 .playlist-link {
@@ -408,16 +409,18 @@ nav.main_tabs .link-more {
     border-bottom: none;
 }
 
+.track:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+}
+
+
+
 .track.active {
     background: rgba(255,255,255,0.1);
     color: #fff;
     height: 170px;
     grid-template-rows: 120px 50px;
-}
-
-.track:hover {
-    background: rgba(255,255,255,0.1);
-    color: #fff;
 }
 
 .track:first-child.active {
@@ -587,7 +590,7 @@ nav.main_tabs .link-more {
     height: 50px;
     grid-template-columns: 50px 50px 0.1fr 1fr 0.1fr 50px 0.2fr 0.1fr 50px 50px 50px;
     align-items: center;
-    background: #26a9e7;
+    background: #26a9e7; 
 }
 
 .player>div {
@@ -946,3 +949,6 @@ grid-row: 2/3;
     background-color: #fff
 }
 
+.track.active .player {
+    box-shadow: 0 -10px 25px rgba(38, 169, 231, 0.25), 0 -10px 50px rgba(38, 169, 231, 0.2);
+}
