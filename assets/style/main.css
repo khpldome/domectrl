@@ -245,6 +245,8 @@ nav.main_tabs .link-more {
     grid-template-columns: 30px 1fr 30px;
     text-align: center;
     color: #666;
+    border-right: 5px solid rgba(0,0,0,0);
+    box-sizing: border-box;
 }
 
 .playlist-move {
@@ -267,7 +269,8 @@ nav.main_tabs .link-more {
     visibility: hidden;
 }
 
-.active .playlist-trash form input {
+.active .playlist-trash form input,
+.playlist:hover .playlist-trash form input {
     width: 100%;
     border: none;
     visibility: visible;
@@ -440,9 +443,11 @@ nav.main_tabs .link-more {
 .active .icon-move {
     content: url('../img/icon-move.svg');
 }
-.track:hover .icon-move {
+.track:hover .icon-move, .playlist:hover .icon-move {
     content: url('../img/icon-move.svg');
 }
+
+
 
 .track-poster-play {
     grid-column: 2/3;
@@ -559,7 +564,8 @@ nav.main_tabs .link-more {
 
 }
 
-.active .track-trash form input, .track:hover .track-trash form input {
+.active .track-trash form input,
+.track:hover .track-trash form input {
     visibility: visible;
     cursor: pointer;
 }
