@@ -6,6 +6,12 @@ jQuery(document).ready(function($) {
         $(this).addClass('pressed');
     });
 
+    $(document).keyup(function(e) {
+        if (e.keyCode === 27) {
+            $('#myModal').hide();
+        };
+    });
+
         var browse_target       =   'default';
         $(function(){
             $('#window_browse').dialog({
