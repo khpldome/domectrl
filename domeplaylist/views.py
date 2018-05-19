@@ -267,7 +267,7 @@ class TrackDeleteView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
 # class DeletePlayItemView(LoginRequiredMixin, DeleteView):
 
     model = Track
-    template_name = 'domeplaylist/no_access.html'
+    template_name = 'domeplaylist/track_list.html'
 
     def get_object(self, **kwargs):
         print('myTrack=', self.myTrack)
