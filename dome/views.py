@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import View, TemplateView
+from django.views.generic import View, TemplateView, RedirectView
 
 from controlapp import mosaic_surround as mr
 from controlapp import vlc_routine as vr
@@ -14,9 +14,21 @@ from controlapp import projectors_routine as pr
 from controlapp import fds_routine as fr
 
 
-def index(request):
-    context = {'latest_question_list': 22}
-    return render(request, 'dome/additional.html', context)
+class IndexView(TemplateView):
+
+    template_name = "dome/additional.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+
+        str_context = "fdrdsfds"
+        if 'text_output' in kwargs:
+            str_context = kwargs['text_output']
+
+        context.update({
+            "data_context": str_context,
+        })
+        return context
 
 
 class MosaicSurroundActionView(TemplateView):
@@ -30,7 +42,7 @@ class MosaicSurroundActionView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(MosaicSurroundActionView, self).get_context_data(**kwargs)
-        text_output = ""
+        str_context = ""
         if 'action' in kwargs:
             action = kwargs['action']
             print("action=", action)
@@ -88,15 +100,34 @@ class WinapiActionView(TemplateView):
         return context
 
 
+# class DisplayproActionView(RedirectView):
+#
+#     text_output = ''
+#
+#     def get(self, request, *args, **kwargs):
+#
+#         action = request.GET.get('action', '')
+#         param = request.GET.get('param', '')
+#         if 'action' is not '':
+#             print("action=", action)
+#
+#         if 'param' is not '':
+#             print("param=", param)
+#
+#         self.text_output = dr.displaypro_func(action, param)
+#
+#         return super(DisplayproActionView, self).get(request, *args, **kwargs)
+#
+#     def get_redirect_url(self, *args, **kwargs):
+#         return reverse_lazy('dome:index', kwargs={'text_output': str(self.text_output)+'qwewewerwerw'})
+
+
 class DisplayproActionView(TemplateView):
 
     template_name = 'dome/additional.html'
+    text_output = ''
 
     def get(self, request, *args, **kwargs):
-        return super(DisplayproActionView, self).get(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(DisplayproActionView, self).get_context_data(**kwargs)
 
         action = ''
         param = ''
@@ -108,9 +139,14 @@ class DisplayproActionView(TemplateView):
             param = kwargs['param']
             print("param=", param)
 
-        text_output = dr.displaypro_func(action, param)
+        self.text_output = dr.displaypro_func(action, param)
 
-        context['data_context'] = text_output
+        return super(DisplayproActionView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(DisplayproActionView, self).get_context_data(**kwargs)
+
+        context['data_context'] = self.text_output
         return context
 
 

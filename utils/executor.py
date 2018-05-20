@@ -60,7 +60,7 @@ def execute_command2(str_command):
 
 
 def _ffprobe_to_db(in_json):
-
+    print(in_json)
     temp_dict = loads(in_json)
     return dumps(temp_dict)
 

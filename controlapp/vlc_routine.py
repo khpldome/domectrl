@@ -16,7 +16,7 @@ def check_vlc_server():
     try:
         r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml',
                          auth=('', '63933'))
-        print("responce=", r)
+        print("check vlc: responce=", r.status_code)
         return r.status_code
     except:
         pass
@@ -27,7 +27,6 @@ def vlc_func(action):
     import time
 
     out_dict = {}
-    # vlc_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.VLC_EXE_RELPATH
     vlc_exe = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + conf.VLC_BAT_RELPATH
 
     if action == "start":

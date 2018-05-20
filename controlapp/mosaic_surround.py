@@ -28,7 +28,10 @@ def mosaic_surround_func(action):
         out_dict = mosaic_func(action)
     elif conf.VIDEO_CARD_NAME == 'GTX 1070':
         out_dict = surround_func(action)
-
+    else:
+        out_dict.update({'code': c.ERROR,
+                         'verbose': "Action unavailable: Unsupported video card!",
+                         })
     return out_dict
 
 
@@ -190,13 +193,13 @@ def parse_mosaic_xml(in_dict):
     xml_out = in_dict['xml_out']
 
     if 'ERROR: NvAPI_SYS_GetDriverAndBranchVersion failed with status -2' in xml_out:
-        print("not NvApi driver")
+        # print("not NvApi driver")
         code = c.ERROR
         str_context += '\nnot NvApi driver'
 
     elif action == "restart":  # Temporary!
         print("mosaic help")
-        str_context = xml_out
+        str_context += xml_out
 
     else:
         odered_dict = xmltodict.parse(xml_out)  # Parse the read document string
@@ -246,8 +249,6 @@ def parse_mosaic_xml(in_dict):
 
     out_dict.update({'code': code,
                      'verbose': str_context,
-                     # 'proc_state': True,
-                     # 'server_state': False,
                      })
 
     return out_dict

@@ -255,9 +255,6 @@ class TrackActionView(LoginRequiredMixin, ListView):
 
         return context
 
-    def get_success_url(self):
-        return reverse_lazy('domeplaylist:track-list')
-
 
 class NoAccessView(TemplateView):
     template_name = 'domeplaylist/no_access.html'
@@ -297,7 +294,7 @@ class TrackActionRedirect(View):
 
         pass
         path = self.kwargs['path']
-        print('&' * 100, str(self.request.GET))
+        # print('&' * 100, str(self.request.GET))
 
         if 'command' in self.request.GET:
             path += '?command=' + self.request.GET['command']
@@ -305,7 +302,7 @@ class TrackActionRedirect(View):
         if 'val' in self.request.GET:
             path += '&val=' + self.request.GET['val']
 
-        print('+' * 100, path)
+        # print('+' * 100, path)
 
         return HttpResponseRedirect(reverse_lazy('domeplaylist:proxy', kwargs={'path': path}))
 
@@ -318,11 +315,11 @@ def proxyView(request, path):
 
     # pm.update_request_ts()
     pm.update_vlc_state()
-    print('!'*100, path)
+    # print('!'*100, path)
     if pm.is_vlc_active() is True:
 
         vlc_server_url = 'http://' + conf.VLC_WEB_DOMAIN + '/' + path
-        print(">>> " + vlc_server_url)
+        print("redirection >>> " + vlc_server_url)
 
         extra_requests_args = {}
         return pv.proxy_view(request, vlc_server_url, extra_requests_args)
