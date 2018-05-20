@@ -11,8 +11,8 @@ print(HOSTNAME)
 SERVER_NAME = HOSTNAME
 VIDEO_CARD_NAME = 'Empty'
 PROJECTOR_AMOUNT = 1
-DISPLAYPRO_ABSPATH = 'c:\Program Files (x86)\ImmersiveDisplayPRO\ImmersiveDisplayPRO.exe'
-# DISPLAYPRO_ABSPATH = 'c:\Program Files (x86)\Immersive Display PRO\ImmersiveDisplayPro.bat'
+# DISPLAYPRO_ABSPATH = 'c:\Program Files (x86)\ImmersiveDisplayPRO\ImmersiveDisplayPRO.exe'
+DISPLAYPRO_ABSPATH = 'c:\Program Files (x86)\Immersive Display PRO\ImmersiveDisplayPro.bat'
 
 VLC_EXE_RELPATH = r'\exec\vlc-2.1.6\vlc.exe'
 VLC_BAT_RELPATH = r'\exec\vlc-2.1.6\vlc.bat'
