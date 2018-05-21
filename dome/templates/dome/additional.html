@@ -15,15 +15,27 @@
 {#            <a href="{% url 'dome:mosaic-surround' action='restart' %}"><span>mosaic_restart</span></a>#}
             <a href="{% url 'dome:mosaic-surround' action='state' %}"><span>mosaic_state</span></a>
             <br> <br>
-            <a href="{% url 'dome:displaypro' action='start' param='2' %}"><span>start_DisplayPro</span></a>
-            <a href="{% url 'dome:displaypro' action='stop' param='2' %}"><span>stop_DisplayPro</span></a>
+{#            <a href="{% url 'dome:displaypro' action='start' param='2' %}"><span>start_DisplayPro</span></a>#}
+{#            <a href="{% url 'dome:displaypro' action='stop' param='2' %}"><span>stop_DisplayPro</span></a>#}
 {#            <a href="{% url 'dome:displaypro' %}?action=stop "><span>stop_DisplayPro</span></a>#}
 
 {#            <a href="{% url 'dome:displaypro' %}?action=setconfig&param=1 "><span>setconfig_1</span></a>#}
-              <a href="{% url 'dome:displaypro' action='setconfig' param='2' %}"><span>setconfig_2</span></a>
+{#              <a href="{% url 'dome:displaypro' action='setconfig' param='2' %}"><span>setconfig_2</span></a>#}
 {#            <a href="{% url 'dome:displaypro' action='setconfig' param='3' %}"><span>setconfig_3</span></a>#}
 {#            <a href="{% url 'dome:displaypro' action='setdesktopwarping' param='0' %}"><span>setdesktopwarping_0</span></a>#}
 {#            <a href="{% url 'dome:displaypro' action='setdesktopwarping' param='1' %}"><span>setdesktopwarping_1</span></a>#}
+
+
+            <div >
+                <form method="POST" action="{% url 'dome:displaypro'%}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="stop">
+{#                    <input type="hidden" name="param" value="3">#}
+                    <input type="submit" name="qqqqq" value="config_2" title="Конфигурация 2" class="btn">
+                </form>
+            </div>
+
+
             <br> <br>
             <a href="{% url 'dome:vlc' action='start' %}"><span>start_vlc</span></a>
             <a href="{% url 'dome:vlc' action='stop' %}"><span>stop_vlc</span></a>
