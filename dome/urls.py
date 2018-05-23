@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^vlc/(?P<action>\w+)/$', views.VlcActionView.as_view(), name='vlc'),
     url(r'^winapi/(?P<action>\w+)/$', views.WinapiActionView.as_view(), name='winapi'),
     url(r'^displaypro/(?P<action>\w+)/(?P<param>\w+)/$', views.DisplayproActionView.as_view(), name='displaypro'),
-    # url(r'^displaypro/$', views.DisplayproActionView.as_view(), name='displaypro'),
+    url(r'^displaypro$', views.DisplayproActionView.as_view(), name='displaypro'),
 
 
     url(r'^projectors/(?P<action>\w+)/$', views.ProjectorsActionView.as_view(), name='projectors'),

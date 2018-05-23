@@ -127,20 +127,33 @@ class DisplayproActionView(TemplateView):
     template_name = 'dome/additional.html'
     text_output = ''
 
-    def get(self, request, *args, **kwargs):
+    # def get(self, request, *args, **kwargs):
+    #
+    #     action = ''
+    #     param = ''
+    #     if 'action' in kwargs:
+    #         action = kwargs['action']
+    #         print("GET:action=", action)
+    #
+    #     if 'param' in kwargs:
+    #         param = kwargs['param']
+    #         print("GET:param=", param)
+    #
+    #     self.text_output = dr.displaypro_func(action, param)
+    #
+    #     return super(DisplayproActionView, self).get(request, *args, **kwargs)
 
-        action = ''
-        param = ''
-        if 'action' in kwargs:
-            action = kwargs['action']
-            print("action=", action)
+    def post(self, request, *args, **kwargs):
 
-        if 'param' in kwargs:
-            param = kwargs['param']
-            print("param=", param)
+        action = request.POST.get('action')
+        # param = request.POST.get('param')
 
-        self.text_output = dr.displaypro_func(action, param)
+        print('POST:', action, param)
 
+        self.text_output = dr.displaypro_func(action)
+        self.text_output = str(request.POST)
+
+        # return self.get(request, *args, **kwargs)
         return super(DisplayproActionView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

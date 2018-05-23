@@ -2,6 +2,7 @@
 
 {% load staticfiles %}
 
+<<<<<<< HEAD
 {% block content %}
     <div class="page page-more grid">
         <aside class="more-tabs-list grid">
@@ -58,15 +59,45 @@
                         </a>
                     </li>
                     <li class="flex">
-                        <a href="{% url 'dome:displaypro' action='start' param='2' %}" class="start">
-                            <span>start DisplayPro</span>
-                        </a>
-                        <a href="{% url 'dome:displaypro' action='stop' param='2' %}" class="stop">
-                            <span>stop DisplayPro</span>
-                        </a>
-                          <a href="{% url 'dome:displaypro' action='setconfig' param='2' %}" class="service">
-                            <span>set config 2</span>
-                        </a>
+                        <form method="POST" action="{% url 'dome:displaypro' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="stop">
+                            <input type="submit" name="buttonName" value="DP stop" title="DisplayPRO Start" class="start">
+                        </form>
+                        <form method="POST" action="{% url 'dome:displaypro' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="stop">
+                            <input type="submit" name="buttonName" value="DP stop" title="DisplayPro Stop" class="stop">
+                        </form>
+                        <form method="POST" action="{% url 'dome:displaypro' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="state">
+                            <input type="submit" name="buttonName" value="DP state" title="DisplayPRO State" class="state">
+                        </form>
+                        <form method="POST" action="{% url 'dome:displaypro'%}">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="config_1">
+        {#                    <input type="hidden" name="param" value="3">#}
+                            <input type="submit" name="buttonName" value="DP config_1" title="DisplayPRO: Конфигурация 1" class="service">
+                        </form>
+                        <form method="POST" action="{% url 'dome:displaypro'%}">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="config_2">
+        {#                    <input type="hidden" name="param" value="3">#}
+                            <input type="submit" name="buttonName" value="DP config_2" title="DisplayPRO: Конфигурация 2" class="service">
+                        </form>
+                        <form method="POST" action="{% url 'dome:displaypro'%}">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="config_3">
+        {#                    <input type="hidden" name="param" value="3">#}
+                            <input type="submit" name="buttonName" value="DP config_3" title="DisplayPRO: Конфигурация 3" class="service">
+                        </form>
+                        <form method="POST" action="{% url 'dome:displaypro'%}">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="config_4">
+        {#                    <input type="hidden" name="param" value="3">#}
+                            <input type="submit" name="buttonName" value="DP config_4" title="DisplayPRO: Конфигурация 4" class="service">
+                        </form>
                     </li>
                     <li class="flex">
                         <a href="{% url 'dome:vlc' action='start' %}" class="start">
