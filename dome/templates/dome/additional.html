@@ -26,15 +26,39 @@
 {#            <a href="{% url 'dome:displaypro' action='setdesktopwarping' param='1' %}"><span>setdesktopwarping_1</span></a>#}
 
 
-            <div >
-                <form method="POST" action="{% url 'dome:displaypro'%}">
+            <div>
+                <form method="POST" action="{% url 'dome:displaypro' %}">
                     {% csrf_token %}
                     <input type="hidden" name="action" value="stop">
-{#                    <input type="hidden" name="param" value="3">#}
-                    <input type="submit" name="qqqqq" value="config_2" title="Конфигурация 2" class="btn">
+                    <input type="submit" name="buttonName" value="DP stop" title="DisplayPRO stop" class="btn">
                 </form>
             </div>
 
+            <div>
+                <form method="POST" action="{% url 'dome:displaypro' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="state">
+                    <input type="submit" name="buttonName" value="DP state" title="DisplayPRO state" class="btn">
+                </form>
+            </div>
+
+            <div >
+                <form method="POST" action="{% url 'dome:displaypro'%}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="config_1">
+{#                    <input type="hidden" name="param" value="3">#}
+                    <input type="submit" name="buttonName" value="DP config_1" title="DisplayPRO: rонфигурация 1" class="btn">
+                </form>
+            </div>
+
+            <div >
+                <form method="POST" action="{% url 'dome:displaypro'%}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="config_2">
+{#                    <input type="hidden" name="param" value="3">#}
+                    <input type="submit" name="buttonName" value="DP config_2" title="DisplayPRO: rонфигурация 2" class="btn">
+                </form>
+            </div>
 
             <br> <br>
             <a href="{% url 'dome:vlc' action='start' %}"><span>start_vlc</span></a>

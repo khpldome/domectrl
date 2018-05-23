@@ -146,20 +146,12 @@ class DisplayproActionView(TemplateView):
     def post(self, request, *args, **kwargs):
 
         action = request.POST.get('action')
-        param = request.POST.get('param')
+        # param = request.POST.get('param')
 
         print('POST:', action, param)
 
-        # if 'action' in kwargs:
-        #     action = kwargs['action']
-        #     print("action=", action)
-        #
-        # if 'param' in kwargs:
-        #     param = kwargs['param']
-        #     print("param=", param)
-
-        self.text_output = dr.displaypro_func(action, param)
-        # self.text_output = str(request.POST)
+        self.text_output = dr.displaypro_func(action)
+        self.text_output = str(request.POST)
 
         # return self.get(request, *args, **kwargs)
         return super(DisplayproActionView, self).get(request, *args, **kwargs)
