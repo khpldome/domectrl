@@ -55,7 +55,7 @@ def displaypro_func(action, param=''):
                 out_dict.update({'code': 1,
                                  'verbose': str_out})
 
-    if action == "stop":
+    elif action == "stop":
         print("Stop displaypro")
         str_out = 'DisplaeyPRO: already stopped.'
 
@@ -66,7 +66,7 @@ def displaypro_func(action, param=''):
         out_dict.update({'code': 1,
                          'verbose': str_out})
 
-    if action == "state":
+    elif action == "state":
         print("State dpro")
 
         proc_dpro_dict = am.check_process_state(PROCESS_NAME)
@@ -86,18 +86,18 @@ def displaypro_func(action, param=''):
                 'proc_state': False,
             })
 
-    if action == "setconfig":
+    elif action in ["setconfig_1", "setconfig_2", "setconfig_3", "setconfig_4"]:
 
-        print('http://' + conf.HOST_IP + ':6600/?' + action + '=' + param)
+        print('*** http://' + conf.HOST_IP + ':6600/?' + action + '=' + param)
         # r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=in_play&input=' + path,
         #                  auth=('', '63933'))
         # print("responce=", r)
         out_dict.update({'code': 3,
-                         'verbose': ''})
+                         'verbose': '***'})
 
     if action == "setdesktopwarping":
 
-        print('http://' + conf.HOST_IP + ':6600/?' + action + '=' + param)
+        print('--- http://' + conf.HOST_IP + ':6600/?' + action + '=' + param)
         # r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=in_play&input=' + path,
         #                  auth=('', '63933'))
         # print("responce=", r)

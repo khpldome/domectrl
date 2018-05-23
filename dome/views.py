@@ -34,23 +34,34 @@ class IndexView(TemplateView):
 class MosaicSurroundActionView(TemplateView):
 
     template_name = 'dome/additional.html'
+    str_context = ''
 
-    def get(self, request, *args, **kwargs):
-        # print("get=", mosaic_action)
-        messages.error(request, 'action=' + kwargs['action'])
+    # def get(self, request, *args, **kwargs):
+    #     # print("get=", mosaic_action)
+    #     messages.error(request, 'action=' + kwargs['action'])
+    #     return super(MosaicSurroundActionView, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+
+        action = request.POST.get('action')
+        # param = request.POST.get('param')
+        print('POST:', action)
+
+        self.str_context = mr.mosaic_surround_func(action)['verbose']
+
         return super(MosaicSurroundActionView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(MosaicSurroundActionView, self).get_context_data(**kwargs)
         str_context = ""
-        if 'action' in kwargs:
-            action = kwargs['action']
-            print("action=", action)
-
-            str_context = mr.mosaic_surround_func(action)['verbose']
+        # if 'action' in kwargs:
+        #     action = kwargs['action']
+        #     print("action=", action)
+        #
+        #     str_context = mr.mosaic_surround_func(action)['verbose']
 
         context.update({
-            "data_context": str_context,
+            "data_context": self.str_context,
         })
         return context
 
@@ -58,24 +69,29 @@ class MosaicSurroundActionView(TemplateView):
 class VlcActionView(TemplateView):
 
     template_name = 'dome/additional.html'
+    res_dict = {}
 
-    def get(self, request, *args, **kwargs):
+    # def get(self, request, *args, **kwargs):
+    #     return super(VlcActionView, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+
+        action = request.POST.get('action')
+        # param = request.POST.get('param')
+        print('POST:', action)
+
+        self.res_dict = vr.vlc_func(action)
+
         return super(VlcActionView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(VlcActionView, self).get_context_data(**kwargs)
 
-        if 'action' in kwargs:
-            action = kwargs['action']
-            print("action=", action)
-
-            res_dict = vr.vlc_func(action)
-
-        context['data_context'] = res_dict['verbose']
-        if 'proc_state' in res_dict:
-            context['vlc_state'] = res_dict['proc_state']
-        if 'server_state' in res_dict:
-            context['vlc_server_state'] = res_dict['server_state']
+        context['data_context'] = self.res_dict['verbose']
+        if 'proc_state' in self.res_dict:
+            context['vlc_state'] = self.res_dict['proc_state']
+        if 'server_state' in self.res_dict:
+            context['vlc_server_state'] = self.res_dict['server_state']
         return context
 
 
@@ -148,12 +164,11 @@ class DisplayproActionView(TemplateView):
         action = request.POST.get('action')
         # param = request.POST.get('param')
 
-        print('POST:', action, param)
+        print('POST:', action)
 
         self.text_output = dr.displaypro_func(action)
-        self.text_output = str(request.POST)
+        # self.text_output = str(request.POST)
 
-        # return self.get(request, *args, **kwargs)
         return super(DisplayproActionView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -166,61 +181,84 @@ class DisplayproActionView(TemplateView):
 class ProjectorsActionView(TemplateView):
 
     template_name = 'dome/additional.html'
+    out_dict = {}
 
     def get(self, request, *args, **kwargs):
+        return super(ProjectorsActionView, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+
+        action = request.POST.get('action')
+        # param = request.POST.get('param')
+
+        print('POST:', action)
+
+        self.out_dict = pr.projectors_func(action)
+        # self.text_output = str(request.POST)
+
         return super(ProjectorsActionView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ProjectorsActionView, self).get_context_data(**kwargs)
 
-        action = ''
-        if 'action' in kwargs:
-            action = kwargs['action']
-            print("action=", action)
-
-            out_dict = pr.projectors_func(action)
-
-            context['data_context'] = out_dict['verbose']
+        context['data_context'] = self.out_dict['verbose']
         return context
 
 
 class FdsActionView(TemplateView):
 
     template_name = 'dome/additional.html'
+    out_dict = {}
 
     def get(self, request, *args, **kwargs):
+        return super(FdsActionView, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+
+        action = request.POST.get('action')
+        # param = request.POST.get('param')
+        print('POST:', action)
+
+        self.out_dict = fr.fds_func(action)
+
         return super(FdsActionView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(FdsActionView, self).get_context_data(**kwargs)
 
-        action = ''
-        if 'action' in kwargs:
-            action = kwargs['action']
-            print("action=", action)
+        # action = ''
+        # if 'action' in kwargs:
+        #     action = kwargs['action']
+        #     print("action=", action)
+        #
+        #     out_dict = fr.fds_func(action)
 
-            out_dict = fr.fds_func(action)
-
-            context['data_context'] = out_dict['verbose']
+        context['data_context'] = self.out_dict['verbose']
         return context
 
 
 class BaseView(TemplateView):
 
     template_name = 'dome/additional.html'
+    out_dict = {}
 
     def get(self, request, *args, **kwargs):
+        return super(BaseView, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+
+        action = request.POST.get('action')
+        # param = request.POST.get('param')
+        print('POST:', action)
+
+        self.out_dict = am.base_func(action)
+
         return super(BaseView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(BaseView, self).get_context_data(**kwargs)
 
-        if 'action' in kwargs:
-            action = kwargs['action']
-            print("action=", action)
-
-            out_dict = am.base_func(action)
-            context['data_context'] = out_dict['verbose']
+        context['data_context'] = self.out_dict['verbose']
 
         return context
 
