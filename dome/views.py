@@ -98,21 +98,25 @@ class VlcActionView(TemplateView):
 class WinapiActionView(TemplateView):
 
     template_name = 'dome/additional.html'
+    text_output = ''
 
     def get(self, request, *args, **kwargs):
         return super(WinapiActionView, self).get(request, *args, **kwargs)
 
+    def post(self, request, *args, **kwargs):
+
+        action = request.POST.get('action')
+        # param = request.POST.get('param')
+        print('POST:', action)
+
+        self.text_output = wr.winapi_func(action)
+
+        return super(WinapiActionView, self).get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(WinapiActionView, self).get_context_data(**kwargs)
-        text_output = ""
 
-        if 'action' in kwargs:
-            action = kwargs['action']
-            print("action=", action)
-
-            text_output = wr.winapi_func(action)
-
-        context['data_context'] = text_output
+        context['data_context'] = self.text_output
         return context
 
 
