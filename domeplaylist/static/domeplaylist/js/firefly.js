@@ -20,12 +20,12 @@ jQuery(document).ready(function($) {
         };
     });
 
-    // $('.track').click(function() {
-    //     $('.track').removeClass('active');
-    //     $(this).addClass('active');
-    //     $('.player').insertAfter($(this).find('.track-trash'));
-    //     $('.player').css({'grid-column': '1/6', 'grid-row': '2/3'});
-    // });
+    $('.track').click(function() {
+        $('.track').removeClass('active');
+        $(this).addClass('active');
+        // $('.player').insertAfter($(this).find('.track-trash'));
+        // $('.player').css({'grid-column': '1/6', 'grid-row': '2/3'});
+    });
     // console.log($('.track.active').length);
     // if ($(".track.active").length) {
     //     $(window).load(function () {

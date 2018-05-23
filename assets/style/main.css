@@ -160,7 +160,7 @@ nav.main_pages .page-link-more {
     grid-row: 1/2;
 }
 
-.icon-speed, {
+.icon-speed{
     grid-column: 1/2;
 }
 
@@ -512,8 +512,8 @@ a.service {
 }
 
 .tracks-container.collapsed .track.active {
-    height: 110px;
-    grid-template-rows: 60px 50px;
+    /*height: 110px;*/
+    /*grid-template-rows: 60px 50px;*/
 }
 
 .tracks-container.collapsed .track-poster-play img {
@@ -541,7 +541,7 @@ a.service {
     border-bottom: none;
 }
 
-.track:hover {
+.track:hover  .track-title {
     color: #FFF;
 }
 
@@ -550,8 +550,8 @@ a.service {
 .track.active {
     background: rgba(255,255,255,0.1);
     color: #FFF;
-    height: 170px;
-    grid-template-rows: 120px 50px;
+    /*height: 170px;*/
+    /*grid-template-rows: 120px 50px;*/
 }
 
 .track:first-child.active {
@@ -598,7 +598,7 @@ a.service {
 }
 
 .track:hover .icon-play:after {
-    content: url(../img/icon-play.svg);
+    /*content: url(../img/icon-play.svg);*/
 }
 
 .track-poster {
