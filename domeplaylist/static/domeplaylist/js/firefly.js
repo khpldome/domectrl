@@ -1,8 +1,16 @@
 jQuery(document).ready(function($) {
 
-    $('.playlist-collapse').click(function() {
+    $('.playlist-collapse').on('click', function(e) {
+        e.preventDefault();
         $('.tracks-container').addClass('collapsed');
         $('.playlist-expand').removeClass('pressed');
+        $(this).addClass('pressed');
+    });
+
+    $('.playlist-expand').on('click', function(e) {
+        e.preventDefault();
+        $('.tracks-container').removeClass('collapsed');
+        $('.playlist-collapse').removeClass('pressed');
         $(this).addClass('pressed');
     });
 
@@ -12,87 +20,67 @@ jQuery(document).ready(function($) {
         };
     });
 
-        var browse_target       =   'default';
-        $(function(){
-            $('#window_browse').dialog({
-                autoOpen: false,
-                width: 50,
-                height: 650,
-                modal: true,
-                resizable: false,
-                buttons: {
-                    "Открыть":function(){
-                        $('li.ui-selected','#browse_elements').each(function(){
-                            $(this).dblclick();
-                        });
-                    },
-                    "Enqueue": function() {
-                        $('li.ui-selected','#browse_elements').each(function(){
-                            var path    =   this.getAttribute('opendir') ? this.getAttribute('opendir') : this.getAttribute('openfile');
-                            switch(browse_target){
-                                default:
-                                    sendCommand('command=in_enqueue&input='+encodeURI(path));
-                                    setTimeout(function(){updatePlayList(true);},1000);
-                                    break;
-                            }
-                        });
-                        $(this).dialog("close");
-                    },
-                    "Отмена" : function(){
-                        $(this).dialog("close")
-                    }
-                }
-            });
-        });
-
-    $('.playlist-expand').click(function() {
-        $('.tracks-container').removeClass('collapsed');
-        $('.playlist-collapse').removeClass('pressed');
-        $(this).addClass('pressed');
-    });
-
-    $('.track').click(function() {
-        $('.track').removeClass('active');
-        $(this).addClass('active');
-        $('.player').insertAfter($(this).find('.track-trash'));
-        $('.player').css({'grid-column': '1/6', 'grid-row': '2/3'});
-    });
+    // $('.track').click(function() {
+    //     $('.track').removeClass('active');
+    //     $(this).addClass('active');
+    //     $('.player').insertAfter($(this).find('.track-trash'));
+    //     $('.player').css({'grid-column': '1/6', 'grid-row': '2/3'});
+    // });
     // console.log($('.track.active').length);
-    if ($(".track.active").length) {
-        $(window).load(function () {
-            $('.player').insertAfter( $(".track.active").find('.track-trash'));
-            $('.player').css({'grid-column': '1/6', 'grid-row': '2/3'});
-        });
-    }
+    // if ($(".track.active").length) {
+    //     $(window).load(function () {
+    //         $('.player').insertAfter( $(".track.active").find('.track-trash'));
+    //         $('.player').css({'grid-column': '1/6', 'grid-row': '2/3'});
+    //     });
+    // }
 
-    $('.projectors-turn-off a').click(function(){
+    $('.projectors-turn-off a').on('click', function(e) {
         $(this).parent().addClass("hidden")
         $('.projectors-turn-on').removeClass('hidden');
     });
 
-    $('.projectors-turn-on a').click(function(){
+    $('.projectors-turn-on a').on('click', function(e) {
         $(this).parent().addClass("hidden")
         $('.projectors-turn-off').removeClass('hidden');
     });
 
-    $('.playlists-item').click(function(){
+    $('.playlists-item').on('click', function() {
         $('.playlists-item').removeClass('active');
         $(this).addClass('active');
     });
 
-    $('.icon-trash').click(function() {
+    $('.icon-trash').on('click', function() {
         $(this).parent().parent().remove();
     });
 
     var playlistCount = $('.playlists-container').data("playlistCount");
     $('.playlists-container').css('grid-template-rows', '68px repeat(' + playlistCount + ', 50px)');
 
-// Загузка плейлиста без перезагузки всей страницы
-    //  $(".playlist-link").click(function(e){
-    //     e.preventDefault(); //отключаем событие по умолчанию
-    //     var target = $(this).attr("href"); //берем URL из ссылки на плейлист
-    //     $(".tracks-container").load(target); //подгружаем содержимое в элемент с классом 'tracks-container'
-    // });
+    if ( $('.page-playlists').length == 1 ) {
+        $('.page-link-more').removeClass('page-link-active');
+        $('.page-link-playlists').addClass('page-link-active');
+    };
+
+    if ( $('.page-more').length == 1 ) {
+        $('.page-link-playlists').removeClass('page-link-active');
+        $('.page-link-more').addClass('page-link-active');
+    };
+
+    $('.tab-link').on('click', function(e) {
+        e.preventDefault();
+        $('.tab-link').removeClass('active');
+        $(this).addClass('active');
+        // var target ='\'$(' + $(this).find('a').attr('href') + '\')';
+        var tabTarget = $(this).find('a').attr('href');
+        var tabTitle = $(this).find('a').attr('title');
+        $('.tab').css('display','none');
+        $('.tab-content .title h2').html(tabTitle);
+        $(tabTarget).css('display','block');
+    });
+
+    var tabsCount = $('.tab-link').length;
+    $('.more-tabs-list').css('grid-template-rows', '68px repeat(' + tabsCount + ', 50px)');
+
 
     var origin = 'sortable';
     $(".tracks-container").droppable({

@@ -2,79 +2,143 @@
 
 {% load staticfiles %}
 
-{% block aside_bar %}
+{% block content %}
+    <div class="page page-more grid">
+        <aside class="more-tabs-list grid">
+            <div class="title grid">
+                <h2>Вкладки</h2>
+            </div>
+            <div class="tab-link grid active">
+                <a href="#tab-1" class="flex" title="Service">
+                    <span>Service</span>
+                </a>
+            </div>
+            <div class="tab-link grid">
+                <a href="#tab-2" class="flex" title="Tab 2">
+                    <span>Tab 2</span>
+                </a>
+            </div>
+            <div class="tab-link grid">
+                <a href="#tab-3" class="flex" title="Tab 3">
+                    <span>Tab 3</span>
+                </a>
+            </div>
+            <div class="tab-link grid">
+                <a href="#tab-4" class="flex" title="Tab 4">
+                    <span>Tab 4</span>
+                </a>
+            </div>
+        </aside>
+        <main class="tab-content grid">
+            <div class="title grid">
+                <h2>Servise</h2>
+            </div>
+            <div id="tab-1" class="tab active">
+                <ul>
+                    <li class="flex">
+                        <a href="{% url 'dome:projectors' action='start' %}" class="start">
+                            <span>Projectors start</span>
+                        </a>
+                        <a href="{% url 'dome:projectors' action='stop' %}" class="stop">
+                            <span>Projectors stop</span>
+                        </a>
+                        <a href="{% url 'dome:projectors' action='state' %}" class="state">
+                            <span>Projectors state</span>
+                        </a>
+                    </li>
+                    <li class="flex">
+                        <a href="{% url 'dome:mosaic-surround' action='start' %}" class="start">
+                            <span>mosaic start</span>
+                        </a>
+                        <a href="{% url 'dome:mosaic-surround' action='stop' %}" class="stop">
+                            <span>mosaic stop</span>
+                        </a>
+                        <a href="{% url 'dome:mosaic-surround' action='state' %}" class="state">
+                            <span>mosaic state</span>
+                        </a>
+                    </li>
+                    <li class="flex">
+                        <a href="{% url 'dome:displaypro' action='start' param='2' %}" class="start">
+                            <span>start DisplayPro</span>
+                        </a>
+                        <a href="{% url 'dome:displaypro' action='stop' param='2' %}" class="stop">
+                            <span>stop DisplayPro</span>
+                        </a>
+                          <a href="{% url 'dome:displaypro' action='setconfig' param='2' %}" class="service">
+                            <span>set config 2</span>
+                        </a>
+                    </li>
+                    <li class="flex">
+                        <a href="{% url 'dome:vlc' action='start' %}" class="start">
+                            <span>start VLC</span>
+                        </a>
+                        <a href="{% url 'dome:vlc' action='stop' %}" class="stop">
+                            <span>stop VLC</span>
+                        </a>
+                        <a href="{% url 'dome:vlc' action='state' %}" class="state">
+                            <span>state VLC</span>
+                        </a>
+                    </li>
+                        {% if user.is_staff %}
+                        <li class="flex">
+                            <a href="{% url 'dome:winapi' action='setPrimaryMonitor' %}" class="service">
+                                <span>set Primary Monitor</span>
+                            </a>
+                            <a href="{% url 'dome:winapi' action='EnableOneProjector' %}" class="service">
+                                <span>Enable One Projector</span>
+                            </a>
+                            <a href="{% url 'dome:winapi' action='WinapiInfo' %}" class="service">
+                                <span>WinAPI Info</span>
+                            </a>
+                        </li>
+                        {% else %}
 
-    <div class="playlist grid" role="group" aria-label="...">
-        <li>
-            <a href="{% url 'dome:projectors' action='start' %}"><span>Projectors_start</span></a>
-            <a href="{% url 'dome:projectors' action='stop' %}"><span>Projectors_stop</span></a>
-            <a href="{% url 'dome:projectors' action='state' %}"><span>Projectors_state</span></a>
-            <br> <br>
-            <a href="{% url 'dome:mosaic-surround' action='start' %}"><span>mosaic_start</span></a>
-            <a href="{% url 'dome:mosaic-surround' action='stop' %}"><span>mosaic_stop</span></a>
-{#            <a href="{% url 'dome:mosaic-surround' action='restart' %}"><span>mosaic_restart</span></a>#}
-            <a href="{% url 'dome:mosaic-surround' action='state' %}"><span>mosaic_state</span></a>
-            <br> <br>
-            <a href="{% url 'dome:displaypro' action='start' param='2' %}"><span>start_DisplayPro</span></a>
-            <a href="{% url 'dome:displaypro' action='stop' param='2' %}"><span>stop_DisplayPro</span></a>
-{#            <a href="{% url 'dome:displaypro' %}?action=stop "><span>stop_DisplayPro</span></a>#}
-
-{#            <a href="{% url 'dome:displaypro' %}?action=setconfig&param=1 "><span>setconfig_1</span></a>#}
-              <a href="{% url 'dome:displaypro' action='setconfig' param='2' %}"><span>setconfig_2</span></a>
-{#            <a href="{% url 'dome:displaypro' action='setconfig' param='3' %}"><span>setconfig_3</span></a>#}
-{#            <a href="{% url 'dome:displaypro' action='setdesktopwarping' param='0' %}"><span>setdesktopwarping_0</span></a>#}
-{#            <a href="{% url 'dome:displaypro' action='setdesktopwarping' param='1' %}"><span>setdesktopwarping_1</span></a>#}
-            <br> <br>
-            <a href="{% url 'dome:vlc' action='start' %}"><span>start_vlc</span></a>
-            <a href="{% url 'dome:vlc' action='stop' %}"><span>stop_vlc</span></a>
-            <a href="{% url 'dome:vlc' action='state' %}"><span>state_vlc</span></a>
-            <br> <br>
-            {% if user.is_staff %}
-                <a href="{% url 'dome:winapi' action='setPrimaryMonitor' %}"><span>setPrimaryMonitor</span></a>
-                <a href="{% url 'dome:winapi' action='EnableOneProjector' %}"><span>EnableOneProjector</span></a>
-                <a href="{% url 'dome:winapi' action='WinapiInfo' %}"><span>WinAPI_Info</span></a>
-                <br> <br>
-            {% else %}
-
-            {% endif %}
-            <a href="{% url 'dome:fds' action='shutdown' %}"><span>shutdown_fds</span></a>
-            <a href="{% url 'dome:fds' action='restart' %}"><span>restart_fds</span></a>
-            <a href="{% url 'dome:fds' action='state' %}"><span>state_fds</span></a>
-        </li>
+                        {% endif %}
+                    <li class="flex">
+                        <a href="{% url 'dome:fds' action='shutdown' %}" class="service">
+                            <span>shutdown FDS</span>
+                        </a>
+                        <a href="{% url 'dome:fds' action='restart' %}" class="service">
+                            <span>restart FDS</span>
+                        </a>
+                        <a href="{% url 'dome:fds' action='state' %}" class="service">
+                            <span>state FDS</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="system-start-stop flex">
+                    <div class="system-switch system-start">
+                        <a href="{% url 'dome:base' action='start' %}" class="btn start">
+                            <span>Start system</span>
+                        </a>
+                    </div>
+                    <div class="system-switch system-stop">
+                        <a href="{% url 'dome:base' action='stop' %}" class="btn stop">
+                            <span>Stop system</span>
+                        </a>
+                    </div>
+                </div>
+                <code style="visibility: hidden;">{{ data_context|linebreaks }}</code>
+            </div>
+            <div id="tab-2" class="tab">
+                Tab 2 content
+            </div>
+            <div id="tab-3" class="tab">
+                Tab 3 content
+            </div>
+            <div id="tab-4" class="tab">
+                Tab 4 content
+            </div>
+        </main>
     </div>
-
-{% endblock aside_bar %}
-
-{% block main_bar %}
-
-    <div>
-        <br><br> <br>
-        <div>
-            <a href="{% url 'dome:base' action='start' %}" class="btn"><span>Start system</span></a>
-        </div>
-
-        <br><br><br>
-        <div>
-            <a href="{% url 'dome:base' action='stop' %}" class="btn"><span>Stop system</span></a>
-        </div>
-
-        <br><br><br>
-
-        <code>{{ data_context|linebreaks }}</code><br><br>
-    </div>
-
-{% endblock main_bar %}
-
+{% endblock content %}
 
 {% block js %}
-
-{#    <script src="{% static 'madquiz/js/dashboard.js' %}"></script>#}
-
+    <script src="{% static 'lib/jquery-ui/jquery-ui.js' %}"></script>
+    <script src="{% static 'domeplaylist/js/firefly.js' %}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
 
         });
     </script>
 {% endblock js %}
-
-

@@ -121,7 +121,6 @@ jQuery(document).ready(function($) {
         $(this).parent().addClass('active');
         $('.account-tab').removeClass('active');
         $(divId).addClass('active');
-
     });
 
 });

@@ -7,11 +7,11 @@
         <div class="logo">
             <img class="logo-img" src="" alt="firefly"/>
         </div>
-        <nav class="main_tabs grid">
-            <a href="{% url 'domeplaylist:track-list' playlist_id=-1 %}" class="tab-link link-playlists tab-link-active flex">
+        <nav class="main_pages grid">
+            <a href="{% url 'domeplaylist:track-list' playlist_id=-1 %}" class="page-link page-link-playlists flex">
                 <span class="link-playlists-text flex">Плейлисты</span>
             </a>
-            <a href="{% url 'dome:index' %}" class="tab-link link-more flex">
+            <a href="{% url 'dome:index' %}" class="page-link page-link-more flex">
                 <span class="link-more-text flex">Еще</span>
             </a>
         </nav>
@@ -39,10 +39,6 @@
                     <span id="icon-status" class="icon-status-on">Плеер</span>
                     <span id="icon-status" class="icon-status-wtf">Плеер</span>
                 </div>
-{#            <div class="status-player{% if vlc_proc %}{% if vlc_server %}{% endif %}{% else %} disabled{% endif %}">#}
-{#                <span class="icon-status-{% if vlc_proc %}{% if vlc_server %}on{% endif %}{% else %}off{% endif %}">Плеер</span>#}
-    {#            <span class="icon-status-on">Плеер</span>#}
-{#            </div>#}
             <div id="status-calib" class="status-calib disabled">
                 <span class="icon-status-off">Калибровки</span>
                 <span class="icon-status-on">Калибровки</span>
@@ -70,30 +66,14 @@
 {% endblock header %}
 
 {% block main_container %}
-    <main class="grid-tabs">
-        <div class="tab tab-playlists grid">
-            {% block content %}{% endblock %}
-            {% block aside_bar %}{% endblock aside_bar %}
-            {% block main_bar %}{% endblock main_bar %}
-        </div>
-        <div class="tab tab-more" style="display: none"></div>
-    </main>
+    <div class="grid-tabs">
+        {% block content %}{% endblock %}
+    </div>
 {% endblock main_container %}
 
 {% block footer %}
-<!--<div class="panel panel-default">-->
-<!--<div class="panel-body">-->
-<!--<p>Copyright &copy; MadCram Ltd. 2016</p>-->
-<!--</div>-->
-<!--</div>-->
 {% endblock footer %}
 
 {% block js_inner_layout %}
     <script src="{% static 'domeplaylist/js/inner_layout.js' %}"></script>
-
-{#    <script type="text/javascript">#}
-{#        $(document).ready(function () {#}
-{#        });#}
-{#    </script>#}
-
 {% endblock js_inner_layout %}

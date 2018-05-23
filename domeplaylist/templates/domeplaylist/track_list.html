@@ -1,209 +1,133 @@
 {% extends "inner_layout.html" %}
 
-
 {% load static %}
 
-
-{% block aside_bar %}
-
-    <aside id="play-list" class="playlists-container grid" data-playlist-count='{{ playlist_count }}'>
-        <div class="playlist-add grid">
-            <a href="{% url 'domeplaylist:new-playlist' %}" class="playlist-add-btn">
-                <span class="icon-add-playlist">Новый плейлист</span>
-            </a>
-{#                        <ul>#}
-{#                            <li>vlc_ts=<span id="vlc_ts" class="dynamic_state">vlc_ts</span></li>#}
-{#                            <li>vlc_proc=<span id="vlc_proc" class="dynamic_state">vlc_proc</span></li>#}
-{#                            <li>vlc_server=<span id="vlc_server" class="dynamic_state">vlc_server</span></li>#}
-{#                            <li>request_ts=<span id="request_ts" class="dynamic_state">request_ts</span></li>#}
-{#                            <li>dpro_ts=<span id="dpro_ts" class="dynamic_state">dpro_ts</span></li>#}
-{#                            <li>dpro_proc=<span id="dpro_process" class="dynamic_state">dpro_proc</span></li>#}
-{#                            <li>dpro_desktop=<span id="dpro_desktop" class="dynamic_state">dpro_desktop</span></li>#}
-{#                            <li>dpro_window=<span id="dpro_window" class="dynamic_state">dpro_window</span></li>#}
-{#                            <li>dpro_collision=<span id="dpro_collision" class="dynamic_state">dpro_collision</span></li>#}
-{#                            <li>mosaic_ts=<span id="mosaic_ts" class="dynamic_state">mosaic_ts</span></li>#}
-{#                            <li>mosaic=<span id="mosaic" class="dynamic_state">mosaic</span></li>#}
-{#                            <li>pojectors_ts=<span id="pojectors_ts" class="dynamic_state">pojectors_ts</span></li>#}
-{#                            <li>pojectors=<span id="pojectors_on" class="dynamic_state">pojectors</span></li>#}
-{#                    </ul>#}
-        </div>
-        {#==================================================================#}
-        {#        <div id="play-list">#}
-        {% if playlists_qs %}
-            {% for playlist in playlists_qs %}
-                <div class="playlist grid {% if playlist.id|stringformat:"i" == playlist_id_active %}active{% else %}{% endif %}"
-                     title="ID: {{ playlist.id }}, ver: {{ playlist.title }}"
-                     data-playlist-num={{ playlist.id }}>
-                    <div class="playlist-move">
-                        <span class="icon-move"></span>
-                    </div>
-                    {# TODO: Ссылка должна возвращать не весь документ, а только часть, содержащуюся в 'tracks-container' #}
-                    <a href="{% url 'domeplaylist:track-list' playlist_id=playlist.id %}"
-                       class="playlist-link flex"><span>{{ playlist.title }}</span></a>
-                    <div class="playlist-trash">
-                        {#            <a href="{% url 'domeplaylist:playlist-delete' playlist_id=playlist_id_active %}">sfrqrqrwerqwerqwers</a>#}
-                        <form method="POST"
-                              action="{% url 'domeplaylist:playlist-delete' playlist_id=playlist.id %}">
-                            {% csrf_token %}
-                            <input type="submit" value="" title="Удалить плейлист">
-                        </form>
-                    </div>
-
-                </div>
-
-            {% endfor %}
-        {% endif %}
-        {#        </div>#}
-        {#==================================================================#}
-    </aside>
-{% endblock aside_bar %}
-
-
-{% block main_bar %}
-    <div class="playlist-current grid">
-        <div class="playlist-current-title grid">
-            <h2>Имя активного плейлиста {{ track_id_active }}</h2>
-            <a href="{% url 'filemanager:track-add' playlist_id_active=playlist_id_active %}" title="Добавить видео"
-               class="playlist-add-track icon icon-add-track"></a>
-
-            <a href="#expand" title="Развернуть" class="playlist-expand icon icon-expand pressed"></a>
-
-            <a href="#collapse" title="Свернуть" class="playlist-collapse icon icon-collapse"></a>
-        </div>
-        <div class="player grid">
-            <div class="player-play icon icon-play-small flex">
-                <a id="track-play-button"
-                   href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='play' %}"
-                   title="Play"></a>
+{% block content %}
+    <div class="page page-playlists grid">
+        <aside id="play-list" class="playlists-container grid" data-playlist-count='{{ playlist_count }}'>
+            <div class="playlist-add grid">
+                <a href="{% url 'domeplaylist:new-playlist' %}" class="playlist-add-btn">
+                    <span class="icon-add-playlist">Новый плейлист</span>
+                </a>
             </div>
-            <div class="player-stop icon icon-stop flex">
-                <a id="buttonStop"
-                   href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='stop' %}"
-                   title="Stop"></a>
-            </div>
-            <div id="currentTime" class="player-current-position flex dynamic"></div>
-            <div class="player-progress-bar flex">
-                <div id="seekContainer">
-                    <div id="seekSlider" title="Seek Time" class="bar-empty ui-slider ui-slider-horizontal">
-                        <div class="ui-slider-range ui-slider-range-min"></div>
-                        <a class="bar-marker ui-slider-handle ui-state-default" href="#"></a>
-                    </div>
-                </div>
-            </div>
-
-            <div id="totalTime" class="player-duration flex dynamic">
-                00:00
-            </div>
-            <div class="player-volume-icon icon icon-volume flex"></div>
-<!--             <div class="player-volume-bar flex">
-                <span class="player-volume-bar">Volume bar</span>
-            </div>
-            <div class="player-volume-value flex">
-                <span class="player-volume-value">82%</span>
-            </div>-->
-            <div class="player-volume-bar flex">
-                <div id="volumesliderzone">
-                    <div id="volumeSlider" title="Volume" class="ui-slider ui-slider-horizontal bar-empty">
-                        <div class="bar-marker ui-slider-handle ui-state-default volume-bar-marker"></div>
-                        <div class="ui-slider-range ui-widget-header ui-slider-range-min"></div>
-                    </div>
-                </div>
-            </div>
-            <div id="currentVolume" class="player-volume-value dynamic flex"></div>
-            <div class="player-lock icon icon-lock flex"></div>
-
-
-
-            <div id="buttonOpen" class="player-repeat icon icon-repeat flex"></div>
-
-
-
-
-            <div class="player-full icon icon-full flex">
-                 <a id="track-fullscreen-button"
-                   href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='fullscreen' %}"
-                   title="Fullscreen"></a>
-            </div>
-        </div>
-
-        <div id="track-list" class="tracks-container grid">
-            {% if tracklist_qs %}
-                {% for track in tracklist_qs %}
-                    <div id="track-item"
-                         class="track grid {% if track.id|stringformat:"i" == track_id_active %}active{% else %}{% endif %}"
-                         data-track-num={{ track.id }}>
-
-                        <div class="track-move">
+            {% if playlists_qs %}
+                {% for playlist in playlists_qs %}
+                    <div class="playlist grid {% if playlist.id|stringformat:"i" == playlist_id_active %}active{% else %}{% endif %}"
+                         title="ID: {{ playlist.id }}, ver: {{ playlist.title }}"
+                         data-playlist-num={{ playlist.id }}>
+                        <div class="playlist-move">
                             <span class="icon-move"></span>
                         </div>
-                        <div class="track-poster-play grid">
-                            <div class="track-play flex">
-                                <span class="icon-play"></span>
-                            </div>
-                            <div class="track-poster">
-                                <img title="ID: {{ track.id }}">
-                            </div>
-                        </div>
-                        <div class="track-title"
-                             title="codec_name: {{ track.codec_name }}, : {{ track.codec_long_name }}">
-                            <h3>{{ track.title }}</h3>
-                        </div>
-                        <div class="track-info grid">
-                            <div class="track-info-time">
-                                <span class="icon-time">{{ track.duration }}</span>
-                            </div>
-                            <div class="track-info-size">
-                                <span class="icon-size">{{ track.width }}*{{ track.height }}@{{ track.r_frame_rate }}fps</span>
-                            </div>
-                            <div class="track-info-bitrate">
-                                <span class="icon-bitrate">{{ track.bit_rate }}</span>
-                            </div>
-                        </div>
-                        <div class="track-trash">
-                            <a href="{% url 'domeplaylist:track-delete' playlist_id=playlist_id_active track_id=track.id %}"></a>
+                        <a href="{% url 'domeplaylist:track-list' playlist_id=playlist.id %}"
+                           class="playlist-link flex"><span>{{ playlist.title }}</span></a>
+                        <div class="playlist-trash">
                             <form method="POST"
-                                  action="{% url 'domeplaylist:track-delete' playlist_id=playlist_id_active track_id=track.id %}">
+                                  action="{% url 'domeplaylist:playlist-delete' playlist_id=playlist.id %}">
                                 {% csrf_token %}
-                                <input type="submit" value="" title="Удалить видео">
+                                <input type="submit" value="" title="Удалить плейлист">
                             </form>
                         </div>
+
                     </div>
                 {% endfor %}
             {% endif %}
-        </div>
+        </aside>
+        <main class="playlist-current grid">
+            <div class="title grid">
+                <h2>Имя активного плейлиста {{ track_id_active }}</h2>
+                <a href="{% url 'filemanager:track-add' playlist_id_active=playlist_id_active %}" title="Добавить видео"
+                   class="playlist-add-track icon icon-add-track"></a>
+                <a href="#expand" title="Развернуть" class="playlist-expand icon icon-expand pressed"></a>
+                <a href="#collapse" title="Свернуть" class="playlist-collapse icon icon-collapse"></a>
+            </div>
+            <div class="player grid">
+                <div class="player-play icon icon-play-small flex">
+                    <a id="track-play-button"
+                       href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='play' %}"
+                       title="Play"></a>
+                </div>
+                <div class="player-stop icon icon-stop flex">
+                    <a id="buttonStop"
+                       href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='stop' %}"
+                       title="Stop"></a>
+                </div>
+                <div id="currentTime" class="player-current-position flex dynamic"></div>
+                <div class="player-progress-bar flex">
+                    <div id="seekContainer">
+                        <div id="seekSlider" title="Seek Time" class="bar-empty ui-slider ui-slider-horizontal">
+                            <div class="ui-slider-range ui-slider-range-min"></div>
+                            <a class="bar-marker ui-slider-handle ui-state-default" href="#"></a>
+                        </div>
+                    </div>
+                </div>
+                <div id="totalTime" class="player-duration flex dynamic">
+                    00:00
+                </div>
+                <div class="player-volume-icon icon icon-volume flex"></div>
+                <div class="player-volume-bar flex">
+                    <div id="volumesliderzone">
+                        <div id="volumeSlider" title="Volume" class="ui-slider ui-slider-horizontal bar-empty">
+                            <div class="bar-marker ui-slider-handle ui-state-default volume-bar-marker"></div>
+                            <div class="ui-slider-range ui-widget-header ui-slider-range-min"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="currentVolume" class="player-volume-value dynamic flex"></div>
+                <div class="player-lock icon icon-lock flex"></div>
+                <div id="buttonOpen" class="player-repeat icon icon-repeat flex"></div>
+                <div class="player-full icon icon-full flex">
+                     <a id="track-fullscreen-button"
+                       href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='fullscreen' %}"
+                       title="Fullscreen"></a>
+                </div>
+            </div>
+            <div id="track-list" class="tracks-container grid">
+                {% if tracklist_qs %}
+                    {% for track in tracklist_qs %}
+                        <div id="track-item"
+                             class="track grid {% if track.id|stringformat:"i" == track_id_active %}active{% else %}{% endif %}"
+                             data-track-num={{ track.id }}>
+                            <div class="track-move">
+                                <span class="icon-move"></span>
+                            </div>
+                            <div class="track-poster-play grid">
+                                <div class="track-play flex">
+                                    <span class="icon-play"></span>
+                                </div>
+                                <div class="track-poster">
+                                    <img title="ID: {{ track.id }}">
+                                </div>
+                            </div>
+                            <div class="track-title"
+                                 title="codec_name: {{ track.codec_name }}, : {{ track.codec_long_name }}">
+                                <h3>{{ track.title }}</h3>
+                            </div>
+                            <div class="track-info grid">
+                                <div class="track-info-time">
+                                    <span class="icon-time">{{ track.duration }}</span>
+                                </div>
+                                <div class="track-info-size">
+                                    <span class="icon-size">{{ track.width }}*{{ track.height }}@{{ track.r_frame_rate }}fps</span>
+                                </div>
+                                <div class="track-info-bitrate">
+                                    <span class="icon-bitrate">{{ track.bit_rate }}</span>
+                                </div>
+                            </div>
+                            <div class="track-trash">
+                                <a href="{% url 'domeplaylist:track-delete' playlist_id=playlist_id_active track_id=track.id %}"></a>
+                                <form method="POST"
+                                      action="{% url 'domeplaylist:track-delete' playlist_id=playlist_id_active track_id=track.id %}">
+                                    {% csrf_token %}
+                                    <input type="submit" value="" title="Удалить видео">
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </main>
     </div>
-
-
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            var opt = {
-        autoOpen: false,
-        modal: true,
-        width: 550,
-        height:650,
-        title: 'Details'
-};
-
-            $('#buttonOpen').click(function () {
-                browse_target = 'default';
-                browse();
-                console.log("browse");
-                $('#window_browse').dialog(opt).dialog('open');
-                return false;
-            });
-
-        });
-    </script>
-
-    <div id="window_browse">
-
-    </div>
-
-{% endblock main_bar %}
-
-
+{% endblock content %}
 
 {% block js %}
     <script src="{% static 'domeplaylist/js/vlc_web/common.js' %}"></script>
@@ -212,34 +136,22 @@
    <script src="{% static 'domeplaylist/js/vlc_web/ui.js' %}"></script>
     <script src="{% static 'domeplaylist/js/vlc_web/controlers.js' %}"></script>
     <script src="{% static 'domeplaylist/js/firefly.js' %}"></script>
-    {#    <script src="{% static 'domeplaylist/js/inner_layout.js' %}"></script>#}
-
-
-
-
-{#  		<link type="text/css" href="css/ui-lightness/jquery-ui-1.8.13.custom.css" rel="stylesheet" />#}
-{#		<link type="text/css" href="css/main.css" rel="stylesheet" />#}
-{#		<script type="text/javascript" src="js/jquery-ui-1.8.13.custom.min.js"></script>#}
-
-
 
     <script type="text/javascript">
         $(document).ready(function () {
-
             $('.track').click(function () {
 
                 var track = $('.track.active').data("trackNum");
-                {#console.log(track);#}
+                // console.log(track);
 
                 var track_play_button = $('#track-play-button');
                 var str_url = track_play_button.attr('href');
-                {#console.log(str_url);#}
+                // console.log(str_url);
 
                 var res = str_url.split('/');
                 res[4] = track;
                 str_url = res.join('/');
                 track_play_button.attr('href', str_url);
-
 
                 var track_stop_button = $('#buttonStop');
                 var str_url = track_stop_button.attr('href');
@@ -247,7 +159,6 @@
                 res[4] = track;
                 str_url = res.join('/');
                 track_stop_button.attr('href', str_url);
-
 
                 var track_fullscreen_button = $('#track-fullscreen-button');
                 var str_url = track_fullscreen_button.attr('href');
@@ -257,16 +168,7 @@
                 track_fullscreen_button.attr('href', str_url);
 
             });
-
-
-{#            $('#buttonOpen').click(function () {#}
-{#                browse_target = 'default';#}
-{#                browse();#}
-{#                console.log("browse");#}
-{#                $('#window_browse').dialog('open');#}
-{#                return false;#}
-{#            });#}
-
         });
     </script>
+
 {% endblock js %}
