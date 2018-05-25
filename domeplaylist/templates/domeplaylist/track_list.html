@@ -84,8 +84,7 @@
             <div id="track-list" class="tracks-container grid">
                 {% if tracklist_qs %}
                     {% for track in tracklist_qs %}
-                        <div id="track-item"
-                             class="track grid {% if track.id|stringformat:"i" == track_id_active %}active{% else %}{% endif %}"
+                        <div class="track grid {% if track.id|stringformat:"i" == track_id_active %}active{% else %}{% endif %}"
                              data-track-num={{ track.id }}>
                             <div class="track-move">
                                 <span class="icon-move"></span>
@@ -121,6 +120,7 @@
                                     <input type="submit" value="" title="Удалить видео">
                                 </form>
                             </div>
+                            <div class="track-click-container"></div>
                         </div>
                     {% endfor %}
                 {% endif %}

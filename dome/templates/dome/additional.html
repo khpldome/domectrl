@@ -2,7 +2,6 @@
 
 {% load staticfiles %}
 
-<<<<<<< HEAD
 {% block content %}
     <div class="page page-more grid">
         <aside class="more-tabs-list grid">
@@ -37,167 +36,176 @@
             <div id="tab-1" class="tab active">
                 <ul>
                     <li class="flex">
-{#                        <a href="{% url 'dome:projectors' action='start' %}" class="start">#}
-{#                            <span>Projectors start</span>#}
-{#                        </a>#}
                         <form method="POST" action="{% url 'dome:projectors' %}">
                             {% csrf_token %}
                             <input type="hidden" name="action" value="start">
-                            <input type="submit" name="buttonName" value="Projectors start" title="Projectors: start" class="start">
+                            <input type="submit" name="buttonName" value="Projectors start" title="Проекторы: Старт" class="button start">
                         </form>
-{#                        <a href="{% url 'dome:projectors' action='stop' %}" class="stop">#}
-{#                            <span>Projectors stop</span>#}
-{#                        </a>#}
                         <form method="POST" action="{% url 'dome:projectors' %}">
                             {% csrf_token %}
                             <input type="hidden" name="action" value="stop">
-                            <input type="submit" name="buttonName" value="Projectors stop" title="Projectors: stop" class="stop">
+                            <input type="submit" name="buttonName" value="Projectors stop" title="Проекторы: Стоп" class="button stop">
                         </form>
-{#                        <a href="{% url 'dome:projectors' action='state' %}" class="state">#}
-{#                            <span>Projectors state</span>#}
-{#                        </a>#}
                         <form method="POST" action="{% url 'dome:projectors' %}">
                             {% csrf_token %}
                             <input type="hidden" name="action" value="state">
-                            <input type="submit" name="buttonName" value="Projectors state" title="Projectors: state" class="state">
+                            <input type="submit" name="buttonName" value="Projectors state" title="Проекторы: Статус" class="button state">
                         </form>
                     </li>
                     <li class="flex">
                         <form method="POST" action="{% url 'dome:mosaic-surround' %}">
                             {% csrf_token %}
                             <input type="hidden" name="action" value="start">
-                            <input type="submit" name="buttonName" value="Mosaic start" title="Mosaic: start" class="start">
+                            <input type="submit" name="buttonName" value="Mosaic start" title="Мозаика: Старт" class="button start">
                         </form>
                         <form method="POST" action="{% url 'dome:mosaic-surround' %}">
                             {% csrf_token %}
                             <input type="hidden" name="action" value="stop">
-                            <input type="submit" name="buttonName" value="Mosaic stop" title="Mosaic: stop" class="stop">
+                            <input type="submit" name="buttonName" value="Mosaic stop" title="Мозаика: Стоп" class="button stop">
                         </form>
                         <form method="POST" action="{% url 'dome:mosaic-surround' %}">
                             {% csrf_token %}
                             <input type="hidden" name="action" value="state">
-                            <input type="submit" name="buttonName" value="Mosaic state" title="Mosaic: stop" class="state">
+                            <input type="submit" name="buttonName" value="Mosaic state" title="Мозаика: Статус" class="button state">
                         </form>
                     </li>
                     <li class="flex">
                         <form method="POST" action="{% url 'dome:displaypro' %}">
                             {% csrf_token %}
                             <input type="hidden" name="action" value="start">
-                            <input type="submit" name="buttonName" value="DP start" title="DisplayPRO Start" class="start">
+                            <input type="submit" name="buttonName" value="DP start" title="DisplayPRO: Старт" class="button start">
                         </form>
                         <form method="POST" action="{% url 'dome:displaypro' %}">
                             {% csrf_token %}
                             <input type="hidden" name="action" value="stop">
-                            <input type="submit" name="buttonName" value="DP stop" title="DisplayPro Stop" class="stop">
+                            <input type="submit" name="buttonName" value="DP stop" title="DisplayPro: Стоп" class="button stop">
                         </form>
                         <form method="POST" action="{% url 'dome:displaypro' %}">
                             {% csrf_token %}
                             <input type="hidden" name="action" value="state">
-                            <input type="submit" name="buttonName" value="DP state" title="DisplayPRO State" class="state">
+                            <input type="submit" name="buttonName" value="DP state" title="DisplayPRO: Статус" class="button state">
                         </form>
-                        <form method="POST" action="{% url 'dome:displaypro'%}">
+                    </li>
+                    <li class="flex">
+                         <form method="POST" action="{% url 'dome:vlc'%}">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="start">
+                            <input type="submit" name="buttonName" value="VLC start" title="VLC: Старт" class="button start">
+                        </form>
+                         <form method="POST" action="{% url 'dome:vlc'%}">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="stop">
+                            <input type="submit" name="buttonName" value="VLC stop" title="VLC: Стоп" class="button stop">
+                        </form>
+                         <form method="POST" action="{% url 'dome:vlc'%}">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="state">
+                            <input type="submit" name="buttonName" value="VLC state" title="VLC: Статус" class="button state">
+                        </form>
+                    </li>
+                </ul>
+                <div class="system-start-stop flex">
+                    <form method="POST" action="{% url 'dome:system' %}" class="system-switch system-start">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="autostart">
+                        <input type="submit" name="buttonName" value="System autostart" title="System autostart" class="start">
+                    </form>
+                    <form method="POST" action="{% url 'dome:system' %}" class="system-switch system-stop">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="autostop">
+                        <input type="submit" name="buttonName" value="System autostop" title="System autostop" class="stop">
+                    </form>
+                </div>
+                <ul>
+                    <li class="flex">
+                        <form method="POST" action="{% url 'dome:displaypro'%}" class=" config">
                             {% csrf_token %}
                             <input type="hidden" name="action" value="config_1">
-                            <input type="submit" name="buttonName" value="DP config_1" title="DisplayPRO: Конфигурация 1" class="service">
+                            <input type="submit" name="buttonName" value="DP config_1" title="DisplayPRO: Конфигурация 1" class="button service">
                         </form>
-                        <form method="POST" action="{% url 'dome:displaypro'%}">
+                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">
                             {% csrf_token %}
                             <input type="hidden" name="action" value="config_2">
-                            <input type="submit" name="buttonName" value="DP config_2" title="DisplayPRO: Конфигурация 2" class="service">
+                            <input type="submit" name="buttonName" value="DP config_2" title="DisplayPRO: Конфигурация 2" class="button service">
                         </form>
-                        <form method="POST" action="{% url 'dome:displaypro'%}">
+                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">
                             {% csrf_token %}
                             <input type="hidden" name="action" value="config_3">
-                            <input type="submit" name="buttonName" value="DP config_3" title="DisplayPRO: Конфигурация 3" class="service">
+                            <input type="submit" name="buttonName" value="DP config_3" title="DisplayPRO: Конфигурация 3" class="button service">
                         </form>
-                        <form method="POST" action="{% url 'dome:displaypro'%}">
+                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">
                             {% csrf_token %}
-                            <input type="hidden" name="action" value="config_4">
-                            <input type="submit" name="buttonName" value="DP config_4" title="DisplayPRO: Конфигурация 4" class="service">
+                            <input type="hidden" name="action" value="config_4" class="config">
+                            <input type="submit" name="buttonName" value="DP config_4" title="DisplayPRO: Конфигурация 4" class="button service">
                         </form>
                     </li>
                     <li class="flex">
-                         <form method="POST" action="{% url 'dome:vlc'%}">
+                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">
                             {% csrf_token %}
-                            <input type="hidden" name="action" value="start">
-                            <input type="submit" name="buttonName" value="VLC start" title="VLC: start" class="service">
+                            <input type="hidden" name="action" value="config_5" class="config">
+                            <input type="submit" name="buttonName" value="DP config_5" title="DisplayPRO: Конфигурация 5" class="button service disabled" disabled />
                         </form>
-                         <form method="POST" action="{% url 'dome:vlc'%}">
+                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">
                             {% csrf_token %}
-                            <input type="hidden" name="action" value="stop">
-                            <input type="submit" name="buttonName" value="VLC stop" title="VLC: stop" class="service">
+                            <input type="hidden" name="action" value="config_6" class="config">
+                            <input type="submit" name="buttonName" value="DP config_6" title="DisplayPRO: Конфигурация 6" class="button service disabled" disabled />
                         </form>
-                         <form method="POST" action="{% url 'dome:vlc'%}">
+                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">
                             {% csrf_token %}
-                            <input type="hidden" name="action" value="state">
-                            <input type="submit" name="buttonName" value="VLC state" title="VLC: state" class="service">
+                            <input type="hidden" name="action" value="config_7" class="config">
+                            <input type="submit" name="buttonName" value="DP config_7" title="DisplayPRO: Конфигурация 7" class="button service disabled" disabled />
+                        </form>
+                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="config_8" class="config">
+                            <input type="submit" name="buttonName" value="DP config_8" title="DisplayPRO: Конфигурация 8" class="button service disabled" disabled />
                         </form>
                     </li>
-                        {% if user.is_staff %}
+                    {% if user.is_staff %}
                         <li class="flex">
                             <form method="POST" action="{% url 'dome:winapi' %}">
                                 {% csrf_token %}
                                 <input type="hidden" name="action" value="setPrimaryMonitor">
                                 <input type="submit" name="buttonName" value="WINAPI setPrimaryMonitor" title="WINAPI setPrimaryMonitor"
-                                       class="service">
+                                       class="button service">
                             </form>
                             <form method="POST" action="{% url 'dome:winapi' %}">
                                 {% csrf_token %}
                                 <input type="hidden" name="action" value="EnableOneProjector">
                                 <input type="submit" name="buttonName" value="WINAPI EnableOneProjector" title="WINAPI EnableOneProjector"
-                                       class="service">
+                                       class="button service">
                             </form>
                              <form method="POST" action="{% url 'dome:winapi' %}">
                                 {% csrf_token %}
                                 <input type="hidden" name="action" value="WinapiInfo">
                                 <input type="submit" name="buttonName" value="WINAPI WinapiInfo" title="WINAPI WinapiInfo"
-                                       class="service">
+                                       class="button service">
                             </form>
                         </li>
-                        {% else %}
+                    {% else %}
 
-                        {% endif %}
+                    {% endif %}
                     <li class="flex">
                         <form method="POST" action="{% url 'dome:fds'%}">
                             {% csrf_token %}
                             <input type="hidden" name="action" value="shutdown">
-                            <input type="submit" name="buttonName" value="shutdown FDS" title="FDS: shutdown" class="service">
+                            <input type="submit" name="buttonName" value="shutdown FDS" title="FDS: shutdown" class="button service">
                         </form>
                         <form method="POST" action="{% url 'dome:fds'%}">
                             {% csrf_token %}
                             <input type="hidden" name="action" value="restart">
-                            <input type="submit" name="buttonName" value="restart FDS" title="FDS: restart" class="service">
+                            <input type="submit" name="buttonName" value="restart FDS" title="FDS: restart" class="button service">
                         </form>
                          <form method="POST" action="{% url 'dome:fds'%}">
                             {% csrf_token %}
                             <input type="hidden" name="action" value="state">
-                            <input type="submit" name="buttonName" value="state FDS" title="FDS: state" class="service">
+                            <input type="submit" name="buttonName" value="state FDS" title="FDS: state" class="button service">
                         </form>
                     </li>
                 </ul>
-                <div class="system-start-stop flex">
-{#                    <div class="system-switch system-start">#}
-{#                        <a href="{% url 'dome:base' action='start' %}" class="btn start">#}
-{#                            <span>Start system</span>#}
-{#                        </a>#}
-{#                    </div>#}
-                    <form method="POST" action="{% url 'dome:system' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="action" value="autostart">
-                        <input type="submit" name="buttonName" value="System autostart" title="System autostart" class="service">
-                    </form>
-{#                    <div class="system-switch system-stop">#}
-{#                        <a href="{% url 'dome:base' action='stop' %}" class="btn stop">#}
-{#                            <span>Stop system</span>#}
-{#                        </a>#}
-{#                    </div>#}
-                    <form method="POST" action="{% url 'dome:system' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="action" value="autostop">
-                        <input type="submit" name="buttonName" value="System autostop" title="System autostop" class="service">
-                    </form>
+                <div class="context">
+                    <code>{{ data_context|linebreaks }}</code>
                 </div>
-                <code>{{ data_context|linebreaks }}</code>
             </div>
             <div id="tab-2" class="tab">
                 Tab 2 content

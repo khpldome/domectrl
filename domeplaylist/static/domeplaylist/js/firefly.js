@@ -20,9 +20,11 @@ jQuery(document).ready(function($) {
         };
     });
 
-    $('.track').click(function() {
+    $('.track-click-container').click(function() {
         $('.track').removeClass('active');
-        $(this).addClass('active');
+        $(this).parent('.track').addClass('active');
+        var trackName = $(this).parent('.track').find('.track-title h3').html();
+        $('footer marquee span').html('Сейчас играет ' + trackName);
         // $('.player').insertAfter($(this).find('.track-trash'));
         // $('.player').css({'grid-column': '1/6', 'grid-row': '2/3'});
     });
@@ -33,6 +35,10 @@ jQuery(document).ready(function($) {
     //         $('.player').css({'grid-column': '1/6', 'grid-row': '2/3'});
     //     });
     // }
+
+    $('.track-click-container').on('mouseenter', function() {
+
+    });
 
     $('.projectors-turn-off a').on('click', function(e) {
         $(this).parent().addClass("hidden")
