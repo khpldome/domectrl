@@ -41,15 +41,15 @@
                 <a href="#collapse" title="Свернуть" class="playlist-collapse icon icon-collapse"></a>
             </div>
             <div class="player grid">
-                <div class="player-play icon icon-play-small flex">
-                    <a id="buttonPlay" state = 'stopped' class="paused"
-{#                       href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='play' %}"#}
-                       title="Play"></a>
+                <div class="player-play flex">
+<!--                     <a id="buttonPlay" state = 'stopped' class="paused"
+                       href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='play' %}"
+                       title="Play"></a> -->
+                    <a id="buttonPlay" state='stopped' class="paused icon icon-play-small" title="Play"></a>
                 </div>
-                <div class="player-stop icon icon-stop flex">
-                    <a id="buttonStop"
-{#                       href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='stop' %}"#}
-                       title="Stop"></a>
+                <div class="player-stop flex">
+<!--                     <a id="buttonStop" href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='stop' %}" title="Stop"></a> -->
+                    <a id="buttonStop" class="icon icon-stop" title="Stop"></a>
                 </div>
                 <div id="currentTime" class="player-current-position flex dynamic"></div>
                 <div class="player-progress-bar flex">
@@ -75,10 +75,10 @@
                 <div id="currentVolume" class="player-volume-value dynamic flex"></div>
 {#                <div class="player-lock icon icon-lock flex"></div>#}
 {#                <div id="buttonOpen" class="player-repeat icon icon-repeat flex"></div>#}
-                <div class="player-full icon icon-full flex">
-                     <a id="buttonFull"
-{#                       href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='fullscreen' %}"#}
-                       title="Fullscreen"></a>
+                <div class="player-full flex">
+<!--                     <a id="buttonFull"
+                       href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='fullscreen' %}" title="Fullscreen"></a> -->
+                     <a id="buttonFull" class="icon icon-full" title="Fullscreen"></a>
                 </div>
                 <div id='mediaTitle' class="played-track-name flex dynamic">
 {#                    {% if track_id_active|stringformat:"i" == '-1' %}#}
