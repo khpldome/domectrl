@@ -80,6 +80,9 @@
                        href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='fullscreen' %}"
                        title="Fullscreen"></a>
                 </div>
+                <div class="played-track-name flex">
+                    <span>Ничего не проигрывается.</span>
+                </div>
             </div>
             <div id="track-list" class="tracks-container grid">
                 {% if tracklist_qs %}

@@ -25,16 +25,17 @@ jQuery(document).ready(function($) {
         $(this).parent('.track').addClass('active');
         var trackName = $(this).parent('.track').find('.track-title h3').html();
         $('footer marquee span').html('Сейчас играет ' + trackName);
+        $('.played-track-name').find('span').html('Сейчас играет ' + trackName);
+        $('.player').addClass('active');
+        $('.playlist-current').addClass('active');
+        $
         // $('.player').insertAfter($(this).find('.track-trash'));
         // $('.player').css({'grid-column': '1/6', 'grid-row': '2/3'});
     });
     // console.log($('.track.active').length);
-    // if ($(".track.active").length) {
-    //     $(window).load(function () {
-    //         $('.player').insertAfter( $(".track.active").find('.track-trash'));
-    //         $('.player').css({'grid-column': '1/6', 'grid-row': '2/3'});
-    //     });
-    // }
+    if ($('.track.active').length) {
+        $('.player').addClass('active');
+    }
 
     $('.track-click-container').on('mouseenter', function() {
 
