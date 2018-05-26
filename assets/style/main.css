@@ -353,7 +353,7 @@ nav.main_pages .page-link-more {
     border: 2px solid #2abbff;
     grid-row: 1/2;
     grid-column: 2/3;
-    grid-template-rows: 68px 50px;
+    grid-template-rows: 68px 90px;
     min-height: calc(100vh - 205px);
     align-items: start;
 }
@@ -792,7 +792,7 @@ input.service {
 }
 
 .player {
-    height: 50px;
+    height: 90px;
     grid-template-columns: 50px 50px 0.1fr 1fr 0.1fr 50px 0.2fr 0.1fr 50px 50px 50px;
     align-items: center;
     background: #26a9e7; 
@@ -852,14 +852,16 @@ input.service {
 
 .player-volume-bar {
     grid-row: 1/2;
-    grid-column: 7/8;
+    /*grid-column: 7/8;*/
+    grid-column: 7/10;
     padding-left: 10px;
     padding-right: 10px;
 }
 
 .player-volume-value {
     grid-row: 1/2;
-    grid-column: 8/9;
+    /*grid-column: 8/9;*/
+    grid-column: 10/11;
 }
 
 .player-lock {
@@ -1163,7 +1165,8 @@ grid-row: 2/3;
 }
 
 .player .played-track-name {
-    display: none;
+    /*display: none;*/
+    display: block;
     grid-row: 2/3;
     grid-column: 1/12;
     color: #1f2127;
@@ -1174,6 +1177,6 @@ grid-row: 2/3;
     border-top: 1px solid #fff;
 }
 
-.player.active .played-track-name {
-    display: block;
-}
+/*.player.active .played-track-name {*/
+    /*display: block;*/
+/*}*/

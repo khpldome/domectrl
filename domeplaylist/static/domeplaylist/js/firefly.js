@@ -21,17 +21,39 @@ jQuery(document).ready(function($) {
     });
 
     $('.track-click-container').click(function() {
+
+        var trackName = $(this).parent('.track').find('.track-title h3').html();
+
+        if ($(this).attr('state') == 'stopped') {
+
+            // var trackName = $('.track').find('.track-title h3').html();
+            console.log(trackName);
+            sendCommand({
+                'command': 'in_play',
+                'input': trackName
+            });
+
+        } else {
+            sendCommand({
+                'command': 'pl_pause'
+            });
+        }
+
+
+
+
         $('.track').removeClass('active');
         $(this).parent('.track').addClass('active');
-        var trackName = $(this).parent('.track').find('.track-title h3').html();
-        $('footer marquee span').html('Сейчас играет ' + trackName);
-        $('.played-track-name').find('span').html('Сейчас играет ' + trackName);
+        // var trackName = $(this).parent('.track').find('.track-title h3').html();
+        // $('footer marquee span').html('Сейчас играет ' + trackName);
+        // $('.played-track-name').find('span').html('Сейчас играет ' + trackName);
         $('.player').addClass('active');
         $('.playlist-current').addClass('active');
         $
         // $('.player').insertAfter($(this).find('.track-trash'));
         // $('.player').css({'grid-column': '1/6', 'grid-row': '2/3'});
     });
+
     // console.log($('.track.active').length);
     if ($('.track.active').length) {
         $('.player').addClass('active');

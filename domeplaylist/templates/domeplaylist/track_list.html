@@ -34,7 +34,7 @@
         </aside>
         <main class="playlist-current grid">
             <div class="title grid">
-                <h2>Имя активного плейлиста {{ track_id_active }}</h2>
+                <h2>Имя активного плейлиста</h2>
                 <a href="{% url 'filemanager:track-add' playlist_id_active=playlist_id_active %}" title="Добавить видео"
                    class="playlist-add-track icon icon-add-track"></a>
                 <a href="#expand" title="Развернуть" class="playlist-expand icon icon-expand pressed"></a>
@@ -42,13 +42,13 @@
             </div>
             <div class="player grid">
                 <div class="player-play icon icon-play-small flex">
-                    <a id="track-play-button"
-                       href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='play' %}"
+                    <a id="buttonPlay" state = 'stopped' class="paused"
+{#                       href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='play' %}"#}
                        title="Play"></a>
                 </div>
                 <div class="player-stop icon icon-stop flex">
                     <a id="buttonStop"
-                       href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='stop' %}"
+{#                       href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='stop' %}"#}
                        title="Stop"></a>
                 </div>
                 <div id="currentTime" class="player-current-position flex dynamic"></div>
@@ -73,15 +73,19 @@
                     </div>
                 </div>
                 <div id="currentVolume" class="player-volume-value dynamic flex"></div>
-                <div class="player-lock icon icon-lock flex"></div>
-                <div id="buttonOpen" class="player-repeat icon icon-repeat flex"></div>
+{#                <div class="player-lock icon icon-lock flex"></div>#}
+{#                <div id="buttonOpen" class="player-repeat icon icon-repeat flex"></div>#}
                 <div class="player-full icon icon-full flex">
-                     <a id="track-fullscreen-button"
-                       href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='fullscreen' %}"
+                     <a id="buttonFull"
+{#                       href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=-1 action='fullscreen' %}"#}
                        title="Fullscreen"></a>
                 </div>
-                <div class="played-track-name flex">
-                    <span>Ничего не проигрывается.</span>
+                <div id='mediaTitle' class="played-track-name flex dynamic">
+{#                    {% if track_id_active|stringformat:"i" == '-1' %}#}
+                        <span></span>
+{#                    {% else %}#}
+{#                        <span></span>#}
+{#                    {% endif %}#}
                 </div>
             </div>
             <div id="track-list" class="tracks-container grid">
@@ -94,6 +98,7 @@
                             </div>
                             <div class="track-poster-play grid">
                                 <div class="track-play flex">
+
                                     <span class="icon-play"></span>
                                 </div>
                                 <div class="track-poster">
@@ -123,7 +128,17 @@
                                     <input type="submit" value="" title="Удалить видео">
                                 </form>
                             </div>
-                            <div class="track-click-container"></div>
+
+                            <div class="track-click-container" state='stopped' class="paused">
+
+{#                                <a href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=track.id action='play' %}"#}
+{#                       title="Play"></a>#}
+
+{#                                <a id="buttonPlay" state = 'stopped' class="paused" title="Play"></a>#}
+
+                            </div>
+
+
                         </div>
                     {% endfor %}
                 {% endif %}
@@ -147,31 +162,47 @@
                 var track = $('.track.active').data("trackNum");
                 // console.log(track);
 
-                var track_play_button = $('#track-play-button');
-                var str_url = track_play_button.attr('href');
-                // console.log(str_url);
+{#                var track_play_button = $('#track-play-button');#}
+{#                var str_url = track_play_button.attr('href');#}
+{#                // console.log(str_url);#}
+{##}
+{#                var res = str_url.split('/');#}
+{#                res[4] = track;#}
+{#                str_url = res.join('/');#}
+{#                track_play_button.attr('href', str_url);#}
 
-                var res = str_url.split('/');
-                res[4] = track;
-                str_url = res.join('/');
-                track_play_button.attr('href', str_url);
+{#                var track_stop_button = $('#buttonStop');#}
+{#                var str_url = track_stop_button.attr('href');#}
+{#                var res = str_url.split('/');#}
+{#                res[4] = track;#}
+{#                str_url = res.join('/');#}
+{#                track_stop_button.attr('href', str_url);#}
 
-                var track_stop_button = $('#buttonStop');
-                var str_url = track_stop_button.attr('href');
-                var res = str_url.split('/');
-                res[4] = track;
-                str_url = res.join('/');
-                track_stop_button.attr('href', str_url);
-
-                var track_fullscreen_button = $('#track-fullscreen-button');
-                var str_url = track_fullscreen_button.attr('href');
-                var res = str_url.split('/');
-                res[4] = track;
-                str_url = res.join('/');
-                track_fullscreen_button.attr('href', str_url);
+{#                var track_fullscreen_button = $('#track-fullscreen-button');#}
+{#                var str_url = track_fullscreen_button.attr('href');#}
+{#                var res = str_url.split('/');#}
+{#                res[4] = track;#}
+{#                str_url = res.join('/');#}
+{#                track_fullscreen_button.attr('href', str_url);#}
 
             });
+
+            var trackName = $('.track').find('.track-title h3').html();
+            $('footer marquee span').html('Сейчас играет ' + trackName);
+{#            console.log(mediaTitle+'1234');#}
+{#            $('.played-track-name').find('span').html('Сейчас играет ' + trackName);#}
+
+
+{#            $(".track-click-container").click(function () {#}
+{#                window.location = $(this).find("a").attr("href");#}
+{#                return false;#}
+{#            });#}
+
+
         });
+
+
+
     </script>
 
 {% endblock js %}

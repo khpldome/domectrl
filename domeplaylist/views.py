@@ -186,18 +186,18 @@ class TrackActionView(LoginRequiredMixin, ListView):
             path = instance.title
             print('http://' + conf.HOST_IP, ':8080/requests/status.xml?command=in_enqueue&input=', path)
 
-            if action == 'play':
-                # r = requests.get('http://'+conf.ALLOWED_IP+':8080/requests/status.xml?command=in_enqueue&input='+t3, auth=('', '63933'))
-                r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=in_play&input=' + path, auth=('', '63933'))
-                print("responce=", r)
+            # if action == 'play':
+            #     # r = requests.get('http://'+conf.ALLOWED_IP+':8080/requests/status.xml?command=in_enqueue&input='+t3, auth=('', '63933'))
+            #     r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=in_play&input=' + path, auth=('', '63933'))
+            #     print("responce=", r)
 
             # elif action == 'stop':
             #     r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=pl_stop', auth=('', '63933'))
             #     print("responce=", r)
 
-            elif action == 'fullscreen':
-                r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=fullscreen', auth=('', '63933'))
-                print("responce=", r)
+            # elif action == 'fullscreen':
+            #     r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=fullscreen', auth=('', '63933'))
+            #     print("responce=", r)
 
             # elif action == 'seek':
             #     r = requests.get('http://' + conf.HOST_IP + ':8080/requests/status.xml?command=seek&val=' + val, auth=('', '63933'))
@@ -298,9 +298,14 @@ class TrackActionRedirect(View):
 
         if 'command' in self.request.GET:
             path += '?command=' + self.request.GET['command']
+            vr.vlc_func('start')
 
         if 'val' in self.request.GET:
             path += '&val=' + self.request.GET['val']
+
+        if 'input' in self.request.GET:
+            path += '&input=' + self.request.GET['input']
+
 
         # print('+' * 100, path)
 

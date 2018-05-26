@@ -61,10 +61,11 @@ $(function () {
         if ($(this).attr('state') == 'stopped') {
             switch (current_que) {
             case 'main':
-                var id = $('.jstree-clicked', '#libraryTree').length > 0 ? $('.jstree-clicked', '#libraryTree').first().parents().first().attr('id').substr(5) : current_id;
+                // var id = $('.jstree-clicked', '#libraryTree').length > 0 ? $('.jstree-clicked', '#libraryTree').first().parents().first().attr('id').substr(5) : current_id;
+                var trackName = $('.track').find('.track-title h3').html();
                 sendCommand({
-                    'command': 'pl_play',
-                    'id': id
+                    'command': 'in_play',
+                    'input': trackName
                 });
                 break;
             case 'stream':
