@@ -309,13 +309,13 @@ class TrackActionRedirect(View):
         if 'input' in self.request.GET:
             path += '&input=' + self.request.GET['input']
 
-        url_redirect = reverse_lazy('domeplaylist:proxy', kwargs={'path': path})
-        url_redirect = url_redirect.replace("%3F", "?")
+        # url_redirect =
+        # url_redirect = url_redirect.replace("%3F", "?")
+        #
+        # print('+' * 20, path)
+        # print('W' * 20, url_redirect)
 
-        print('+' * 20, path)
-        print('W' * 20, url_redirect)
-
-        return HttpResponseRedirect(url_redirect)
+        return HttpResponseRedirect(reverse_lazy('domeplaylist:proxy', kwargs={'path': path}))
 
 
 def proxyView(request, path):
