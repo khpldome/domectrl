@@ -23,15 +23,18 @@ jQuery(document).ready(function($) {
     $('.track-click-container').click(function() {
 
         var trackName = $(this).parent('.track').find('.track-title h3').html();
+        // trackName = encodeURIComponent(trackName.trim());
+        // trackName = trackName.replace("%3A", ":");
+        console.log('tttttttrrr'+trackName);
 
         if ($(this).attr('state') == 'stopped') {
 
             // var trackName = $('.track').find('.track-title h3').html();
             //console.log(trackName);
 
-            sendCommand({
-                'command': 'pl_empty'
-            });
+            // sendCommand({
+            //     'command': 'pl_empty'
+            // });
 
             sendCommand({
                 'command': 'in_play',

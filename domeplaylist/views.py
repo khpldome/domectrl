@@ -284,11 +284,13 @@ class TrackDeleteView(LoginRequiredMixin, ModulePermissionMixin, DeleteView):
 
         self.object.delete()
         # messages.add_message(request, messages.INFO, 'fefefwef!')
-        messages.success(request, 'Track deleted successfully.')
+        # messages.success(request, 'Track deleted successfully.')
         return HttpResponseRedirect(success_url)
 
 
 class TrackActionRedirect(View):
+
+    import codecs
 
     def get(self, request, **kwargs):
 
@@ -299,6 +301,7 @@ class TrackActionRedirect(View):
         if 'command' in self.request.GET:
             path += '?command=' + self.request.GET['command']
             vr.vlc_func('start')
+            print('X'*20)
 
         if 'val' in self.request.GET:
             path += '&val=' + self.request.GET['val']
@@ -306,10 +309,13 @@ class TrackActionRedirect(View):
         if 'input' in self.request.GET:
             path += '&input=' + self.request.GET['input']
 
+        url_redirect = reverse_lazy('domeplaylist:proxy', kwargs={'path': path})
+        url_redirect = url_redirect.replace("%3F", "?")
 
-        # print('+' * 100, path)
+        print('+' * 20, path)
+        print('W' * 20, url_redirect)
 
-        return HttpResponseRedirect(reverse_lazy('domeplaylist:proxy', kwargs={'path': path}))
+        return HttpResponseRedirect(url_redirect)
 
 
 def proxyView(request, path):
@@ -327,6 +333,9 @@ def proxyView(request, path):
         print("redirection >>> " + vlc_server_url)
 
         extra_requests_args = {}
+        # filePath = request.GET.get('input', '')
+        # filePath = filePath.replace(' ', '%20')
+        # print('filePath = ',  filePath)
         return pv.proxy_view(request, vlc_server_url, extra_requests_args)
     else:
         return HttpResponse(status=503)

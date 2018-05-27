@@ -105,7 +105,7 @@ class TrackSelectView(FilemanagerMixin, RedirectView):
                 title=track_path,
                 text=track_info_str)
             pi.save()
-            messages.add_message(request, messages.INFO, 'Track saved: ' + track_path)
+            # messages.add_message(request, messages.INFO, 'Track saved: ' + track_path)
         else:
             filepath = False
 
