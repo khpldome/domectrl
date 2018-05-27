@@ -28,6 +28,11 @@ jQuery(document).ready(function($) {
 
             // var trackName = $('.track').find('.track-title h3').html();
             //console.log(trackName);
+
+            sendCommand({
+                'command': 'pl_empty'
+            });
+
             sendCommand({
                 'command': 'in_play',
                 'input': trackName
@@ -50,6 +55,7 @@ jQuery(document).ready(function($) {
         // $('.player').insertAfter($(this).find('.track-trash'));
         // $('.player').css({'grid-column': '1/6', 'grid-row': '2/3'});
     });
+
 
     // console.log($('.track.active').length);
     if ($('.track.active').length) {

@@ -15,6 +15,7 @@ class PlayList(models.Model):
     title = models.CharField(max_length=50)
     order = models.IntegerField(default=1)
     theme = models.PositiveSmallIntegerField(blank=True, null=True, choices=THEME)
+    active_track = models.IntegerField(blank=True, null=True, default=-1)
 
     def __str__(self):
         return "id:{} {} of {}".format(self.id, self.theme, self.title)
