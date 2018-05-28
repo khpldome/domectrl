@@ -104,63 +104,63 @@
                         </form>
                     </li>
                 </ul>
-                <div class="system-start-stop flex">
-                    <form method="POST" action="{% url 'dome:system' %}" class="system-switch system-start">
-                        {% csrf_token %}
-                        <input type="hidden" name="action" value="autostart">
-                        <input type="submit" name="buttonName" value="System autostart" title="System autostart" class="start">
-                    </form>
-                    <form method="POST" action="{% url 'dome:system' %}" class="system-switch system-stop">
-                        {% csrf_token %}
-                        <input type="hidden" name="action" value="autostop">
-                        <input type="submit" name="buttonName" value="System autostop" title="System autostop" class="stop">
-                    </form>
-                </div>
+{#                <div class="system-start-stop flex">#}
+{#                    <form method="POST" action="{% url 'dome:system' %}" class="system-switch system-start">#}
+{#                        {% csrf_token %}#}
+{#                        <input type="hidden" name="action" value="autostart">#}
+{#                        <input type="submit" name="buttonName" value="System autostart" title="System autostart" class="start">#}
+{#                    </form>#}
+{#                    <form method="POST" action="{% url 'dome:system' %}" class="system-switch system-stop">#}
+{#                        {% csrf_token %}#}
+{#                        <input type="hidden" name="action" value="autostop">#}
+{#                        <input type="submit" name="buttonName" value="System autostop" title="System autostop" class="stop">#}
+{#                    </form>#}
+{#                </div>#}
                 <ul>
-                    <li class="flex">
-                        <form method="POST" action="{% url 'dome:displaypro'%}" class=" config">
-                            {% csrf_token %}
-                            <input type="hidden" name="action" value="config_1">
-                            <input type="submit" name="buttonName" value="DP config_1" title="DisplayPRO: Конфигурация 1" class="button service">
-                        </form>
-                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">
-                            {% csrf_token %}
-                            <input type="hidden" name="action" value="config_2">
-                            <input type="submit" name="buttonName" value="DP config_2" title="DisplayPRO: Конфигурация 2" class="button service">
-                        </form>
-                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">
-                            {% csrf_token %}
-                            <input type="hidden" name="action" value="config_3">
-                            <input type="submit" name="buttonName" value="DP config_3" title="DisplayPRO: Конфигурация 3" class="button service">
-                        </form>
-                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">
-                            {% csrf_token %}
-                            <input type="hidden" name="action" value="config_4" class="config">
-                            <input type="submit" name="buttonName" value="DP config_4" title="DisplayPRO: Конфигурация 4" class="button service">
-                        </form>
-                    </li>
-                    <li class="flex">
-                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">
-                            {% csrf_token %}
-                            <input type="hidden" name="action" value="config_5" class="config">
-                            <input type="submit" name="buttonName" value="DP config_5" title="DisplayPRO: Конфигурация 5" class="button service disabled" disabled />
-                        </form>
-                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">
-                            {% csrf_token %}
-                            <input type="hidden" name="action" value="config_6" class="config">
-                            <input type="submit" name="buttonName" value="DP config_6" title="DisplayPRO: Конфигурация 6" class="button service disabled" disabled />
-                        </form>
-                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">
-                            {% csrf_token %}
-                            <input type="hidden" name="action" value="config_7" class="config">
-                            <input type="submit" name="buttonName" value="DP config_7" title="DisplayPRO: Конфигурация 7" class="button service disabled" disabled />
-                        </form>
-                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">
-                            {% csrf_token %}
-                            <input type="hidden" name="action" value="config_8" class="config">
-                            <input type="submit" name="buttonName" value="DP config_8" title="DisplayPRO: Конфигурация 8" class="button service disabled" disabled />
-                        </form>
-                    </li>
+{#                    <li class="flex">#}
+{#                        <form method="POST" action="{% url 'dome:displaypro'%}" class=" config">#}
+{#                            {% csrf_token %}#}
+{#                            <input type="hidden" name="action" value="config_1">#}
+{#                            <input type="submit" name="buttonName" value="DP config_1" title="DisplayPRO: Конфигурация 1" class="button service">#}
+{#                        </form>#}
+{#                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">#}
+{#                            {% csrf_token %}#}
+{#                            <input type="hidden" name="action" value="config_2">#}
+{#                            <input type="submit" name="buttonName" value="DP config_2" title="DisplayPRO: Конфигурация 2" class="button service">#}
+{#                        </form>#}
+{#                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">#}
+{#                            {% csrf_token %}#}
+{#                            <input type="hidden" name="action" value="config_3">#}
+{#                            <input type="submit" name="buttonName" value="DP config_3" title="DisplayPRO: Конфигурация 3" class="button service">#}
+{#                        </form>#}
+{#                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">#}
+{#                            {% csrf_token %}#}
+{#                            <input type="hidden" name="action" value="config_4" class="config">#}
+{#                            <input type="submit" name="buttonName" value="DP config_4" title="DisplayPRO: Конфигурация 4" class="button service">#}
+{#                        </form>#}
+{#                    </li>#}
+{#                    <li class="flex">#}
+{#                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">#}
+{#                            {% csrf_token %}#}
+{#                            <input type="hidden" name="action" value="config_5" class="config">#}
+{#                            <input type="submit" name="buttonName" value="DP config_5" title="DisplayPRO: Конфигурация 5" class="button service disabled" disabled />#}
+{#                        </form>#}
+{#                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">#}
+{#                            {% csrf_token %}#}
+{#                            <input type="hidden" name="action" value="config_6" class="config">#}
+{#                            <input type="submit" name="buttonName" value="DP config_6" title="DisplayPRO: Конфигурация 6" class="button service disabled" disabled />#}
+{#                        </form>#}
+{#                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">#}
+{#                            {% csrf_token %}#}
+{#                            <input type="hidden" name="action" value="config_7" class="config">#}
+{#                            <input type="submit" name="buttonName" value="DP config_7" title="DisplayPRO: Конфигурация 7" class="button service disabled" disabled />#}
+{#                        </form>#}
+{#                        <form method="POST" action="{% url 'dome:displaypro'%}" class="config">#}
+{#                            {% csrf_token %}#}
+{#                            <input type="hidden" name="action" value="config_8" class="config">#}
+{#                            <input type="submit" name="buttonName" value="DP config_8" title="DisplayPRO: Конфигурация 8" class="button service disabled" disabled />#}
+{#                        </form>#}
+{#                    </li>#}
                     {% if user.is_staff %}
                         <li class="flex">
                             <form method="POST" action="{% url 'dome:winapi' %}">
