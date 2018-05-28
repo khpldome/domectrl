@@ -17,14 +17,26 @@
         </nav>
         <div class="projectors-turn">
             <div class="projectors-turn-off">
-                <a href="{% url 'dome:projectors' action='start' %}">
-                    <span class="icon-turn-off"></span>
-                </a>
+                {#                <a href="{% url 'dome:projectors' action='start' %}">#}
+                {#                    <span class="icon-turn-off"></span>#}
+                {#                </a>#}
+{#                <form method="POST" action="{% url 'dome:projectors' %}">#}
+{#                    {% csrf_token %}#}
+{#                    <input type="hidden" name="action" value="start">#}
+{#                    <input type="submit" name="buttonName" value="Projectors stop" title="Projectors: Стоп"#}
+{#                           class="button stop">#}
+{#                </form>#}
             </div>
             <div class="projectors-turn-on hidden">
-                <a href="{% url 'dome:projectors' action='stop' %}">
-                    <span class="icon-turn-on"></span>
-                </a>
+                {#                <a href="{% url 'dome:projectors' action='stop' %}">#}
+                {#                    <span class="icon-turn-on"></span>#}
+                {#                </a>#}
+{#                <form method="POST" action="{% url 'dome:projectors' %}">#}
+{#                    {% csrf_token %}#}
+{#                    <input type="hidden" name="action" value="stop">#}
+{#                    <input type="submit" name="buttonName" value="Projectors stop" title="Projectors: Стоп"#}
+{#                           class="button stop">#}
+{#                </form>#}
             </div>
         </div>
         <div class="status grid">

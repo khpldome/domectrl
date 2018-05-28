@@ -187,8 +187,8 @@ class ProjectorsActionView(TemplateView):
     template_name = 'dome/additional.html'
     out_dict = {}
 
-    def get(self, request, *args, **kwargs):
-        return super(ProjectorsActionView, self).get(request, *args, **kwargs)
+    # def get(self, request, *args, **kwargs):
+    #     return super(ProjectorsActionView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
 
