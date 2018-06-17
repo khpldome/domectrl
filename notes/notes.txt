@@ -10,6 +10,7 @@ https://git-for-windows.github.io/
 Логин и пароль от почты и аккаунта на гитхабе
 khpldome@gmail.com
 8013emodlphk7102
+50649394
 
 git config --global commit.gpgsign false
 

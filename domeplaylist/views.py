@@ -329,6 +329,18 @@ def proxyView(request, path):
     # print('!'*100, path)
     if pm.is_vlc_active() is True:
 
+        if 'command' in self.request.GET:
+            path += '?command=' + self.request.GET['command']
+            vr.vlc_func('start')
+            print('X' * 20)
+
+        if 'val' in self.request.GET:
+            path += '&val=' + self.request.GET['val']
+
+        if 'input' in self.request.GET:
+            path += '&input=' + self.request.GET['input']
+
+
         vlc_server_url = 'http://' + conf.VLC_WEB_DOMAIN + '/' + path
         print("redirection >>> " + vlc_server_url)
 
