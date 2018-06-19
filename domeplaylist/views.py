@@ -306,11 +306,14 @@ class TrackActionRedirect(View):
         if 'val' in self.request.GET:
             path += '&val=' + self.request.GET['val']
 
-        if 'input' in self.request.GET:
-            path += '&input=' + self.request.GET['input']
+        # if 'input' in self.request.GET:
+        #     path += '&input=' + self.request.GET['input']
 
         url_redirect = reverse_lazy('domeplaylist:proxy', kwargs={'path': path})
-        url_redirect = url_redirect.replace("%3F", "?")
+        # url_redirect = url_redirect.replace("%3F", "?")
+
+        if 'input' in self.request.GET:
+            url_redirect += '&input=' + self.request.GET['input']
 
         print('+' * 20, path)
         print('W' * 20, url_redirect)
@@ -329,17 +332,17 @@ def proxyView(request, path):
     # print('!'*100, path)
     if pm.is_vlc_active() is True:
 
-        if 'command' in self.request.GET:
-            path += '?command=' + self.request.GET['command']
+        if 'command' in request.GET:
+            path += '?command=' + request.GET['command']
             vr.vlc_func('start')
             print('X' * 20)
 
-        if 'val' in self.request.GET:
-            path += '&val=' + self.request.GET['val']
+        if 'val' in request.GET:
+            path += '&val=' + request.GET['val']
 
-        if 'input' in self.request.GET:
-            path += '&input=' + self.request.GET['input']
-
+        if 'input' in request.GET:
+            # path += '&input=' + request.GET['input']
+            path += '&input=d:\\1.mp4'
 
         vlc_server_url = 'http://' + conf.VLC_WEB_DOMAIN + '/' + path
         print("redirection >>> " + vlc_server_url)
