@@ -129,15 +129,7 @@
                                 </form>
                             </div>
 
-                            <div class="track-click-container" state='stopped' class="paused">
-
-{#                                <a href="{% url 'domeplaylist:track-action' playlist_id=playlist_id_active track_id=track.id action='play' %}"#}
-{#                       title="Play"></a>#}
-
-{#                                <a id="buttonPlay" state = 'stopped' class="paused" title="Play"></a>#}
-
-                            </div>
-
+                            <div class="track-click-container" state='stopped' class="paused"></div>
 
                         </div>
                     {% endfor %}
@@ -150,7 +142,7 @@
 {% block js %}
     <script src="{% static 'domeplaylist/js/vlc_web/common.js' %}"></script>
     <script src="{% static 'lib/jquery-ui/jquery-ui.js' %}"></script>
-    <script src="{% static 'domeplaylist/js/vlc_web/jquery.jstree.js' %}"></script>
+    <!--<script src="{% static 'domeplaylist/js/vlc_web/jquery.jstree.js' %}"></script>-->
     <script src="{% static 'domeplaylist/js/vlc_web/ui.js' %}"></script>
     <script src="{% static 'domeplaylist/js/vlc_web/controlers.js' %}"></script>
     <script src="{% static 'domeplaylist/js/firefly.js' %}"></script>
@@ -158,51 +150,45 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('.track').click(function () {
-
                 var track = $('.track.active').data("trackNum");
                 // console.log(track);
+                /*
+                var track_play_button = $('#track-play-button');
+                var str_url = track_play_button.attr('href');
+                // console.log(str_url);
 
-{#                var track_play_button = $('#track-play-button');#}
-{#                var str_url = track_play_button.attr('href');#}
-{#                // console.log(str_url);#}
-{##}
-{#                var res = str_url.split('/');#}
-{#                res[4] = track;#}
-{#                str_url = res.join('/');#}
-{#                track_play_button.attr('href', str_url);#}
+                var res = str_url.split('/');
+                res[4] = track;
+                str_url = res.join('/');
+                track_play_button.attr('href', str_url);
 
-{#                var track_stop_button = $('#buttonStop');#}
-{#                var str_url = track_stop_button.attr('href');#}
-{#                var res = str_url.split('/');#}
-{#                res[4] = track;#}
-{#                str_url = res.join('/');#}
-{#                track_stop_button.attr('href', str_url);#}
+                var track_stop_button = $('#buttonStop');
+                var str_url = track_stop_button.attr('href');
+                var res = str_url.split('/');
+                res[4] = track;
+                str_url = res.join('/');
+                track_stop_button.attr('href', str_url);
 
-{#                var track_fullscreen_button = $('#track-fullscreen-button');#}
-{#                var str_url = track_fullscreen_button.attr('href');#}
-{#                var res = str_url.split('/');#}
-{#                res[4] = track;#}
-{#                str_url = res.join('/');#}
-{#                track_fullscreen_button.attr('href', str_url);#}
-
+                var track_fullscreen_button = $('#track-fullscreen-button');
+                var str_url = track_fullscreen_button.attr('href');
+                var res = str_url.split('/');
+                res[4] = track;
+                str_url = res.join('/');
+                track_fullscreen_button.attr('href', str_url);
+                */
             });
 
-            var trackName = $('.track').find('.track-title h3').html();
-            $('footer marquee span').html('Сейчас играет ' + trackName);
-{#            console.log(mediaTitle+'1234');#}
-{#            $('.played-track-name').find('span').html('Сейчас играет ' + trackName);#}
-
-
-{#            $(".track-click-container").click(function () {#}
-{#                window.location = $(this).find("a").attr("href");#}
-{#                return false;#}
-{#            });#}
-
-
+        var trackName = $('.track').find('.track-title h3').html();
+        $('footer marquee span').html('Сейчас играет ' + trackName);
+    /*
+        console.log(mediaTitle+'1234');#}
+        $('.played-track-name').find('span').html('Сейчас играет ' + trackName);#}
+        $(".track-click-container").click(function () {#}
+        window.location = $(this).find("a").attr("href");#}
+            return false;#}
         });
-
-
-
+    */
+            });
     </script>
 
 {% endblock js %}
