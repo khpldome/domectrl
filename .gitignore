@@ -17,3 +17,6 @@ media/playitem_imgs
 
 nfo/*
 static/*
+
+node_modules/*
+bower_components/*
